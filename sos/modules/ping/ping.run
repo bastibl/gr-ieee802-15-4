@@ -1,0 +1,13 @@
+
+include link/link.run
+
+&link_udp(udp0);
+&link_linkstats(udp0,ls0,show="leds:core");
+&link_neighbors(ls0);
+
+process blink {
+  waitfor = udp0;
+  type = once;
+  noclean;
+  cmd = "sos/blink --uses udp0 --mod_id 20";
+}
