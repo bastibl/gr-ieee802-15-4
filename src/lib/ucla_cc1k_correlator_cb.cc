@@ -35,6 +35,7 @@
 #include "config.h"
 #endif
 
+#include <stdio.h>
 #include <ucla_cc1k_correlator_cb.h>
 #include <gr_io_signature.h>
 #include <assert.h>

@@ -1,23 +1,23 @@
 #
 # Copyright 2005 Free Software Foundation, Inc.
-# 
+#
 # This file is part of GNU Radio
-# 
+#
 # GNU Radio is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
-# 
+#
 # GNU Radio is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with GNU Radio; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
-# 
+#
 
 # This is derived from gmsk2_pkt.py.
 #
@@ -124,8 +124,8 @@ def make_FCF(frameType=1, securityEnabled=0, framePending=0, acknowledgeRequest=
     if sourceAddressingMode >= 2**2:
         raise ValueError, " must be < "
 
-    
-    
+
+
     return struct.pack("H", frameType
                        + (securityEnabled << 3)
                        + (framePending << 4)
@@ -133,7 +133,7 @@ def make_FCF(frameType=1, securityEnabled=0, framePending=0, acknowledgeRequest=
                        + (intraPAN << 6)
                        + (destinationAddressingMode << 10)
                        + (sourceAddressingMode << 14))
-    
+
 
 class ieee802_15_4_mod_pkts(gr.hier_block2):
     """
@@ -141,7 +141,7 @@ class ieee802_15_4_mod_pkts(gr.hier_block2):
 
     Send packets by calling send_pkt
     """
-    def __init__(self, pad_for_usrp=True, *args, **kwargs): 
+    def __init__(self, pad_for_usrp=True, *args, **kwargs):
         """
 	Hierarchical block for the 802_15_4 O-QPSK  modulation.
 
@@ -155,7 +155,7 @@ class ieee802_15_4_mod_pkts(gr.hier_block2):
         See 802_15_4_mod for remaining parameters
         """
 	try:
-		self.msgq_limit = kwargs.pop('msgq_limit') 
+		self.msgq_limit = kwargs.pop('msgq_limit')
 	except KeyError:
 		pass
 
@@ -167,7 +167,7 @@ class ieee802_15_4_mod_pkts(gr.hier_block2):
         # accepts messages from the outside world
         self.pkt_input = gr.message_source(gr.sizeof_char, self.msgq_limit)
         self.ieee802_15_4_mod = ieee802_15_4.ieee802_15_4_mod(self, *args, **kwargs)
-        self.connect(self.pkt_input, self.ieee802_15_4_mod, self) 
+        self.connect(self.pkt_input, self.ieee802_15_4_mod, self)
 
     def send_pkt(self, seqNr, addressInfo, payload='', eof=False):
         """
@@ -180,12 +180,12 @@ class ieee802_15_4_mod_pkts(gr.hier_block2):
         @param payload: data to send
         @type payload: string
         """
-        
+
         if eof:
             msg = gr.message(1) # tell self.pkt_input we're not sending any more packets
         else:
             FCF = make_FCF()
-            
+
             pkt = make_ieee802_15_4_packet(FCF,
                                            seqNr,
                                            addressInfo,
@@ -234,7 +234,7 @@ class ieee802_15_4_demod_pkts(gr.hier_block2):
         self._packet_sink = ucla.ieee802_15_4_packet_sink(self._rcvd_pktq, self.threshold)
 
         self.connect(self,self.ieee802_15_4_demod, self._packet_sink)
-      
+
         self._watcher = _queue_watcher_thread(self._rcvd_pktq, self.callback, self.chan_num)
 
     def carrier_sensed(self):
@@ -261,10 +261,13 @@ class _queue_watcher_thread(_threading.Thread):
             msg = self.rcvd_pktq.delete_head()
             ok = 0
             payload = msg.to_string()
-            
+
             print "received packet "
             if len(payload) > 2:
                 crc = crc16.CRC16()
+            else:
+                print "too small:", len(payload)
+                continue
             # Calculate CRC skipping over LQI and CRC
             crc.update(payload[1:-2])
 

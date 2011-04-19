@@ -38,7 +38,7 @@ ucla_delay_cc::ucla_delay_cc (const int delay)
 		   gr_make_io_signature (1, 1, sizeof (gr_complex)),
 		   gr_make_io_signature (1, 1, sizeof (gr_complex)))
 {
-  d_delay = delay;
+  d_delay = delay-1;
   set_history (delay);
 }
 
@@ -57,7 +57,7 @@ ucla_delay_cc::work (int noutput_items,
 
   //fprintf(stderr, "."), fflush(stderr);
   for (int j = 0; j < noutput_items; j++)
-      out[j] = gr_complex (real(in[j]), imag(in[j-d_delay]));
+      out[j] = gr_complex (real(in[j+d_delay]), imag(in[j]));
 
   return noutput_items;
 }
