@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<block>
+	<name>MAC Deframer</name>
+	<key>ieee802_15_4_mac_deframer</key>
+	<category>IEEE802.15.4</category>
+	<import>import gnuradio.ieee802_15_4 as gr_ieee802_15_4</import>
+	<make>gr_ieee802_15_4.mac_deframer()</make>
+
+	<sink>
+		<name>pdu in</name>
+		<type>message</type>
+	</sink>
+
+	<source>
+		<name>pdu out</name>
+		<type>message</type>
+	</source>
+</block>

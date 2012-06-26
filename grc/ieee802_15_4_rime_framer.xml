@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<block>
+	<name>RIME Framer</name>
+	<key>ieee802_15_4_rime_framer</key>
+	<category>IEEE802.15.4</category>
+	<import>import gnuradio.ieee802_15_4 as gr_ieee802_15_4</import>
+	<make>gr_ieee802_15_4.rime_framer()</make>
+
+	<sink>
+		<name>in</name>
+		<type>message</type>
+	</sink>
+	<source>
+		<name>out</name>
+		<type>message</type>
+	</source>
+</block>

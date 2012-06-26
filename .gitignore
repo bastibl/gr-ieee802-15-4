@@ -1,0 +1,10 @@
+build/*
+contiki/obj_sky/*
+.cproject
+.project
+.pydevproject
+contiki/symbols.*
+contiki/*.a
+contiki/*.map
+contiki/*.ihex
+contiki/*.sky
