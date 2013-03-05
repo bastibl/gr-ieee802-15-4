@@ -1,6 +1,7 @@
-This is an example Contiki firmware intended for the TelosB sensor mote that can be used to test interoperability.
+This is an example Contiki firmware for TelosB sensor motes that can be used to test interoperability.
 
 ### INSTALLATION
+- install Contiki (http://www.contiki-os.org/)
 - edit the CONTIKI variable in the Makefile to point to your contiki installation directory
 - make
 - make upload
