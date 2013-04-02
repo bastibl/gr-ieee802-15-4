@@ -20,6 +20,7 @@ install(FILES
     ieee802_15_4_symbols_to_chips.xml
     ieee802_15_4_rime_framer.xml
     ieee802_15_4_mac_framer.xml
+    ieee802_15_4_mac.xml
     ieee802_15_4_rime_deframer.xml
     ieee802_15_4_mac_deframer.xml
     DESTINATION share/gnuradio/grc/blocks

@@ -20,6 +20,7 @@
 include(GrPlatform) #define LIB_SUFFIX
 
 list(APPEND gr_ieee802_15_4_sources
+    mac.cc
     mac_deframer.cc
     mac_framer.cc
     packet_sink.cc

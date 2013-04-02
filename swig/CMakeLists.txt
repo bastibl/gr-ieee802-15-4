@@ -62,6 +62,7 @@ GR_SWIG_INSTALL(
 list(APPEND swig_sources
     ieee802_15_4_swig.i
     ieee802_15_4_factory.i
+    ieee802_15_4_mac.i
     ieee802_15_4_mac_deframer.i
     ieee802_15_4_mac_framer.i
     ieee802_15_4_qpsk_modulator.i

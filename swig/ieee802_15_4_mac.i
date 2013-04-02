@@ -14,23 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
-#define GR_IEEE802_15_4_API
 
 ////////////////////////////////////////////////////////////////////////
-// standard includes
+// block headers
 ////////////////////////////////////////////////////////////////////////
-%include <gnuradio.i>
-%include "ieee802_15_4_factory.i"
+%{
+#include <gnuradio/ieee802_15_4/mac.h>
+%}
+
+%include <gnuradio/ieee802_15_4/mac.h>
 
 ////////////////////////////////////////////////////////////////////////
-// block includes
+// block magic
 ////////////////////////////////////////////////////////////////////////
-%include <ieee802_15_4_packet_sink.i>
-%include <ieee802_15_4_mac.i>
-%include <ieee802_15_4_mac_deframer.i>
-%include <ieee802_15_4_mac_framer.i>
-%include <ieee802_15_4_qpsk_modulator.i>
-%include <ieee802_15_4_rime_deframer.i>
-%include <ieee802_15_4_rime_framer.i>
-%include <ieee802_15_4_symbols_to_chips.i>
+using namespace gr::ieee802_15_4;
+GR_IEEE802_15_4_BLOCK_MAGIC2(ieee802_15_4, mac)

@@ -16,6 +16,7 @@
 
 list(APPEND include_sources
 	api.h
+	mac.h
 	mac_framer.h
 	mac_deframer.h
 	packet_sink.h

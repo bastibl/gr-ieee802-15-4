@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<block>
+	<name>IEEE802.15.4 MAC</name>
+	<key>ieee802_15_4_mac</key>
+	<category>IEEE802.15.4</category>
+	<import>import gnuradio.ieee802_15_4 as gr_ieee802_15_4</import>
+	<make>gr_ieee802_15_4.mac($debug)</make>
+
+	<param>
+		<name>Debug</name>
+		<key>debug</key>
+		<value>False</value>
+		<type>bool</type>
+
+		<option>
+			<name>Enable</name>
+			<key>True</key>
+		</option>
+		<option>
+			<name>Disable</name>
+			<key>False</key>
+		</option>
+	</param>
+
+	<sink>
+		<name>app in</name>
+		<type>message</type>
+	</sink>
+	<sink>
+		<name>pdu in</name>
+		<type>message</type>
+	</sink>
+	<source>
+		<name>app out</name>
+		<type>message</type>
+	</source>
+	<source>
+		<name>pdu out</name>
+		<type>message</type>
+	</source>
+</block>
