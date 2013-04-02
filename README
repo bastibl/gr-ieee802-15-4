@@ -1,6 +1,10 @@
-This is a simple IEEE802.15.4 implementation for GNU Radio v3.6.3, based on the UCLA transceiver (https://cgran.org/wiki/UCLAZigBee). Currently, it features very basic, separated rx and tx chains (-> examples folder).
+Hi!
 
-In the contiki folder you find a Contiki(v2.6) firmware that I used to test interoperability with TelosB motes. There is also another README file that shows how to use the firmware.
+This is an IEEE802.15.4 transceiver for GNU Radio v3.6.4. It is based on the UCLA implementation (https://cgran.org/wiki/UCLAZigBee) of Thomas Schmid.
+
+Currently, it features a transceiver, separated rx and tx chains, and a loopback flow graph to test it without any hardware (see the examples folder).
+
+You can find the firmware that I used to test interoperability with TelosB motes in the contiki folder. The firmware is based on Contiki(v2.6). There is another README file in the contiki folder that describes how to use the firmware.
 
 INSTALLATION
 ============
@@ -16,9 +20,8 @@ sudo ldconfig
 
 USAGE
 ===========
-Open tx.grc / rx.grc in gnuradio-companion.
-You can connect to the rx and tx flow graph with netcat to send packets or see the received payload, respectively.
+Open a flow graph from the examples folder in GNU Radio Companion. You can connect to the Socket PDU blocks of the flow graph with netcat to send and receive packets. Just open a terminal and type
 
 nc -u localhost 52001
 
-
+Have fun!
