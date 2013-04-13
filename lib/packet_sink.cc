@@ -221,7 +221,7 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 								d_preamble_cnt ++;
 							} else if (gr_count_bits32((d_shift_reg & 0x7FFFFFFE) ^ (CHIP_MAPPING[7] & 0xFFFFFFFE)) <= d_threshold) {
 								if (VERBOSE2)
-									fprintf(stderr,"Found first SFD\n", d_preamble_cnt),fflush(stderr);
+									fprintf(stderr,"Found first SFD\n"),fflush(stderr);
 								d_packet_byte = 7 << 4;
 							} else {
 								// we are not in the synchronization header
@@ -342,25 +342,10 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 							unsigned int scaled_lqi = (d_lqi / MAX_LQI_SAMPLES) << 3;
 							unsigned char lqi = (scaled_lqi >= 256? 255 : scaled_lqi);
 
-							// build a message, leave space for LQI
-							// Message will be:
-							// |-----------------|--------------------------|
-							// |    LQI (1 Byte) |   MPDU (variable length) |
-							// |-----------------|--------------------------|
-							//
-
-							//acquire blob and memcpy stream memory to the blob memory
-							//pmt::pmt_t blob = _mgr->acquire(true /*block*/);
-							//pmt::pmt_blob_resize(blob, d_packetlen_cnt + sizeof(unsigned char));
-							//std::memcpy((char*)pmt::pmt_blob_rw_data(blob), &lqi, sizeof(unsigned char));
-							//std::memcpy(((char*)pmt::pmt_blob_rw_data(blob)) + sizeof(unsigned char), d_packet, d_packetlen_cnt);
-
-							//post_msg(0, BLOB_KEY, blob, _id);  // send it
-							//std::cout << "yes!!!!!" << std::endl;
-
-							buf[0] = lqi;
-							std::memcpy(buf + 1, d_packet, d_packetlen_cnt);
-							pmt::pmt_t payload = pmt::pmt_make_blob(buf, d_packetlen_cnt + 1);
+							//buf[0] = lqi;
+							// TODO: add lqi as dict in pdu
+							std::memcpy(buf, d_packet, d_packetlen_cnt);
+							pmt::pmt_t payload = pmt::pmt_make_blob(buf, d_packetlen_cnt);
 
 							message_port_pub(pmt::mp("out"), pmt::pmt_cons(pmt::PMT_NIL, payload));
 
