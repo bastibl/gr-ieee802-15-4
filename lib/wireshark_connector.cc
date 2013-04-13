@@ -78,13 +78,15 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 			dout << "WIRESHARK: exiting" << std::endl;
 			return -1;
 		} else if(pmt::pmt_is_blob(msg)) {
-			dout << "MAC: received new message" << std::endl;
+			dout << "WIRESHARK: received new message" << std::endl;
 			dout << "message length " << pmt::pmt_blob_length(msg) << std::endl;
 
 			copy_message((const char*)pmt_blob_data(msg), pmt::pmt_blob_length(msg));
 			break;
 		} else if(pmt::pmt_is_pair(msg)) {
 			pmt::pmt_t blob = pmt::pmt_cdr(msg);
+			dout << "WIRESHARK: received new message" << std::endl;
+			dout << "message length " << pmt::pmt_blob_length(blob) << std::endl;
 			copy_message((const char*)pmt_blob_data(blob), pmt::pmt_blob_length(blob));
 			break;
 		}
@@ -93,7 +95,7 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 	int to_copy = std::min((d_msg_len - d_msg_offset), noutput);
 	memcpy(out, d_msg + d_msg_offset, to_copy);
 
-	dout << "MAC: d_msg_offset: " <<  d_msg_offset <<
+	dout << "WIRESHARK: d_msg_offset: " <<  d_msg_offset <<
 		"   to_copy: " << to_copy << 
 		"   d_msg_len " << d_msg_len << std::endl;
 
@@ -104,7 +106,7 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 		d_msg_len = 0;
 	}
 
-	dout << "MAC: output size: " <<  noutput <<
+	dout << "WIRESHARK: output size: " <<  noutput <<
 		"   produced items: " << to_copy << std::endl;
 	return to_copy;
 }
