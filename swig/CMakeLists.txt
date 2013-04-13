@@ -69,6 +69,7 @@ list(APPEND swig_sources
     ieee802_15_4_rime_deframer.i
     ieee802_15_4_rime_framer.i
     ieee802_15_4_symbols_to_chips.i
+    ieee802_15_4_wireshark_connector.i
     ${CMAKE_CURRENT_BINARY_DIR}/ieee802_15_4_swig_doc.i
 )
 

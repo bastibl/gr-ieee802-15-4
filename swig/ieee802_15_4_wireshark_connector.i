@@ -19,13 +19,13 @@
 // block headers
 ////////////////////////////////////////////////////////////////////////
 %{
-#include <gnuradio/ieee802_15_4/wireshark_connector.h>
+#include <gnuradio/ieee802_15_4/mac_framer.h>
 %}
 
-%include <gnuradio/ieee802_15_4/wireshark_connector.h>
+%include <gnuradio/ieee802_15_4/mac_framer.h>
 
 ////////////////////////////////////////////////////////////////////////
 // block magic
 ////////////////////////////////////////////////////////////////////////
 using namespace gr::ieee802_15_4;
-GR_IEEE802_15_4_BLOCK_MAGIC2(ieee802_15_4, wireshark_connector)
+GR_IEEE802_15_4_BLOCK_MAGIC2(ieee802_15_4, mac_framer)
