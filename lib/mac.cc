@@ -68,7 +68,7 @@ void mac_in(pmt::pmt_t msg) {
 	}
 
 	// FIXME: here should be a crc check
-	pmt::pmt_t mac_payload = pmt::pmt_make_blob((char*)pmt::pmt_blob_data(blob) + 10 , data_len - 10 - 2);
+	pmt::pmt_t mac_payload = pmt::pmt_make_blob((char*)pmt::pmt_blob_data(blob) + 9 , data_len - 9 - 2);
 
 	message_port_pub(pmt::mp("app out"), pmt::pmt_cons(pmt::PMT_NIL, mac_payload));
 }
