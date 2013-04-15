@@ -30,7 +30,6 @@
 %include <ieee802_15_4_mac.i>
 %include <ieee802_15_4_mac_deframer.i>
 %include <ieee802_15_4_mac_framer.i>
-%include <ieee802_15_4_qpsk_modulator.i>
 %include <ieee802_15_4_rime_deframer.i>
 %include <ieee802_15_4_rime_framer.i>
 %include <ieee802_15_4_symbols_to_chips.i>

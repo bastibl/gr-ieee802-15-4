@@ -20,7 +20,6 @@ list(APPEND include_sources
 	mac_framer.h
 	mac_deframer.h
 	packet_sink.h
-	qpsk_modulator.h
 	rime_deframer.h
 	rime_framer.h
 	symbols_to_chips.h

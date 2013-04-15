@@ -65,7 +65,6 @@ list(APPEND swig_sources
     ieee802_15_4_mac.i
     ieee802_15_4_mac_deframer.i
     ieee802_15_4_mac_framer.i
-    ieee802_15_4_qpsk_modulator.i
     ieee802_15_4_rime_deframer.i
     ieee802_15_4_rime_framer.i
     ieee802_15_4_symbols_to_chips.i

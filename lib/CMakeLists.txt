@@ -24,7 +24,6 @@ list(APPEND gr_ieee802_15_4_sources
     mac_deframer.cc
     mac_framer.cc
     packet_sink.cc
-    qpsk_modulator.cc
     rime_deframer.cc
     rime_framer.cc
     symbols_to_chips.cc
