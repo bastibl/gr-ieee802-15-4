@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='ASCII'?>
 <flow_graph>
-  <timestamp>Mon Apr 15 10:14:38 2013</timestamp>
+  <timestamp>Mon Apr 15 13:34:16 2013</timestamp>
   <block>
     <key>options</key>
     <param>
@@ -162,29 +162,6 @@
     <param>
       <key>_coordinate</key>
       <value>(929, 364)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-  </block>
-  <block>
-    <key>gr_pdu_to_tagged_stream</key>
-    <param>
-      <key>id</key>
-      <value>gr_pdu_to_tagged_stream_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>byte</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(373, 641)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1153,130 +1130,6 @@
     </param>
   </block>
   <block>
-    <key>blocks_repeat</key>
-    <param>
-      <key>id</key>
-      <value>blocks_repeat_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>interp</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(888, 830)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>gr_chunks_to_symbols_xx</key>
-    <param>
-      <key>id</key>
-      <value>gr_chunks_to_symbols_xx_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>in_type</key>
-      <value>int</value>
-    </param>
-    <param>
-      <key>out_type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>symbol_table</key>
-      <value>(-1-1j, -1+1j, 1-1j, 1+1j)</value>
-    </param>
-    <param>
-      <key>dimension</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>num_ports</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(576, 822)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>gr_packed_to_unpacked_xx</key>
-    <param>
-      <key>id</key>
-      <value>gr_packed_to_unpacked_xx_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>int</value>
-    </param>
-    <param>
-      <key>bits_per_chunk</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>endianness</key>
-      <value>gr.GR_MSB_FIRST</value>
-    </param>
-    <param>
-      <key>num_ports</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(354, 822)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_symbols_to_chips</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_symbols_to_chips_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(105, 834)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
     <key>gr_complex_to_float</key>
     <param>
       <key>id</key>
@@ -1351,76 +1204,6 @@
     <param>
       <key>_coordinate</key>
       <value>(584, 955)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_multiply_xx</key>
-    <param>
-      <key>id</key>
-      <value>blocks_multiply_xx_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>num_inputs</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1133, 800)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_vector_source_x</key>
-    <param>
-      <key>id</key>
-      <value>blocks_vector_source_x_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>vector</key>
-      <value>[0, sin(pi/4), 1, sin(3*pi/4)]</value>
-    </param>
-    <param>
-      <key>tags</key>
-      <value>[]</value>
-    </param>
-    <param>
-      <key>repeat</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(852, 725)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2168,6 +1951,204 @@
       <value>0</value>
     </param>
   </block>
+  <block>
+    <key>gr_pdu_to_tagged_stream</key>
+    <param>
+      <key>id</key>
+      <value>gr_pdu_to_tagged_stream_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>byte</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(373, 641)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
+    <key>gr_packed_to_unpacked_xx</key>
+    <param>
+      <key>id</key>
+      <value>gr_packed_to_unpacked_xx_0_0_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>byte</value>
+    </param>
+    <param>
+      <key>bits_per_chunk</key>
+      <value>4</value>
+    </param>
+    <param>
+      <key>endianness</key>
+      <value>gr.GR_LSB_FIRST</value>
+    </param>
+    <param>
+      <key>num_ports</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(100, 807)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>gr_chunks_to_symbols_xx</key>
+    <param>
+      <key>id</key>
+      <value>gr_chunks_to_symbols_xx_0_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>in_type</key>
+      <value>byte</value>
+    </param>
+    <param>
+      <key>out_type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>symbol_table</key>
+      <value>[(1+1j), (-1+1j), (1-1j), (-1+1j), (1+1j), (-1-1j), (-1-1j), (1+1j), (-1+1j), (-1+1j), (-1-1j), (1-1j), (-1-1j), (1-1j), (1+1j), (1-1j), (1-1j), (-1-1j), (1+1j), (-1-1j), (1-1j), (-1+1j), (-1+1j), (1-1j), (-1-1j), (-1-1j), (-1+1j), (1+1j), (-1+1j), (1+1j), (1-1j), (1+1j), (-1+1j), (-1+1j), (-1-1j), (1-1j), (-1-1j), (1-1j), (1+1j), (1-1j), (1+1j), (-1+1j), (1-1j), (-1+1j), (1+1j), (-1-1j), (-1-1j), (1+1j), (-1-1j), (-1-1j), (-1+1j), (1+1j), (-1+1j), (1+1j), (1-1j), (1+1j), (1-1j), (-1-1j), (1+1j), (-1-1j), (1-1j), (-1+1j), (-1+1j), (1-1j), (-1-1j), (1-1j), (1+1j), (1-1j), (1+1j), (-1+1j), (1-1j), (-1+1j), (1+1j), (-1-1j), (-1-1j), (1+1j), (-1+1j), (-1+1j), (-1-1j), (1-1j), (-1+1j), (1+1j), (1-1j), (1+1j), (1-1j), (-1-1j), (1+1j), (-1-1j), (1-1j), (-1+1j), (-1+1j), (1-1j), (-1-1j), (-1-1j), (-1+1j), (1+1j), (1+1j), (-1-1j), (-1-1j), (1+1j), (-1+1j), (-1+1j), (-1-1j), (1-1j), (-1-1j), (1-1j), (1+1j), (1-1j), (1+1j), (-1+1j), (1-1j), (-1+1j), (1-1j), (-1+1j), (-1+1j), (1-1j), (-1-1j), (-1-1j), (-1+1j), (1+1j), (-1+1j), (1+1j), (1-1j), (1+1j), (1-1j), (-1-1j), (1+1j), (-1-1j), (1+1j), (1-1j), (1+1j), (-1+1j), (1-1j), (-1+1j), (1+1j), (-1-1j), (-1-1j), (1+1j), (-1+1j), (-1+1j), (-1-1j), (1-1j), (-1-1j), (1-1j), (1-1j), (1+1j), (1-1j), (-1-1j), (1+1j), (-1-1j), (1-1j), (-1+1j), (-1+1j), (1-1j), (-1-1j), (-1-1j), (-1+1j), (1+1j), (-1+1j), (1+1j), (-1-1j), (1+1j), (-1+1j), (-1+1j), (-1-1j), (1-1j), (-1-1j), (1-1j), (1+1j), (1-1j), (1+1j), (-1+1j), (1-1j), (-1+1j), (1+1j), (-1-1j), (-1+1j), (1-1j), (-1-1j), (-1-1j), (-1+1j), (1+1j), (-1+1j), (1+1j), (1-1j), (1+1j), (1-1j), (-1-1j), (1+1j), (-1-1j), (1-1j), (-1+1j), (-1-1j), (1-1j), (-1-1j), (1-1j), (1+1j), (1-1j), (1+1j), (-1+1j), (1-1j), (-1+1j), (1+1j), (-1-1j), (-1-1j), (1+1j), (-1+1j), (-1+1j), (-1+1j), (1+1j), (-1+1j), (1+1j), (1-1j), (1+1j), (1-1j), (-1-1j), (1+1j), (-1-1j), (1-1j), (-1+1j), (-1+1j), (1-1j), (-1-1j), (-1-1j), (1-1j), (-1+1j), (1+1j), (-1-1j), (-1-1j), (1+1j), (-1+1j), (-1+1j), (-1-1j), (1-1j), (-1-1j), (1-1j), (1+1j), (1-1j), (1+1j), (-1+1j), (1+1j), (-1-1j), (1-1j), (-1+1j), (-1+1j), (1-1j), (-1-1j), (-1-1j), (-1+1j), (1+1j), (-1+1j), (1+1j), (1-1j), (1+1j), (1-1j), (-1-1j)]</value>
+    </param>
+    <param>
+      <key>dimension</key>
+      <value>16</value>
+    </param>
+    <param>
+      <key>num_ports</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(419, 807)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_repeat</key>
+    <param>
+      <key>id</key>
+      <value>blocks_repeat_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>interp</key>
+      <value>4</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(868, 815)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_vector_source_x</key>
+    <param>
+      <key>id</key>
+      <value>blocks_vector_source_x_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>vector</key>
+      <value>[0, sin(pi/4), 1, sin(3*pi/4)]</value>
+    </param>
+    <param>
+      <key>tags</key>
+      <value>[]</value>
+    </param>
+    <param>
+      <key>repeat</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(832, 710)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_multiply_xx</key>
+    <param>
+      <key>id</key>
+      <value>blocks_multiply_xx_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>num_inputs</key>
+      <value>2</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1113, 785)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
   <connection>
     <source_block_id>digital_clock_recovery_mm_xx_0</source_block_id>
     <sink_block_id>ieee802_15_4_packet_sink_0</sink_block_id>
@@ -2253,48 +2234,6 @@
     <sink_key>in</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_symbols_to_chips_0</source_block_id>
-    <sink_block_id>gr_packed_to_unpacked_xx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>gr_packed_to_unpacked_xx_0</source_block_id>
-    <sink_block_id>gr_chunks_to_symbols_xx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>gr_pdu_to_tagged_stream_0</source_block_id>
-    <sink_block_id>ieee802_15_4_symbols_to_chips_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_multiply_xx_0</source_block_id>
-    <sink_block_id>gr_complex_to_float_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>gr_chunks_to_symbols_xx_0</source_block_id>
-    <sink_block_id>blocks_repeat_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_vector_source_x_0</source_block_id>
-    <sink_block_id>blocks_multiply_xx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_repeat_0</source_block_id>
-    <sink_block_id>blocks_multiply_xx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>1</sink_key>
-  </connection>
-  <connection>
     <source_block_id>gr_float_to_complex_0</source_block_id>
     <sink_block_id>uhd_usrp_sink_0</sink_block_id>
     <source_key>0</source_key>
@@ -2315,6 +2254,42 @@
   <connection>
     <source_block_id>gr_complex_to_float_0</source_block_id>
     <sink_block_id>gr_float_to_complex_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>gr_chunks_to_symbols_xx_0_0</source_block_id>
+    <sink_block_id>blocks_repeat_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>gr_pdu_to_tagged_stream_0</source_block_id>
+    <sink_block_id>gr_packed_to_unpacked_xx_0_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>gr_packed_to_unpacked_xx_0_0_0</source_block_id>
+    <sink_block_id>gr_chunks_to_symbols_xx_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_repeat_0</source_block_id>
+    <sink_block_id>blocks_multiply_xx_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>1</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_vector_source_x_0</source_block_id>
+    <sink_block_id>blocks_multiply_xx_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_multiply_xx_0</source_block_id>
+    <sink_block_id>gr_complex_to_float_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
