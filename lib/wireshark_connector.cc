@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <sys/time.h>
 
 using namespace gr::ieee802_15_4;
 
@@ -54,9 +55,12 @@ wireshark_connector_impl(bool debug) :
 
 void copy_message(const char *buf, int len) {
 
+	struct timeval t;
+	gettimeofday(&t, NULL);
+
 	pcap_pkt hdr;
-	hdr.ts_sec   = 0;
-	hdr.ts_usec  = 0;
+	hdr.ts_sec   = t.tv_sec;
+	hdr.ts_usec  = t.tv_usec;
 	hdr.incl_len = len;
 	hdr.orig_len = len;
 
