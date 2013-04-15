@@ -342,12 +342,13 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 							unsigned int scaled_lqi = (d_lqi / MAX_LQI_SAMPLES) << 3;
 							unsigned char lqi = (scaled_lqi >= 256? 255 : scaled_lqi);
 
-							//buf[0] = lqi;
-							// TODO: add lqi as dict in pdu
+							pmt::pmt_t meta = pmt::pmt_make_dict();
+							meta = pmt::pmt_dict_add(meta, pmt::mp("lqi"), pmt::pmt_from_long(lqi));
+
 							std::memcpy(buf, d_packet, d_packetlen_cnt);
 							pmt::pmt_t payload = pmt::pmt_make_blob(buf, d_packetlen_cnt);
 
-							message_port_pub(pmt::mp("out"), pmt::pmt_cons(pmt::PMT_NIL, payload));
+							message_port_pub(pmt::mp("out"), pmt::pmt_cons(meta, payload));
 
 							if(VERBOSE2)
 								fprintf(stderr, "Adding message of size %d to queue\n", d_packetlen_cnt);
