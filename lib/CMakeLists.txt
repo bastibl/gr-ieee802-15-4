@@ -26,7 +26,6 @@ list(APPEND gr_ieee802_15_4_sources
     packet_sink.cc
     rime_deframer.cc
     rime_framer.cc
-    symbols_to_chips.cc
     wireshark_connector.cc
 )
 

@@ -32,5 +32,4 @@
 %include <ieee802_15_4_mac_framer.i>
 %include <ieee802_15_4_rime_deframer.i>
 %include <ieee802_15_4_rime_framer.i>
-%include <ieee802_15_4_symbols_to_chips.i>
 %include <ieee802_15_4_wireshark_connector.i>

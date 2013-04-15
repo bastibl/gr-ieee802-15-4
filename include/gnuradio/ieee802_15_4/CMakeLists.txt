@@ -22,7 +22,6 @@ list(APPEND include_sources
 	packet_sink.h
 	rime_deframer.h
 	rime_framer.h
-	symbols_to_chips.h
 	wireshark_connector.h
 )
 

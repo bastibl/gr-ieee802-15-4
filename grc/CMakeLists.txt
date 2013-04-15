@@ -16,7 +16,6 @@
 
 install(FILES
     ieee802_15_4_packet_sink.xml
-    ieee802_15_4_symbols_to_chips.xml
     ieee802_15_4_rime_framer.xml
     ieee802_15_4_mac_framer.xml
     ieee802_15_4_mac.xml
