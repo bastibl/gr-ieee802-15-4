@@ -63,11 +63,17 @@ void mac_in(pmt::pmt_t msg) {
 	}
 
 	size_t data_len = pmt::pmt_blob_length(blob);
-	if(data_len < 13) {
+	if(data_len < 11) {
+		dout << "MAC: frame too short. Dropping!" << std::endl;
 		return;
 	}
 
-	// FIXME: here should be a crc check
+	uint16_t crc = crc16((char*)pmt::pmt_blob_data(blob), data_len);
+	if(crc) {
+		dout << "MAC: wrong crc. Dropping packet!" << std::endl;
+		return;
+	}
+
 	pmt::pmt_t mac_payload = pmt::pmt_make_blob((char*)pmt::pmt_blob_data(blob) + 9 , data_len - 9 - 2);
 
 	message_port_pub(pmt::mp("app out"), pmt::pmt_cons(pmt::PMT_NIL, mac_payload));
