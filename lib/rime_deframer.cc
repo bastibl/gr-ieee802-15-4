@@ -63,7 +63,7 @@ void make_frame (pmt::pmt_t msg) {
 
 	message_port_pub(pmt::mp("pdu out"), pmt::pmt_cons(pmt::PMT_NIL, rime_payload));
 
-	dout << (char*)pmt::pmt_blob_data(blob) + 4 << std::endl;
+	dout << std::string((char*)pmt::pmt_blob_data(blob) + 4, data_len - 4) << std::endl;
 }
 
 private:
