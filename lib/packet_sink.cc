@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <gnuradio/ieee802_15_4/packet_sink.h>
-#include <gr_io_signature.h>
+#include <gnuradio/io_signature.h>
 #include <cstdio>
 #include <errno.h>
 #include <sys/types.h>
@@ -23,7 +23,7 @@
 #include <fcntl.h>
 #include <stdexcept>
 #include <cstring>
-#include <gr_count_bits.h>
+#include <gnuradio/blocks/count_bits.h>
 #include <iostream>
 
 using namespace gr::ieee802_15_4;
@@ -112,7 +112,7 @@ unsigned char decode_chips(unsigned int chips){
 	for(i=0; i<16; i++) {
 		// FIXME: we can store the last chip
 		// ignore the first and last chip since it depends on the last chip.
-		unsigned int threshold = gr_count_bits32((chips & 0x7FFFFFFE) ^ (CHIP_MAPPING[i] & 0x7FFFFFFE));
+		unsigned int threshold = gr::blocks::count_bits32((chips & 0x7FFFFFFE) ^ (CHIP_MAPPING[i] & 0x7FFFFFFE));
 
 		if (threshold < min_threshold) {
 			best_match = i;
@@ -141,9 +141,9 @@ int slice(float x) {
 }
 
 packet_sink_impl(int threshold)
-  : gr_block ("packet_sink",
-		   gr_make_io_signature (1, 1, sizeof(float)),
-		   gr_make_io_signature (0, 0, 0)),
+  : gr::block ("packet_sink",
+		   gr::io_signature::make (1, 1, sizeof(float)),
+		   gr::io_signature::make (0, 0, 0)),
     d_threshold(threshold)
 {
 	d_sync_vector = 0xA7;
@@ -197,7 +197,7 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 				// The first if block syncronizes to chip sequences.
 				if(d_preamble_cnt == 0){
 					unsigned int threshold;
-					threshold = gr_count_bits32((d_shift_reg & 0x7FFFFFFE) ^ (CHIP_MAPPING[0] & 0x7FFFFFFE));
+					threshold = gr::blocks::count_bits32((d_shift_reg & 0x7FFFFFFE) ^ (CHIP_MAPPING[0] & 0x7FFFFFFE));
 					if(threshold < d_threshold) {
 						//  fprintf(stderr, "Threshold %d d_preamble_cnt: %d\n", threshold, d_preamble_cnt);
 						//if ((d_shift_reg&0xFFFFFE) == (CHIP_MAPPING[0]&0xFFFFFE)) {
@@ -213,13 +213,13 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 						d_chip_cnt = 0;
 
 						if(d_packet_byte == 0) {
-							if (gr_count_bits32((d_shift_reg & 0x7FFFFFFE) ^ (CHIP_MAPPING[0] & 0xFFFFFFFE)) <= d_threshold) {
+							if (gr::blocks::count_bits32((d_shift_reg & 0x7FFFFFFE) ^ (CHIP_MAPPING[0] & 0xFFFFFFFE)) <= d_threshold) {
 								if (VERBOSE2)
 									fprintf(stderr,"Found %d 0 in chip sequence\n", d_preamble_cnt),fflush(stderr);
 								// we found an other 0 in the chip sequence
 								d_packet_byte = 0;
 								d_preamble_cnt ++;
-							} else if (gr_count_bits32((d_shift_reg & 0x7FFFFFFE) ^ (CHIP_MAPPING[7] & 0xFFFFFFFE)) <= d_threshold) {
+							} else if (gr::blocks::count_bits32((d_shift_reg & 0x7FFFFFFE) ^ (CHIP_MAPPING[7] & 0xFFFFFFFE)) <= d_threshold) {
 								if (VERBOSE2)
 									fprintf(stderr,"Found first SFD\n"),fflush(stderr);
 								d_packet_byte = 7 << 4;
@@ -232,7 +232,7 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 							}
 
 						} else {
-							if (gr_count_bits32((d_shift_reg & 0x7FFFFFFE) ^ (CHIP_MAPPING[10] & 0xFFFFFFFE)) <= d_threshold) {
+							if (gr::blocks::count_bits32((d_shift_reg & 0x7FFFFFFE) ^ (CHIP_MAPPING[10] & 0xFFFFFFFE)) <= d_threshold) {
 								d_packet_byte |= 0xA;
 								if (VERBOSE2)
 									fprintf(stderr,"Found sync, 0x%x\n", d_packet_byte),fflush(stderr);
@@ -342,13 +342,13 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 							unsigned int scaled_lqi = (d_lqi / MAX_LQI_SAMPLES) << 3;
 							unsigned char lqi = (scaled_lqi >= 256? 255 : scaled_lqi);
 
-							pmt::pmt_t meta = pmt::pmt_make_dict();
-							meta = pmt::pmt_dict_add(meta, pmt::mp("lqi"), pmt::pmt_from_long(lqi));
+							pmt::pmt_t meta = pmt::make_dict();
+							meta = pmt::dict_add(meta, pmt::mp("lqi"), pmt::from_long(lqi));
 
 							std::memcpy(buf, d_packet, d_packetlen_cnt);
-							pmt::pmt_t payload = pmt::pmt_make_blob(buf, d_packetlen_cnt);
+							pmt::pmt_t payload = pmt::make_blob(buf, d_packetlen_cnt);
 
-							message_port_pub(pmt::mp("out"), pmt::pmt_cons(meta, payload));
+							message_port_pub(pmt::mp("out"), pmt::cons(meta, payload));
 
 							if(VERBOSE2)
 								fprintf(stderr, "Adding message of size %d to queue\n", d_packetlen_cnt);
