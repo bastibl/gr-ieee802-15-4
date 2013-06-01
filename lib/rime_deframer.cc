@@ -16,8 +16,8 @@
  */
 #include <gnuradio/ieee802_15_4/rime_deframer.h>
 
-#include <gr_io_signature.h>
-#include <gr_block_detail.h>
+#include <gnuradio/io_signature.h>
+#include <gnuradio/block_detail.h>
 #include <string.h>
 
 using namespace gr::ieee802_15_4;
@@ -28,9 +28,9 @@ public:
 
 #define dout d_debug && std::cout
 
-rime_deframer_impl(bool debug) : gr_block("rime_deframer",
-		gr_make_io_signature (0, 0, 0),
-		gr_make_io_signature (0, 0, 0)),
+rime_deframer_impl(bool debug) : gr::block("rime_deframer",
+		gr::io_signature::make (0, 0, 0),
+		gr::io_signature::make (0, 0, 0)),
 		d_debug(debug) {
 
 	message_port_register_out(pmt::mp("pdu out"));
@@ -47,23 +47,23 @@ void make_frame (pmt::pmt_t msg) {
 
 	pmt::pmt_t blob;
 
-	if(pmt::pmt_is_eof_object(msg)) {
+	if(pmt::is_eof_object(msg)) {
 		message_port_pub(pmt::mp("pdu out"), pmt::PMT_EOF);
 		detail().get()->set_done(true);
 		return;
-	} else if(pmt::pmt_is_pair(msg)) {
-		blob = pmt::pmt_cdr(msg);
+	} else if(pmt::is_pair(msg)) {
+		blob = pmt::cdr(msg);
 	} else {
 		assert(false);
 	}
 
-	size_t data_len = pmt::pmt_blob_length(blob);
+	size_t data_len = pmt::blob_length(blob);
 
-	pmt::pmt_t rime_payload = pmt::pmt_make_blob((char*)pmt::pmt_blob_data(blob) + 4, data_len - 4);
+	pmt::pmt_t rime_payload = pmt::make_blob((char*)pmt::blob_data(blob) + 4, data_len - 4);
 
-	message_port_pub(pmt::mp("pdu out"), pmt::pmt_cons(pmt::PMT_NIL, rime_payload));
+	message_port_pub(pmt::mp("pdu out"), pmt::cons(pmt::PMT_NIL, rime_payload));
 
-	dout << std::string((char*)pmt::pmt_blob_data(blob) + 4, data_len - 4) << std::endl;
+	dout << std::string((char*)pmt::blob_data(blob) + 4, data_len - 4) << std::endl;
 }
 
 private:
