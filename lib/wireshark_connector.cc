@@ -16,7 +16,7 @@
  */
 #include "wireshark_connector_impl.h"
 #include <gnuradio/ieee802_15_4/wireshark_connector.h>
-#include <gr_io_signature.h>
+#include <gnuradio/io_signature.h>
 
 #include <iostream>
 #include <iomanip>
@@ -31,9 +31,9 @@ public:
 #define dout d_debug && std::cout
 
 wireshark_connector_impl(bool debug) :
-	gr_block ("wireshark_connector",
-			gr_make_io_signature (0, 0, 0),
-			gr_make_io_signature (1, 1, sizeof(uint8_t))),
+	gr::block ("wireshark_connector",
+			gr::io_signature::make (0, 0, 0),
+			gr::io_signature::make (1, 1, sizeof(uint8_t))),
 			d_msg_offset(0),
 			d_debug(debug) {
 
@@ -76,22 +76,22 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 	gr_complex *out = (gr_complex*)output_items[0];
 
 	while(!d_msg_len) {
-		pmt::pmt_t msg(delete_head_blocking(pmt::pmt_intern("in")));
+		pmt::pmt_t msg(delete_head_blocking(pmt::intern("in")));
 
-		if(pmt::pmt_is_eof_object(msg)) {
+		if(pmt::is_eof_object(msg)) {
 			dout << "WIRESHARK: exiting" << std::endl;
 			return -1;
-		} else if(pmt::pmt_is_blob(msg)) {
+		} else if(pmt::is_blob(msg)) {
 			dout << "WIRESHARK: received new message" << std::endl;
-			dout << "message length " << pmt::pmt_blob_length(msg) << std::endl;
+			dout << "message length " << pmt::blob_length(msg) << std::endl;
 
-			copy_message((const char*)pmt_blob_data(msg), pmt::pmt_blob_length(msg));
+			copy_message((const char*)blob_data(msg), pmt::blob_length(msg));
 			break;
-		} else if(pmt::pmt_is_pair(msg)) {
-			pmt::pmt_t blob = pmt::pmt_cdr(msg);
+		} else if(pmt::is_pair(msg)) {
+			pmt::pmt_t blob = pmt::cdr(msg);
 			dout << "WIRESHARK: received new message" << std::endl;
-			dout << "message length " << pmt::pmt_blob_length(blob) << std::endl;
-			copy_message((const char*)pmt_blob_data(blob), pmt::pmt_blob_length(blob));
+			dout << "message length " << pmt::blob_length(blob) << std::endl;
+			copy_message((const char*)blob_data(blob), pmt::blob_length(blob));
 			break;
 		}
 	}

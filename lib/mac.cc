@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <gnuradio/ieee802_15_4/mac.h>
-#include <gr_io_signature.h>
-#include <gr_block_detail.h>
+#include <gnuradio/io_signature.h>
+#include <gnuradio/block_detail.h>
 
 #include <iostream>
 #include <iomanip>
@@ -30,9 +30,9 @@ public:
 #define dout d_debug && std::cout
 
 mac_impl(bool debug) :
-	gr_block ("mac",
-			gr_make_io_signature(0, 0, 0),
-			gr_make_io_signature(0, 0, 0)),
+	gr::block ("mac",
+			gr::io_signature::make(0, 0, 0),
+			gr::io_signature::make(0, 0, 0)),
 			d_msg_offset(0),
 			d_seq_nr(0),
 			d_debug(debug) {
@@ -52,46 +52,46 @@ mac_impl(bool debug) :
 void mac_in(pmt::pmt_t msg) {
 	pmt::pmt_t blob;
 
-	if(pmt::pmt_is_eof_object(msg)) {
+	if(pmt::is_eof_object(msg)) {
 		message_port_pub(pmt::mp("pdu out"), pmt::PMT_EOF);
 		detail().get()->set_done(true);
 		return;
-	} else if(pmt::pmt_is_pair(msg)) {
-		blob = pmt::pmt_cdr(msg);
+	} else if(pmt::is_pair(msg)) {
+		blob = pmt::cdr(msg);
 	} else {
 		assert(false);
 	}
 
-	size_t data_len = pmt::pmt_blob_length(blob);
+	size_t data_len = pmt::blob_length(blob);
 	if(data_len < 11) {
 		dout << "MAC: frame too short. Dropping!" << std::endl;
 		return;
 	}
 
-	uint16_t crc = crc16((char*)pmt::pmt_blob_data(blob), data_len);
+	uint16_t crc = crc16((char*)pmt::blob_data(blob), data_len);
 	if(crc) {
 		dout << "MAC: wrong crc. Dropping packet!" << std::endl;
 		return;
 	}
 
-	pmt::pmt_t mac_payload = pmt::pmt_make_blob((char*)pmt::pmt_blob_data(blob) + 9 , data_len - 9 - 2);
+	pmt::pmt_t mac_payload = pmt::make_blob((char*)pmt::blob_data(blob) + 9 , data_len - 9 - 2);
 
-	message_port_pub(pmt::mp("app out"), pmt::pmt_cons(pmt::PMT_NIL, mac_payload));
+	message_port_pub(pmt::mp("app out"), pmt::cons(pmt::PMT_NIL, mac_payload));
 }
 
 void app_in(pmt::pmt_t msg) {
 
-	if(pmt::pmt_is_eof_object(msg)) {
+	if(pmt::is_eof_object(msg)) {
 		dout << "MAC: exiting" << std::endl;
 		detail().get()->set_done(true);
-	} else 	if(pmt::pmt_is_blob(msg)) {
+	} else 	if(pmt::is_blob(msg)) {
 		dout << "MAC: received new message" << std::endl;
-		dout << "message length " << pmt::pmt_blob_length(msg) << std::endl;
+		dout << "message length " << pmt::blob_length(msg) << std::endl;
 
-		generate_mac((const char*)pmt_blob_data(msg), pmt::pmt_blob_length(msg));
+		generate_mac((const char*)blob_data(msg), pmt::blob_length(msg));
 		print_message();
-		message_port_pub(pmt::mp("pdu out"), pmt::pmt_cons(pmt::PMT_NIL,
-						pmt::pmt_make_blob(d_msg, d_msg_len)));
+		message_port_pub(pmt::mp("pdu out"), pmt::cons(pmt::PMT_NIL,
+						pmt::make_blob(d_msg, d_msg_len)));
 	} else {
 		dout << "MAC: unknown input" << std::endl;
 	}

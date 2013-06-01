@@ -16,8 +16,8 @@
  */
 #include <gnuradio/ieee802_15_4/mac_deframer.h>
 
-#include <gr_io_signature.h>
-#include <gr_block_detail.h>
+#include <gnuradio/io_signature.h>
+#include <gnuradio/block_detail.h>
 #include <string.h>
 
 using namespace gr::ieee802_15_4;
@@ -26,9 +26,9 @@ class mac_deframer_impl : public mac_deframer {
 
 public:
 
-mac_deframer_impl() : gr_block("mac_deframer",
-		gr_make_io_signature (0, 0, 0),
-		gr_make_io_signature (0, 0, 0)) {
+mac_deframer_impl() : gr::block("mac_deframer",
+		gr::io_signature::make (0, 0, 0),
+		gr::io_signature::make (0, 0, 0)) {
 
 	message_port_register_out(pmt::mp("pdu out"));
 
@@ -44,25 +44,25 @@ void make_frame (pmt::pmt_t msg) {
 
 	pmt::pmt_t blob;
 
-	if(pmt::pmt_is_eof_object(msg)) {
+	if(pmt::is_eof_object(msg)) {
 		message_port_pub(pmt::mp("pdu out"), pmt::PMT_EOF);
 		detail().get()->set_done(true);
 		return;
-	} else if(pmt::pmt_is_pair(msg)) {
-		blob = pmt::pmt_cdr(msg);
+	} else if(pmt::is_pair(msg)) {
+		blob = pmt::cdr(msg);
 	} else {
 		assert(false);
 	}
 
-	size_t data_len = pmt::pmt_blob_length(blob);
+	size_t data_len = pmt::blob_length(blob);
 	if(data_len < 13) {
 		return;
 	}
 
 	// FIXME: here should be a crc check
-	pmt::pmt_t mac_payload = pmt::pmt_make_blob((char*)pmt::pmt_blob_data(blob) + 9 , data_len - 9 - 2);
+	pmt::pmt_t mac_payload = pmt::make_blob((char*)pmt::blob_data(blob) + 9 , data_len - 9 - 2);
 
-        message_port_pub(pmt::mp("pdu out"), pmt::pmt_cons(pmt::PMT_NIL, mac_payload));
+        message_port_pub(pmt::mp("pdu out"), pmt::cons(pmt::PMT_NIL, mac_payload));
 }
 
 };

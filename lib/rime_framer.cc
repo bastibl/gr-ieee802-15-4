@@ -16,8 +16,8 @@
  */
 #include <gnuradio/ieee802_15_4/rime_framer.h>
 
-#include <gr_io_signature.h>
-#include <gr_block_detail.h>
+#include <gnuradio/io_signature.h>
+#include <gnuradio/block_detail.h>
 #include <string.h>
 
 using namespace gr::ieee802_15_4;
@@ -26,9 +26,9 @@ class rime_framer_impl : public rime_framer {
 
 public:
 
-rime_framer_impl() : gr_block("rime_framer",
-		gr_make_io_signature (0, 0, 0),
-		gr_make_io_signature (0, 0, 0)) {
+rime_framer_impl() : gr::block("rime_framer",
+		gr::io_signature::make (0, 0, 0),
+		gr::io_signature::make (0, 0, 0)) {
 
 	message_port_register_out(pmt::mp("out"));
 
@@ -49,28 +49,28 @@ void make_frame (pmt::pmt_t msg) {
 
         pmt::pmt_t blob;
 
-	if(pmt::pmt_is_eof_object(msg)) {
+	if(pmt::is_eof_object(msg)) {
 		message_port_pub(pmt::mp("out"), pmt::PMT_EOF);
 		detail().get()->set_done(true);
 		return;
-	} else if(pmt::pmt_is_pair(msg)) {
-		blob = pmt::pmt_cdr(msg);
-        } else if(pmt::pmt_is_symbol(msg)) {
-		blob = pmt::pmt_make_blob(
-			pmt::pmt_symbol_to_string(msg).data(),
-			pmt::pmt_symbol_to_string(msg).length());
-	} else if(pmt::pmt_is_blob(msg)) {
+	} else if(pmt::is_pair(msg)) {
+		blob = pmt::cdr(msg);
+        } else if(pmt::is_symbol(msg)) {
+		blob = pmt::make_blob(
+			pmt::symbol_to_string(msg).data(),
+			pmt::symbol_to_string(msg).length());
+	} else if(pmt::is_blob(msg)) {
 		blob = msg;
 	} else {
 		assert(false);
 	}
 
-	size_t data_len = pmt::pmt_blob_length(blob);
-	assert(pmt::pmt_blob_length(blob));
+	size_t data_len = pmt::blob_length(blob);
+	assert(pmt::blob_length(blob));
 	assert(data_len < 256 - 4);
 
-	std::memcpy(buf + 4, pmt::pmt_blob_data(blob), data_len);
-	pmt::pmt_t rime_msg = pmt::pmt_make_blob(buf, data_len + 4);
+	std::memcpy(buf + 4, pmt::blob_data(blob), data_len);
+	pmt::pmt_t rime_msg = pmt::make_blob(buf, data_len + 4);
 
         message_port_pub(pmt::mp("out"), rime_msg);
 }
