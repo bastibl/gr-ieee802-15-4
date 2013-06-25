@@ -1,13 +1,45 @@
+                     _                ____  ____ ___       _________      __ __       \
+   ____ ______      (_)__  ___  ___  ( __ )/ __ \__ \     <  / ____/     / // /    \   \
+  / __ `/ ___/_____/ / _ \/ _ \/ _ \/ __  / / / /_/ /_____/ /___ \______/ // /_  \  |   |
+ / /_/ / /  /_____/ /  __/  __/  __/ /_/ / /_/ / __/_____/ /___/ /_____/__  __/  /  |   |
+ \__, /_/        /_/\___/\___/\___/\____/\____/____/    /_/_____/        /_/       /   /
+/____/                                                                                /
+
 Hi!
 
-This is an IEEE802.15.4 transceiver for GNU Radio v3.6.4. It is based on the UCLA implementation (https://cgran.org/wiki/UCLAZigBee) of Thomas Schmid.
+This is an IEEE802.15.4 O-QPSK transceiver for GNU Radio v3.7. It is based on the UCLA implementation (https://cgran.org/wiki/UCLAZigBee) of Thomas Schmid.
 
-Currently, it features a transceiver, separated rx and tx chains, and a loopback flow graph to test it without any hardware (see the examples folder).
+Currently, it features the following:
 
-You can find the firmware that I used to test interoperability with TelosB motes in the contiki folder. The firmware is based on Contiki(v2.6). There is another README file in the contiki folder that describes how to use the firmware.
+- The 0-QPSK PHY encapsulated in a hierarchical block.
+- A block that implements the Rime communication stack. Rime is a lightweight communication stack designed for Wireless Sensor Networks and is part of the Contiki Operating System.
+- A transceiver flow graph with USRP <-> PHY <-> MAC <-> Network layer (Rime) <-> UDP Socket / APP which resembles pretty well the ISO/OSI structure.
+- A sample application which visualizes sensor values. The application shows how easy it is to connect an external program to the flow graph by using Socket PDU blocks.
+- A IEEE 802.15.4 and Rime dissector for Wireshark.
 
-INSTALLATION
-============
+Some interesting proberties:
+- Packets can be piped to Wireshark.
+- The complete physical modulation is done with plain GNU Radio blocks.
+- It is interoperable with TelosB sensor motes.
+- It is interoperable with Contiki.
+- It uses a block to tag packet bursts with tx_sob and tx_eob tags. This tags are understood by the UHD blocks and allow fast switching between transmission and reception.
+
+You can find the firmware that I used to test interoperability with TelosB motes in the contiki folder. The firmware is based on Contiki v2.6. There is another README file in the contiki folder that describes how to compile and use the firmware.
+
+### Dependencies
+
+- GNU Radio v3.7 with some patches from me
+  https://github.com/bastibl/gnuradio.git
+
+- gr-foo (Wireshark Connector, Packet Pad and Burst Tagger blocks)
+  https://github.com/bastibl/gr-foo.git
+
+- python-matplotlib (if you want to run the GUI sample application)
+  sudo apt-get install python-matplotlib
+
+
+### Installation
+
 git clone git://github.com/bastibl/gr-ieee802-15-4.git
 cd gr-ieee802-15-4
 mkdir build
@@ -17,11 +49,16 @@ make
 sudo make install
 sudo ldconfig
 
+The  hierarchical block has to be installed separately:
+Open examples/ieee802_15_4_PHY.grc in gnuradio-companion and generate (hotkey F5) the flow graph. This installs the hierarchical block in your home, where gnuradio-companion can find it (typically ~/.grc_gnuradio).
 
-USAGE
-===========
-Open a flow graph from the examples folder in GNU Radio Companion. You can connect to the Socket PDU blocks of the flow graph with netcat to send and receive packets. Just open a terminal and type
+
+### Usage
+
+Open the examples/transceiver.grc flow graph with gnuradio-companion and check if all blocks are connected (sometime the links break for whatever reason). Enable either the UHD blocks to interface with real hardware or the Packet Pad block to loop back the samples. Open some Rime connections and connect messages sources or Socket PDUs. You can easily connect to the Socket PDU blocks with netcat. Netcat can be started for example with
 
 nc -u localhost 52001
 
+If you have any questions email me or write to the GNU Radio mailing list.
 Have fun!
+
