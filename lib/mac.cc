@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <gnuradio/ieee802_15_4/mac.h>
+#include <ieee802-15-4/mac.h>
 #include <gnuradio/io_signature.h>
 #include <gnuradio/block_detail.h>
 
@@ -30,7 +30,7 @@ public:
 #define dout d_debug && std::cout
 
 mac_impl(bool debug) :
-	gr::block ("mac",
+	block ("mac",
 			gr::io_signature::make(0, 0, 0),
 			gr::io_signature::make(0, 0, 0)),
 			d_msg_offset(0),
@@ -80,21 +80,27 @@ void mac_in(pmt::pmt_t msg) {
 }
 
 void app_in(pmt::pmt_t msg) {
-
+	pmt::pmt_t blob;
 	if(pmt::is_eof_object(msg)) {
 		dout << "MAC: exiting" << std::endl;
 		detail().get()->set_done(true);
-	} else 	if(pmt::is_blob(msg)) {
-		dout << "MAC: received new message" << std::endl;
-		dout << "message length " << pmt::blob_length(msg) << std::endl;
-
-		generate_mac((const char*)blob_data(msg), pmt::blob_length(msg));
-		print_message();
-		message_port_pub(pmt::mp("pdu out"), pmt::cons(pmt::PMT_NIL,
-						pmt::make_blob(d_msg, d_msg_len)));
+		return;
+	} else if(pmt::is_blob(msg)) {
+		blob = msg;
+	} else if(pmt::is_pair(msg)) {
+		blob = pmt::cdr(msg);
 	} else {
 		dout << "MAC: unknown input" << std::endl;
+		return;
 	}
+
+	dout << "MAC: received new message" << std::endl;
+	dout << "message length " << pmt::blob_length(blob) << std::endl;
+
+	generate_mac((const char*)pmt::blob_data(blob), pmt::blob_length(blob));
+	print_message();
+	message_port_pub(pmt::mp("pdu out"), pmt::cons(pmt::PMT_NIL,
+			pmt::make_blob(d_msg, d_msg_len)));
 }
 
 uint16_t crc16(char *buf, int len) {
@@ -117,39 +123,29 @@ uint16_t crc16(char *buf, int len) {
 
 void generate_mac(const char *buf, int len) {
 
-	// start frame
-	d_msg[0] = 0x00;
-	d_msg[1] = 0x00;
-	d_msg[2] = 0x00;
-	d_msg[3] = 0x00;
-	d_msg[4] = 0xA7;
-
-	// length
-	d_msg[5] = 3 + 6 + len + 2;
-
 	// FCF
-	d_msg[6] = 0x41;
-	d_msg[7] = 0x88;
+	d_msg[0] = 0x41;
+	d_msg[1] = 0x88;
 
 	// seq nr
-	d_msg[8] = d_seq_nr++;
+	d_msg[2] = d_seq_nr++;
 
 	// addr info
-	d_msg[ 9] = 0xcd;
-	d_msg[10] = 0xab;
-	d_msg[11] = 0xff;
-	d_msg[12] = 0xff;
-	d_msg[13] = 0x40;
-	d_msg[14] = 0xe8;
+	d_msg[3] = 0xcd;
+	d_msg[4] = 0xab;
+	d_msg[5] = 0xff;
+	d_msg[6] = 0xff;
+	d_msg[7] = 0x40;
+	d_msg[8] = 0xe8;
 
-	std::memcpy(d_msg + 15, buf, len);
+	std::memcpy(d_msg + 9, buf, len);
 
-	uint16_t crc = crc16(d_msg + 6, len + 9);
+	uint16_t crc = crc16(d_msg, len + 9);
 
-	d_msg[15 + len] = crc & 0xFF;
-	d_msg[16 + len] = crc >> 8;
+	d_msg[ 9 + len] = crc & 0xFF;
+	d_msg[10 + len] = crc >> 8;
 
-	d_msg_len = 15 + len + 2;
+	d_msg_len = 9 + len + 2;
 
 	dout << std::dec << "msg len " << d_msg_len <<
 	        "    len " << len << std::endl;
@@ -163,14 +159,6 @@ void print_message() {
 		}
 	}
 	dout << std::endl;
-}
-
-int general_work(int noutput, gr_vector_int& ninput_items,
-                gr_vector_const_void_star& input_items,
-		gr_vector_void_star& output_items ) {
-
-	gr_complex *out = (gr_complex*)output_items[0];
-
 }
 
 private:

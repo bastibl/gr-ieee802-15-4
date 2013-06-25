@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <gnuradio/ieee802_15_4/packet_sink.h>
+#include <ieee802-15-4/packet_sink.h>
 #include <gnuradio/io_signature.h>
 #include <cstdio>
 #include <errno.h>
@@ -141,9 +141,9 @@ int slice(float x) {
 }
 
 packet_sink_impl(int threshold)
-  : gr::block ("packet_sink",
-		   gr::io_signature::make (1, 1, sizeof(float)),
-		   gr::io_signature::make (0, 0, 0)),
+  : block ("packet_sink",
+		   gr::io_signature::make(1, 1, sizeof(float)),
+		   gr::io_signature::make(0, 0, 0)),
     d_threshold(threshold)
 {
 	d_sync_vector = 0xA7;

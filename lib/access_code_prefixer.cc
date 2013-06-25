@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <gnuradio/ieee802_15_4/rime_framer.h>
+#include <ieee802-15-4/access_code_prefixer.h>
 
 #include <gnuradio/io_signature.h>
 #include <gnuradio/block_detail.h>
@@ -22,57 +22,53 @@
 
 using namespace gr::ieee802_15_4;
 
-class rime_framer_impl : public rime_framer {
+class access_code_prefixer_impl : public access_code_prefixer {
 
 public:
 
-rime_framer_impl() : gr::block("rime_framer",
-		gr::io_signature::make (0, 0, 0),
-		gr::io_signature::make (0, 0, 0)) {
+access_code_prefixer_impl() :
+		block("access_code_prefixer",
+				gr::io_signature::make(0, 0, 0),
+				gr::io_signature::make(0, 0, 0)) {
 
-	message_port_register_out(pmt::mp("out"));
+    message_port_register_out(pmt::mp("out"));
 
-	message_port_register_in(pmt::mp("in"));
-	set_msg_handler(pmt::mp("in"), boost::bind(&rime_framer_impl::make_frame, this, _1));
+    message_port_register_in(pmt::mp("in"));
+    set_msg_handler(pmt::mp("in"), boost::bind(&access_code_prefixer_impl::make_frame, this, _1));
 
-	buf[0] = 0x81;
-	buf[1] = 0x00;
-	buf[2] = 0x2a;
-	buf[3] = 0x17;
+    buf[0] = 0x00;
+    buf[1] = 0x00;
+    buf[2] = 0x00;
+    buf[3] = 0x00;
+    buf[4] = 0xA7;
+
 }
 
-~rime_framer_impl() {
+~access_code_prefixer_impl() {
 
 }
 
 void make_frame (pmt::pmt_t msg) {
 
-        pmt::pmt_t blob;
-
 	if(pmt::is_eof_object(msg)) {
 		message_port_pub(pmt::mp("out"), pmt::PMT_EOF);
 		detail().get()->set_done(true);
 		return;
-	} else if(pmt::is_pair(msg)) {
-		blob = pmt::cdr(msg);
-        } else if(pmt::is_symbol(msg)) {
-		blob = pmt::make_blob(
-			pmt::symbol_to_string(msg).data(),
-			pmt::symbol_to_string(msg).length());
-	} else if(pmt::is_blob(msg)) {
-		blob = msg;
-	} else {
-		assert(false);
 	}
 
+	assert(pmt::is_pair(msg));
+	pmt::pmt_t blob = pmt::cdr(msg);
+
 	size_t data_len = pmt::blob_length(blob);
-	assert(pmt::blob_length(blob));
-	assert(data_len < 256 - 4);
+	assert(data_len);
+	assert(data_len < 256 - 5);
 
-	std::memcpy(buf + 4, pmt::blob_data(blob), data_len);
-	pmt::pmt_t rime_msg = pmt::make_blob(buf, data_len + 4);
+	buf[5] = data_len;
 
-        message_port_pub(pmt::mp("out"), rime_msg);
+	std::memcpy(buf + 6, pmt::blob_data(blob), data_len);
+	pmt::pmt_t packet = pmt::make_blob(buf, data_len + 6);
+
+	message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
 }
 
 private:
@@ -80,9 +76,9 @@ private:
 
 };
 
-rime_framer::sptr
-rime_framer::make() {
-	return gnuradio::get_initial_sptr(new rime_framer_impl());
+access_code_prefixer::sptr
+access_code_prefixer::make() {
+	return gnuradio::get_initial_sptr(new access_code_prefixer_impl());
 }
 
 

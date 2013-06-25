@@ -14,22 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
 #define GR_IEEE802_15_4_API
 
-////////////////////////////////////////////////////////////////////////
-// standard includes
-////////////////////////////////////////////////////////////////////////
 %include <gnuradio.i>
-%include "ieee802_15_4_factory.i"
 
-////////////////////////////////////////////////////////////////////////
-// block includes
-////////////////////////////////////////////////////////////////////////
-%include <ieee802_15_4_packet_sink.i>
-%include <ieee802_15_4_mac.i>
-%include <ieee802_15_4_mac_deframer.i>
-%include <ieee802_15_4_mac_framer.i>
-%include <ieee802_15_4_rime_deframer.i>
-%include <ieee802_15_4_rime_framer.i>
-%include <ieee802_15_4_wireshark_connector.i>
+%include "ieee802_15_4_swig_doc.i"
+
+%{
+#include "ieee802-15-4/access_code_prefixer.h"
+#include "ieee802-15-4/mac.h"
+#include "ieee802-15-4/packet_sink.h"
+#include "ieee802-15-4/rime_stack.h"
+%}
+
+%include "ieee802-15-4/access_code_prefixer.h"
+%include "ieee802-15-4/mac.h"
+%include "ieee802-15-4/packet_sink.h"
+%include "ieee802-15-4/rime_stack.h"
+
+
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, access_code_prefixer);
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, mac);
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, packet_sink);
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, rime_stack);

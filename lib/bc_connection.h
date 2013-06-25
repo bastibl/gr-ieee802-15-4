@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Bastian Bloessl <bloessl@ccs-labs.org>
+ * Copyright (C) 2013 Christoph Leitner <c.leitner@student.uibk.ac.at>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,25 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef INCLUDED_GR_IEEE802_15_4_DERIME_FRAMER_H
-#define INCLUDED_GR_IEEE802_15_4_DERIME_FRAMER_H
+#ifndef INCLUDED_BC_CONNECTION_H
+#define INCLUDED_BC_CONNECTION_H
 
-#include <gnuradio/ieee802_15_4/api.h>
-#include <gnuradio/block.h>
+#include "rime_connection.h"
+#include <array>
 
-namespace gr {
-namespace ieee802_15_4 {
+namespace gr{
+	namespace ieee802_15_4{
+		class GR_IEEE802_15_4_API bc_connection : public rime_connection{
+		private:
+			static const int header_length = 4;
 
-class GR_IEEE802_15_4_API rime_deframer : virtual public gr::block
-{
-public:
+		public:
+			static std::array<uint8_t, 256> make_msgbuf(uint16_t channel,
+					const uint8_t src[2]);
+			bc_connection(rime_stack *block, uint16_t channel, pmt::pmt_t inport,
+				pmt::pmt_t outport, const uint8_t rime_add_mine[2]);
+			void pack(pmt::pmt_t msg);
+			void unpack(pmt::pmt_t msg);
+		};
+	}
+}
 
-	typedef boost::shared_ptr<rime_deframer> sptr;
-	static sptr make(bool debug = false);
 
-};
-
-}  // namespace ieee802_15_4
-}  // namespace gr
-
-#endif /* INCLUDED_GR_IEEE802_15_4_DERIME_FRAMER_H */
+#endif

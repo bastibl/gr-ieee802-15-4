@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 ########################################################################
 # Include swig generation macros
@@ -39,7 +40,7 @@ endforeach(incdir)
 
 set(GR_SWIG_LIBRARIES gnuradio-ieee802_15_4)
 set(GR_SWIG_DOC_FILE ${CMAKE_CURRENT_BINARY_DIR}/ieee802_15_4_swig_doc.i)
-set(GR_SWIG_DOC_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include/gnuradio/ieee802_15_4)
+set(GR_SWIG_DOC_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include/ieee802-15-4)
 
 GR_SWIG_MAKE(ieee802_15_4_swig ieee802_15_4_swig.i)
 
@@ -57,18 +58,11 @@ GR_SWIG_INSTALL(
 ########################################################################
 list(APPEND swig_sources
     ieee802_15_4_swig.i
-    ieee802_15_4_factory.i
-    ieee802_15_4_mac.i
-    ieee802_15_4_mac_deframer.i
-    ieee802_15_4_mac_framer.i
-    ieee802_15_4_rime_deframer.i
-    ieee802_15_4_rime_framer.i
-    ieee802_15_4_wireshark_connector.i
     ${CMAKE_CURRENT_BINARY_DIR}/ieee802_15_4_swig_doc.i
 )
 
 install(
     FILES ${swig_sources}
-    DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4/swig
+    DESTINATION ${GR_INCLUDE_DIR}/ieee802_15_4/swig
     COMPONENT "ieee802_15_4_swig"
 )

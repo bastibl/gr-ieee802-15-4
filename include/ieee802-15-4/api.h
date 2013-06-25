@@ -14,25 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef INCLUDED_GR_IEEE802_15_4_MAC_DEFRAMER_H
-#define INCLUDED_GR_IEEE802_15_4_MAC_DEFRAMER_H
+#ifndef INCLUDED_GR_IEEE802_15_4_API_H
+#define INCLUDED_GR_IEEE802_15_4_API_H
 
-#include <gnuradio/ieee802_15_4/api.h>
-#include <gnuradio/block.h>
+#include <gnuradio/attributes.h>
 
-namespace gr {
-namespace ieee802_15_4 {
+#ifdef gnuradio_ieee802_15_4_EXPORTS
+#  define GR_IEEE802_15_4_API __GR_ATTR_EXPORT
+#else
+#  define GR_IEEE802_15_4_API __GR_ATTR_IMPORT
+#endif
 
-class GR_IEEE802_15_4_API mac_deframer : virtual public gr::block
-{
-public:
-
-	typedef boost::shared_ptr<mac_deframer> sptr;
-	static sptr make();
-
-};
-
-}  // namespace ieee802_15_4
-}  // namespace gr
-
-#endif /* INCLUDED_GR_IEEE802_15_4_MAC_DEFRAMER_H */
+#endif /* INCLUDED_GR_IEEE802_15_4_API_H */

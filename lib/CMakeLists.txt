@@ -20,19 +20,21 @@
 include(GrPlatform) #define LIB_SUFFIX
 
 list(APPEND gr_ieee802_15_4_sources
+    access_code_prefixer.cc
+    bc_connection.cc
     mac.cc
-    mac_deframer.cc
-    mac_framer.cc
     packet_sink.cc
-    rime_deframer.cc
-    rime_framer.cc
-    wireshark_connector.cc
+    rime_connection.cc
+    rime_stack.cc
+    ruc_connection.cc
+    stubborn_sender.cc
+    uc_connection.cc
 )
 
 list(APPEND gr_ieee802_15_4_libs
     ${Boost_LIBRARIES}
     ${GNURADIO_RUNTIME_LIBRARIES}
-    ${GNURADIO_BLOCKS_LIBRARIES}
+    gnuradio-blocks
 )
 
 add_library(gnuradio-ieee802_15_4 SHARED ${gr_ieee802_15_4_sources})

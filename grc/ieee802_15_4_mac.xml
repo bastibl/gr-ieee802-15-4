@@ -21,21 +21,21 @@
 			<key>False</key>
 		</option>
 	</param>
-
-	<sink>
-		<name>app in</name>
-		<type>message</type>
-	</sink>
 	<sink>
 		<name>pdu in</name>
 		<type>message</type>
 	</sink>
-	<source>
-		<name>app out</name>
+	<sink>
+		<name>app in</name>
 		<type>message</type>
-	</source>
+	</sink>
 	<source>
 		<name>pdu out</name>
 		<type>message</type>
 	</source>
+	<source>
+		<name>app out</name>
+		<type>message</type>
+	</source>
+
 </block>

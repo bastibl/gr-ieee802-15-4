@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Free Software Foundation, Inc.
+ * Copyright (C) 2013 Bastian Bloessl <bloessl@ccs-labs.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,18 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H
+#define INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H
 
-////////////////////////////////////////////////////////////////////////
-// block headers
-////////////////////////////////////////////////////////////////////////
-%{
-#include <gnuradio/ieee802_15_4/mac_deframer.h>
-%}
+#include <ieee802-15-4/api.h>
+#include <gnuradio/block.h>
 
-%include <gnuradio/ieee802_15_4/mac_deframer.h>
+namespace gr {
+namespace ieee802_15_4 {
 
-////////////////////////////////////////////////////////////////////////
-// block magic
-////////////////////////////////////////////////////////////////////////
-using namespace gr::ieee802_15_4;
-GR_IEEE802_15_4_BLOCK_MAGIC2(ieee802_15_4, mac_deframer)
+class GR_IEEE802_15_4_API access_code_prefixer : virtual public gr::block
+{
+public:
+
+	typedef boost::shared_ptr<access_code_prefixer> sptr;
+	static sptr make();
+
+};
+
+}  // namespace ieee802_15_4
+}  // namespace gr
+
+#endif /* INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H */

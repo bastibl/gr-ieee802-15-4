@@ -15,14 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 list(APPEND include_sources
+	access_code_prefixer.h
 	api.h
 	mac.h
-	mac_framer.h
-	mac_deframer.h
 	packet_sink.h
-	rime_deframer.h
-	rime_framer.h
-	wireshark_connector.h
+	rime_stack.h
 )
 
 install(
