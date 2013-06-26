@@ -9,24 +9,28 @@
   <param>
     <name>Broadcast Channels</name>
     <key>bc_channels</key>
+    <value>[129]</value>
     <type>int_vector</type>
   </param>
 
   <param>
     <name>Unicast Channels</name>
     <key>uc_channels</key>
+    <value>[130]</value>
     <type>int_vector</type>
   </param>
 
   <param>
     <name>Reliable Unicast Channels</name>
     <key>ruc_channels</key>
+    <value>[131]</value>
     <type>int_vector</type>
   </param>
 
   <param>
     <name>RIME Address</name>
     <key>rime_add</key>
+    <value>[23,42]</value>
     <type>int_vector</type>
   </param>
 
