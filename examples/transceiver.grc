@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='ASCII'?>
 <flow_graph>
-  <timestamp>Tue Jun 25 21:16:13 2013</timestamp>
+  <timestamp>Tue Aug  6 18:13:00 2013</timestamp>
   <block>
     <key>options</key>
     <param>
@@ -192,64 +192,6 @@
     </param>
   </block>
   <block>
-    <key>note</key>
-    <param>
-      <key>id</key>
-      <value>note_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>note</key>
-      <value>This is for loopback testing. Disable this block an enable the USRP blocks for over-the-air transmission.</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(376, 660)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_rime_stack</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_rime_stack_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>bc_channels</key>
-      <value>[129]</value>
-    </param>
-    <param>
-      <key>uc_channels</key>
-      <value>[131]</value>
-    </param>
-    <param>
-      <key>ruc_channels</key>
-      <value>[132]</value>
-    </param>
-    <param>
-      <key>rime_add</key>
-      <value>[23,42]</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(349, 224)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
     <key>blocks_message_strobe</key>
     <param>
       <key>id</key>
@@ -305,37 +247,6 @@
     <param>
       <key>_coordinate</key>
       <value>(358, 116)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-  </block>
-  <block>
-    <key>foo_packet_pad</key>
-    <param>
-      <key>id</key>
-      <value>foo_packet_pad_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>debug</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>pad_front</key>
-      <value>2000</value>
-    </param>
-    <param>
-      <key>pad_tail</key>
-      <value>2000</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(404, 576)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -449,6 +360,29 @@
     </param>
   </block>
   <block>
+    <key>note</key>
+    <param>
+      <key>id</key>
+      <value>note_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>note</key>
+      <value>This is for loopback testing. Disable this block an enable the USRP blocks for over-the-air transmission.</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(352, 666)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
     <key>uhd_usrp_source</key>
     <param>
       <key>id</key>
@@ -456,7 +390,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>False</value>
+      <value>True</value>
     </param>
     <param>
       <key>type</key>
@@ -1119,7 +1053,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>False</value>
+      <value>True</value>
     </param>
     <param>
       <key>type</key>
@@ -1774,6 +1708,72 @@
       <value>0</value>
     </param>
   </block>
+  <block>
+    <key>ieee802_15_4_rime_stack</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_rime_stack_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>bc_channels</key>
+      <value>[129]</value>
+    </param>
+    <param>
+      <key>uc_channels</key>
+      <value>[131]</value>
+    </param>
+    <param>
+      <key>ruc_channels</key>
+      <value>[132]</value>
+    </param>
+    <param>
+      <key>rime_add</key>
+      <value>[23,42]</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(349, 224)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>foo_packet_pad</key>
+    <param>
+      <key>id</key>
+      <value>foo_packet_pad_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>debug</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>pad_front</key>
+      <value>2000</value>
+    </param>
+    <param>
+      <key>pad_tail</key>
+      <value>2000</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(367, 582)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
   <connection>
     <source_block_id>uhd_usrp_source_0</source_block_id>
     <sink_block_id>ieee802_15_4_phy_0</sink_block_id>
@@ -1841,14 +1841,14 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_phy_0</source_block_id>
-    <sink_block_id>foo_packet_pad_0</sink_block_id>
+    <source_block_id>foo_wireshark_connector_0</source_block_id>
+    <sink_block_id>blocks_file_sink_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>foo_wireshark_connector_0</source_block_id>
-    <sink_block_id>blocks_file_sink_0</sink_block_id>
+    <source_block_id>ieee802_15_4_phy_0</source_block_id>
+    <sink_block_id>foo_packet_pad_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
