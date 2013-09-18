@@ -84,11 +84,11 @@ find_package(GnuradioRuntime)
 find_package(CppUnit)
 
 if(NOT GNURADIO_RUNTIME_FOUND)
-    message(FATAL_ERROR "GnuRadio Runtime required to compile ieee802-11")
+    message(FATAL_ERROR "GnuRadio Runtime required to compile ieee802-15-4")
 endif()
 
 if(NOT CPPUNIT_FOUND)
-    message(FATAL_ERROR "CppUnit required to compile ieee802-11")
+    message(FATAL_ERROR "CppUnit required to compile ieee802-15-4")
 endif()
 
 ########################################################################
