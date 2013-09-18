@@ -28,6 +28,8 @@ You can find the firmware that I used to test interoperability with TelosB motes
 
 ### Dependencies
 
+- g++ 4.6 (for C++11 support)
+
 - GNU Radio v3.7 with some patches from me
   https://github.com/bastibl/gnuradio.git
 
@@ -59,6 +61,10 @@ Open the examples/transceiver.grc flow graph with gnuradio-companion and check i
 
 nc -u localhost 52001
 
-If you have any questions email me or write to the GNU Radio mailing list.
+
+### Disclaimer
+
+This code is work in progress. It is not extensively tested, also not under a lot of different environments (I use Ubunut 12.04). It's published in the hope that it might be useful but I don't guarantee anything.
+
 Have fun!
 
