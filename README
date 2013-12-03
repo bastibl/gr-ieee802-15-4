@@ -15,7 +15,7 @@ Currently, it features the following:
 - A block that implements the Rime communication stack. Rime is a lightweight communication stack designed for Wireless Sensor Networks and is part of the Contiki Operating System.
 - A transceiver flow graph with USRP <-> PHY <-> MAC <-> Network layer (Rime) <-> UDP Socket / APP which resembles pretty well the ISO/OSI structure.
 - A sample application which visualizes sensor values. The application shows how easy it is to connect an external program to the flow graph by using Socket PDU blocks.
-- A IEEE 802.15.4 and Rime dissector for Wireshark.
+- An IEEE 802.15.4 and Rime dissector for Wireshark.
 
 Some interesting properties:
 - Packets can be piped to Wireshark.
@@ -29,9 +29,6 @@ You can find the firmware that I used to test interoperability with TelosB motes
 ### Dependencies
 
 - g++ 4.6 (for C++11 support)
-
-- GNU Radio v3.7 with some patches from me
-  https://github.com/bastibl/gnuradio.git
 
 - gr-foo (Wireshark Connector, Packet Pad and Burst Tagger blocks)
   https://github.com/bastibl/gr-foo.git
@@ -57,14 +54,11 @@ Open examples/ieee802_15_4_PHY.grc in gnuradio-companion and generate (hotkey F5
 
 ### Usage
 
-Open the examples/transceiver.grc flow graph with gnuradio-companion and check if all blocks are connected (sometime the links break for whatever reason). Enable either the UHD blocks to interface with real hardware or the Packet Pad block to loop back the samples. Open some Rime connections and connect messages sources or Socket PDUs. You can easily connect to the Socket PDU blocks with netcat. Netcat can be started for example with
+Open the examples/transceiver.grc flow graph with gnuradio-companion and check if all blocks are connected. Enable either the UHD blocks to interface with real hardware or the Packet Pad block to loop back the samples. Open some Rime connections and connect messages sources or Socket PDUs. You can easily connect to the Socket PDU blocks with netcat. Netcat can be started for example with
 
 nc -u localhost 52001
 
-
-### Disclaimer
-
-This code is work in progress. It is not extensively tested, also not under a lot of different environments (I use Ubunut 12.04). It's published in the hope that it might be useful but I don't guarantee anything.
+There are also startup scripts in the apps folder.
 
 Have fun!
 
