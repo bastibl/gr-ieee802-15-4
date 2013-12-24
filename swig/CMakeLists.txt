@@ -49,7 +49,7 @@ GR_SWIG_MAKE(ieee802_15_4_swig ieee802_15_4_swig.i)
 ########################################################################
 GR_SWIG_INSTALL(
     TARGETS ieee802_15_4_swig
-    DESTINATION ${GR_PYTHON_DIR}/gnuradio/ieee802_15_4
+    DESTINATION ${GR_PYTHON_DIR}/ieee802_15_4
     COMPONENT "ieee802_15_4_python"
 )
 

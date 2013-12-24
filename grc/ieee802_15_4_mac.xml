@@ -3,8 +3,8 @@
 	<name>IEEE802.15.4 MAC</name>
 	<key>ieee802_15_4_mac</key>
 	<category>IEEE802.15.4</category>
-	<import>import gnuradio.ieee802_15_4 as gr_ieee802_15_4</import>
-	<make>gr_ieee802_15_4.mac($debug)</make>
+	<import>import ieee802_15_4</import>
+	<make>ieee802_15_4.mac($debug)</make>
 
 	<param>
 		<name>Debug</name>

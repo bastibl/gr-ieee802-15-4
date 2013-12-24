@@ -25,7 +25,7 @@ list(APPEND python_sources
 
 GR_PYTHON_INSTALL(
     FILES ${python_sources}
-    DESTINATION ${GR_PYTHON_DIR}/gnuradio/ieee802_15_4
+    DESTINATION ${GR_PYTHON_DIR}/ieee802_15_4
     COMPONENT "ieee802_15_4_python"
 )
 
