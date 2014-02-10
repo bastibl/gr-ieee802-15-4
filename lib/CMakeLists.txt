@@ -40,6 +40,14 @@ add_library(gnuradio-ieee802_15_4 SHARED ${gr_ieee802_15_4_sources})
 target_link_libraries(gnuradio-ieee802_15_4 ${gr_ieee802_15_4_libs})
 set_target_properties(gnuradio-ieee802_15_4 PROPERTIES DEFINE_SYMBOL "gnuradio_ieee802_15_4_EXPORTS")
 
+
+if(APPLE)
+    set_target_properties(gnuradio-ieee802_15_4 PROPERTIES
+        INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib"
+    )
+endif(APPLE)
+
+
 #####################################################################
 # Install built library files
 #####################################################################
