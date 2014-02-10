@@ -33,8 +33,7 @@ list(APPEND gr_ieee802_15_4_sources
 
 list(APPEND gr_ieee802_15_4_libs
     ${Boost_LIBRARIES}
-    ${GNURADIO_RUNTIME_LIBRARIES}
-    gnuradio-blocks
+    ${GNURADIO_ALL_LIBRARIES}
 )
 
 add_library(gnuradio-ieee802_15_4 SHARED ${gr_ieee802_15_4_sources})

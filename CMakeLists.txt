@@ -80,7 +80,7 @@ set(GRC_BLOCKS_DIR      ${GR_PKG_DATA_DIR}/grc/blocks)
 ########################################################################
 # Find gnuradio build dependencies
 ########################################################################
-set(GR_REQUIRED_COMPONENTS RUNTIME PMT)
+set(GR_REQUIRED_COMPONENTS RUNTIME PMT BLOCKS)
 find_package(Gnuradio)
 find_package(CppUnit)
 
