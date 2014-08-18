@@ -83,6 +83,7 @@ set(GRC_BLOCKS_DIR      ${GR_PKG_DATA_DIR}/grc/blocks)
 set(GR_REQUIRED_COMPONENTS RUNTIME PMT BLOCKS)
 find_package(Gnuradio)
 find_package(CppUnit)
+find_package(PythonLibs 2)
 
 if(NOT GNURADIO_RUNTIME_FOUND)
     message(FATAL_ERROR "GnuRadio Runtime required to compile ieee802-15-4")
@@ -90,6 +91,10 @@ endif()
 
 if(NOT CPPUNIT_FOUND)
     message(FATAL_ERROR "CppUnit required to compile ieee802-15-4")
+endif()
+
+if(NOT PYTHONLIBS_FOUND)
+    message(FATAL_ERROR "Python required to compile ieee802-15-4")
 endif()
 
 ########################################################################

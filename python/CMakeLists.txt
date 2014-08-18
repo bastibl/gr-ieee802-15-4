@@ -18,6 +18,9 @@
 # Setup python install
 #####################################################################
 include(GrPython)
+if(NOT PYTHONINTERP_FOUND)
+    return()
+endif()
 
 list(APPEND python_sources
     __init__.py
