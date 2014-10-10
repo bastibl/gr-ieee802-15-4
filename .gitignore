@@ -9,3 +9,4 @@ contiki/*.a
 contiki/*.map
 contiki/*.ihex
 contiki/*.sky
+matlab/*~
