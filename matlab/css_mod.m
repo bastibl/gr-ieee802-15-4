@@ -1,6 +1,6 @@
 %% IEEE 802.15.4 CSS PHY 250 kbps modulator
 
-%% CSS PPDU format: [preamble, SFD, PHR, SHR]
+%% CSS PPDU format: [preamble, SFD, PHR, PSDU]
 preamble = ones(1,80);
 SFD = [-1 1 1 1 1 -1 1 -1 -1 -1 1 -1 -1 -1 1 1];
 PHR = zeros(1,12); % bits [0..6] indicate length of payload in octets (bytes)
