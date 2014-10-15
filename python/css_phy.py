@@ -1,5 +1,6 @@
 import css_constants
 import numpy as np
+import matplotlib.pyplot as plt
 
 class physical_layer:
 	def __init__(self, slow_rate=False, phy_packetsize_bytes=18, nframes=1, chirp_number=1):
@@ -27,17 +28,40 @@ class physical_layer:
 	def gen_rcfilt(self):
 		alpha = 0.25
 		rcfilt = np.ones((css_constants.n_sub,))
-		start_slope = round((1-alpha)/(1+alpha)*css_constants.n_sub/2)
-		rcfilt[len(rcfilt)/2+start_slope:] = [0.5*(1+np.cos((1+alpha)*np.pi/(alpha*css_constants.n_sub)*i)) for i in range(int(css_constants.n_sub/2-start_slope))]
-		rcfilt[0:len(rcfilt)/2-start_slope] = rcfilt[-1:len(rcfilt)/2+start_slope-1:-1]
+		half_plateau_width = round((1-alpha)/(1+alpha)*css_constants.n_sub/2)
+		rcfilt[len(rcfilt)/2+half_plateau_width:] = [0.5*(1+np.cos((1+alpha)*np.pi/(alpha*css_constants.n_sub)*i)) for i in range(int(css_constants.n_sub/2-half_plateau_width))]
+		rcfilt[0:len(rcfilt)/2-half_plateau_width] = rcfilt[-1:len(rcfilt)/2+half_plateau_width-1:-1]
+		# force 0s at the edges
+		rcfilt[0] = 0
+		rcfilt[-1] = 0
 		return rcfilt
 
 	def gen_chirp_sequences(self):
-		# first, generate subchirps
-		subchirp_low_up = np.array([np.exp(1j*(2*np.pi*css_constants.fc_low + css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate)*self.rcfilt[i] for i in range(css_constants.n_sub)])
-		subchirp_low_down = np.array([np.exp(1j*(2*np.pi*css_constants.fc_low - css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate)*self.rcfilt[i] for i in range(css_constants.n_sub)])
-		subchirp_high_up = np.array([np.exp(1j*(2*np.pi*css_constants.fc_high + css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate)*self.rcfilt[i] for i in range(css_constants.n_sub)])
-		subchirp_high_down = np.array([np.exp(1j*(2*np.pi*css_constants.fc_high - css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate)*self.rcfilt[i] for i in range(css_constants.n_sub)])
+		# generate subchirps
+		subchirp_low_up = np.array([np.exp(1j*(-2*np.pi*css_constants.fc + css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate) for i in np.arange(css_constants.n_sub)-css_constants.n_sub/2])
+		subchirp_low_down = np.array([np.exp(1j*(-2*np.pi*css_constants.fc - css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate) for i in np.arange(css_constants.n_sub)-css_constants.n_sub/2])
+		subchirp_high_up = np.array([np.exp(1j*(+2*np.pi*css_constants.fc + css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate) for i in np.arange(css_constants.n_sub)-css_constants.n_sub/2])
+		subchirp_high_down = np.array([np.exp(1j*(+2*np.pi*css_constants.fc - css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate) for i in np.arange(css_constants.n_sub)-css_constants.n_sub/2])
+		c1 = abs(np.correlate(self.rcfilt, subchirp_low_up, mode='full'))
+		c2 = abs(np.correlate(self.rcfilt, subchirp_low_down, mode='full'))
+		c3 = abs(np.correlate(self.rcfilt, subchirp_high_up, mode='full'))
+		c4 = abs(np.correlate(self.rcfilt, subchirp_high_down, mode='full'))
+		f, axarr = plt.subplots(4)
+		axarr[0].plot(subchirp_low_up.real)
+		axarr[0].plot(subchirp_low_up.imag)
+		axarr[1].plot(subchirp_low_down.real)
+		axarr[1].plot(subchirp_low_down.imag)		
+		axarr[2].plot(subchirp_high_up.real)
+		axarr[2].plot(subchirp_high_up.imag)
+		axarr[3].plot(subchirp_high_down.real)
+		axarr[3].plot(subchirp_high_down.imag)
+		f.suptitle("Real and imaginary part of the 4 subchirps")
+
+		# multiply each subchirp with the raised cosine window
+		subchirp_low_up *= self.rcfilt
+		subchirp_low_down *= self.rcfilt
+		subchirp_high_up *= self.rcfilt
+		subchirp_high_down *= self.rcfilt
 
 		# put together the chirp sequences (without DQPSK symbols)
 		chirp_seq_I = np.concatenate((subchirp_low_up, subchirp_high_up, subchirp_high_down, subchirp_low_down))

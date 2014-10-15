@@ -8,9 +8,18 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
 	print "Generate IEEE 802.15.4 compliant CSS baseband signal"
-	m = css_mod.modulator(slow_rate=True, phy_packetsize_bytes=18, nframes=100, chirp_number=4)
-	[payload,baseband] = m.modulate_random()
-	
+	m = css_mod.modulator(slow_rate=True, phy_packetsize_bytes=6, nframes=1, chirp_number=2)
+	[payload,baseband] = m.modulate_random()	
+
+	print "samples in one..."
+	print "-> subchirp: ", css_constants.n_sub
+	print "-> average chirp sequence:", css_constants.n_chirp
+	nsamp_frame = len(baseband)/m.nframes
+	print "-> frame: ", nsamp_frame
+	nsamp_payload = m.phy_packetsize_bytes*css_constants.n_chirp
+	nsamp_header = nsamp_frame - nsamp_payload
+	print "-> header: ", nsamp_header
+	print "-> payload: ", nsamp_payload
 
 	# plot PSD and frequency mask
 	s = abs(np.fft.fftshift(np.fft.fft(baseband)))**2
@@ -35,14 +44,14 @@ if __name__ == "__main__":
 
 	# plot time signal magnitude
 	t = np.linspace(0,1,css_constants.bb_samp_rate+1)
-	t = t[:1500]
-	axarr[1].plot(t, abs(baseband[:len(t)]))
+	t = t[:len(s)]
+	axarr[1].plot(abs(baseband[:len(t)]))
 	axarr[1].set_title("Complex baseband magnitude")
 	axarr[1].set_xlabel("s")
 	axarr[1].set_ylabel("|s(t)|")
 
 	# plot real part of time signal
-	axarr[2].plot(t,baseband[:len(t)].real)
+	axarr[2].plot(baseband[:len(t)].real)
 	axarr[2].set_title("Real part of time signal using chirp sequence #"+str(m.chirp_number))
 	axarr[2].set_xlabel("s")
 	axarr[2].set_ylabel("R{s(t)}")
@@ -62,8 +71,25 @@ if __name__ == "__main__":
 			axarr[i,k].legend()
 	f.suptitle("Cross correlation of chirp sequence pairs (no time gaps)")
 
-	
+	# plot correlation of chirp sequences and transmit signal with raised cosine filter
+	f, axarr = plt.subplots(5)
+	for i in range(4):
+		titlestring = str(i+1)
+		axarr[i].plot(abs(np.correlate(m.rcfilt, m.possible_chirp_sequences[i], mode='full')), label=titlestring)
+		axarr[i].legend()
+	titlestring = "tx w/ chirp #"+str(m.chirp_number)
+	axarr[4].plot(abs(np.correlate(m.rcfilt, baseband[:len(t)], mode='full')), label=titlestring)
+	axarr[4].legend()
+	f.suptitle("Correlation of raised cosine filter with chirp sequences and transmit signal")
 
+	# plot correlation of chirp sequences with transmit signal
+	f, axarr = plt.subplots(4)
+	for i in range(4):
+		titlestring = "chirp seq #"+str(i+1)
+		axarr[i].plot(abs(np.correlate(baseband, m.possible_chirp_sequences[i], mode='full')), label=titlestring)
+		axarr[i].legend()
+		axarr[i].set_xlim([0,25000])
+	f.suptitle("Correlation of chirp sequences with transmit signal carrying chirp seq #"+ str(m.chirp_number))
 	plt.show()
 
 

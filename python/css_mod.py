@@ -43,7 +43,7 @@ class modulator(css_phy.physical_layer):
 
 		return [payload_total, complex_baseband_total]
 
-	def modulate(payload):
+	def modulate(self,payload):
 		print "not implemented yet, shall be used to pipe in special payload"
 
 
