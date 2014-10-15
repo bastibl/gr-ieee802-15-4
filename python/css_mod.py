@@ -16,8 +16,7 @@ class modulator:
 		self.intlv_seq = css_constants.intlv_seq if self.slow_rate == True else []
 		self.preamble = css_constants.preamble_250kbps if self.slow_rate == True else css_constants.preamble_1mbps
 		self.SFD = css_constants.SFD_250kbps if self.slow_rate == True else css_constants.SFD_1mbpsg
-		self.PHR = np.zeros((12,))
-		self.PHR[0:7] = self.gen_PHR()
+		self.PHR = self.gen_PHR()
 		self.rcfilt = self.gen_rcfilt()
 		self.possible_chirp_sequences = self.gen_chirp_sequences()
 		if self.chirp_number < 1 or self.chirp_number > 4:
@@ -30,7 +29,7 @@ class modulator:
 		alpha = 0.25
 		rcfilt = np.ones((css_constants.n_sub,))
 		start_slope = round((1-alpha)/(1+alpha)*css_constants.n_sub/2)
-		rcfilt[len(rcfilt)/2+start_slope::] = [0.5*(1+np.cos((1+alpha)*np.pi/(alpha*css_constants.n_sub)*i)) for i in range(int(css_constants.n_sub/2-start_slope))]
+		rcfilt[len(rcfilt)/2+start_slope:] = [0.5*(1+np.cos((1+alpha)*np.pi/(alpha*css_constants.n_sub)*i)) for i in range(int(css_constants.n_sub/2-start_slope))]
 		rcfilt[0:len(rcfilt)/2-start_slope] = rcfilt[-1:len(rcfilt)/2+start_slope-1:-1]
 		return rcfilt
 
@@ -50,9 +49,11 @@ class modulator:
 		return [chirp_seq_I, chirp_seq_II, chirp_seq_III, chirp_seq_IV]
 
 	def gen_PHR(self):
+		PHR = np.zeros((12,))
 		payl_len_bitstring = '{0:07b}'.format(self.phy_packetsize_bytes)
 		payl_len_list = [int(payl_len_bitstring[i],2) for i in range(0,len(payl_len_bitstring))]
-		return payl_len_list
+		PHR[0:7] = payl_len_list
+		return PHR
 
 	def modulate_random(self):
 		payload_total = np.zeros((0,));
@@ -60,33 +61,33 @@ class modulator:
 
 		for n in range(self.nframes):
 			print "process frame", n+1, "/", self.nframes
-			print "- create random payload data and PHR"	
 
+			#print "- create random payload data and PHR"	
 			payload = np.random.randint(0,2,size=(self.nframes*self.phy_packetsize_bytes*8,))
 			payload_total = np.concatenate((payload_total, payload))
 			payload = np.concatenate((self.PHR, payload)) # append payload to PHR
 
-			print "- divide payload up into I and Q stream"
+			#print "- divide payload up into I and Q stream"
 			[payload_I, payload_Q] = self.demux(payload)
 
-			print "- map bits to codewords"
+			#print "- map bits to codewords"
 			payl_sym_I = self.bits_to_codewords(payload_I)
 			payl_sym_Q = self.bits_to_codewords(payload_Q)
 		
 			if self.slow_rate == True:
-				print "- interleave codewords if in 250 kbps mode"
+				#print "- interleave codewords if in 250 kbps mode"
 				payl_sym_I = self.interleaver(payl_sym_I)
 				payl_sym_Q = self.interleaver(payl_sym_Q)
 
-			print "- create frame structure"
+			#print "- create frame structure"
 			frame_sym_I = self.create_frame(payl_sym_I)
 			frame_sym_Q = self.create_frame(payl_sym_Q)
 
-			print "- modulate DQPSK symbols"
+			#print "- modulate DQPSK symbols"
 			frame_QPSK = self.mod_QPSK(frame_sym_I, frame_sym_Q)
 			frame_DQPSK = self.mod_DQPSK(frame_QPSK)
 
-			print "- modulate DQCSK symbols"
+			#print "- modulate DQCSK symbols"
 			frame_DQCSK = self.mod_DQCSK(frame_DQPSK)
 			complex_baseband_total = np.concatenate((complex_baseband_total,frame_DQCSK)) 	
 
@@ -151,7 +152,6 @@ class modulator:
 		
 		time_gap_1 = np.zeros((css_constants.n_chirp - 2*self.n_tau - 4*css_constants.n_sub,),dtype=np.complex64)
 		time_gap_2 = np.zeros((css_constants.n_chirp + 2*self.n_tau - 4*css_constants.n_sub,),dtype=np.complex64)
-		print "len gap1:", len(time_gap_1), "len gap2:", len(time_gap_2)
 		for i in range(n_seq):
 			tmp = self.chirp_seq
 			for k in range(4):
