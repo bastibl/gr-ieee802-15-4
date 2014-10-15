@@ -19,11 +19,11 @@ class modulator:
 		self.PHR = np.zeros((12,))
 		self.PHR[0:7] = self.gen_PHR()
 		self.rcfilt = self.gen_rcfilt()
-		possible_chirp_sequences = self.gen_chirp_sequences()
+		self.possible_chirp_sequences = self.gen_chirp_sequences()
 		if self.chirp_number < 1 or self.chirp_number > 4:
 			print "Invalid chirp sequence number, must be [1..4]. Use chirp 1"
 			self.chirp_number = 1
-		self.chirp_seq = possible_chirp_sequences[self.chirp_number-1]
+		self.chirp_seq = self.possible_chirp_sequences[self.chirp_number-1]
 		self.n_tau = css_constants.n_tau[self.chirp_number-1]
 
 	def gen_rcfilt(self):
@@ -86,7 +86,7 @@ class modulator:
 			frame_QPSK = self.mod_QPSK(frame_sym_I, frame_sym_Q)
 			frame_DQPSK = self.mod_DQPSK(frame_QPSK)
 
-			print "- modulate DQCSK"
+			print "- modulate DQCSK symbols"
 			frame_DQCSK = self.mod_DQCSK(frame_DQPSK)
 			complex_baseband_total = np.concatenate((complex_baseband_total,frame_DQCSK)) 	
 
@@ -150,16 +150,17 @@ class modulator:
 		cplx_bb = np.zeros((0,), dtype=np.complex64)
 		
 		time_gap_1 = np.zeros((css_constants.n_chirp - 2*self.n_tau - 4*css_constants.n_sub,),dtype=np.complex64)
-		time_gap_2 = np.zeros((2*css_constants.n_chirp-len(time_gap_1)-8*css_constants.n_sub,),dtype=np.complex64)
+		time_gap_2 = np.zeros((css_constants.n_chirp + 2*self.n_tau - 4*css_constants.n_sub,),dtype=np.complex64)
+		print "len gap1:", len(time_gap_1), "len gap2:", len(time_gap_2)
 		for i in range(n_seq):
 			tmp = self.chirp_seq
 			for k in range(4):
-				tmp[i*css_constants.n_sub:(i+1)*css_constants.n_sub] *= in_DQPSK[i*4+k]
+				tmp[k*css_constants.n_sub:(k+1)*css_constants.n_sub] *= in_DQPSK[i*4+k]
+			cplx_bb = np.concatenate((cplx_bb, tmp))
 			if i%2 == 0:
-				np.concatenate((cplx_bb, time_gap_1))
+				cplx_bb = np.concatenate((cplx_bb, time_gap_1))
 			else:
-				np.concatenate((cplx_bb, time_gap_2))
-			np.concatenate((cplx_bb, tmp))
+				cplx_bb = np.concatenate((cplx_bb, time_gap_2))
 		return cplx_bb
 
 
