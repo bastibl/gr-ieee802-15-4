@@ -21,6 +21,13 @@ if __name__ == "__main__":
 	print "-> frame header: ", nsamp_header
 	print "-> frame payload: ", nsamp_payload
 
+	f, axarr = plt.subplots(4)
+	for i in range(4):
+		axarr[i].plot(m.possible_chirp_sequences[i].real,label='real')
+		axarr[i].plot(m.possible_chirp_sequences[i].imag,label='imag')
+		axarr[i].legend()
+	f.suptitle("Real and imaginary part of the 4 chirp sequences windows with the raised cosine")
+
 	# plot PSD and frequency mask
 	s = abs(np.fft.fftshift(np.fft.fft(baseband)))**2
 	freq = np.linspace(-css_constants.bb_samp_rate/2, css_constants.bb_samp_rate/2-1/css_constants.bb_samp_rate, len(s))
@@ -93,11 +100,14 @@ if __name__ == "__main__":
 		titlestring = "chirp seq #"+str(i+1)
 		axarr[i].plot(abs(np.correlate(baseband, m.possible_chirp_sequences[i], mode='full')), label=titlestring)
 		axarr[i].legend()
-		axarr[i].set_xlim([0,25000])
-		for k in range(25000/nsamp_frame):
+		axarr[i].set_xlim([0,nsamp_frame*m.nframes])
+		for k in range(m.nframes):
 			axarr[i].axvline(x=nsamp_frame*k, linewidth=4, color='r')
 	f.suptitle("Correlation of chirp sequences with transmit signal carrying chirp seq #"+ str(m.chirp_number))
+
 	plt.show()
+
+
 
 
 

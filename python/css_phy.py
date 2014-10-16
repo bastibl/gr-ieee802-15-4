@@ -42,20 +42,6 @@ class physical_layer:
 		subchirp_low_down = np.array([np.exp(1j*(-2*np.pi*css_constants.fc - css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate) for i in np.arange(css_constants.n_sub)-css_constants.n_sub/2])
 		subchirp_high_up = np.array([np.exp(1j*(+2*np.pi*css_constants.fc + css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate) for i in np.arange(css_constants.n_sub)-css_constants.n_sub/2])
 		subchirp_high_down = np.array([np.exp(1j*(+2*np.pi*css_constants.fc - css_constants.mu/2*i/css_constants.bb_samp_rate)*i/css_constants.bb_samp_rate) for i in np.arange(css_constants.n_sub)-css_constants.n_sub/2])
-		c1 = abs(np.correlate(self.rcfilt, subchirp_low_up, mode='full'))
-		c2 = abs(np.correlate(self.rcfilt, subchirp_low_down, mode='full'))
-		c3 = abs(np.correlate(self.rcfilt, subchirp_high_up, mode='full'))
-		c4 = abs(np.correlate(self.rcfilt, subchirp_high_down, mode='full'))
-		f, axarr = plt.subplots(4)
-		axarr[0].plot(subchirp_low_up.real)
-		axarr[0].plot(subchirp_low_up.imag)
-		axarr[1].plot(subchirp_low_down.real)
-		axarr[1].plot(subchirp_low_down.imag)		
-		axarr[2].plot(subchirp_high_up.real)
-		axarr[2].plot(subchirp_high_up.imag)
-		axarr[3].plot(subchirp_high_down.real)
-		axarr[3].plot(subchirp_high_down.imag)
-		f.suptitle("Real and imaginary part of the 4 subchirps")
 
 		# multiply each subchirp with the raised cosine window
 		subchirp_low_up *= self.rcfilt

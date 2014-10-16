@@ -108,14 +108,12 @@ class modulator(css_phy.physical_layer):
 			sym_out.append(in_QPSK[i]*delay_chain[3])
 			delay_chain[1::] = delay_chain[0::-1]
 			delay_chain[0] = sym_out[i]
-		delay_chain = np.array([np.exp(1j*np.pi/4) for i in range(4)])
+		delay_chain[:] = np.exp(1j*np.pi/4) # reset delay chain
 		return sym_out
 
 	def mod_DQCSK(self, in_DQPSK):
 		if len(in_DQPSK) % 4 != 0:
-			raise Exception("Number of DQPSK input symbols must be a multiple of 4")
-		
-		print "mod_DQCSK input len:", len(in_DQPSK)
+			raise Exception("Number of DQPSK input symbols must be a multiple of 4")		
 		n_subchirps = 4;
 		n_seq = len(in_DQPSK)/n_subchirps
 		cplx_bb = np.zeros((0,), dtype=np.complex64)
@@ -123,7 +121,7 @@ class modulator(css_phy.physical_layer):
 		time_gap_1 = np.zeros((css_constants.n_chirp - 2*self.n_tau - n_subchirps*css_constants.n_sub,),dtype=np.complex64)
 		time_gap_2 = np.zeros((css_constants.n_chirp + 2*self.n_tau - n_subchirps*css_constants.n_sub,),dtype=np.complex64)
 		for i in range(n_seq):
-			tmp = self.chirp_seq
+			tmp = self.chirp_seq.copy()
 			for k in range(n_subchirps):
 				tmp[k*css_constants.n_sub:(k+1)*css_constants.n_sub] *= in_DQPSK[i*n_subchirps+k]
 			cplx_bb = np.concatenate((cplx_bb, tmp))
