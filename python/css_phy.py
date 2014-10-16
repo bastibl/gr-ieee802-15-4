@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 class physical_layer:
 	def __init__(self, slow_rate=False, phy_packetsize_bytes=18, nframes=1, chirp_number=1):
-		self.slow_rate = True
+		self.slow_rate = slow_rate
 		self.phy_packetsize_bytes = phy_packetsize_bytes if phy_packetsize_bytes <= css_constants.max_phy_packetsize_bytes else css_constants.max_phy_packetsize_bytes
 		if self.phy_packetsize_bytes % 6 != 0: # in order to match all periodicites the standard imposes the number of payload bytes has to be a multiple of 6
 			self.phy_packetsize_bytes = self.phy_packetsize_bytes - (self.phy_packetsize_bytes % 6)
@@ -15,7 +15,7 @@ class physical_layer:
 		self.codewords = css_constants.codewords_250kbps if self.slow_rate == True else css_constants.codewords_1mbps
 		self.intlv_seq = css_constants.intlv_seq if self.slow_rate == True else []
 		self.preamble = css_constants.preamble_250kbps if self.slow_rate == True else css_constants.preamble_1mbps
-		self.SFD = css_constants.SFD_250kbps if self.slow_rate == True else css_constants.SFD_1mbpsg
+		self.SFD = css_constants.SFD_250kbps if self.slow_rate == True else css_constants.SFD_1mbps
 		self.PHR = self.gen_PHR()
 		self.rcfilt = self.gen_rcfilt()
 		self.possible_chirp_sequences = self.gen_chirp_sequences()
