@@ -6,9 +6,6 @@ class physical_layer:
 	def __init__(self, slow_rate=False, phy_packetsize_bytes=18, nframes=1, chirp_number=1):
 		self.slow_rate = slow_rate
 		self.phy_packetsize_bytes = phy_packetsize_bytes if phy_packetsize_bytes <= css_constants.max_phy_packetsize_bytes else css_constants.max_phy_packetsize_bytes
-		if self.phy_packetsize_bytes % 6 != 0: # in order to match all periodicites the standard imposes the number of payload bytes has to be a multiple of 6
-			self.phy_packetsize_bytes = self.phy_packetsize_bytes - (self.phy_packetsize_bytes % 6)
-			print "changed packet size to", self.phy_packetsize_bytes
 		self.nframes = nframes
 		self.chirp_number = chirp_number
 		self.bits_per_symbol = 6 if self.slow_rate == True else 3

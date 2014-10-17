@@ -22,6 +22,10 @@ class modulator(css_phy.physical_layer):
 			[payload_I, payload_Q] = self.demux(payload)
 			print "len payload+PHR:", len(payload_I)+len(payload_Q)
 
+			#print "- pad payload with zeros to satisfy block boundaries"
+			payload_I = self.pad_zeros(payload_I)
+			payload_Q = self.pad_zeros(payload_Q)
+
 			#print "- map bits to codewords"
 			payl_sym_I = self.bits_to_codewords(payload_I)
 			payl_sym_Q = self.bits_to_codewords(payload_Q)
@@ -59,6 +63,21 @@ class modulator(css_phy.physical_layer):
 
 	def demux(self, in_stream):
 		return [in_stream[0::2], in_stream[1::2]]
+
+	def pad_zeros(self, in_stream):
+		# the interleaver and codeword generation impose certain conditions on the frame length that need to be satisfied
+		if self.slow_rate == True:
+			k = np.ceil(1.0/3*self.phy_packetsize_bytes+0.5)
+			p = 12*k - 6 - 4*self.phy_packetsize_bytes
+		else:
+			k = np.ceil(4.0/3*self.phy_packetsize_bytes) + 2
+			# k can have values 2+m*4
+			if (k-2)%4 != 0:
+				k += 4 - (k-2)%4
+			p = round(3.0/4*k - self.phy_packetsize_bytes - 3.0/2)
+		print "pad", p, "zeros"
+		padded_zeros = np.zeros((p,))
+		return np.concatenate((in_stream,padded_zeros))
 
 	def bits_to_codewords(self, in_bits):
 		in_bits = in_bits.reshape((len(in_bits)/self.bits_per_symbol), self.bits_per_symbol)
@@ -112,7 +131,6 @@ class modulator(css_phy.physical_layer):
 		return sym_out
 
 	def mod_DQCSK(self, in_DQPSK):
-		print "DBG: modulate all sequences with 1"
 		if len(in_DQPSK) % 4 != 0:
 			raise Exception("Number of DQPSK input symbols must be a multiple of 4")		
 		n_subchirps = 4;
@@ -124,7 +142,7 @@ class modulator(css_phy.physical_layer):
 		for i in range(n_seq):
 			tmp = self.chirp_seq.copy()
 			for k in range(n_subchirps):
-				tmp[k*css_constants.n_sub:(k+1)*css_constants.n_sub] *= 1#in_DQPSK[i*n_subchirps+k]
+				tmp[k*css_constants.n_sub:(k+1)*css_constants.n_sub] *= in_DQPSK[i*n_subchirps+k]
 			cplx_bb = np.concatenate((cplx_bb, tmp))
 			if i%2 == 0:
 				cplx_bb = np.concatenate((cplx_bb, time_gap_1))
