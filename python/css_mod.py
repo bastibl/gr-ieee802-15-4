@@ -112,6 +112,7 @@ class modulator(css_phy.physical_layer):
 		return sym_out
 
 	def mod_DQCSK(self, in_DQPSK):
+		print "DBG: modulate all sequences with 1"
 		if len(in_DQPSK) % 4 != 0:
 			raise Exception("Number of DQPSK input symbols must be a multiple of 4")		
 		n_subchirps = 4;
@@ -123,7 +124,7 @@ class modulator(css_phy.physical_layer):
 		for i in range(n_seq):
 			tmp = self.chirp_seq.copy()
 			for k in range(n_subchirps):
-				tmp[k*css_constants.n_sub:(k+1)*css_constants.n_sub] *= in_DQPSK[i*n_subchirps+k]
+				tmp[k*css_constants.n_sub:(k+1)*css_constants.n_sub] *= 1#in_DQPSK[i*n_subchirps+k]
 			cplx_bb = np.concatenate((cplx_bb, tmp))
 			if i%2 == 0:
 				cplx_bb = np.concatenate((cplx_bb, time_gap_1))
