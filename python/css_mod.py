@@ -44,7 +44,6 @@ class modulator(css_phy.physical_layer):
 			frame_DQCSK = self.mod_DQCSK(frame_DQPSK)
 			complex_baseband_total = np.concatenate((complex_baseband_total,frame_DQCSK)) 	
 
-
 		return [payload_total, complex_baseband_total]
 
 	def modulate(self,payload):
@@ -56,16 +55,7 @@ class modulator(css_phy.physical_layer):
 
 	def pad_zeros(self, in_stream):
 		# the interleaver and codeword generation impose certain conditions on the frame length that need to be satisfied
-		if self.slow_rate == True:
-			k = np.ceil(1.0/3*self.phy_packetsize_bytes+0.5)
-			p = 12*k - 6 - 4*self.phy_packetsize_bytes
-		else:
-			k = np.ceil(4.0/3*self.phy_packetsize_bytes) + 2
-			# k can have values 2+m*4
-			if (k-2)%4 != 0:
-				k += 4 - (k-2)%4
-			p = round(3.0/4*k - self.phy_packetsize_bytes - 3.0/2)
-		padded_zeros = np.zeros((p,))
+		padded_zeros = np.zeros((self.padded_zeros,))
 		return np.concatenate((in_stream,padded_zeros))
 
 	def bits_to_codewords(self, in_bits):

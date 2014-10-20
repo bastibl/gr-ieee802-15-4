@@ -10,6 +10,7 @@ class physical_layer:
 		self.chirp_number = chirp_number
 		self.bits_per_symbol = 6 if self.slow_rate == True else 3
 		self.codewords = css_constants.codewords_250kbps if self.slow_rate == True else css_constants.codewords_1mbps
+		self.coderate = 3.0/4 if self.slow_rate == False else 3.0/16
 		self.intlv_seq = css_constants.intlv_seq if self.slow_rate == True else []
 		self.preamble = css_constants.preamble_250kbps if self.slow_rate == True else css_constants.preamble_1mbps
 		self.SFD = css_constants.SFD_250kbps if self.slow_rate == True else css_constants.SFD_1mbps
@@ -24,6 +25,19 @@ class physical_layer:
 		self.n_tau = css_constants.n_tau[self.chirp_number-1]
 		self.time_gap_1 = np.zeros((css_constants.n_chirp - 2*self.n_tau - self.n_subchirps*css_constants.n_sub,),dtype=np.complex64)
 		self.time_gap_2 = np.zeros((css_constants.n_chirp + 2*self.n_tau - self.n_subchirps*css_constants.n_sub,),dtype=np.complex64)
+		self.padded_zeros = self.calc_padded_zeros()
+
+	def calc_padded_zeros(self):
+		if self.slow_rate == True:
+			k = np.ceil(1.0/3*self.phy_packetsize_bytes+0.5)
+			p = 12*k - 6 - 4*self.phy_packetsize_bytes
+		else:
+			k = np.ceil(4.0/3*self.phy_packetsize_bytes) + 2
+			# k can have values 2+m*4
+			if (k-2)%4 != 0:
+				k += 4 - (k-2)%4
+			p = round(3.0/4*k - self.phy_packetsize_bytes - 3.0/2)
+		return p
 
 	def gen_rcfilt(self):
 		alpha = 0.25
