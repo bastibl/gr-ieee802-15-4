@@ -24,6 +24,9 @@ endif()
 
 list(APPEND python_sources
     __init__.py
+    css_constants.py
+    css_phy.py
+    css_mod.py
 )
 
 GR_PYTHON_INSTALL(

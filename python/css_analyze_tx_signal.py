@@ -1,14 +1,18 @@
 #! /usr/bin python
 
 import css_mod
+import css_demod
 import css_constants
 import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-	print "Generate IEEE 802.15.4 compliant CSS baseband signal"
+	print "Generate and demodulate IEEE 802.15.4 compliant CSS baseband signal"
 	m = css_mod.modulator(slow_rate=False, phy_packetsize_bytes=14, nframes=4, chirp_number=4)
 	[payload,baseband] = m.modulate_random()	
+	d = css_demod.demodulator(slow_rate=False, phy_packetsize_bytes=14, nframes=4, chirp_number=4)
+	correlator_out = d.demodulate(baseband)
+
 	print "len baseband signal:", len(baseband)
 
 	print "samples in one..."
@@ -20,6 +24,7 @@ if __name__ == "__main__":
 	nsamp_header = nsamp_frame - nsamp_payload
 	print "-> frame header: ", nsamp_header
 	print "-> frame payload: ", nsamp_payload
+	print "chirp sequence shape:", m.chirp_seq.shape
 
 	f, axarr = plt.subplots(4)
 	for i in range(4):
@@ -56,12 +61,14 @@ if __name__ == "__main__":
 	axarr[1].set_title("Complex baseband magnitude")
 	axarr[1].set_xlabel("n")
 	axarr[1].set_ylabel("|s(n)|")
+	axarr[1].set_xlim([0,nsamp_frame])
 
 	# plot real part of time signal
 	axarr[2].plot(baseband[:len(t)].real, label='real')
 	axarr[2].plot(baseband[:len(t)].imag, label='imag')
 	axarr[2].legend()
 	axarr[2].set_title("Real and imaginary part of time signal using chirp sequence #"+str(m.chirp_number))
+	axarr[2].set_xlim([0,nsamp_frame])
 	for i in range(len(t)/nsamp_frame):
 		axarr[2].axvline(x=nsamp_frame*i, linewidth=4, color='r')
 
@@ -119,7 +126,26 @@ if __name__ == "__main__":
 		axarr[i,1].plot(sc[i].imag,label='imag')
 		axarr[i,1].legend()
 	f.suptitle("Correlation of subchirps with transmit signal")
-	
+
+	# plot correlation of subchirps with frequency shifted transmit signal
+	cfo = 50000 # Hz
+	baseband_foff = baseband[:len(t)]*np.exp(1j*2*np.pi*cfo*t)
+	f, axarr = plt.subplots(4)
+	for i in range(4):
+		titlestring = "subchirp #"+str(i)
+		axarr[i].plot(abs(np.correlate(baseband_foff, sc[i])),label=titlestring)
+		axarr[i].set_xlim([0,4*css_constants.n_chirp])
+		axarr[i].legend()
+	f.suptitle("Correlation of subchirps and transmit signal with "+str(cfo/1000)+" kHz CFO")
+
+	# plot correlator output magnitude and phase
+	f, axarr = plt.subplots(2)
+	axarr[0].plot(correlator_out[0])
+	axarr[0].set_title("Magnitude")
+	axarr[1].plot(correlator_out[1])
+	axarr[1].set_title("Phase")
+	f.suptitle("RX correlator output")
+
 	plt.show()
 
 

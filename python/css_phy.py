@@ -20,7 +20,10 @@ class physical_layer:
 			print "Invalid chirp sequence number, must be [1..4]. Use chirp 1"
 			self.chirp_number = 1
 		self.chirp_seq = self.possible_chirp_sequences[self.chirp_number-1]
+		self.n_subchirps = 4;
 		self.n_tau = css_constants.n_tau[self.chirp_number-1]
+		self.time_gap_1 = np.zeros((css_constants.n_chirp - 2*self.n_tau - self.n_subchirps*css_constants.n_sub,),dtype=np.complex64)
+		self.time_gap_2 = np.zeros((css_constants.n_chirp + 2*self.n_tau - self.n_subchirps*css_constants.n_sub,),dtype=np.complex64)
 
 	def gen_rcfilt(self):
 		alpha = 0.25
