@@ -8,12 +8,19 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
 	print "Generate and demodulate IEEE 802.15.4 compliant CSS baseband signal"
-	m = css_mod.modulator(slow_rate=True, phy_packetsize_bytes=14, nframes=4, chirp_number=4)
-	[payload,baseband] = m.modulate_random()	
-	d = css_demod.demodulator(slow_rate=False, phy_packetsize_bytes=14, nframes=4, chirp_number=4)
-	correlator_out = d.demodulate(baseband)
+	slow_rate = True
+	phy_packetsize_bytes = 14
+	nframes = 4
+	chirp_number = 3
 
-	print "len baseband signal:", len(baseband)
+	m = css_mod.modulator(slow_rate=slow_rate, phy_packetsize_bytes=phy_packetsize_bytes, nframes=nframes, chirp_number=chirp_number)
+	[payload,baseband] = m.modulate_random()	
+	d = css_demod.demodulator(slow_rate=slow_rate, phy_packetsize_bytes=phy_packetsize_bytes, nframes=nframes, chirp_number=chirp_number)
+	payload_rx = d.demodulate(baseband)
+
+	print "len baseband tx signal:", len(baseband)
+	print "len tx payload:", np.prod(payload.shape)
+	print "len rx payload:", len(payload_rx)
 
 	print "samples in one..."
 	print "-> subchirp: ", css_constants.n_sub
@@ -137,15 +144,15 @@ if __name__ == "__main__":
 	# 	axarr[i].legend()
 	# f.suptitle("Correlation of subchirps and transmit signal with "+str(cfo/1000)+" kHz CFO")
 
-	# plot correlator output magnitude and phase
-	f, axarr = plt.subplots(2)
-	axarr[0].plot(abs(correlator_out))
-	axarr[0].set_title("Magnitude")
-	axarr[1].stem(np.angle(correlator_out)/np.pi*180)
-	axarr[1].set_title("Phase")
-	f.suptitle("RX correlator output")
+	# # plot correlator output magnitude and phase
+	# f, axarr = plt.subplots(2)
+	# axarr[0].plot(abs(correlator_out))
+	# axarr[0].set_title("Magnitude")
+	# axarr[1].stem(np.angle(correlator_out)/np.pi*180)
+	# axarr[1].set_title("Phase")
+	# f.suptitle("RX correlator output")
 
-	plt.show()
+	# plt.show()
 
 
 

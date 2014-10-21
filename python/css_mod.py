@@ -5,15 +5,19 @@ import matplotlib.pyplot as plt
 
 class modulator(css_phy.physical_layer):
 	def modulate_random(self):
-		payload_total = np.zeros((0,));
-		complex_baseband_total = np.zeros((0,))
+		payload_bits = np.random.randint(0,2,size=(self.nframes*self.phy_packetsize_bytes*8,))
+		return self.modulate(payload_bits)
 
+	def modulate(self,bits):
+		if len(bits) != self.nframes*self.phy_packetsize_bytes*8:
+			raise Exception("Payload length has to be nframes*packetsize_bytes*8="+str(self.nframes*self.phy_packetsize_bytes*8)+", but is " + str(len(bits)))
+		payload_total = bits.reshape(self.nframes, self.phy_packetsize_bytes*8)
+		complex_baseband_total = np.zeros((0,))
 		for n in range(self.nframes):
 			print "process frame", n+1, "/", self.nframes
 
 			#print "- create random payload data and PHR"	
-			payload = np.random.randint(0,2,size=(self.phy_packetsize_bytes*8,))
-			payload_total = np.concatenate((payload_total, payload))
+			payload = payload_total[n]
 			payload = np.concatenate((self.PHR, payload)) # append payload to PHR
 
 			#print "- divide payload up into I and Q stream"
@@ -28,7 +32,7 @@ class modulator(css_phy.physical_layer):
 			payl_sym_Q = self.bits_to_codewords(payload_Q)
 		
 			if self.slow_rate == True:
-				#print "- interleave codewords if in 250 kbps mode"
+				# print "- interleave codewords"
 				payl_sym_I = self.interleaver(payl_sym_I)
 				payl_sym_Q = self.interleaver(payl_sym_Q)
 
@@ -43,12 +47,8 @@ class modulator(css_phy.physical_layer):
 			#print "- modulate DQCSK symbols"
 			frame_DQCSK = self.mod_DQCSK(frame_DQPSK)
 			complex_baseband_total = np.concatenate((complex_baseband_total,frame_DQCSK)) 	
-
-		return [payload_total, complex_baseband_total]
-
-	def modulate(self,payload):
-		print "not implemented yet, shall be used to pipe in special payload"
-
+		
+		return [payload_total, complex_baseband_total]		
 
 	def demux(self, in_stream):
 		return [in_stream[0::2], in_stream[1::2]]
