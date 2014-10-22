@@ -27,6 +27,7 @@ list(APPEND python_sources
     css_constants.py
     css_phy.py
     css_mod.py
+    css_demod.py
 )
 
 GR_PYTHON_INSTALL(

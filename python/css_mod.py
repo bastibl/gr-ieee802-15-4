@@ -14,7 +14,7 @@ class modulator(css_phy.physical_layer):
 		payload_total = bits.reshape(self.nframes, self.phy_packetsize_bytes*8)
 		complex_baseband_total = np.zeros((0,))
 		for n in range(self.nframes):
-			print "process frame", n+1, "/", self.nframes
+			# print "process frame", n+1, "/", self.nframes
 
 			#print "- create random payload data and PHR"	
 			payload = payload_total[n]
