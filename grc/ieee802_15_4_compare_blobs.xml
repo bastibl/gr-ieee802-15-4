@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<block>
+  <name>Compare Blobs</name>
+  <key>ieee802_15_4_compare_blobs</key>
+  <category>IEEE802.15.4</category>
+  <import>import ieee802_15_4</import>
+  <make>ieee802_15_4.compare_blobs($packet_error_mode)</make>
+  <param>
+    <name>Packet error mode</name>
+    <key>packet_error_mode</key>
+    <type>bool</type>
+  </param>
+  <sink>
+    <name>ref</name>
+    <type>message</type>
+  </sink>
+  <sink>
+    <name>test</name>
+    <type>message</type>
+  </sink>
+</block>

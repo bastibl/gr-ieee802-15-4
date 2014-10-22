@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Christoph Leitner <c.leitner@student.uibk.ac.at>
+ * Copyright (C) 2013 Bastian Bloessl <bloessl@ccs-labs.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,28 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef INCLUDED_GR_IEEE802_15_4_RIME_STACK_H
-#define INCLUDED_GR_IEEE802_15_4_RIME_STACK_H
+#ifndef INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H
+#define INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H
 
-#include <ieee802-15-4/api.h>
+#include <ieee802_15_4/api.h>
 #include <gnuradio/block.h>
-#include <vector>
 
 namespace gr {
-	namespace ieee802_15_4 {
+namespace ieee802_15_4 {
 
-		class GR_IEEE802_15_4_API rime_stack : virtual public block
-		{
-		public:
+class IEEE802_15_4_API access_code_prefixer : virtual public gr::block
+{
+public:
 
-			typedef boost::shared_ptr<rime_stack> sptr;
-			static sptr make(std::vector<uint16_t> bc_channels, 
-				std::vector<uint16_t> uc_channels,
-				std::vector<uint16_t> ruc_channels,
-				std::vector<uint8_t> rime_add);
-		};
-	}  // namespace ieee802_15_4
+	typedef boost::shared_ptr<access_code_prefixer> sptr;
+	static sptr make();
+
+};
+
+}  // namespace ieee802_15_4
 }  // namespace gr
 
-#endif /* INCLUDED_GR_IEEE802_15_4_RIME_STACK_H */
- 
+#endif /* INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H */

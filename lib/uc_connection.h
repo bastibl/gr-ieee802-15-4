@@ -23,7 +23,7 @@
 
 namespace gr{
 	namespace ieee802_15_4{
-		class GR_IEEE802_15_4_API uc_connection : public rime_connection{
+		class IEEE802_15_4_API uc_connection : public rime_connection{
 		private:
 			static const int header_length = 6;
 

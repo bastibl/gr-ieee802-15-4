@@ -13,17 +13,34 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-list(APPEND include_sources
+install(FILES
 	access_code_prefixer.h
 	api.h
 	mac.h
 	packet_sink.h
 	rime_stack.h
-)
-
-install(
-	FILES ${include_sources}
-	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+	fragmentation.h
+    phr_prefixer.h
+    zeropadding_b.h
+    codeword_mapper_bi.h
+    interleaver_ii.h
+    qpsk_mapper_if.h
+    dqpsk_mapper_ff.h
+    dqcsk_mapper_fc.h
+    preamble_sfd_prefixer_ii.h
+    dqcsk_demapper_cc.h
+    qpsk_demapper_fi.h
+    codeword_demapper_ib.h
+    zeropadding_removal_b.h
+    phr_removal.h
+    make_pair_with_blob.h
+    matched_filter_ff.h
+    chips_to_bits_fb.h
+    access_code_removal_b.h
+    dqpsk_soft_demapper_cc.h
+    deinterleaver_ff.h
+    codeword_soft_demapper_fb.h
+    compare_blobs.h
+    rayleigh_multipath_cc.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

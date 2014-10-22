@@ -27,8 +27,8 @@ list(APPEND python_sources
     css_constants.py
     css_phy.py
     css_mod.py
+    css_demod.py
 )
-
 GR_PYTHON_INSTALL(
     FILES ${python_sources}
     DESTINATION ${GR_PYTHON_DIR}/ieee802_15_4
@@ -40,6 +40,30 @@ GR_PYTHON_INSTALL(
 #####################################################################
 include(GrTest)
 
-#set(GR_TEST_TARGET_DEPS gnuradio-ieee802-15-4)
-#set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)
-#GR_ADD_TEST(qa_howto ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_howto.py)
+set(GR_TEST_TARGET_DEPS gnuradio-ieee802-15-4)
+set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)
+GR_ADD_TEST(qa_fragmentation ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_fragmentation.py)
+GR_ADD_TEST(qa_phr_prefixer ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_phr_prefixer.py)
+GR_ADD_TEST(qa_zeropadding_b ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_zeropadding_b.py)
+GR_ADD_TEST(qa_codeword_mapper_bi ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_codeword_mapper_bi.py)
+GR_ADD_TEST(qa_interleaver_ii ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_interleaver_ii.py)
+GR_ADD_TEST(qa_qpsk_mapper_if ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_qpsk_mapper_if.py)
+GR_ADD_TEST(qa_dqpsk_mapper_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dqpsk_mapper_ff.py)
+GR_ADD_TEST(qa_dqcsk_mapper_fc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dqcsk_mapper_fc.py)
+GR_ADD_TEST(qa_preamble_sfd_prefixer_ii ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_preamble_sfd_prefixer_ii.py)
+GR_ADD_TEST(qa_dqcsk_demapper_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dqcsk_demapper_cc.py)
+GR_ADD_TEST(qa_qpsk_demapper_fi ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_qpsk_demapper_fi.py)
+GR_ADD_TEST(qa_codeword_demapper_ib ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_codeword_demapper_ib.py)
+GR_ADD_TEST(qa_zeropadding_removal_b ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_zeropadding_removal_b.py)
+GR_ADD_TEST(qa_phr_removal ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_phr_removal.py)
+GR_ADD_TEST(qa_css_txrx ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_css_txrx.py)  
+
+GR_ADD_TEST(qa_make_pair_with_blob ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_make_pair_with_blob.py)
+GR_ADD_TEST(qa_matched_filter_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_matched_filter_ff.py)
+GR_ADD_TEST(qa_chips_to_bits_fb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_chips_to_bits_fb.py)
+GR_ADD_TEST(qa_access_code_removal_b ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_access_code_removal_b.py)
+GR_ADD_TEST(qa_dqpsk_soft_demapper_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dqpsk_soft_demapper_cc.py)
+GR_ADD_TEST(qa_deinterleaver_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_deinterleaver_ff.py)
+GR_ADD_TEST(qa_codeword_soft_demapper_fb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_codeword_soft_demapper_fb.py)
+GR_ADD_TEST(qa_compare_blobs ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_compare_blobs.py)
+GR_ADD_TEST(qa_rayleigh_multipath_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_rayleigh_multipath_cc.py)
