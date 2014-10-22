@@ -18,20 +18,20 @@ class demodulator(css_phy.physical_layer):
 		iq_in = iq_in.reshape(self.nframes, self.nsamp_frame)
 		payl_bits_total = np.zeros((0,))
 		for i in range(self.nframes):			
-			sym_DQPSK = self.demod_DQCSK(iq_in[i])	
-			sym_QPSK = self.demod_DQPSK(sym_DQPSK)
-			[sym_I, sym_Q] = self.demod_QPSK(sym_QPSK)
-			[hdr_sym_I, payl_sym_I] = self.separate_payload(sym_I)
-			[hdr_sym_Q, payl_sym_Q] = self.separate_payload(sym_Q)
+			self.sym_DQPSK = self.demod_DQCSK(iq_in[i])	
+			self.sym_QPSK = self.demod_DQPSK(self.sym_DQPSK)
+			[self.sym_I, self.sym_Q] = self.demod_QPSK(self.sym_QPSK)
+			[self.hdr_sym_I, self.payl_sym_I] = self.separate_payload(self.sym_I)
+			[self.hdr_sym_Q, self.payl_sym_Q] = self.separate_payload(self.sym_Q)
 			if self.slow_rate == True:
-				payl_sym_I = self.deinterleaver(payl_sym_I)
-				payl_sym_Q = self.deinterleaver(payl_sym_Q)
-			payl_bits_I = self.codewords_to_bits(payl_sym_I)
-			payl_bits_Q = self.codewords_to_bits(payl_sym_Q)
-			payl_bits_I = self.remove_zeropadding(payl_bits_I)
-			payl_bits_Q = self.remove_zeropadding(payl_bits_Q)
-			payl_bits = self.mux(payl_bits_I, payl_bits_Q)
-			payl_bits_total = np.concatenate((payl_bits_total,payl_bits[len(self.PHR):]))
+				self.payl_sym_I = self.deinterleaver(self.payl_sym_I)
+				self.payl_sym_Q = self.deinterleaver(self.payl_sym_Q)
+			self.payl_bits_I = self.codewords_to_bits(self.payl_sym_I)
+			self.payl_bits_Q = self.codewords_to_bits(self.payl_sym_Q)
+			self.payl_bits_I = self.remove_zeropadding(self.payl_bits_I)
+			self.payl_bits_Q = self.remove_zeropadding(self.payl_bits_Q)
+			self.payl_bits = self.mux(self.payl_bits_I, self.payl_bits_Q)
+			payl_bits_total = np.concatenate((payl_bits_total,self.payl_bits[len(self.PHR):]))
 		return payl_bits_total	
 		
 	def demod_DQCSK(self, iq_in):
@@ -57,12 +57,12 @@ class demodulator(css_phy.physical_layer):
 		return np.array(corr_out)
 
 	def demod_DQPSK(self, sym_in):
-		delay_chain = np.array([np.exp(1j*np.pi/4) for i in range(4)])
+		delay_chain = np.conj(np.array([np.exp(1j*np.pi/4) for i in range(4)]))
 		sym_out = []
 		for i in range(len(sym_in)):
 			sym_out.append(sym_in[i]*delay_chain[3])
 			delay_chain[1::] = delay_chain[0::-1]
-			delay_chain[0] = sym_out[i]
+			delay_chain[0] = np.conj(sym_in[i])
 		return sym_out
 
 	def demod_QPSK(self, sym_in):

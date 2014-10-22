@@ -18,37 +18,37 @@ class modulator(css_phy.physical_layer):
 
 			#print "- create random payload data and PHR"	
 			payload = payload_total[n]
-			payload = np.concatenate((self.PHR, payload)) # append payload to PHR
+			self.payload = np.concatenate((self.PHR, payload)) # append payload to PHR
 
 			#print "- divide payload up into I and Q stream"
-			[payload_I, payload_Q] = self.demux(payload)
+			[self.payload_I, self.payload_Q] = self.demux(self.payload)
 
 			#print "- pad payload with zeros to satisfy block boundaries"
-			payload_I = self.pad_zeros(payload_I)
-			payload_Q = self.pad_zeros(payload_Q)
+			self.payload_I = self.pad_zeros(self.payload_I)
+			self.payload_Q = self.pad_zeros(self.payload_Q)
 
 			#print "- map bits to codewords"
-			payl_sym_I = self.bits_to_codewords(payload_I)
-			payl_sym_Q = self.bits_to_codewords(payload_Q)
+			self.payl_sym_I = self.bits_to_codewords(self.payload_I)
+			self.payl_sym_Q = self.bits_to_codewords(self.payload_Q)
 		
 			if self.slow_rate == True:
 				# print "- interleave codewords"
-				payl_sym_I = self.interleaver(payl_sym_I)
-				payl_sym_Q = self.interleaver(payl_sym_Q)
+				self.payl_sym_I = self.interleaver(self.payl_sym_I)
+				self.payl_sym_Q = self.interleaver(self.payl_sym_Q)
 
 			#print "- create frame structure"
-			frame_sym_I = self.create_frame(payl_sym_I)
-			frame_sym_Q = self.create_frame(payl_sym_Q)
+			self.frame_sym_I = self.create_frame(self.payl_sym_I)
+			self.frame_sym_Q = self.create_frame(self.payl_sym_Q)
 
 			#print "- modulate DQPSK symbols"
-			frame_QPSK = self.mod_QPSK(frame_sym_I, frame_sym_Q)
-			frame_DQPSK = self.mod_DQPSK(frame_QPSK)
+			self.frame_QPSK = self.mod_QPSK(self.frame_sym_I, self.frame_sym_Q)
+			self.frame_DQPSK = self.mod_DQPSK(self.frame_QPSK)
 
 			#print "- modulate DQCSK symbols"
-			frame_DQCSK = self.mod_DQCSK(frame_DQPSK)
-			complex_baseband_total = np.concatenate((complex_baseband_total,frame_DQCSK)) 	
+			self.frame_DQCSK = self.mod_DQCSK(self.frame_DQPSK)
+			complex_baseband_total = np.concatenate((complex_baseband_total,self.frame_DQCSK)) 	
 		
-		return [payload_total, complex_baseband_total]		
+		return [bits, complex_baseband_total]		
 
 	def demux(self, in_stream):
 		return [in_stream[0::2], in_stream[1::2]]
