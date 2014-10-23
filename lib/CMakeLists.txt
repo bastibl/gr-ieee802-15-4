@@ -18,7 +18,6 @@
 # Setup library
 #####################################################################
 include(GrPlatform) #define LIB_SUFFIX
-
 list(APPEND ieee802_15_4_sources
     access_code_prefixer.cc
     bc_connection.cc
@@ -30,7 +29,7 @@ list(APPEND ieee802_15_4_sources
     stubborn_sender.cc
     uc_connection.cc
     css_phr_prefixer_impl.cc
-)
+    )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}

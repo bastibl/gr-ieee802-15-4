@@ -18,7 +18,7 @@
 # Project setup
 ########################################################################
 cmake_minimum_required(VERSION 2.6)
-project(gr-ieee802-15-4 CXX C)
+project(gr-ieee802_15_4 CXX C)
 enable_testing()
 
 #select the release build type by default to get optimization flags
