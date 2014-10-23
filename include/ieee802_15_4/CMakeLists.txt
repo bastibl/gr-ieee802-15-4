@@ -21,6 +21,6 @@ install(FILES
 	packet_sink.h
 	rime_stack.h
 	css_phr_prefixer.h
-	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+    fragmentation.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

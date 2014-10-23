@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <ieee802-15-4/rime_stack.h>
+#include <ieee802_15_4/rime_stack.h>
 #include "rime_connection.h"
 #include "bc_connection.h"
 #include "uc_connection.h"

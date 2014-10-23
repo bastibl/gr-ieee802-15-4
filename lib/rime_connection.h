@@ -17,13 +17,13 @@
 #ifndef INCLUDED_RIME_CONNECTION_H
 #define INCLUDED_RIME_CONNECTION_H
 
-#include <ieee802-15-4/api.h>
-#include <ieee802-15-4/rime_stack.h>
+#include <ieee802_15_4/api.h>
+#include <ieee802_15_4/rime_stack.h>
 #include <gnuradio/block_detail.h>
 
 namespace gr{
 	namespace ieee802_15_4{
-		class GR_IEEE802_15_4_API rime_connection{
+		class IEEE802_15_4_API rime_connection{
 		protected:
 			rime_stack *d_block;
 			uint16_t d_channel;

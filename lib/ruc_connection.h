@@ -24,7 +24,7 @@
 
 namespace gr{
 	namespace ieee802_15_4{
-		class GR_IEEE802_15_4_API ruc_connection : public rime_connection{
+		class IEEE802_15_4_API ruc_connection : public rime_connection{
 		private:
 			static const int header_length = 7;
 			static const int seqno_bits = 2;

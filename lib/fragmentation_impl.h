@@ -18,39 +18,35 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#ifndef INCLUDED_IEEE802_15_4_FRAGMENTATION_IMPL_H
+#define INCLUDED_IEEE802_15_4_FRAGMENTATION_IMPL_H
 
-#ifndef INCLUDED_IEEE802_15_4_CSS_PHR_PREFIXER_H
-#define INCLUDED_IEEE802_15_4_CSS_PHR_PREFIXER_H
-
-#include <ieee802_15_4/api.h>
-#include <gnuradio/block.h>
+#include <ieee802_15_4/fragmentation.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    /*!
-     * \brief <+description of block+>
-     * \ingroup ieee802_15_4
-     *
-     */
-    class IEEE802_15_4_API css_phr_prefixer : virtual public gr::block
+    class fragmentation_impl : public fragmentation
     {
-     public:
-      typedef boost::shared_ptr<css_phr_prefixer> sptr;
+     private:
+      int d_nbytes;
+      void create_packets(pmt::pmt_t msg);
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of ieee802_15_4::css_phr_prefixer.
-       *
-       * To avoid accidental use of raw pointers, ieee802_15_4::css_phr_prefixer's
-       * constructor is in a private implementation
-       * class. ieee802_15_4::css_phr_prefixer::make is the public interface for
-       * creating new instances.
-       */
-      static sptr make(std::vector<unsigned char> phr, int nbytes_payload);
+     public:
+      fragmentation_impl(int nbytes);
+      ~fragmentation_impl();
+
+      // Where all the action really happens
+      // void forecast (int noutput_items, gr_vector_int &ninput_items_required);
+
+      // int general_work(int noutput_items,
+		    //    gr_vector_int &ninput_items,
+		    //    gr_vector_const_void_star &input_items,
+		    //    gr_vector_void_star &output_items);
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_CSS_PHR_PREFIXER_H */
+#endif /* INCLUDED_IEEE802_15_4_FRAGMENTATION_IMPL_H */
 

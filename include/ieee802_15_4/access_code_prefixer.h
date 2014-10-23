@@ -17,13 +17,13 @@
 #ifndef INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H
 #define INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H
 
-#include <ieee802-15-4/api.h>
+#include <ieee802_15_4/api.h>
 #include <gnuradio/block.h>
 
 namespace gr {
 namespace ieee802_15_4 {
 
-class GR_IEEE802_15_4_API access_code_prefixer : virtual public gr::block
+class IEEE802_15_4_API access_code_prefixer : virtual public gr::block
 {
 public:
 

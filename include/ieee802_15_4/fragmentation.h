@@ -19,8 +19,8 @@
  */
 
 
-#ifndef INCLUDED_IEEE802_15_4_CSS_PHR_PREFIXER_H
-#define INCLUDED_IEEE802_15_4_CSS_PHR_PREFIXER_H
+#ifndef INCLUDED_IEEE802_15_4_FRAGMENTATION_H
+#define INCLUDED_IEEE802_15_4_FRAGMENTATION_H
 
 #include <ieee802_15_4/api.h>
 #include <gnuradio/block.h>
@@ -33,24 +33,24 @@ namespace gr {
      * \ingroup ieee802_15_4
      *
      */
-    class IEEE802_15_4_API css_phr_prefixer : virtual public gr::block
+    class IEEE802_15_4_API fragmentation : virtual public gr::block
     {
      public:
-      typedef boost::shared_ptr<css_phr_prefixer> sptr;
+      typedef boost::shared_ptr<fragmentation> sptr;
 
       /*!
-       * \brief Return a shared_ptr to a new instance of ieee802_15_4::css_phr_prefixer.
+       * \brief Return a shared_ptr to a new instance of ieee802_15_4::fragmentation.
        *
-       * To avoid accidental use of raw pointers, ieee802_15_4::css_phr_prefixer's
+       * To avoid accidental use of raw pointers, ieee802_15_4::fragmentation's
        * constructor is in a private implementation
-       * class. ieee802_15_4::css_phr_prefixer::make is the public interface for
+       * class. ieee802_15_4::fragmentation::make is the public interface for
        * creating new instances.
        */
-      static sptr make(std::vector<unsigned char> phr, int nbytes_payload);
+      static sptr make(int nbytes);
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_CSS_PHR_PREFIXER_H */
+#endif /* INCLUDED_IEEE802_15_4_FRAGMENTATION_H */
 

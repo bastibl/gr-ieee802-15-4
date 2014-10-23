@@ -17,7 +17,7 @@
 #ifndef INCLUDED_STUBBORN_SENDER_H
 #define INCLUDED_STUBBORN_SENDER_H
 
-#include <ieee802-15-4/rime_stack.h>
+#include <ieee802_15_4/rime_stack.h>
 #include <thread>
 #include <atomic>
 #include <queue>
@@ -25,7 +25,7 @@
 namespace gr{
 	namespace ieee802_15_4{
 		class ruc_connection;
-		class GR_IEEE802_15_4_API stubborn_sender{
+		class IEEE802_15_4_API stubborn_sender{
 		private:
 			rime_stack *d_block;
 			ruc_connection *d_caller;

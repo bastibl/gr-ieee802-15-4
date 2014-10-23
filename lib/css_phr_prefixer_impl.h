@@ -21,7 +21,7 @@
 #ifndef INCLUDED_IEEE802_15_4_CSS_PHR_PREFIXER_IMPL_H
 #define INCLUDED_IEEE802_15_4_CSS_PHR_PREFIXER_IMPL_H
 
-#include <ieee802-15-4/css_phr_prefixer.h>
+#include <ieee802_15_4/css_phr_prefixer.h>
 
 namespace gr {
   namespace ieee802_15_4 {

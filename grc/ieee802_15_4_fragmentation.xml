@@ -1,0 +1,21 @@
+<block>
+  <name>Packet Fragmentation</name>
+  <key>ieee802_15_4_fragmentation</key>
+  <category>IEEE802.15.4</category>
+  <import>import ieee802_15_4</import>
+  <make>ieee802_15_4.fragmentation($nbytes)</make>
+  <param>
+    <name>Bytes per packet</name>
+    <key>nbytes</key>
+    <type>int</type>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>message</type>
+  </sink>
+
+  <source>
+    <name>out</name>
+    <type>message</type>
+  </source> 
+</block>
