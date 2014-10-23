@@ -14,16 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-list(APPEND include_sources
+install(FILES
 	access_code_prefixer.h
 	api.h
 	mac.h
 	packet_sink.h
 	rime_stack.h
-)
-
-install(
-	FILES ${include_sources}
+	css_phr_prefixer.h
 	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )
