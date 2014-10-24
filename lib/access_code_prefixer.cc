@@ -24,55 +24,55 @@ using namespace gr::ieee802_15_4;
 
 class access_code_prefixer_impl : public access_code_prefixer {
 
-public:
+	public:
 
-access_code_prefixer_impl() :
-		block("access_code_prefixer",
-				gr::io_signature::make(0, 0, 0),
-				gr::io_signature::make(0, 0, 0)) {
+	access_code_prefixer_impl() :
+			block("access_code_prefixer",
+					gr::io_signature::make(0, 0, 0),
+					gr::io_signature::make(0, 0, 0)) {
 
-    message_port_register_out(pmt::mp("out"));
+	    message_port_register_out(pmt::mp("out"));
 
-    message_port_register_in(pmt::mp("in"));
-    set_msg_handler(pmt::mp("in"), boost::bind(&access_code_prefixer_impl::make_frame, this, _1));
+	    message_port_register_in(pmt::mp("in"));
+	    set_msg_handler(pmt::mp("in"), boost::bind(&access_code_prefixer_impl::make_frame, this, _1));
 
-    buf[0] = 0x00;
-    buf[1] = 0x00;
-    buf[2] = 0x00;
-    buf[3] = 0x00;
-    buf[4] = 0xA7;
+	    buf[0] = 0x00;
+	    buf[1] = 0x00;
+	    buf[2] = 0x00;
+	    buf[3] = 0x00;
+	    buf[4] = 0xA7;
 
-}
-
-~access_code_prefixer_impl() {
-
-}
-
-void make_frame (pmt::pmt_t msg) {
-
-	if(pmt::is_eof_object(msg)) {
-		message_port_pub(pmt::mp("out"), pmt::PMT_EOF);
-		detail().get()->set_done(true);
-		return;
 	}
 
-	assert(pmt::is_pair(msg));
-	pmt::pmt_t blob = pmt::cdr(msg);
+	~access_code_prefixer_impl() {
 
-	size_t data_len = pmt::blob_length(blob);
-	assert(data_len);
-	assert(data_len < 256 - 5);
+	}
 
-	buf[5] = data_len;
+	void make_frame (pmt::pmt_t msg) {
 
-	std::memcpy(buf + 6, pmt::blob_data(blob), data_len);
-	pmt::pmt_t packet = pmt::make_blob(buf, data_len + 6);
+		if(pmt::is_eof_object(msg)) {
+			message_port_pub(pmt::mp("out"), pmt::PMT_EOF);
+			detail().get()->set_done(true);
+			return;
+		}
 
-	message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
-}
+		assert(pmt::is_pair(msg));
+		pmt::pmt_t blob = pmt::cdr(msg);
 
-private:
-	char buf[256];
+		size_t data_len = pmt::blob_length(blob);
+		assert(data_len);
+		assert(data_len < 256 - 5);
+
+		buf[5] = data_len;
+
+		std::memcpy(buf + 6, pmt::blob_data(blob), data_len);
+		pmt::pmt_t packet = pmt::make_blob(buf, data_len + 6);
+
+		message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
+	}
+
+	private:
+		char buf[256];
 
 };
 

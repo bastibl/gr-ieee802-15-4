@@ -28,7 +28,6 @@ list(APPEND ieee802_15_4_sources
     ruc_connection.cc
     stubborn_sender.cc
     uc_connection.cc
-    css_phr_prefixer_impl.cc
     fragmentation_impl.cc )
 
 list(APPEND ieee802_15_4_libs

@@ -30,19 +30,12 @@ namespace gr {
     {
      private:
       int d_nbytes;
+      std::vector<char> d_buf;
       void create_packets(pmt::pmt_t msg);
 
      public:
       fragmentation_impl(int nbytes);
       ~fragmentation_impl();
-
-      // Where all the action really happens
-      // void forecast (int noutput_items, gr_vector_int &ninput_items_required);
-
-      // int general_work(int noutput_items,
-		    //    gr_vector_int &ninput_items,
-		    //    gr_vector_const_void_star &input_items,
-		    //    gr_vector_void_star &output_items);
     };
 
   } // namespace ieee802_15_4

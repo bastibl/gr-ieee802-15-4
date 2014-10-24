@@ -23,6 +23,7 @@
 #endif
 
 #include <gnuradio/io_signature.h>
+#include <gnuradio/block_detail.h>
 #include "fragmentation_impl.h"
 
 namespace gr {
@@ -44,15 +45,11 @@ namespace gr {
               gr::io_signature::make(0,0,0)),
       d_nbytes(nbytes)
     {
-      if(d_nbytes > 127)
-      {
-        std::cerr << "Packet size must be < 128 bytes. Packet size is set to 127 bytes" << std::endl;
-        d_nbytes = 127;
-
       message_port_register_out(pmt::mp("out"));
       message_port_register_in(pmt::mp("in"));
       set_msg_handler(pmt::mp("in"), boost::bind(&fragmentation_impl::create_packets, this, _1));
-      }
+      
+      d_buf.clear();
     }
 
     /*
@@ -64,31 +61,36 @@ namespace gr {
 
     void
     fragmentation_impl::create_packets(pmt::pmt_t msg)
-    {}
-    // void
-    // fragmentation_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
-    // {
-    //     /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
-    // }
+    {
+      if(pmt::is_eof_object(msg)) 
+      {
+        message_port_pub(pmt::mp("out"), pmt::PMT_EOF);
+        detail().get()->set_done(true);
+        return;
+      }
 
-    // int
-    // fragmentation_impl::general_work (int noutput_items,
-    //                    gr_vector_int &ninput_items,
-    //                    gr_vector_const_void_star &input_items,
-    //                    gr_vector_void_star &output_items)
-    // {
-    //     const <+ITYPE*> *in = (const <+ITYPE*> *) input_items[0];
-    //     <+OTYPE*> *out = (<+OTYPE*> *) output_items[0];
+      if(!pmt::is_pair(msg))
+        throw std::runtime_error("Input PMT is not of type pair");
 
-    //     // Do <+signal processing+>
-    //     // Tell runtime system how many input items we consumed on
-    //     // each input stream.
-    //     consume_each (noutput_items);
+      pmt::pmt_t blob = pmt::cdr(msg);
+      size_t data_len = pmt::blob_length(blob);
+      int npackets = std::floor(data_len/d_nbytes);
+      char* blob_ptr = (char*) pmt::blob_data(blob);
+      for(int i=0; i<data_len; i++)
+      {
+        if(d_buf.size() < d_nbytes)
+        {
+          d_buf.push_back(blob_ptr[i]);
+        }
+        if(d_buf.size() == d_nbytes)
+        {
+          pmt::pmt_t packet = pmt::make_blob(&d_buf[0], d_nbytes);
+          message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
+          d_buf.clear();          
+        }
 
-    //     // Tell runtime system how many output items we produced.
-    //     return noutput_items;
-    // }
-
+      }
+    }
   } /* namespace ieee802_15_4 */
 } /* namespace gr */
 

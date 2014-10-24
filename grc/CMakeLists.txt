@@ -13,12 +13,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 install(FILES
     ieee802_15_4_access_code_prefixer.xml
     ieee802_15_4_mac.xml
     ieee802_15_4_packet_sink.xml
     ieee802_15_4_rime_stack.xml
-    ieee802_15_4_css_phr_prefixer.xml
     ieee802_15_4_fragmentation.xml DESTINATION share/gnuradio/grc/blocks
 )

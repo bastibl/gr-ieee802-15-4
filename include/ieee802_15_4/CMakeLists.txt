@@ -13,14 +13,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 install(FILES
 	access_code_prefixer.h
 	api.h
 	mac.h
 	packet_sink.h
 	rime_stack.h
-	css_phr_prefixer.h
-    fragmentation.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+	fragmentation.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

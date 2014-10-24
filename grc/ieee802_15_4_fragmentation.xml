@@ -13,7 +13,6 @@
     <name>in</name>
     <type>message</type>
   </sink>
-
   <source>
     <name>out</name>
     <type>message</type>
