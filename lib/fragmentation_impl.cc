@@ -74,7 +74,6 @@ namespace gr {
 
       pmt::pmt_t blob = pmt::cdr(msg);
       size_t data_len = pmt::blob_length(blob);
-      int npackets = std::floor(data_len/d_nbytes);
       char* blob_ptr = (char*) pmt::blob_data(blob);
       for(int i=0; i<data_len; i++)
       {
