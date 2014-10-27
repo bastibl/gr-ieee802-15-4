@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='ASCII'?>
 <?grc format='1' created='3.7.6'?>
 <flow_graph>
-  <timestamp>Mon Oct 27 15:17:49 2014</timestamp>
+  <timestamp>Mon Oct 27 16:04:47 2014</timestamp>
   <block>
     <key>options</key>
     <param>
@@ -59,45 +59,6 @@
     <param>
       <key>_coordinate</key>
       <value>(10, 10)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_phr_prefixer_c</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_phr_prefixer_c_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>phr</key>
-      <value>phr</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(352, 259)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -183,6 +144,45 @@
     </param>
   </block>
   <block>
+    <key>pad_source</key>
+    <param>
+      <key>id</key>
+      <value>pad_source_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>txin</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>message</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>num_streams</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>optional</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(8, 259)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
     <key>ieee802_15_4_fragmentation</key>
     <param>
       <key>id</key>
@@ -249,38 +249,38 @@
     </param>
   </block>
   <block>
-    <key>pad_source</key>
+    <key>ieee802_15_4_phr_prefixer_c</key>
     <param>
       <key>id</key>
-      <value>pad_source_0</value>
+      <value>ieee802_15_4_phr_prefixer_c_0</value>
     </param>
     <param>
       <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
-      <key>label</key>
-      <value>txin</value>
+      <key>phr</key>
+      <value>phr</value>
     </param>
     <param>
-      <key>type</key>
-      <value>message</value>
+      <key>alias</key>
+      <value></value>
     </param>
     <param>
-      <key>vlen</key>
-      <value>1</value>
+      <key>affinity</key>
+      <value></value>
     </param>
     <param>
-      <key>num_streams</key>
-      <value>1</value>
+      <key>minoutbuf</key>
+      <value>0</value>
     </param>
     <param>
-      <key>optional</key>
-      <value>False</value>
+      <key>maxoutbuf</key>
+      <value>0</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(8, 259)</value>
+      <value>(368, 259)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -294,15 +294,15 @@
     <sink_key>in</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_phr_prefixer_c_0</source_block_id>
-    <sink_block_id>blocks_message_debug_0</sink_block_id>
-    <source_key>out</source_key>
-    <sink_key>print_pdu</sink_key>
-  </connection>
-  <connection>
     <source_block_id>ieee802_15_4_fragmentation_0</source_block_id>
     <sink_block_id>ieee802_15_4_phr_prefixer_c_0</sink_block_id>
     <source_key>out</source_key>
     <sink_key>in</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_phr_prefixer_c_0</source_block_id>
+    <sink_block_id>blocks_message_debug_0</sink_block_id>
+    <source_key>out</source_key>
+    <sink_key>print_pdu</sink_key>
   </connection>
 </flow_graph>

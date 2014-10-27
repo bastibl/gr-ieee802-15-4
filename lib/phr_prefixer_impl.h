@@ -18,39 +18,29 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#ifndef INCLUDED_IEEE802_15_4_PHR_PREFIXER_C_IMPL_H
+#define INCLUDED_IEEE802_15_4_PHR_PREFIXER_C_IMPL_H
 
-#ifndef INCLUDED_IEEE802_15_4_PHR_PREFIXER_C_H
-#define INCLUDED_IEEE802_15_4_PHR_PREFIXER_C_H
-
-#include <ieee802_15_4/api.h>
-#include <gnuradio/block.h>
+#include <ieee802_15_4/phr_prefixer.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    /*!
-     * \brief <+description of block+>
-     * \ingroup ieee802_15_4
-     *
-     */
-    class IEEE802_15_4_API phr_prefixer_c : virtual public gr::block
+    class phr_prefixer_impl : public phr_prefixer
     {
-     public:
-      typedef boost::shared_ptr<phr_prefixer_c> sptr;
+     private:
+      const static int PHR_LEN = 12;
+      unsigned char* d_buf;
+      void prefix_phr(pmt::pmt_t msg);
+      void unpack(unsigned char* dest_unpacked, unsigned char* src_packed, int nbytes);
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of ieee802_15_4::phr_prefixer_c.
-       *
-       * To avoid accidental use of raw pointers, ieee802_15_4::phr_prefixer_c's
-       * constructor is in a private implementation
-       * class. ieee802_15_4::phr_prefixer_c::make is the public interface for
-       * creating new instances.
-       */
-      static sptr make(std::vector<unsigned char> phr);
+     public:
+      phr_prefixer_impl(std::vector<unsigned char> phr);
+      ~phr_prefixer_impl();
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_PHR_PREFIXER_C_H */
+#endif /* INCLUDED_IEEE802_15_4_PHR_PREFIXER_C_IMPL_H */
 

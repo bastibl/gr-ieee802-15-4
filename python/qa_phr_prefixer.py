@@ -25,7 +25,7 @@ import numpy as np
 import time
 import ieee802_15_4_swig as ieee802_15_4
 
-class qa_phr_prefixer_c (gr_unittest.TestCase):
+class qa_phr_prefixer (gr_unittest.TestCase):
 
     def setUp (self):
         self.tb = gr.top_block ()
@@ -41,7 +41,7 @@ class qa_phr_prefixer_c (gr_unittest.TestCase):
         self.src = blocks.vector_source_b(data, False, 1, [])
         self.s2ts = blocks.stream_to_tagged_stream(gr.sizeof_char, 1, 6, "packet_len")
         self.ts2pdu = blocks.tagged_stream_to_pdu(blocks.byte_t, "packet_len")
-        self.pref = ieee802_15_4.phr_prefixer_c(phr)
+        self.pref = ieee802_15_4.phr_prefixer(phr)
         self.pdu2ts = blocks.pdu_to_tagged_stream(blocks.byte_t, "packet_len")
         self.snk = blocks.vector_sink_b(1)
         self.tb.connect(self.src, self.s2ts, self.ts2pdu)
@@ -66,4 +66,4 @@ class qa_phr_prefixer_c (gr_unittest.TestCase):
 
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_phr_prefixer_c)
+    gr_unittest.run(qa_phr_prefixer)

@@ -24,23 +24,23 @@
 
 #include <gnuradio/io_signature.h>
 #include <gnuradio/block_detail.h>
-#include "phr_prefixer_c_impl.h"
+#include "phr_prefixer_impl.h"
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    phr_prefixer_c::sptr
-    phr_prefixer_c::make(std::vector<unsigned char> phr)
+    phr_prefixer::sptr
+    phr_prefixer::make(std::vector<unsigned char> phr)
     {
       return gnuradio::get_initial_sptr
-        (new phr_prefixer_c_impl(phr));
+        (new phr_prefixer_impl(phr));
     }
 
     /*
      * The private constructor
      */
-    phr_prefixer_c_impl::phr_prefixer_c_impl(std::vector<unsigned char> phr)
-      : gr::block("phr_prefixer_c",
+    phr_prefixer_impl::phr_prefixer_impl(std::vector<unsigned char> phr)
+      : gr::block("phr_prefixer",
               gr::io_signature::make(0,0,0),
               gr::io_signature::make(0,0,0))
     {
@@ -53,19 +53,19 @@ namespace gr {
       // define message ports
       message_port_register_out(pmt::mp("out"));
       message_port_register_in(pmt::mp("in"));
-      set_msg_handler(pmt::mp("in"), boost::bind(&phr_prefixer_c_impl::prefix_phr, this, _1));
+      set_msg_handler(pmt::mp("in"), boost::bind(&phr_prefixer_impl::prefix_phr, this, _1));
     }
 
     /*
      * Our virtual destructor.
      */
-    phr_prefixer_c_impl::~phr_prefixer_c_impl()
+    phr_prefixer_impl::~phr_prefixer_impl()
     {
       delete[] d_buf;
     }
 
     void
-    phr_prefixer_c_impl::prefix_phr(pmt::pmt_t msg)
+    phr_prefixer_impl::prefix_phr(pmt::pmt_t msg)
     {
       if(pmt::is_eof_object(msg)) 
       {
@@ -88,7 +88,7 @@ namespace gr {
     }
 
     void
-    phr_prefixer_c_impl::unpack(unsigned char* dest_unpacked, unsigned char* src_packed, int nbytes)
+    phr_prefixer_impl::unpack(unsigned char* dest_unpacked, unsigned char* src_packed, int nbytes)
     {
       // extract bits from left to right (to preserve the order at byte boundaries) and copy them into the buffer   
       for(int i=0; i<nbytes; i++)

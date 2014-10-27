@@ -29,7 +29,7 @@ list(APPEND ieee802_15_4_sources
     stubborn_sender.cc
     uc_connection.cc
     fragmentation_impl.cc
-    phr_prefixer_c_impl.cc )
+    phr_prefixer_impl.cc )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}
