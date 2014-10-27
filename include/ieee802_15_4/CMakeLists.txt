@@ -20,6 +20,7 @@ install(FILES
 	packet_sink.h
 	rime_stack.h
 	fragmentation.h
-    phr_prefixer.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+    phr_prefixer.h
+    zeropadding_b.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

@@ -27,6 +27,7 @@
 #include "ieee802_15_4/rime_stack.h"
 #include "ieee802_15_4/fragmentation.h"
 #include "ieee802_15_4/phr_prefixer.h"
+#include "ieee802_15_4/zeropadding_b.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -44,3 +45,5 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, rime_stack);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, fragmentation);
 %include "ieee802_15_4/phr_prefixer.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, phr_prefixer);
+%include "ieee802_15_4/zeropadding_b.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, zeropadding_b);
