@@ -86,7 +86,7 @@ class physical_layer:
 		return [chirp_seq_I, chirp_seq_II, chirp_seq_III, chirp_seq_IV]
 
 	def gen_PHR(self):
-		PHR = np.zeros((12,))
+		PHR = np.zeros((12,),dtype=int)
 		payl_len_bitstring = '{0:07b}'.format(self.phy_packetsize_bytes)
 		payl_len_list = [int(payl_len_bitstring[i],2) for i in range(0,len(payl_len_bitstring))]
 		PHR[0:7] = payl_len_list

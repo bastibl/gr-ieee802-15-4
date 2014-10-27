@@ -19,6 +19,7 @@ install(FILES
 	mac.h
 	packet_sink.h
 	rime_stack.h
-	fragmentation.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+	fragmentation.h
+    phr_prefixer_c.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )
