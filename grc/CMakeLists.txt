@@ -20,5 +20,6 @@ install(FILES
     ieee802_15_4_rime_stack.xml
     ieee802_15_4_fragmentation.xml
     ieee802_15_4_phr_prefixer.xml
-    ieee802_15_4_zeropadding_b.xml DESTINATION share/gnuradio/grc/blocks
+    ieee802_15_4_zeropadding_b.xml
+    ieee802_15_4_codeword_mapper_bi.xml DESTINATION share/gnuradio/grc/blocks
 )

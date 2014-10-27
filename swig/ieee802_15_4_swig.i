@@ -28,6 +28,7 @@
 #include "ieee802_15_4/fragmentation.h"
 #include "ieee802_15_4/phr_prefixer.h"
 #include "ieee802_15_4/zeropadding_b.h"
+#include "ieee802_15_4/codeword_mapper_bi.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -47,3 +48,5 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, fragmentation);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, phr_prefixer);
 %include "ieee802_15_4/zeropadding_b.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, zeropadding_b);
+%include "ieee802_15_4/codeword_mapper_bi.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_mapper_bi);

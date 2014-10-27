@@ -30,7 +30,8 @@ list(APPEND ieee802_15_4_sources
     uc_connection.cc
     fragmentation_impl.cc
     phr_prefixer_impl.cc
-    zeropadding_b_impl.cc )
+    zeropadding_b_impl.cc
+    codeword_mapper_bi_impl.cc )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}

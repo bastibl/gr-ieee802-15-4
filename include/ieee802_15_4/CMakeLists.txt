@@ -21,6 +21,7 @@ install(FILES
 	rime_stack.h
 	fragmentation.h
     phr_prefixer.h
-    zeropadding_b.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+    zeropadding_b.h
+    codeword_mapper_bi.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

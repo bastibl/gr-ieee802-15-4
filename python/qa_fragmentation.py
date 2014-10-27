@@ -50,6 +50,7 @@ class qa_fragmentation (gr_unittest.TestCase):
         self.tb.stop()
         # check data
         data = [i for i in self.snk.data()]
+        print data
         self.assertTrue(data==range(12))
 
     def test_002_t (self):
@@ -70,6 +71,7 @@ class qa_fragmentation (gr_unittest.TestCase):
         self.tb.stop()
         # check data
         data = [i for i in self.snk.data()]
+        print data
         self.assertTrue(data==range(12))
 
     def test_003_t (self):
@@ -90,6 +92,7 @@ class qa_fragmentation (gr_unittest.TestCase):
         self.tb.stop()
         # check data
         data = [i for i in self.snk.data()]
+        print data
         self.assertTrue(data==range(12))
 
     def test_004_t (self):
@@ -110,6 +113,7 @@ class qa_fragmentation (gr_unittest.TestCase):
         self.tb.stop()
         # check data
         data = [i for i in self.snk.data()]
+        print data
         self.assertTrue(data==range(12))
 
 if __name__ == '__main__':
