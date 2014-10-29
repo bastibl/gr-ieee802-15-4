@@ -24,5 +24,6 @@ install(FILES
     ieee802_15_4_codeword_mapper_bi.xml
     ieee802_15_4_interleaver_ii.xml
     ieee802_15_4_qpsk_mapper_if.xml
-    ieee802_15_4_dqpsk_mapper_ff.xml DESTINATION share/gnuradio/grc/blocks
+    ieee802_15_4_dqpsk_mapper_ff.xml
+    ieee802_15_4_dqcsk_mapper_fc.xml DESTINATION share/gnuradio/grc/blocks
 )

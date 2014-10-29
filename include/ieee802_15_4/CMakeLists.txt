@@ -25,6 +25,7 @@ install(FILES
     codeword_mapper_bi.h
     interleaver_ii.h
     qpsk_mapper_if.h
-    dqpsk_mapper_ff.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+    dqpsk_mapper_ff.h
+    dqcsk_mapper_fc.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='ASCII'?>
 <?grc format='1' created='3.7.6'?>
 <flow_graph>
-  <timestamp>Wed Oct 29 14:42:37 2014</timestamp>
+  <timestamp>Wed Oct 29 17:25:16 2014</timestamp>
   <block>
     <key>options</key>
     <param>
@@ -254,45 +254,6 @@
     <param>
       <key>_coordinate</key>
       <value>(368, 259)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>id</key>
-      <value>nzeros_padding</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Num padded zeros</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>intx</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(504, 11)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -596,49 +557,6 @@
     <key>ieee802_15_4_interleaver_ii</key>
     <param>
       <key>id</key>
-      <value>ieee802_15_4_interleaver_ii_0_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>intlv_seq</key>
-      <value>intlv_seq</value>
-    </param>
-    <param>
-      <key>forward</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(840, 379)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_interleaver_ii</key>
-    <param>
-      <key>id</key>
       <value>ieee802_15_4_interleaver_ii_0</value>
     </param>
     <param>
@@ -714,6 +632,88 @@
     </param>
   </block>
   <block>
+    <key>parameter</key>
+    <param>
+      <key>id</key>
+      <value>sym_per_frame</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Symbols per frame</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value></value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1088, 11)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_interleaver_ii</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_interleaver_ii_0_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>intlv_seq</key>
+      <value>intlv_seq</value>
+    </param>
+    <param>
+      <key>forward</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(840, 379)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
     <key>ieee802_15_4_dqpsk_mapper_ff</key>
     <param>
       <key>id</key>
@@ -757,42 +757,38 @@
     </param>
   </block>
   <block>
-    <key>blocks_null_sink</key>
+    <key>pad_sink</key>
     <param>
       <key>id</key>
-      <value>blocks_null_sink_0</value>
+      <value>pad_sink_0</value>
     </param>
     <param>
       <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
+      <key>label</key>
+      <value>txout</value>
+    </param>
+    <param>
       <key>type</key>
-      <value>float</value>
+      <value>complex</value>
     </param>
     <param>
       <key>vlen</key>
       <value>1</value>
     </param>
     <param>
-      <key>num_inputs</key>
+      <key>num_streams</key>
       <value>1</value>
     </param>
     <param>
-      <key>bus_conns</key>
-      <value>[[0,],]</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
+      <key>optional</key>
+      <value>False</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(256, 424)</value>
+      <value>(32, 419)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -803,7 +799,7 @@
     <key>parameter</key>
     <param>
       <key>id</key>
-      <value>sym_per_frame</value>
+      <value>num_subchirps</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -811,11 +807,50 @@
     </param>
     <param>
       <key>label</key>
-      <value>Symbols per frame</value>
+      <value>Num subchirps per sequence</value>
     </param>
     <param>
       <key>value</key>
       <value>1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>intx</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(728, 107)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>id</key>
+      <value>chirp_seq</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Chirp sequence</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>[]</value>
     </param>
     <param>
       <key>type</key>
@@ -831,7 +866,218 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1088, 11)</value>
+      <value>(192, 91)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>id</key>
+      <value>time_gap_1</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Time gap 1</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>()</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value></value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(328, 107)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>id</key>
+      <value>time_gap_2</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Time gap 2</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>()</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value></value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(448, 107)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_dqcsk_mapper_fc</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_dqcsk_mapper_fc_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>chirp_seq</key>
+      <value>chirp_seq</value>
+    </param>
+    <param>
+      <key>time_gap_1</key>
+      <value>time_gap_1</value>
+    </param>
+    <param>
+      <key>time_gap_2</key>
+      <value>time_gap_2</value>
+    </param>
+    <param>
+      <key>len_subchirp</key>
+      <value>len_sub</value>
+    </param>
+    <param>
+      <key>num_subchirp</key>
+      <value>num_subchirps</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(160, 387)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>id</key>
+      <value>len_sub</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Samples per subchirp</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>intx</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(560, 107)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>id</key>
+      <value>nzeros_padding</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Num padded zeros</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>intx</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(504, 11)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -906,7 +1152,13 @@
   </connection>
   <connection>
     <source_block_id>ieee802_15_4_dqpsk_mapper_ff_0</source_block_id>
-    <sink_block_id>blocks_null_sink_0</sink_block_id>
+    <sink_block_id>ieee802_15_4_dqcsk_mapper_fc_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_dqcsk_mapper_fc_0</source_block_id>
+    <sink_block_id>pad_sink_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

@@ -34,7 +34,8 @@ list(APPEND ieee802_15_4_sources
     codeword_mapper_bi_impl.cc
     interleaver_ii_impl.cc
     qpsk_mapper_if_impl.cc
-    dqpsk_mapper_ff_impl.cc )
+    dqpsk_mapper_ff_impl.cc
+    dqcsk_mapper_fc_impl.cc )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}

@@ -23,8 +23,8 @@ class physical_layer:
 		self.chirp_seq = self.possible_chirp_sequences[self.chirp_number-1]
 		self.n_subchirps = 4;
 		self.n_tau = css_constants.n_tau[self.chirp_number-1]
-		self.time_gap_1 = np.zeros((css_constants.n_chirp - 2*self.n_tau - self.n_subchirps*css_constants.n_sub,),dtype=np.complex64)
-		self.time_gap_2 = np.zeros((css_constants.n_chirp + 2*self.n_tau - self.n_subchirps*css_constants.n_sub,),dtype=np.complex64)
+		self.time_gap_1 = np.zeros((css_constants.n_chirp - 2*self.n_tau - self.n_subchirps*css_constants.n_sub,),dtype=np.complex128)
+		self.time_gap_2 = np.zeros((css_constants.n_chirp + 2*self.n_tau - self.n_subchirps*css_constants.n_sub,),dtype=np.complex128)
 		self.padded_zeros = self.calc_padded_zeros()
 		self.nsym_frame = self.calc_nsym_frame()
 		self.nsamp_frame = self.calc_nsamp_frame(self.nsym_frame)
@@ -36,15 +36,15 @@ class physical_layer:
 		nsym_frame = nsym_header + nsym_payload
 		if nsym_frame % 4 != 0:
 			raise Exception("Invalid frame length")
-		return nsym_frame
+		return int(nsym_frame)
 		
 	
 	def calc_nsamp_frame(self, nsym_frame):
 		nchirps = nsym_frame/4
 		if nchirps % 2 == 0:
-			return nchirps*css_constants.n_chirp
+			return int(nchirps*css_constants.n_chirp)
 		else:
-			return (nchirps-1)*css_constants.n_chirp + 4*css_constants.n_sub + len(self.time_gap_1)
+			return int((nchirps-1)*css_constants.n_chirp + 4*css_constants.n_sub + len(self.time_gap_1))
 
 	def calc_padded_zeros(self):
 		if self.slow_rate == True:
@@ -56,7 +56,7 @@ class physical_layer:
 			if (k-2)%4 != 0:
 				k += 4 - (k-2)%4
 			p = round(3.0/4*k - self.phy_packetsize_bytes - 3.0/2)
-		return p
+		return int(p)
 
 	def gen_rcfilt(self):
 		alpha = 0.25
