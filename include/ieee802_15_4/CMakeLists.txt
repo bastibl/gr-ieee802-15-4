@@ -22,6 +22,9 @@ install(FILES
 	fragmentation.h
     phr_prefixer.h
     zeropadding_b.h
-    codeword_mapper_bi.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+    codeword_mapper_bi.h
+    interleaver_ii.h
+    qpsk_mapper_if.h
+    dqpsk_mapper_ff.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

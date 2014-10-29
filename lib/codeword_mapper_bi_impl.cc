@@ -59,16 +59,22 @@ namespace gr {
     {
     }
 
+    void
+    codeword_mapper_bi_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required)
+    {
+      ninput_items_required[0] = d_bits_per_cw;
+    }
+
     int 
     codeword_mapper_bi_impl::bin2dec(const unsigned char* bin_ptr, int nbits)
     {
       int dec=0;
       for(int i=0; i<nbits; i++)
         dec += (bin_ptr[nbits-i-1] << i) & (0x01 << i);
-      std::cout << "bin in:";
-      for(int i=0; i<nbits; i++)
-        std::cout << " " << int(bin_ptr[i]);
-      std::cout << ", dec out: " << dec << std::endl;
+      // std::cout << "bin in:";
+      // for(int i=0; i<nbits; i++)
+      //   std::cout << " " << int(bin_ptr[i]);
+      // std::cout << ", dec out: " << dec << std::endl;
       return dec;    
     }
 

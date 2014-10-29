@@ -35,7 +35,7 @@ class qa_fragmentation (gr_unittest.TestCase):
     def test_001_t (self):
     	# PDU size > fragmentation size
         # set up fg
-        self.src = blocks.vector_source_b(range(12), False, 1, [])
+        self.src = blocks.vector_source_b(range(252), False, 1, [])
         self.s2ts = blocks.stream_to_tagged_stream(gr.sizeof_char, 1, 6, "packet_len")
         self.ts2pdu = blocks.tagged_stream_to_pdu(blocks.byte_t, "packet_len")
         self.frag = ieee802_15_4.fragmentation(4)
@@ -51,12 +51,12 @@ class qa_fragmentation (gr_unittest.TestCase):
         # check data
         data = [i for i in self.snk.data()]
         print data
-        self.assertTrue(data==range(12))
+        self.assertTrue(data==range(252))
 
     def test_002_t (self):
     	# PDU size < fragmentation size
         # set up fg
-        self.src = blocks.vector_source_b(range(12), False, 1, [])
+        self.src = blocks.vector_source_b(range(252), False, 1, [])
         self.s2ts = blocks.stream_to_tagged_stream(gr.sizeof_char, 1, 4, "packet_len")
         self.ts2pdu = blocks.tagged_stream_to_pdu(blocks.byte_t, "packet_len")
         self.frag = ieee802_15_4.fragmentation(6)
@@ -72,12 +72,12 @@ class qa_fragmentation (gr_unittest.TestCase):
         # check data
         data = [i for i in self.snk.data()]
         print data
-        self.assertTrue(data==range(12))
+        self.assertTrue(data==range(252))
 
     def test_003_t (self):
     	# PDU size > fragmentation size, overlap
         # set up fg
-        self.src = blocks.vector_source_b(range(14), False, 1, [])
+        self.src = blocks.vector_source_b(range(255), False, 1, [])
         self.s2ts = blocks.stream_to_tagged_stream(gr.sizeof_char, 1, 6, "packet_len")
         self.ts2pdu = blocks.tagged_stream_to_pdu(blocks.byte_t, "packet_len")
         self.frag = ieee802_15_4.fragmentation(4)
@@ -93,12 +93,12 @@ class qa_fragmentation (gr_unittest.TestCase):
         # check data
         data = [i for i in self.snk.data()]
         print data
-        self.assertTrue(data==range(12))
+        self.assertTrue(data==range(252))
 
     def test_004_t (self):
     	# PDU size < fragmentation size, overlap
         # set up fg
-        self.src = blocks.vector_source_b(range(14), False, 1, [])
+        self.src = blocks.vector_source_b(range(255), False, 1, [])
         self.s2ts = blocks.stream_to_tagged_stream(gr.sizeof_char, 1, 4, "packet_len")
         self.ts2pdu = blocks.tagged_stream_to_pdu(blocks.byte_t, "packet_len")
         self.frag = ieee802_15_4.fragmentation(6)
@@ -114,7 +114,7 @@ class qa_fragmentation (gr_unittest.TestCase):
         # check data
         data = [i for i in self.snk.data()]
         print data
-        self.assertTrue(data==range(12))
+        self.assertTrue(data==range(252))
 
 if __name__ == '__main__':
     gr_unittest.run(qa_fragmentation)

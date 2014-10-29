@@ -26,15 +26,20 @@ class physical_layer:
 		self.time_gap_1 = np.zeros((css_constants.n_chirp - 2*self.n_tau - self.n_subchirps*css_constants.n_sub,),dtype=np.complex64)
 		self.time_gap_2 = np.zeros((css_constants.n_chirp + 2*self.n_tau - self.n_subchirps*css_constants.n_sub,),dtype=np.complex64)
 		self.padded_zeros = self.calc_padded_zeros()
-		self.nsamp_frame = self.calc_frame_len()
+		self.nsym_frame = self.calc_nsym_frame()
+		self.nsamp_frame = self.calc_nsamp_frame(self.nsym_frame)
 
-	def calc_frame_len(self):
+	def calc_nsym_frame(self):
 		nbits_payload = len(self.PHR) + self.phy_packetsize_bytes*8 + 2*self.padded_zeros
 		nsym_payload = float(nbits_payload)/2/self.coderate
 		nsym_header = len(self.preamble) + len(self.SFD)
 		nsym_frame = nsym_header + nsym_payload
 		if nsym_frame % 4 != 0:
 			raise Exception("Invalid frame length")
+		return nsym_frame
+		
+	
+	def calc_nsamp_frame(self, nsym_frame):
 		nchirps = nsym_frame/4
 		if nchirps % 2 == 0:
 			return nchirps*css_constants.n_chirp

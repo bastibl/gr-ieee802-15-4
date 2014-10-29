@@ -18,37 +18,29 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H
-#define INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H
+#ifndef INCLUDED_IEEE802_15_4_QPSK_MAPPER_IF_IMPL_H
+#define INCLUDED_IEEE802_15_4_QPSK_MAPPER_IF_IMPL_H
 
-#include <ieee802_15_4/codeword_mapper_bi.h>
+#include <ieee802_15_4/qpsk_mapper_if.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class codeword_mapper_bi_impl : public codeword_mapper_bi
+    class qpsk_mapper_if_impl : public qpsk_mapper_if
     {
      private:
-      int d_bits_per_cw;
-      std::vector < std::vector<int> > d_codewords;
-      int d_len_cw;
-      float d_coderate;
-      int bin2dec(const unsigned char* bin_ptr, int nbits);
-
+      float* d_angle_tab;
      public:
-      codeword_mapper_bi_impl(int bits_per_cw, std::vector< std::vector< int > > codewords);
-      ~codeword_mapper_bi_impl();
+      qpsk_mapper_if_impl();
+      ~qpsk_mapper_if_impl();
 
-      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
-
-      int general_work(int noutput_items,
-		       gr_vector_int &ninput_items,
-		       gr_vector_const_void_star &input_items,
-		       gr_vector_void_star &output_items);
+      int work(int noutput_items,
+	       gr_vector_const_void_star &input_items,
+	       gr_vector_void_star &output_items);
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_QPSK_MAPPER_IF_IMPL_H */
 

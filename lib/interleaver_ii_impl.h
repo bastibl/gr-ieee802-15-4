@@ -18,37 +18,33 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H
-#define INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H
+#ifndef INCLUDED_IEEE802_15_4_INTERLEAVER_II_IMPL_H
+#define INCLUDED_IEEE802_15_4_INTERLEAVER_II_IMPL_H
 
-#include <ieee802_15_4/codeword_mapper_bi.h>
+#include <ieee802_15_4/interleaver_ii.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class codeword_mapper_bi_impl : public codeword_mapper_bi
+    class interleaver_ii_impl : public interleaver_ii
     {
      private:
-      int d_bits_per_cw;
-      std::vector < std::vector<int> > d_codewords;
-      int d_len_cw;
-      float d_coderate;
-      int bin2dec(const unsigned char* bin_ptr, int nbits);
+      std::vector<int> d_intlv_seq;
+      int d_len_intlv_seq;
+      bool d_forward;
 
      public:
-      codeword_mapper_bi_impl(int bits_per_cw, std::vector< std::vector< int > > codewords);
-      ~codeword_mapper_bi_impl();
+      interleaver_ii_impl(std::vector<int> intlv_seq, bool forward);
+      ~interleaver_ii_impl();
 
-      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
-
-      int general_work(int noutput_items,
-		       gr_vector_int &ninput_items,
-		       gr_vector_const_void_star &input_items,
-		       gr_vector_void_star &output_items);
+      // Where all the action really happens
+      int work(int noutput_items,
+	       gr_vector_const_void_star &input_items,
+	       gr_vector_void_star &output_items);
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_INTERLEAVER_II_IMPL_H */
 

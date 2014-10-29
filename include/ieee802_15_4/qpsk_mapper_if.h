@@ -18,37 +18,39 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H
-#define INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H
 
-#include <ieee802_15_4/codeword_mapper_bi.h>
+#ifndef INCLUDED_IEEE802_15_4_QPSK_MAPPER_IF_H
+#define INCLUDED_IEEE802_15_4_QPSK_MAPPER_IF_H
+
+#include <ieee802_15_4/api.h>
+#include <gnuradio/sync_block.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class codeword_mapper_bi_impl : public codeword_mapper_bi
+    /*!
+     * \brief <+description of block+>
+     * \ingroup ieee802_15_4
+     *
+     */
+    class IEEE802_15_4_API qpsk_mapper_if : virtual public gr::sync_block
     {
-     private:
-      int d_bits_per_cw;
-      std::vector < std::vector<int> > d_codewords;
-      int d_len_cw;
-      float d_coderate;
-      int bin2dec(const unsigned char* bin_ptr, int nbits);
-
      public:
-      codeword_mapper_bi_impl(int bits_per_cw, std::vector< std::vector< int > > codewords);
-      ~codeword_mapper_bi_impl();
+      typedef boost::shared_ptr<qpsk_mapper_if> sptr;
 
-      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
-
-      int general_work(int noutput_items,
-		       gr_vector_int &ninput_items,
-		       gr_vector_const_void_star &input_items,
-		       gr_vector_void_star &output_items);
+      /*!
+       * \brief Return a shared_ptr to a new instance of ieee802_15_4::qpsk_mapper_if.
+       *
+       * To avoid accidental use of raw pointers, ieee802_15_4::qpsk_mapper_if's
+       * constructor is in a private implementation
+       * class. ieee802_15_4::qpsk_mapper_if::make is the public interface for
+       * creating new instances.
+       */
+      static sptr make();
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_QPSK_MAPPER_IF_H */
 

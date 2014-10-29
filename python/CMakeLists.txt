@@ -47,3 +47,6 @@ GR_ADD_TEST(qa_fragmentation ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa
 GR_ADD_TEST(qa_phr_prefixer ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_phr_prefixer.py)
 GR_ADD_TEST(qa_zeropadding_b ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_zeropadding_b.py)
 GR_ADD_TEST(qa_codeword_mapper_bi ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_codeword_mapper_bi.py)
+GR_ADD_TEST(qa_interleaver_ii ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_interleaver_ii.py)
+GR_ADD_TEST(qa_qpsk_mapper_if ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_qpsk_mapper_if.py)
+GR_ADD_TEST(qa_dqpsk_mapper_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dqpsk_mapper_ff.py)

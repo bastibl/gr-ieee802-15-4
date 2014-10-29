@@ -18,37 +18,38 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H
-#define INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H
+#ifndef INCLUDED_IEEE802_15_4_DQPSK_MAPPER_FF_IMPL_H
+#define INCLUDED_IEEE802_15_4_DQPSK_MAPPER_FF_IMPL_H
 
-#include <ieee802_15_4/codeword_mapper_bi.h>
+#include <ieee802_15_4/dqpsk_mapper_ff.h>
+#include <boost/circular_buffer.hpp>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class codeword_mapper_bi_impl : public codeword_mapper_bi
+    class dqpsk_mapper_ff_impl : public dqpsk_mapper_ff
     {
      private:
-      int d_bits_per_cw;
-      std::vector < std::vector<int> > d_codewords;
-      int d_len_cw;
-      float d_coderate;
-      int bin2dec(const unsigned char* bin_ptr, int nbits);
+      bool d_forward;
+      int d_framelen;
+      int d_symctr;
+      int d_nmem;
+      boost::circular_buffer<float> d_mem;
+      float d_init_val;
+      void reset_mem();
 
      public:
-      codeword_mapper_bi_impl(int bits_per_cw, std::vector< std::vector< int > > codewords);
-      ~codeword_mapper_bi_impl();
+      dqpsk_mapper_ff_impl(int framelen, bool forward);
+      ~dqpsk_mapper_ff_impl();
 
-      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
-
-      int general_work(int noutput_items,
-		       gr_vector_int &ninput_items,
-		       gr_vector_const_void_star &input_items,
-		       gr_vector_void_star &output_items);
+      // Where all the action really happens
+      int work(int noutput_items,
+	       gr_vector_const_void_star &input_items,
+	       gr_vector_void_star &output_items);
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_CODEWORD_MAPPER_BI_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_DQPSK_MAPPER_FF_IMPL_H */
 

@@ -21,11 +21,10 @@
 
 from gnuradio import gr, gr_unittest
 from gnuradio import blocks
-import ieee802_15_4_swig as ieee802_15_4
 import numpy as np
-from css_phy import physical_layer as phy
+import ieee802_15_4_swig as ieee802_15_4
 
-class qa_codeword_mapper_bi (gr_unittest.TestCase):
+class qa_qpsk_mapper_if (gr_unittest.TestCase):
 
     def setUp (self):
         self.tb = gr.top_block ()
@@ -35,24 +34,18 @@ class qa_codeword_mapper_bi (gr_unittest.TestCase):
 
     def test_001_t (self):
         # set up fg
-        cfg = phy()
-        bits = (0,0,0, 0,0,1, 0,1,0, 0,1,1, 1,0,0, 1,0,1, 1,1,0, 1,1,1)
-        cw = cfg.codewords
-        self.src = blocks.vector_source_b(bits)
-        self.enc = ieee802_15_4.codeword_mapper_bi(bits_per_cw=cfg.bits_per_symbol,codewords=cw)
-        self.snk = blocks.vector_sink_i(1)
-        self.snk2 = blocks.vector_sink_b(1)
-        self.tb.connect(self.src, self.enc, self.snk)
-        self.tb.connect(self.src, self.snk2)
-        self.tb.run()
+        self.src_I = blocks.vector_source_i([1,-1,1,-1])
+        self.src_Q = blocks.vector_source_i([1,1,-1,-1])
+        self.qpsk_mapper = ieee802_15_4.qpsk_mapper_if()
+        self.snk = blocks.vector_sink_f(1)
+        self.tb.connect(self.src_I, (self.qpsk_mapper,0))
+        self.tb.connect(self.src_Q, (self.qpsk_mapper,1))
+        self.tb.connect(self.qpsk_mapper, self.snk)
+        self.tb.run ()
         # check data
+        ref = [0, np.pi/2, -np.pi/2, np.pi]
         data = self.snk.data()
-        print "len data:", len(self.snk2.data())
-        print "rx data:", data
-        ref = np.concatenate((cw[0], cw[1], cw[2], cw[3], cw[4], cw[5], cw[6], cw[7]))
-        print "ref:", ref
-        self.assertFloatTuplesAlmostEqual(data, ref)
-
+        self.assertFloatTuplesAlmostEqual(data, ref, 5)
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_codeword_mapper_bi)
+    gr_unittest.run(qa_qpsk_mapper_if, "qa_qpsk_mapper_if.xml")

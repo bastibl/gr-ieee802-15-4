@@ -31,7 +31,10 @@ list(APPEND ieee802_15_4_sources
     fragmentation_impl.cc
     phr_prefixer_impl.cc
     zeropadding_b_impl.cc
-    codeword_mapper_bi_impl.cc )
+    codeword_mapper_bi_impl.cc
+    interleaver_ii_impl.cc
+    qpsk_mapper_if_impl.cc
+    dqpsk_mapper_ff_impl.cc )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}

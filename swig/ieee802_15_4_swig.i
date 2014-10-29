@@ -29,6 +29,9 @@
 #include "ieee802_15_4/phr_prefixer.h"
 #include "ieee802_15_4/zeropadding_b.h"
 #include "ieee802_15_4/codeword_mapper_bi.h"
+#include "ieee802_15_4/interleaver_ii.h"
+#include "ieee802_15_4/qpsk_mapper_if.h"
+#include "ieee802_15_4/dqpsk_mapper_ff.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -50,3 +53,9 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, phr_prefixer);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, zeropadding_b);
 %include "ieee802_15_4/codeword_mapper_bi.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_mapper_bi);
+%include "ieee802_15_4/interleaver_ii.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, interleaver_ii);
+%include "ieee802_15_4/qpsk_mapper_if.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, qpsk_mapper_if);
+%include "ieee802_15_4/dqpsk_mapper_ff.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, dqpsk_mapper_ff);
