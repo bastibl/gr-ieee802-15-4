@@ -76,11 +76,11 @@ namespace gr {
         const float *in = (const float*) input_items[0];
         gr_complex *out = (gr_complex*) output_items[0];
 
-        std::cout << "work called with " << ninput_items[0] << " input and " << noutput_items << " output items" << std::endl;
-        std::cout << "input buffer:";
-        for(int i=0; i<ninput_items[0]; i++)
-          std::cout << " " << in[i];
-        std::cout << std::endl;
+        // std::cout << "work called with " << ninput_items[0] << " input and " << noutput_items << " output items" << std::endl;
+        // std::cout << "input buffer:";
+        // for(int i=0; i<ninput_items[0]; i++)
+        //   std::cout << " " << in[i];
+        // std::cout << std::endl;
         int nitems_written = 0;
         for(int i=0; i<noutput_items; i++)
         {
@@ -88,20 +88,20 @@ namespace gr {
           {
             if(d_chirp_seq_ctr % 2 == 0)
             {
-              std::cout << "insert tg1" << std::endl;
+              // std::cout << "insert tg1" << std::endl;
               memcpy(out+nitems_written, &d_time_gap_1[0], sizeof(gr_complex)*d_time_gap_1.size());
               nitems_written += d_time_gap_1.size();
             }
             else
             {
-              std::cout << "insert tg2" << std::endl;
+              // std::cout << "insert tg2" << std::endl;
               memcpy(out+nitems_written, &d_time_gap_2[0], sizeof(gr_complex)*d_time_gap_2.size());
               nitems_written += d_time_gap_2.size();              
             }
             d_chirp_seq_ctr = (d_chirp_seq_ctr+1) % 2;
             d_subchirp_ctr = 0;
           }
-          std::cout << "mult subchirp #" << d_subchirp_ctr << "/" << d_num_subchirp << std::endl;
+          // std::cout << "mult subchirp #" << d_subchirp_ctr << "/" << d_num_subchirp << std::endl;
           for(int n=0; n<d_len_subchirp; n++)
           {
             out[nitems_written+n] = d_chirp_seq[d_len_subchirp*d_subchirp_ctr+n]*std::polar(float(1.0),in[i]);
@@ -111,7 +111,7 @@ namespace gr {
 
         }
 
-        std::cout << "return with " << noutput_items << " consumed and " << nitems_written << " consumed items" << std::endl;
+        // std::cout << "return with " << noutput_items << " consumed and " << nitems_written << " consumed items" << std::endl;
         consume_each (noutput_items);
         return nitems_written;
     }

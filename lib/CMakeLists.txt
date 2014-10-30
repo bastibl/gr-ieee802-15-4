@@ -35,7 +35,8 @@ list(APPEND ieee802_15_4_sources
     interleaver_ii_impl.cc
     qpsk_mapper_if_impl.cc
     dqpsk_mapper_ff_impl.cc
-    dqcsk_mapper_fc_impl.cc )
+    dqcsk_mapper_fc_impl.cc
+    preamble_sfd_prefixer_ii_impl.cc )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}

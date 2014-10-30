@@ -10,3 +10,4 @@ contiki/*.map
 contiki/*.ihex
 contiki/*.sky
 matlab/*~
+examples/transceiver.py

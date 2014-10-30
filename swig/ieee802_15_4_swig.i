@@ -33,6 +33,7 @@
 #include "ieee802_15_4/qpsk_mapper_if.h"
 #include "ieee802_15_4/dqpsk_mapper_ff.h"
 #include "ieee802_15_4/dqcsk_mapper_fc.h"
+#include "ieee802_15_4/preamble_sfd_prefixer_ii.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -62,3 +63,5 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, qpsk_mapper_if);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, dqpsk_mapper_ff);
 %include "ieee802_15_4/dqcsk_mapper_fc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, dqcsk_mapper_fc);
+%include "ieee802_15_4/preamble_sfd_prefixer_ii.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, preamble_sfd_prefixer_ii);
