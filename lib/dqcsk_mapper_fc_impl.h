@@ -41,7 +41,7 @@ namespace gr {
       dqcsk_mapper_fc_impl(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirp);
       ~dqcsk_mapper_fc_impl();
 
-      // void forecast (int noutput_items, gr_vector_int &ninput_items_required);
+      void forecast (int noutput_items, gr_vector_int &ninput_items_required);
 
       int general_work(int noutput_items,
 		       gr_vector_int &ninput_items,

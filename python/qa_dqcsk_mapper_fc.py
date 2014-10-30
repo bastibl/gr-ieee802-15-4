@@ -45,7 +45,7 @@ class qa_dqcsk_mapper_fc (gr_unittest.TestCase):
         self.tb.run ()
         # check data
         data_out = self.snk.data()
-        ref = np.concatenate((cfg.chirp_seq, cfg.time_gap_1, cfg.chirp_seq, cfg.time_gap_2, cfg.chirp_seq))
+        ref = np.concatenate((cfg.chirp_seq, cfg.time_gap_1, cfg.chirp_seq, cfg.time_gap_2, cfg.chirp_seq, cfg.time_gap_1))
         # print "ref:", ref[:10]
         # print "data:", data_out[:10]
         self.assertComplexTuplesAlmostEqual(data_out, ref)
@@ -61,7 +61,7 @@ class qa_dqcsk_mapper_fc (gr_unittest.TestCase):
         self.tb.run ()
         # check data
         data_out = self.snk.data()
-        ref = cfg.chirp_seq.copy()
+        ref = np.concatenate((cfg.chirp_seq.copy(), cfg.time_gap_1))
         for i in range(4):
         	ref[i*c.n_sub:(i+1)*c.n_sub] = ref[i*c.n_sub:(i+1)*c.n_sub]*np.exp(1j*data_in[i])
         # print "ref:", ref[:10]

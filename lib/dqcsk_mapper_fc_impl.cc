@@ -51,8 +51,8 @@ namespace gr {
       d_subchirp_ctr(0),
       d_chirp_seq_ctr(0)
     {
-      set_relative_rate((d_chirp_seq.size()+d_time_gap_1.size()+d_time_gap_2.size())/8.0);
-      // set_min_output_buffer(std::min(d_chirp_seq.size()/d_len_subchirp), d_time_gap_2.size());
+      // set_relative_rate((d_chirp_seq.size()+d_time_gap_1.size()+d_time_gap_2.size())/8.0);
+      set_min_output_buffer(4*d_len_subchirp+d_time_gap_2.size());
     }
 
     /*
@@ -61,11 +61,11 @@ namespace gr {
     dqcsk_mapper_fc_impl::~dqcsk_mapper_fc_impl()
     {}
 
-    // void
-    // dqcsk_mapper_fc_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
-    // {
-    //     ninput_items_required[0] = noutput_items */
-    // }
+    void
+    dqcsk_mapper_fc_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+    {
+        ninput_items_required[0] = d_num_subchirp; 
+    }
 
     int
     dqcsk_mapper_fc_impl::general_work (int noutput_items,
@@ -81,38 +81,37 @@ namespace gr {
         // for(int i=0; i<ninput_items[0]; i++)
         //   std::cout << " " << in[i];
         // std::cout << std::endl;
+
         int nitems_written = 0;
-        for(int i=0; i<noutput_items; i++)
+        
+        int subchirp_ctr = 0;
+        for(int i=0; i<d_num_subchirp; i++)
         {
-          if(d_subchirp_ctr==d_num_subchirp)
-          {
-            if(d_chirp_seq_ctr % 2 == 0)
-            {
-              // std::cout << "insert tg1" << std::endl;
-              memcpy(out+nitems_written, &d_time_gap_1[0], sizeof(gr_complex)*d_time_gap_1.size());
-              nitems_written += d_time_gap_1.size();
-            }
-            else
-            {
-              // std::cout << "insert tg2" << std::endl;
-              memcpy(out+nitems_written, &d_time_gap_2[0], sizeof(gr_complex)*d_time_gap_2.size());
-              nitems_written += d_time_gap_2.size();              
-            }
-            d_chirp_seq_ctr = (d_chirp_seq_ctr+1) % 2;
-            d_subchirp_ctr = 0;
-          }
-          // std::cout << "mult subchirp #" << d_subchirp_ctr << "/" << d_num_subchirp << std::endl;
           for(int n=0; n<d_len_subchirp; n++)
           {
-            out[nitems_written+n] = d_chirp_seq[d_len_subchirp*d_subchirp_ctr+n]*std::polar(float(1.0),in[i]);
+            out[nitems_written+n] = d_chirp_seq[d_len_subchirp*subchirp_ctr+n]*std::polar(float(1.0),in[i]);
           }
-          nitems_written += d_len_subchirp;
-          d_subchirp_ctr++;
+          subchirp_ctr++;
+          nitems_written += d_len_subchirp;   
+        }   
 
+        if(d_chirp_seq_ctr % 2 == 0)
+        {
+          // std::cout << "insert tg1" << std::endl;
+          memcpy(out+nitems_written, &d_time_gap_1[0], sizeof(gr_complex)*d_time_gap_1.size());
+          nitems_written += d_time_gap_1.size();          
         }
+        else
+        {
+          // std::cout << "insert tg2" << std::endl;
+          memcpy(out+nitems_written, &d_time_gap_2[0], sizeof(gr_complex)*d_time_gap_2.size());
+          nitems_written += d_time_gap_2.size();              
+        }
+        d_chirp_seq_ctr = (d_chirp_seq_ctr+1) % 2;
 
-        // std::cout << "return with " << noutput_items << " consumed and " << nitems_written << " consumed items" << std::endl;
-        consume_each (noutput_items);
+
+        // std::cout << "return with " << d_num_subchirp << " consumed and " << nitems_written << " output items" << std::endl;
+        consume_each(d_num_subchirp);
         return nitems_written;
     }
 
