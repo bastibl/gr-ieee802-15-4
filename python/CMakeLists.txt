@@ -53,3 +53,4 @@ GR_ADD_TEST(qa_dqpsk_mapper_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/
 GR_ADD_TEST(qa_dqcsk_mapper_fc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dqcsk_mapper_fc.py)
 GR_ADD_TEST(qa_preamble_sfd_prefixer_ii ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_preamble_sfd_prefixer_ii.py)
 GR_ADD_TEST(qa_dqcsk_demapper_cf ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dqcsk_demapper_cf.py)
+GR_ADD_TEST(qa_qpsk_demapper_fi ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_qpsk_demapper_fi.py)

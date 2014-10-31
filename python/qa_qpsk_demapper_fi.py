@@ -21,10 +21,10 @@
 
 from gnuradio import gr, gr_unittest
 from gnuradio import blocks
-import numpy as np
 import ieee802_15_4_swig as ieee802_15_4
+import numpy as np
 
-class qa_qpsk_mapper_if (gr_unittest.TestCase):
+class qa_qpsk_demapper_fi (gr_unittest.TestCase):
 
     def setUp (self):
         self.tb = gr.top_block ()
@@ -34,18 +34,26 @@ class qa_qpsk_mapper_if (gr_unittest.TestCase):
 
     def test_001_t (self):
         # set up fg
-        self.src_I = blocks.vector_source_i([1,-1,1,-1])
-        self.src_Q = blocks.vector_source_i([1,1,-1,-1])
-        self.qpsk_mapper = ieee802_15_4.qpsk_mapper_if()
-        self.snk = blocks.vector_sink_f(1)
-        self.tb.connect(self.src_I, (self.qpsk_mapper,0))
-        self.tb.connect(self.src_Q, (self.qpsk_mapper,1))
-        self.tb.connect(self.qpsk_mapper, self.snk)
+        data_in = [0, np.pi/2, -np.pi/2, np.pi]
+        self.src = blocks.vector_source_f(data_in)
+        self.qpsk_demapper = ieee802_15_4.qpsk_demapper_fi()
+        self.snk_I = blocks.vector_sink_i(1)
+        self.snk_Q = blocks.vector_sink_i(1)
+        self.tb.connect(self.src, self.qpsk_demapper)
+        self.tb.connect((self.qpsk_demapper,0), self.snk_I)
+        self.tb.connect((self.qpsk_demapper,1), self.snk_Q)
         self.tb.run ()
         # check data
-        ref = [0, np.pi/2, -np.pi/2, np.pi]
-        data = self.snk.data()
-        self.assertFloatTuplesAlmostEqual(data, ref, 5)
+        ref_I = [1,-1,1,-1]
+        ref_Q = [1,1,-1,-1]  
+        print "data in:", data_in   
+        print "ref I:", ref_I
+        print "data I:", self.snk_I.data()
+        print "ref Q:", ref_Q
+        print "data Q:", self.snk_Q.data()
+
+        self.assertFloatTuplesAlmostEqual(ref_I, self.snk_I.data())
+        self.assertFloatTuplesAlmostEqual(ref_Q, self.snk_Q.data())
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_qpsk_mapper_if)
+    gr_unittest.run(qa_qpsk_demapper_fi)
