@@ -29,6 +29,8 @@ install(FILES
     dqcsk_mapper_fc.h
     preamble_sfd_prefixer_ii.h
     dqcsk_demapper_cf.h
-    qpsk_demapper_fi.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+    qpsk_demapper_fi.h
+    codeword_demapper_ib.h
+    zeropadding_removal_b.h	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

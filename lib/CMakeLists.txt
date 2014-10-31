@@ -38,7 +38,9 @@ list(APPEND ieee802_15_4_sources
     dqcsk_mapper_fc_impl.cc
     preamble_sfd_prefixer_ii_impl.cc
     dqcsk_demapper_cf_impl.cc
-    qpsk_demapper_fi_impl.cc )
+    qpsk_demapper_fi_impl.cc
+    codeword_demapper_ib_impl.cc
+    zeropadding_removal_b_impl.cc )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}

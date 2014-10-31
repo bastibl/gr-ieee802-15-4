@@ -36,6 +36,8 @@
 #include "ieee802_15_4/preamble_sfd_prefixer_ii.h"
 #include "ieee802_15_4/dqcsk_demapper_cf.h"
 #include "ieee802_15_4/qpsk_demapper_fi.h"
+#include "ieee802_15_4/codeword_demapper_ib.h"
+#include "ieee802_15_4/zeropadding_removal_b.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -71,3 +73,7 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, preamble_sfd_prefixer_ii);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, dqcsk_demapper_cf);
 %include "ieee802_15_4/qpsk_demapper_fi.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, qpsk_demapper_fi);
+%include "ieee802_15_4/codeword_demapper_ib.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_demapper_ib);
+%include "ieee802_15_4/zeropadding_removal_b.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, zeropadding_removal_b);

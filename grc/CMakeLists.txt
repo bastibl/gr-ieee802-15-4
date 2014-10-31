@@ -28,5 +28,7 @@ install(FILES
     ieee802_15_4_dqcsk_mapper_fc.xml
     ieee802_15_4_preamble_sfd_prefixer_ii.xml
     ieee802_15_4_dqcsk_demapper_cf.xml
-    ieee802_15_4_qpsk_demapper_fi.xml DESTINATION share/gnuradio/grc/blocks
+    ieee802_15_4_qpsk_demapper_fi.xml
+    ieee802_15_4_codeword_demapper_ib.xml
+    ieee802_15_4_zeropadding_removal_b.xml DESTINATION share/gnuradio/grc/blocks
 )
