@@ -27,7 +27,7 @@ import css_constants as c
 import numpy as np
 import matplotlib.pyplot as plt
 
-class qa_dqcsk_mapper_fc (gr_unittest.TestCase):
+class qa_dqcsk_demapper_cf (gr_unittest.TestCase):
 
     def setUp (self):
         self.tb = gr.top_block ()
@@ -38,18 +38,18 @@ class qa_dqcsk_mapper_fc (gr_unittest.TestCase):
     def test_001_t (self):
         # set up fg
         cfg = phy()
-        data_in = [0 for i in range(12)]
-        self.src = blocks.vector_source_f(data_in)
-        self.dqcsk = ieee802_15_4.dqcsk_mapper_fc(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps)
-        self.snk = blocks.vector_sink_c(1)
+        data_in = np.concatenate((cfg.chirp_seq, cfg.time_gap_1, cfg.chirp_seq, cfg.time_gap_2, cfg.chirp_seq, cfg.time_gap_1))
+        self.src = blocks.vector_source_c(data_in)
+        self.dqcsk = ieee802_15_4.dqcsk_demapper_cf(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps)
+        self.snk = blocks.vector_sink_f(1)
         self.tb.connect(self.src, self.dqcsk, self.snk)
         self.tb.run ()
         # check data
+        ref = [0 for i in range(12)]
         data_out = self.snk.data()
-        ref = np.concatenate((cfg.chirp_seq, cfg.time_gap_1, cfg.chirp_seq, cfg.time_gap_2, cfg.chirp_seq, cfg.time_gap_1))
         # print "ref:", ref[:10]
         # print "data:", data_out[:10]
-        f,axarr = plt.subplots(2)
+        # f,axarr = plt.subplots(2)
         # axarr[0].plot(np.real(ref))
         # axarr[1].plot(np.real(data_out))
         # plt.show()
@@ -58,22 +58,21 @@ class qa_dqcsk_mapper_fc (gr_unittest.TestCase):
     def test_002_t (self):
         # set up fg
         cfg = phy()
-        data_in = [0, np.pi/2, np.pi, -np.pi/2]
-        self.src = blocks.vector_source_f(data_in)
-        self.dqcsk = ieee802_15_4.dqcsk_mapper_fc(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps)
-        self.snk = blocks.vector_sink_c(1)
+        ref = [0, np.pi/2, np.pi, -np.pi/2]
+        data_in = np.concatenate((cfg.chirp_seq.copy(), cfg.time_gap_1))
+        for i in range(4):
+        	data_in[i*c.n_sub:(i+1)*c.n_sub] = data_in[i*c.n_sub:(i+1)*c.n_sub]*np.exp(1j*ref[i])        
+        self.src = blocks.vector_source_c(data_in)
+        self.dqcsk = ieee802_15_4.dqcsk_demapper_cf(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps)
+        self.snk = blocks.vector_sink_f(1)
         self.tb.connect(self.src, self.dqcsk, self.snk)
         self.tb.run ()
         # check data
         data_out = self.snk.data()
-        ref = np.concatenate((cfg.chirp_seq.copy(), cfg.time_gap_1))
-        for i in range(4):
-        	ref[i*c.n_sub:(i+1)*c.n_sub] = ref[i*c.n_sub:(i+1)*c.n_sub]*np.exp(1j*data_in[i])
+
         # print "ref:", ref[:10]
         # print "data:", data_out[:10]
         self.assertComplexTuplesAlmostEqual(data_out, ref, 5)
 
-
-
 if __name__ == '__main__':
-    gr_unittest.run(qa_dqcsk_mapper_fc)
+    gr_unittest.run(qa_dqcsk_demapper_cf)

@@ -30,16 +30,16 @@ namespace gr {
   namespace ieee802_15_4 {
 
     dqcsk_mapper_fc::sptr
-    dqcsk_mapper_fc::make(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirp)
+    dqcsk_mapper_fc::make(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirps)
     {
       return gnuradio::get_initial_sptr
-        (new dqcsk_mapper_fc_impl(chirp_seq, time_gap_1, time_gap_2, len_subchirp, num_subchirp));
+        (new dqcsk_mapper_fc_impl(chirp_seq, time_gap_1, time_gap_2, len_subchirp, num_subchirps));
     }
 
     /*
      * The private constructor
      */
-    dqcsk_mapper_fc_impl::dqcsk_mapper_fc_impl(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirp)
+    dqcsk_mapper_fc_impl::dqcsk_mapper_fc_impl(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirps)
       : gr::block("dqcsk_mapper_fc",
               gr::io_signature::make(1,1, sizeof(float)),
               gr::io_signature::make(1,1, sizeof(gr_complex))),
@@ -47,8 +47,7 @@ namespace gr {
       d_time_gap_1(time_gap_1),
       d_time_gap_2(time_gap_2),
       d_len_subchirp(len_subchirp),
-      d_num_subchirp(num_subchirp),
-      d_subchirp_ctr(0),
+      d_num_subchirps(num_subchirps),
       d_chirp_seq_ctr(0)
     {
       // set_relative_rate((d_chirp_seq.size()+d_time_gap_1.size()+d_time_gap_2.size())/8.0);
@@ -64,7 +63,7 @@ namespace gr {
     void
     dqcsk_mapper_fc_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
-        ninput_items_required[0] = d_num_subchirp; 
+        ninput_items_required[0] = d_num_subchirps; 
     }
 
     int
@@ -82,19 +81,11 @@ namespace gr {
         //   std::cout << " " << in[i];
         // std::cout << std::endl;
 
-        int nitems_written = 0;
+        for(int i=0; i<d_num_subchirps; i++)
+          volk_32fc_s32fc_multiply_32fc(out+i*d_len_subchirp, &d_chirp_seq[d_len_subchirp*i], std::polar(float(1.0),in[i]), d_len_subchirp);
+       
+        int nitems_written = d_num_subchirps*d_len_subchirp;
         
-        int subchirp_ctr = 0;
-        for(int i=0; i<d_num_subchirp; i++)
-        {
-          for(int n=0; n<d_len_subchirp; n++)
-          {
-            out[nitems_written+n] = d_chirp_seq[d_len_subchirp*subchirp_ctr+n]*std::polar(float(1.0),in[i]);
-          }
-          subchirp_ctr++;
-          nitems_written += d_len_subchirp;   
-        }   
-
         if(d_chirp_seq_ctr % 2 == 0)
         {
           // std::cout << "insert tg1" << std::endl;
@@ -110,8 +101,8 @@ namespace gr {
         d_chirp_seq_ctr = (d_chirp_seq_ctr+1) % 2;
 
 
-        // std::cout << "return with " << d_num_subchirp << " consumed and " << nitems_written << " output items" << std::endl;
-        consume_each(d_num_subchirp);
+        // std::cout << "return with " << d_num_subchirps << " consumed and " << nitems_written << " output items" << std::endl;
+        consume_each(d_num_subchirps);
         return nitems_written;
     }
 

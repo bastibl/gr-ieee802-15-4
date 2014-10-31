@@ -18,15 +18,15 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802_15_4_DQCSK_MAPPER_FC_IMPL_H
-#define INCLUDED_IEEE802_15_4_DQCSK_MAPPER_FC_IMPL_H
+#ifndef INCLUDED_IEEE802_15_4_DQCSK_DEMAPPER_CF_IMPL_H
+#define INCLUDED_IEEE802_15_4_DQCSK_DEMAPPER_CF_IMPL_H
 
-#include <ieee802_15_4/dqcsk_mapper_fc.h>
+#include <ieee802_15_4/dqcsk_demapper_cf.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class dqcsk_mapper_fc_impl : public dqcsk_mapper_fc
+    class dqcsk_demapper_cf_impl : public dqcsk_demapper_cf
     {
      private:
       std::vector<gr_complex> d_chirp_seq;
@@ -37,8 +37,8 @@ namespace gr {
       int d_chirp_seq_ctr;
 
      public:
-      dqcsk_mapper_fc_impl(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirps);
-      ~dqcsk_mapper_fc_impl();
+      dqcsk_demapper_cf_impl(std::vector< gr_complex> chirp_seq, std::vector< gr_complex > time_gap_1, std::vector< gr_complex > time_gap_2, int len_subchirp, int num_subchirps);
+      ~dqcsk_demapper_cf_impl();
 
       void forecast (int noutput_items, gr_vector_int &ninput_items_required);
 
@@ -51,5 +51,5 @@ namespace gr {
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_DQCSK_MAPPER_FC_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_DQCSK_DEMAPPER_CF_IMPL_H */
 
