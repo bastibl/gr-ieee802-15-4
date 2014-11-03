@@ -68,7 +68,7 @@ namespace gr {
       unsigned char dest[1];
       unsigned char src[8] = {0,0,0,0,0,1,1,1};
       pack(dest, src, 1);
-      std::cout << int(*dest) << std::endl;
+      // std::cout << int(*dest) << std::endl;
 
       pmt::pmt_t blob = pmt::cdr(msg);
       size_t data_len = pmt::blob_length(blob);
@@ -92,10 +92,10 @@ namespace gr {
         tmp = 0;
         for(int k=0; k<8; k++)
         {
-          std::cout << int(src_unpacked[(i+1)*8-k-1]) << " shifted by " << k << " is " <<  (src_unpacked[(i+1)*8-1-k] << k) << std::endl;
+          // std::cout << int(src_unpacked[(i+1)*8-k-1]) << " shifted by " << k << " is " <<  (src_unpacked[(i+1)*8-1-k] << k) << std::endl;
           tmp += src_unpacked[(i+1)*8-k-1] << k;
         }
-        std::cout << std::endl;
+        // std::cout << std::endl;
         dest_packed[i] = tmp;
       }
     }

@@ -50,8 +50,7 @@ namespace gr {
       d_num_subchirps(num_subchirps),
       d_chirp_seq_ctr(0)
     {
-      // set_relative_rate((d_chirp_seq.size()+d_time_gap_1.size()+d_time_gap_2.size())/8.0);
-      set_min_output_buffer(4*d_len_subchirp+d_time_gap_2.size());
+      set_output_multiple(4*d_len_subchirp+d_time_gap_2.size());
     }
 
     /*
@@ -102,6 +101,7 @@ namespace gr {
 
 
         // std::cout << "return with " << d_num_subchirps << " consumed and " << nitems_written << " output items" << std::endl;
+
         consume_each(d_num_subchirps);
         return nitems_written;
     }

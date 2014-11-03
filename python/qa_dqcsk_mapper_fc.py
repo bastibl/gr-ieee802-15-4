@@ -73,7 +73,36 @@ class qa_dqcsk_mapper_fc (gr_unittest.TestCase):
         # print "data:", data_out[:10]
         self.assertComplexTuplesAlmostEqual(data_out, ref, 5)
 
-
+    def test_003_t (self):
+        # set up fg
+        cfg = phy()
+        data_in = np.pi/2*np.random.randint(-1,3,(1000,))
+        self.src = blocks.vector_source_f(data_in)
+        self.dqcsk = ieee802_15_4.dqcsk_mapper_fc(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps)
+        self.snk = blocks.vector_sink_c(1)
+        self.tb.connect(self.src, self.dqcsk, self.snk)
+        self.tb.run ()
+        # check data
+        data_out = self.snk.data()
+        
+        ref = np.array([])
+        seq = cfg.chirp_seq.copy()
+        lensub = c.n_sub
+        nseq = len(data_in)/cfg.n_subchirps
+        len_t1 = len(cfg.time_gap_1)
+        len_t2 = len(cfg.time_gap_2)
+        seq_ctr = 0
+        for i in range(nseq):
+            for k in range(cfg.n_subchirps):
+                ref = np.concatenate((ref, seq[k*lensub:(k+1)*lensub]*np.exp(1j*data_in[i*cfg.n_subchirps+k])))
+            if seq_ctr % 2 == 0:
+                ref = np.concatenate((ref, cfg.time_gap_1))
+            else:
+                ref = np.concatenate((ref, cfg.time_gap_2))
+            seq_ctr = (seq_ctr+1) % 2
+        # print "ref:", ref[:10]
+        # print "data:", data_out[:10]
+        self.assertComplexTuplesAlmostEqual(data_out, ref, 5)
 
 if __name__ == '__main__':
     gr_unittest.run(qa_dqcsk_mapper_fc)

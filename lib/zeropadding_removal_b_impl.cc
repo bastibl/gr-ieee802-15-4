@@ -62,11 +62,8 @@ namespace gr {
     void
     zeropadding_removal_b_impl::remove_zeros()
     {
-      std::cout << "d_buf content: ";
-      for(int i=0; i<d_buf.size(); i++)
-        std::cout << int(d_buf[i]) << " ";
-      std::cout << std::endl;
       pmt::pmt_t packet = pmt::make_blob(&d_buf[0], d_buf.size()-d_nzeros);
+      // std::cout << "zeropadding_removal_b published a packet of size " << d_buf.size()-d_nzeros << std::endl;
       message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
       d_buf_pos = 0;
     }
@@ -83,9 +80,9 @@ namespace gr {
       {
         d_buf[d_buf_pos] = in[nitems_consumed];
         d_buf_pos++;
+        nitems_consumed++;
         if(d_buf_pos == d_buf.size())
           remove_zeros();
-        nitems_consumed++;
       }
 
       return noutput_items;

@@ -79,7 +79,8 @@ namespace gr {
         {
           for(int i=0; i<noutput_items; i++)
           {
-            out[i] = fmod(in[i] + d_mem[3], M_PI);
+            // make sure the output lies in [-pi, pi]
+            out[i] = fmod(in[i] + d_mem[3] + 2*M_PI, 2*M_PI) - M_PI;
             d_mem.push_front(out[i]);
             d_symctr++;
             if(d_symctr == d_framelen)
@@ -91,9 +92,10 @@ namespace gr {
         }
         else
         {
+          // make sure the output lies in [-pi, pi]
           for(int i=0; i<noutput_items; i++)
           {
-            out[i] = fmod(in[i] + d_mem[3], M_PI);
+            out[i] = fmod(in[i] + d_mem[3] + 2*M_PI, 2*M_PI) - M_PI;
             d_mem.push_front(-in[i]);
             d_symctr++;
             if(d_symctr == d_framelen)

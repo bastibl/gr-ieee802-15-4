@@ -44,7 +44,7 @@ class qa_zeropadding_removal_b (gr_unittest.TestCase):
         self.tb.msg_connect(self.zeropadding_removal, "out", self.pdu2ts, "pdus")
         self.tb.connect(self.pdu2ts, self.snk)
         self.tb.start()
-        time.sleep(1)
+        time.sleep(2)
         self.tb.stop()
         # check data
         data_out = self.snk.data()
