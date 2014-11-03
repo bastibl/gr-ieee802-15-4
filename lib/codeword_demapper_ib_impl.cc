@@ -48,7 +48,7 @@ namespace gr {
       // describes the I/O ratio (<=1)
       d_len_cw = d_codewords[0].size();
       d_coderate = float(d_bits_per_cw)/d_len_cw;
-      set_relative_rate(d_coderate);
+      // set_relative_rate(d_coderate);
       set_output_multiple(d_bits_per_cw);
     }
 

@@ -78,7 +78,7 @@ class qa_interleaver_ii (gr_unittest.TestCase):
 				ref.append(data_in[n*len(cfg.intlv_seq)+cfg.intlv_seq[i]])
         self.assertFloatTuplesAlmostEqual(ref, data_out)
 
-    def test_002_t (self):
+    def test_004_t (self):
         # set up fg
         cfg = phy(slow_rate=True)
         data_in = range(3*len(cfg.intlv_seq)) # some random prime number
