@@ -23,6 +23,8 @@ from gnuradio import gr, gr_unittest
 from gnuradio import blocks
 import ieee802_15_4_swig as ieee802_15_4
 import time
+import numpy as np
+import pmt
 
 class qa_zeropadding_removal_b (gr_unittest.TestCase):
 
@@ -36,20 +38,22 @@ class qa_zeropadding_removal_b (gr_unittest.TestCase):
         # set up fg
         data_in = (0,1,2,3,0,0,4,5,6,7,0,0,8,9,10,11,0,0)
         self.src = blocks.vector_source_b(data_in)
-        self.pdu2ts = blocks.pdu_to_tagged_stream(blocks.byte_t, "packet_len")
         self.zeropadding_removal = ieee802_15_4.zeropadding_removal_b(phr_payload_len=4, nzeros=2)
-        self.snk = blocks.vector_sink_b(1)
         self.msgsink = blocks.message_debug()
 
         self.tb.connect(self.src, self.zeropadding_removal)
-        self.tb.msg_connect(self.zeropadding_removal, "out", self.pdu2ts, "pdus")
         self.tb.msg_connect(self.zeropadding_removal, "out", self.msgsink, "store")
-        self.tb.connect(self.pdu2ts, self.snk)
         self.tb.start()
         time.sleep(2)
         self.tb.stop()
         # check data
-        data_out = self.snk.data()
+        num_messages = self.msgsink.num_messages()
+        self.assertTrue(num_messages == 3)
+        data_out = []
+        for i in range(num_messages):
+            tmp = pmt.to_python(self.msgsink.get_message(i))
+            data_out = np.concatenate((data_out,tmp[1]))
+
         ref = range(12)
         print "num messages:", self.msgsink.num_messages()
         print "ref:", ref

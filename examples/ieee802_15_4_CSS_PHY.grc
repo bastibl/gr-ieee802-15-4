@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='ASCII'?>
 <?grc format='1' created='3.7.6'?>
 <flow_graph>
-  <timestamp>Tue Nov  4 10:54:57 2014</timestamp>
+  <timestamp>Tue Nov  4 14:41:44 2014</timestamp>
   <block>
     <key>options</key>
     <param>
@@ -789,100 +789,6 @@
     <param>
       <key>_rotation</key>
       <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_preamble_sfd_prefixer_ii</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_preamble_sfd_prefixer_ii_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>preamble</key>
-      <value>preamble</value>
-    </param>
-    <param>
-      <key>sfd</key>
-      <value>sfd</value>
-    </param>
-    <param>
-      <key>nsym_frame</key>
-      <value>sym_per_frame</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(952, 453)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_preamble_sfd_prefixer_ii</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_preamble_sfd_prefixer_ii_0_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>preamble</key>
-      <value>preamble</value>
-    </param>
-    <param>
-      <key>sfd</key>
-      <value>sfd</value>
-    </param>
-    <param>
-      <key>nsym_frame</key>
-      <value>sym_per_frame</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(952, 373)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
     </param>
   </block>
   <block>
@@ -1703,6 +1609,100 @@
     </param>
   </block>
   <block>
+    <key>ieee802_15_4_preamble_sfd_prefixer_ii</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_preamble_sfd_prefixer_ii_0_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>preamble</key>
+      <value>preamble</value>
+    </param>
+    <param>
+      <key>sfd</key>
+      <value>sfd</value>
+    </param>
+    <param>
+      <key>nsym_frame</key>
+      <value>sym_per_frame</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1040, 371)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_preamble_sfd_prefixer_ii</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_preamble_sfd_prefixer_ii_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>preamble</key>
+      <value>preamble</value>
+    </param>
+    <param>
+      <key>sfd</key>
+      <value>sfd</value>
+    </param>
+    <param>
+      <key>nsym_frame</key>
+      <value>sym_per_frame</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1040, 451)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
     <key>ieee802_15_4_qpsk_mapper_if</key>
     <param>
       <key>id</key>
@@ -1730,7 +1730,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(728, 392)</value>
+      <value>(864, 392)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1773,7 +1773,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(528, 395)</value>
+      <value>(672, 395)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1828,7 +1828,97 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(272, 371)</value>
+      <value>(424, 371)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>id</key>
+      <value>nsamp_frame</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Samples per frame</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>long</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1072, 107)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_stream_to_tagged_stream</key>
+    <param>
+      <key>id</key>
+      <value>blocks_stream_to_tagged_stream_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>packet_len</key>
+      <value>nsamp_frame</value>
+    </param>
+    <param>
+      <key>len_tag_key</key>
+      <value>"burst_len"</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(200, 395)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1875,30 +1965,46 @@
     </param>
   </block>
   <block>
-    <key>note</key>
+    <key>foo_burst_tagger</key>
     <param>
       <key>id</key>
-      <value>note_0</value>
+      <value>foo_burst_tagger_0</value>
     </param>
     <param>
       <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
-      <key>note</key>
-      <value>Burst tagger missing</value>
+      <key>tag_name</key>
+      <value>pmt.intern("burst_len")</value>
+    </param>
+    <param>
+      <key>mult</key>
+      <value>1</value>
     </param>
     <param>
       <key>alias</key>
       <value></value>
     </param>
     <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
       <key>_coordinate</key>
-      <value>(112, 339)</value>
+      <value>(104, 323)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>0</value>
+      <value>180</value>
     </param>
   </block>
   <connection>
@@ -1944,38 +2050,8 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_interleaver_ii_0</source_block_id>
-    <sink_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0</source_block_id>
-    <sink_block_id>ieee802_15_4_qpsk_mapper_if_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_interleaver_ii_0_0</source_block_id>
-    <sink_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0_0</source_block_id>
-    <sink_block_id>ieee802_15_4_qpsk_mapper_if_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>1</sink_key>
-  </connection>
-  <connection>
     <source_block_id>ieee802_15_4_dqpsk_mapper_ff_0</source_block_id>
     <sink_block_id>ieee802_15_4_dqcsk_mapper_fc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_qpsk_mapper_if_0</source_block_id>
-    <sink_block_id>ieee802_15_4_dqpsk_mapper_ff_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -2052,12 +2128,6 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_dqcsk_mapper_fc_0</source_block_id>
-    <sink_block_id>pad_sink_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
     <source_block_id>pad_source_0</source_block_id>
     <sink_block_id>ieee802_15_4_dqcsk_demapper_cf_0</sink_block_id>
     <source_key>0</source_key>
@@ -2073,6 +2143,54 @@
     <source_block_id>ieee802_15_4_phr_removal_0</source_block_id>
     <sink_block_id>pad_sink_1</sink_block_id>
     <source_key>out</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_qpsk_mapper_if_0</source_block_id>
+    <sink_block_id>ieee802_15_4_dqpsk_mapper_ff_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0_0</source_block_id>
+    <sink_block_id>ieee802_15_4_qpsk_mapper_if_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>1</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_interleaver_ii_0_0</source_block_id>
+    <sink_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0</source_block_id>
+    <sink_block_id>ieee802_15_4_qpsk_mapper_if_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_interleaver_ii_0</source_block_id>
+    <sink_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_dqcsk_mapper_fc_0</source_block_id>
+    <sink_block_id>blocks_stream_to_tagged_stream_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_stream_to_tagged_stream_0</source_block_id>
+    <sink_block_id>foo_burst_tagger_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>foo_burst_tagger_0</source_block_id>
+    <sink_block_id>pad_sink_0</sink_block_id>
+    <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
 </flow_graph>

@@ -74,7 +74,7 @@ namespace gr {
 
       pmt::pmt_t blob = pmt::cdr(msg);
       size_t data_len = pmt::blob_length(blob);
-      std::cout << "PHY fragmentation: MAC packet length is " << data_len << " bytes." << std::endl;
+      // std::cout << "PHY fragmentation: MAC packet length is " << data_len << " bytes." << std::endl;
       unsigned char* blob_ptr = (unsigned char*) pmt::blob_data(blob);
       for(int i=0; i<data_len; i++)
       {

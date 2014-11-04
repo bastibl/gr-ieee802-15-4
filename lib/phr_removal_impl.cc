@@ -80,7 +80,7 @@ namespace gr {
       unsigned char* blob_ptr = (unsigned char*) pmt::blob_data(blob);      
       pack(d_buf, blob_ptr+PHR_LEN, payload_len/8);
       pmt::pmt_t packet = pmt::make_blob(d_buf, payload_len/8);
-      message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
+      message_port_pub(pmt::mp("out"), pmt::cons(pmt::intern("rxout"), packet));
     }
 
     void
