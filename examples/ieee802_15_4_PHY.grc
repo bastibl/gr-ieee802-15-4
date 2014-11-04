@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='ASCII'?>
 <?grc format='1' created='3.7.6'?>
 <flow_graph>
-  <timestamp>Thu Oct 23 14:41:48 2014</timestamp>
+  <timestamp>Tue Nov  4 10:04:33 2014</timestamp>
   <block>
     <key>options</key>
     <param>
@@ -1140,6 +1140,33 @@
     <param>
       <key>_coordinate</key>
       <value>(1006, 621)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>note</key>
+    <param>
+      <key>id</key>
+      <value>note_5</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>note</key>
+      <value>RRC filter missing</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(288, 331)</value>
     </param>
     <param>
       <key>_rotation</key>

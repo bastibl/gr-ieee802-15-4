@@ -62,6 +62,13 @@ void mac_in(pmt::pmt_t msg) {
 		assert(false);
 	}
 
+	dout << "MAC: frame content as char: ";
+	char* dblob = (char*) pmt::blob_data(blob);
+	int dlen = pmt::blob_length(blob);
+	for(int i=0; i<dlen; i++)
+		dout << char(dblob[i]);
+	dout << std::endl;
+
 	size_t data_len = pmt::blob_length(blob);
 	if(data_len < 11) {
 		dout << "MAC: frame too short. Dropping!" << std::endl;
@@ -72,6 +79,9 @@ void mac_in(pmt::pmt_t msg) {
 	if(crc) {
 		dout << "MAC: wrong crc. Dropping packet!" << std::endl;
 		return;
+	}
+	else{
+		dout << "MAC: correct crc. Propagate packet to APP layer." << std::endl;
 	}
 
 	pmt::pmt_t mac_payload = pmt::make_blob((char*)pmt::blob_data(blob) + 9 , data_len - 9 - 2);

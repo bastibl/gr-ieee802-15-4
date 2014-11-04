@@ -39,9 +39,11 @@ class qa_zeropadding_removal_b (gr_unittest.TestCase):
         self.pdu2ts = blocks.pdu_to_tagged_stream(blocks.byte_t, "packet_len")
         self.zeropadding_removal = ieee802_15_4.zeropadding_removal_b(phr_payload_len=4, nzeros=2)
         self.snk = blocks.vector_sink_b(1)
+        self.msgsink = blocks.message_debug()
 
         self.tb.connect(self.src, self.zeropadding_removal)
         self.tb.msg_connect(self.zeropadding_removal, "out", self.pdu2ts, "pdus")
+        self.tb.msg_connect(self.zeropadding_removal, "out", self.msgsink, "store")
         self.tb.connect(self.pdu2ts, self.snk)
         self.tb.start()
         time.sleep(2)
@@ -49,6 +51,7 @@ class qa_zeropadding_removal_b (gr_unittest.TestCase):
         # check data
         data_out = self.snk.data()
         ref = range(12)
+        print "num messages:", self.msgsink.num_messages()
         print "ref:", ref
         print "data_out:", data_out
         self.assertFloatTuplesAlmostEqual(data_out, ref)

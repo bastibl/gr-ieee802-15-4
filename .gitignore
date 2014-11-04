@@ -11,3 +11,4 @@ contiki/*.ihex
 contiki/*.sky
 matlab/*~
 examples/transceiver.py
+examples/transceiver_css.py
