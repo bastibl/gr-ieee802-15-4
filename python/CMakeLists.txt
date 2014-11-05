@@ -59,3 +59,4 @@ GR_ADD_TEST(qa_zeropadding_removal_b ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE
 GR_ADD_TEST(qa_phr_removal ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_phr_removal.py)
 GR_ADD_TEST(qa_css_txrx ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_css_txrx.py)  
 
+GR_ADD_TEST(qa_make_pair_with_blob ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_make_pair_with_blob.py)
