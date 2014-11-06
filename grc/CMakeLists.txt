@@ -32,5 +32,7 @@ install(FILES
     ieee802_15_4_codeword_demapper_ib.xml
     ieee802_15_4_zeropadding_removal_b.xml
     ieee802_15_4_phr_removal.xml
-    ieee802_15_4_make_pair_with_blob.xml DESTINATION share/gnuradio/grc/blocks
+    ieee802_15_4_make_pair_with_blob.xml
+    ieee802_15_4_matched_filter_ff.xml
+    ieee802_15_4_chips_to_bits_fb.xml DESTINATION share/gnuradio/grc/blocks
 )

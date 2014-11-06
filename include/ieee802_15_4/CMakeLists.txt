@@ -33,6 +33,8 @@ install(FILES
     codeword_demapper_ib.h
     zeropadding_removal_b.h
     phr_removal.h
-    make_pair_with_blob.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+    make_pair_with_blob.h
+    matched_filter_ff.h
+    chips_to_bits_fb.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

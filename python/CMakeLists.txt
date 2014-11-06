@@ -60,3 +60,5 @@ GR_ADD_TEST(qa_phr_removal ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_p
 GR_ADD_TEST(qa_css_txrx ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_css_txrx.py)  
 
 GR_ADD_TEST(qa_make_pair_with_blob ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_make_pair_with_blob.py)
+GR_ADD_TEST(qa_matched_filter_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_matched_filter_ff.py)
+GR_ADD_TEST(qa_chips_to_bits_fb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_chips_to_bits_fb.py)

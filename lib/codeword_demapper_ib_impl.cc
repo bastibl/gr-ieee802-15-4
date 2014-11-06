@@ -107,6 +107,7 @@ namespace gr {
         {
           hd = calc_distances(in+i*d_len_cw);
           idx = std::distance(hd.begin(), std::min_element(hd.begin(), hd.end()));
+          // std::cout << "sym: " << idx << std::endl;
           idx_bin = dec2bin(idx, d_bits_per_cw);
           memcpy(out+i*d_bits_per_cw, &idx_bin[0], sizeof(unsigned char)*d_bits_per_cw);
         }
