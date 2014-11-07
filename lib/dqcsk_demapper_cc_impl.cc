@@ -23,26 +23,26 @@
 #endif
 
 #include <gnuradio/io_signature.h>
-#include "dqcsk_demapper_cf_impl.h"
+#include "dqcsk_demapper_cc_impl.h"
 #include <volk/volk.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    dqcsk_demapper_cf::sptr
-    dqcsk_demapper_cf::make(std::vector< gr_complex> chirp_seq, std::vector< gr_complex > time_gap_1, std::vector< gr_complex > time_gap_2, int len_subchirp, int num_subchirps)
+    dqcsk_demapper_cc::sptr
+    dqcsk_demapper_cc::make(std::vector< gr_complex> chirp_seq, std::vector< gr_complex > time_gap_1, std::vector< gr_complex > time_gap_2, int len_subchirp, int num_subchirps)
     {
       return gnuradio::get_initial_sptr
-        (new dqcsk_demapper_cf_impl(chirp_seq, time_gap_1, time_gap_2, len_subchirp, num_subchirps));
+        (new dqcsk_demapper_cc_impl(chirp_seq, time_gap_1, time_gap_2, len_subchirp, num_subchirps));
     }
 
     /*
      * The private constructor
      */
-    dqcsk_demapper_cf_impl::dqcsk_demapper_cf_impl(std::vector< gr_complex> chirp_seq, std::vector< gr_complex > time_gap_1, std::vector< gr_complex > time_gap_2, int len_subchirp, int num_subchirps)
-      : gr::block("dqcsk_demapper_cf",
+    dqcsk_demapper_cc_impl::dqcsk_demapper_cc_impl(std::vector< gr_complex> chirp_seq, std::vector< gr_complex > time_gap_1, std::vector< gr_complex > time_gap_2, int len_subchirp, int num_subchirps)
+      : gr::block("dqcsk_demapper_cc",
               gr::io_signature::make(1,1, sizeof(gr_complex)),
-              gr::io_signature::make(1,1, sizeof(float))),
+              gr::io_signature::make(1,1, sizeof(gr_complex))),
       d_chirp_seq(chirp_seq),
       d_time_gap_1(time_gap_1),
       d_time_gap_2(time_gap_2),
@@ -56,12 +56,12 @@ namespace gr {
     /*
      * Our virtual destructor.
      */
-    dqcsk_demapper_cf_impl::~dqcsk_demapper_cf_impl()
+    dqcsk_demapper_cc_impl::~dqcsk_demapper_cc_impl()
     {
     }
 
     void
-    dqcsk_demapper_cf_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+    dqcsk_demapper_cc_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
       if(d_chirp_seq_ctr % 2 == 0)
         ninput_items_required[0] = d_num_subchirps*d_len_subchirp+d_time_gap_1.size();
@@ -70,20 +70,20 @@ namespace gr {
     }
 
     int
-    dqcsk_demapper_cf_impl::general_work (int noutput_items,
+    dqcsk_demapper_cc_impl::general_work (int noutput_items,
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items)
     {
         const gr_complex *in = (const gr_complex *) input_items[0];
-        float *out = (float *) output_items[0];
+        gr_complex *out = (gr_complex *) output_items[0];
 
         // correlate signal with chirp sequence to extract the DQPSK symbol phase
         gr_complex corrval;
         for(int i=0; i<d_num_subchirps; i++)
         {
           volk_32fc_x2_conjugate_dot_prod_32fc(&corrval, in+i*d_len_subchirp, &d_chirp_seq[i*d_len_subchirp], d_len_subchirp);
-          out[i] = std::arg(corrval);
+          out[i] = corrval;
         }
 
         int nitems_consumed = d_num_subchirps*d_len_subchirp;

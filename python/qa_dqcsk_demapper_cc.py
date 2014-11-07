@@ -44,8 +44,9 @@ class qa_dqcsk_demapper_cc (gr_unittest.TestCase):
         self.snk = blocks.vector_sink_c(1)
         self.tb.connect(self.src, self.dqcsk, self.snk)
         self.tb.run ()
+        refval = np.dot(cfg.chirp_seq[:c.n_sub], np.conj(cfg.chirp_seq[:c.n_sub]))
         # check data
-        ref = [1 for i in range(12)]
+        ref = [refval for i in range(12)]
         data_out = self.snk.data()
         # print "ref:", ref[:10]
         # print "data:", data_out[:10]
@@ -53,15 +54,15 @@ class qa_dqcsk_demapper_cc (gr_unittest.TestCase):
         # axarr[0].plot(np.real(ref))
         # axarr[1].plot(np.real(data_out))
         # plt.show()
-        self.assertComplexTuplesAlmostEqual(data_out, ref)
+        self.assertComplexTuplesAlmostEqual(data_out, ref,5)
 
     def test_002_t (self):
         # set up fg
         cfg = phy()
-        ref = np.exp(1j*np.array([0, np.pi/2, np.pi, -np.pi/2]))
+        angle_in = (np.exp(1j*0), np.exp(1j*np.pi/2), np.exp(1j*np.pi), np.exp(1j*-np.pi/2))
         data_in = np.concatenate((cfg.chirp_seq.copy(), cfg.time_gap_1))
         for i in range(4):
-        	data_in[i*c.n_sub:(i+1)*c.n_sub] = data_in[i*c.n_sub:(i+1)*c.n_sub]*ref[i]    
+        	data_in[i*c.n_sub:(i+1)*c.n_sub] = data_in[i*c.n_sub:(i+1)*c.n_sub]*angle_in[i]        
         self.src = blocks.vector_source_c(data_in)
         self.dqcsk = ieee802_15_4.dqcsk_demapper_cc(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps)
         self.snk = blocks.vector_sink_c(1)
@@ -69,7 +70,8 @@ class qa_dqcsk_demapper_cc (gr_unittest.TestCase):
         self.tb.run ()
         # check data
         data_out = self.snk.data()
-
+        refval = np.dot(cfg.chirp_seq[:c.n_sub], np.conj(cfg.chirp_seq[:c.n_sub]))
+        ref = [angle_in[i]*refval for i in range(len(angle_in))]
         # print "ref:", ref[:10]
         # print "data:", data_out[:10]
         self.assertComplexTuplesAlmostEqual(data_out, ref, 5)

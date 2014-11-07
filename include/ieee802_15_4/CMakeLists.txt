@@ -28,7 +28,7 @@ install(FILES
     dqpsk_mapper_ff.h
     dqcsk_mapper_fc.h
     preamble_sfd_prefixer_ii.h
-    dqcsk_demapper_cf.h
+    dqcsk_demapper_cc.h
     qpsk_demapper_fi.h
     codeword_demapper_ib.h
     zeropadding_removal_b.h

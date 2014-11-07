@@ -19,8 +19,8 @@
  */
 
 
-#ifndef INCLUDED_IEEE802_15_4_DQCSK_DEMAPPER_CF_H
-#define INCLUDED_IEEE802_15_4_DQCSK_DEMAPPER_CF_H
+#ifndef INCLUDED_IEEE802_15_4_DQCSK_DEMAPPER_CC_H
+#define INCLUDED_IEEE802_15_4_DQCSK_DEMAPPER_CC_H
 
 #include <ieee802_15_4/api.h>
 #include <gnuradio/block.h>
@@ -33,17 +33,17 @@ namespace gr {
      * \ingroup ieee802_15_4
      *
      */
-    class IEEE802_15_4_API dqcsk_demapper_cf : virtual public gr::block
+    class IEEE802_15_4_API dqcsk_demapper_cc : virtual public gr::block
     {
      public:
-      typedef boost::shared_ptr<dqcsk_demapper_cf> sptr;
+      typedef boost::shared_ptr<dqcsk_demapper_cc> sptr;
 
       /*!
-       * \brief Return a shared_ptr to a new instance of ieee802_15_4::dqcsk_demapper_cf.
+       * \brief Return a shared_ptr to a new instance of ieee802_15_4::dqcsk_demapper_cc.
        *
-       * To avoid accidental use of raw pointers, ieee802_15_4::dqcsk_demapper_cf's
+       * To avoid accidental use of raw pointers, ieee802_15_4::dqcsk_demapper_cc's
        * constructor is in a private implementation
-       * class. ieee802_15_4::dqcsk_demapper_cf::make is the public interface for
+       * class. ieee802_15_4::dqcsk_demapper_cc::make is the public interface for
        * creating new instances.
        */
       static sptr make(std::vector< gr_complex> chirp_seq, std::vector< gr_complex > time_gap_1, std::vector< gr_complex > time_gap_2, int len_subchirp, int num_subchirps);
@@ -52,5 +52,5 @@ namespace gr {
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_DQCSK_DEMAPPER_CF_H */
+#endif /* INCLUDED_IEEE802_15_4_DQCSK_DEMAPPER_CC_H */
 
