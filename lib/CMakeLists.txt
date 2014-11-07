@@ -44,7 +44,8 @@ list(APPEND ieee802_15_4_sources
     phr_removal_impl.cc
     make_pair_with_blob_impl.cc
     matched_filter_ff_impl.cc
-    chips_to_bits_fb_impl.cc )
+    chips_to_bits_fb_impl.cc
+    access_code_removal_b_impl.cc )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}

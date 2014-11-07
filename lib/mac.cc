@@ -62,12 +62,12 @@ void mac_in(pmt::pmt_t msg) {
 		assert(false);
 	}
 
-	dout << "MAC: frame content as char: ";
-	char* dblob = (char*) pmt::blob_data(blob);
-	int dlen = pmt::blob_length(blob);
-	for(int i=0; i<dlen; i++)
-		dout << char(dblob[i]);
-	dout << std::endl;
+	// dout << "MAC: frame content as char: ";
+	// char* dblob = (char*) pmt::blob_data(blob);
+	// int dlen = pmt::blob_length(blob);
+	// for(int i=0; i<dlen; i++)
+	// 	dout << int(dblob[i]);
+	// dout << std::endl;
 
 	size_t data_len = pmt::blob_length(blob);
 	if(data_len < 11) {

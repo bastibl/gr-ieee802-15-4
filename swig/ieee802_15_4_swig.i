@@ -42,6 +42,7 @@
 #include "ieee802_15_4/make_pair_with_blob.h"
 #include "ieee802_15_4/matched_filter_ff.h"
 #include "ieee802_15_4/chips_to_bits_fb.h"
+#include "ieee802_15_4/access_code_removal_b.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -91,3 +92,5 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, make_pair_with_blob);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, matched_filter_ff);
 %include "ieee802_15_4/chips_to_bits_fb.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, chips_to_bits_fb);
+%include "ieee802_15_4/access_code_removal_b.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, access_code_removal_b);
