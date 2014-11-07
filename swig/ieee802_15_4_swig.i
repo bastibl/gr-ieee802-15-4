@@ -45,6 +45,7 @@
 #include "ieee802_15_4/access_code_removal_b.h"
 #include "ieee802_15_4/dqpsk_soft_demapper_cc.h"
 #include "ieee802_15_4/deinterleaver_ff.h"
+#include "ieee802_15_4/codeword_soft_demapper_fb.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -100,3 +101,5 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, access_code_removal_b);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, dqpsk_soft_demapper_cc);
 %include "ieee802_15_4/deinterleaver_ff.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, deinterleaver_ff);
+%include "ieee802_15_4/codeword_soft_demapper_fb.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_soft_demapper_fb);

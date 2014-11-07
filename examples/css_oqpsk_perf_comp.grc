@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='ASCII'?>
 <?grc format='1' created='3.7.6'?>
 <flow_graph>
-  <timestamp>Fri Nov  7 11:17:47 2014</timestamp>
+  <timestamp>Fri Nov  7 16:38:58 2014</timestamp>
   <block>
     <key>options</key>
     <param>
@@ -69,33 +69,6 @@
     <key>variable</key>
     <param>
       <key>id</key>
-      <value>c</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>ieee802_15_4.css_phy(slow_rate=True)</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(328, 123)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>variable</key>
-    <param>
-      <key>id</key>
       <value>samp_rate</value>
     </param>
     <param>
@@ -113,6 +86,33 @@
     <param>
       <key>_coordinate</key>
       <value>(10, 170)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>id</key>
+      <value>c</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>ieee802_15_4.css_phy(slow_rate=True)</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(328, 123)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -222,49 +222,6 @@
     <param>
       <key>_coordinate</key>
       <value>(104, 227)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_pdu_to_tagged_stream</key>
-    <param>
-      <key>id</key>
-      <value>blocks_pdu_to_tagged_stream_1</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>byte</value>
-    </param>
-    <param>
-      <key>tag</key>
-      <value>packet_len</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(224, 755)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -769,187 +726,6 @@
     </param>
   </block>
   <block>
-    <key>blocks_multiply_const_vxx</key>
-    <param>
-      <key>id</key>
-      <value>blocks_multiply_const_vxx_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>const</key>
-      <value>1.1687</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(792, 331)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_make_pair_with_blob</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_make_pair_with_blob_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>vec</key>
-      <value>np.random.randint(0,256,(c.phy_packetsize_bytes,))</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(312, 259)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_css_phy</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_css_phy_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>phr</key>
-      <value>c.PHR</value>
-    </param>
-    <param>
-      <key>nbytes_payload</key>
-      <value>c.phy_packetsize_bytes</value>
-    </param>
-    <param>
-      <key>bits_per_cw</key>
-      <value>c.bits_per_symbol</value>
-    </param>
-    <param>
-      <key>codewords</key>
-      <value>c.codewords</value>
-    </param>
-    <param>
-      <key>intlv_seq</key>
-      <value>c.intlv_seq</value>
-    </param>
-    <param>
-      <key>sym_per_frame</key>
-      <value>c.nsym_frame</value>
-    </param>
-    <param>
-      <key>num_subchirps</key>
-      <value>c.n_subchirps</value>
-    </param>
-    <param>
-      <key>chirp_seq</key>
-      <value>c.chirp_seq</value>
-    </param>
-    <param>
-      <key>time_gap_1</key>
-      <value>c.time_gap_1</value>
-    </param>
-    <param>
-      <key>time_gap_2</key>
-      <value>c.time_gap_2</value>
-    </param>
-    <param>
-      <key>len_sub</key>
-      <value>38</value>
-    </param>
-    <param>
-      <key>nzeros_padding</key>
-      <value>c.padded_zeros</value>
-    </param>
-    <param>
-      <key>preamble</key>
-      <value>c.preamble</value>
-    </param>
-    <param>
-      <key>sfd</key>
-      <value>c.SFD</value>
-    </param>
-    <param>
-      <key>nsamp_frame</key>
-      <value>c.nsamp_frame</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(544, 259)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
     <key>blocks_pdu_to_tagged_stream</key>
     <param>
       <key>id</key>
@@ -1182,53 +958,6 @@
     <param>
       <key>_rotation</key>
       <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_add_xx</key>
-    <param>
-      <key>id</key>
-      <value>blocks_add_xx_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>num_inputs</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(608, 616)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
     </param>
   </block>
   <block>
@@ -2225,23 +1954,282 @@
       <value>0</value>
     </param>
   </block>
+  <block>
+    <key>ieee802_15_4_make_pair_with_blob</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_make_pair_with_blob_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>vec</key>
+      <value>np.random.randint(0,256,(c.phy_packetsize_bytes,))</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(312, 259)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_pdu_to_tagged_stream</key>
+    <param>
+      <key>id</key>
+      <value>blocks_pdu_to_tagged_stream_1</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>byte</value>
+    </param>
+    <param>
+      <key>tag</key>
+      <value>packet_len</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(224, 755)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_multiply_const_vxx</key>
+    <param>
+      <key>id</key>
+      <value>blocks_multiply_const_vxx_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>const</key>
+      <value>1.1687</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(792, 331)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_add_xx</key>
+    <param>
+      <key>id</key>
+      <value>blocks_add_xx_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>num_inputs</key>
+      <value>2</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(608, 616)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_css_phy_sd</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_css_phy_sd_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>phr</key>
+      <value>c.PHR</value>
+    </param>
+    <param>
+      <key>nbytes_payload</key>
+      <value>c.phy_packetsize_bytes</value>
+    </param>
+    <param>
+      <key>bits_per_cw</key>
+      <value>c.bits_per_symbol</value>
+    </param>
+    <param>
+      <key>codewords</key>
+      <value>c.codewords</value>
+    </param>
+    <param>
+      <key>intlv_seq</key>
+      <value>c.intlv_seq</value>
+    </param>
+    <param>
+      <key>sym_per_frame</key>
+      <value>c.nsym_frame</value>
+    </param>
+    <param>
+      <key>num_subchirps</key>
+      <value>c.n_subchirps</value>
+    </param>
+    <param>
+      <key>chirp_seq</key>
+      <value>c.chirp_seq</value>
+    </param>
+    <param>
+      <key>time_gap_1</key>
+      <value>c.time_gap_1</value>
+    </param>
+    <param>
+      <key>time_gap_2</key>
+      <value>c.time_gap_2</value>
+    </param>
+    <param>
+      <key>len_sub</key>
+      <value>38</value>
+    </param>
+    <param>
+      <key>nzeros_padding</key>
+      <value>c.padded_zeros</value>
+    </param>
+    <param>
+      <key>preamble</key>
+      <value>c.preamble</value>
+    </param>
+    <param>
+      <key>sfd</key>
+      <value>c.SFD</value>
+    </param>
+    <param>
+      <key>nsamp_frame</key>
+      <value>c.nsamp_frame</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(520, 267)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
   <connection>
     <source_block_id>foo_periodic_msg_source_0</source_block_id>
     <sink_block_id>ieee802_15_4_make_pair_with_blob_0</sink_block_id>
     <source_key>out</source_key>
     <sink_key>in</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_make_pair_with_blob_0</source_block_id>
-    <sink_block_id>ieee802_15_4_css_phy_0</sink_block_id>
-    <source_key>out</source_key>
-    <sink_key>txin</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_add_xx_0</source_block_id>
-    <sink_block_id>ieee802_15_4_css_phy_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>blocks_pdu_to_tagged_stream_2</source_block_id>
@@ -2268,12 +2256,6 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_css_phy_0</source_block_id>
-    <sink_block_id>blocks_multiply_const_vxx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
     <source_block_id>blocks_multiply_const_vxx_0</source_block_id>
     <sink_block_id>blocks_add_xx_0</sink_block_id>
     <source_key>0</source_key>
@@ -2284,12 +2266,6 @@
     <sink_block_id>qtgui_freq_sink_x_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_css_phy_0</source_block_id>
-    <sink_block_id>blocks_pdu_to_tagged_stream_1</sink_block_id>
-    <source_key>rxout</source_key>
-    <sink_key>pdus</sink_key>
   </connection>
   <connection>
     <source_block_id>blocks_add_xx_0_0</source_block_id>
@@ -2322,12 +2298,6 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>blocks_add_xx_0_0</source_block_id>
-    <sink_block_id>qtgui_const_sink_x_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
     <source_block_id>analog_noise_source_x_0_0</source_block_id>
     <sink_block_id>blocks_add_xx_0_0</sink_block_id>
     <source_key>0</source_key>
@@ -2340,12 +2310,6 @@
     <sink_key>1</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_oqpsk_phy_nosync_0</source_block_id>
-    <sink_block_id>blocks_pdu_to_tagged_stream_0</sink_block_id>
-    <source_key>rxout</source_key>
-    <sink_key>pdus</sink_key>
-  </connection>
-  <connection>
     <source_block_id>ieee802_15_4_make_pair_with_blob_0</source_block_id>
     <sink_block_id>ieee802_15_4_oqpsk_phy_nosync_0</sink_block_id>
     <source_key>out</source_key>
@@ -2356,5 +2320,41 @@
     <sink_block_id>blocks_pdu_to_tagged_stream_2</sink_block_id>
     <source_key>out</source_key>
     <sink_key>pdus</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_oqpsk_phy_nosync_0</source_block_id>
+    <sink_block_id>blocks_pdu_to_tagged_stream_0</sink_block_id>
+    <source_key>rxout</source_key>
+    <sink_key>pdus</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_add_xx_0_0</source_block_id>
+    <sink_block_id>qtgui_const_sink_x_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_make_pair_with_blob_0</source_block_id>
+    <sink_block_id>ieee802_15_4_css_phy_sd_0</sink_block_id>
+    <source_key>out</source_key>
+    <sink_key>txin</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_css_phy_sd_0</source_block_id>
+    <sink_block_id>blocks_pdu_to_tagged_stream_1</sink_block_id>
+    <source_key>rxout</source_key>
+    <sink_key>pdus</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_css_phy_sd_0</source_block_id>
+    <sink_block_id>blocks_multiply_const_vxx_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_add_xx_0</source_block_id>
+    <sink_block_id>ieee802_15_4_css_phy_sd_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
   </connection>
 </flow_graph>

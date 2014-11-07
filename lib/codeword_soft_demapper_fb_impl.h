@@ -18,27 +18,27 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802_15_4_CODEWORD_DEMAPPER_IB_IMPL_H
-#define INCLUDED_IEEE802_15_4_CODEWORD_DEMAPPER_IB_IMPL_H
+#ifndef INCLUDED_IEEE802_15_4_CODEWORD_SOFT_DEMAPPER_FB_IMPL_H
+#define INCLUDED_IEEE802_15_4_CODEWORD_SOFT_DEMAPPER_FB_IMPL_H
 
-#include <ieee802_15_4/codeword_demapper_ib.h>
+#include <ieee802_15_4/codeword_soft_demapper_fb.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class codeword_demapper_ib_impl : public codeword_demapper_ib
+    class codeword_soft_demapper_fb_impl : public codeword_soft_demapper_fb
     {
      private:
       int d_bits_per_cw;
-      std::vector < std::vector<int> > d_codewords;
+      std::vector < std::vector<float> > d_codewords;
       int d_len_cw;
       float d_coderate;
-      std::vector<int> calc_distances(const int* in);
+      std::vector<float> calc_weights(const float* in);
       std::vector<unsigned char> dec2bin(int dec, int nbit);
 
      public:
-      codeword_demapper_ib_impl(int bits_per_cw, std::vector< std::vector< int > > codewords);
-      ~codeword_demapper_ib_impl();
+      codeword_soft_demapper_fb_impl(int bits_per_cw, std::vector< std::vector< float > > codewords);
+      ~codeword_soft_demapper_fb_impl();
 
       void forecast (int noutput_items, gr_vector_int &ninput_items_required);
 
@@ -51,5 +51,5 @@ namespace gr {
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_CODEWORD_DEMAPPER_IB_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_CODEWORD_SOFT_DEMAPPER_FB_IMPL_H */
 
