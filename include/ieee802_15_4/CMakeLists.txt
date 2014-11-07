@@ -36,6 +36,7 @@ install(FILES
     make_pair_with_blob.h
     matched_filter_ff.h
     chips_to_bits_fb.h
-    access_code_removal_b.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+    access_code_removal_b.h
+    dqpsk_soft_demapper_cc.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

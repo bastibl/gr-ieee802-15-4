@@ -24,7 +24,7 @@ from gnuradio import blocks
 import ieee802_15_4_swig as ieee802_15_4
 import numpy as np
 
-class qa_dqpsk_mapper_ff (gr_unittest.TestCase):
+class qa_dqpsk_soft_demapper_cc (gr_unittest.TestCase):
 
     def setUp (self):
         self.tb = gr.top_block ()
@@ -35,42 +35,22 @@ class qa_dqpsk_mapper_ff (gr_unittest.TestCase):
     def test_001_t (self):
         # set up fg
         pi=np.pi
-        data_in = [0, pi/2, pi, -pi/2, pi/2, pi, -pi/2, 0, 0, pi, 0, pi/2]
-        self.src = blocks.vector_source_f(data_in)
-        self.dqpsk = ieee802_15_4.dqpsk_mapper_ff(framelen=6, forward=True)
-        self.snk = blocks.vector_sink_f(1)
-        self.tb.connect(self.src, self.dqpsk, self.snk)
-        self.tb.run ()
-        # check data
-        data_out = self.snk.data()
-        ref = [0, pi/2, pi, -pi/2, pi/2, -pi/2, -pi/2, 0, 0, pi, pi/2, pi/2]
-        ref = [i + pi/4 for i in ref]
-        ref = [np.exp(1j*i) for i in ref]
-        ref2 = [45, 135, -135, -45, 135, -45, -45, 45, 45, -135, -45, 135]
-        ref2 = [np.exp(1j*i/180*pi) for i in ref2]
-        data_out = [np.exp(1j*i) for i in data_out]
-
-        self.assertComplexTuplesAlmostEqual(ref2, data_out, 5)
-
-    def test_002_t (self):
-        # set up fg
-        pi=np.pi
         data_in = [0, pi/2, pi, -pi/2, pi/2, -pi/2, -pi/2, 0, 0, pi, pi/2, pi/2]
-        data_in = [i + pi/4 for i in data_in]
-        self.src = blocks.vector_source_f(data_in)
-        self.dqpsk = ieee802_15_4.dqpsk_mapper_ff(framelen=6, forward=False)
-        self.snk = blocks.vector_sink_f(1)
+        data_in = [np.exp(1j*i) for i in data_in]
+        data_in = [i*np.exp(1j*pi/4) for i in data_in]
+        self.src = blocks.vector_source_c(data_in)
+        self.dqpsk = ieee802_15_4.dqpsk_soft_demapper_cc(framelen=6)
+        self.snk = blocks.vector_sink_c(1)
         self.tb.connect(self.src, self.dqpsk, self.snk)
         self.tb.run ()
         # check data
         data_out = self.snk.data()
-        data_out = [np.exp(1j*i) for i in data_out]
         ref = [0, pi/2, pi, -pi/2, pi/2, pi, -pi/2, 0, 0, pi, pi, pi/2]
-        ref = [np.exp(1j*i) for i in ref]
-        # print "in:", data_in
-        # print "out:", data_out
-        # print "ref:", ref
-        self.assertComplexTuplesAlmostEqual(ref, data_out, 5)       
+        ref = np.array([np.exp(1j*i) for i in ref])
+        print "angle in:", np.angle(data_in)/pi*180
+        print "angle out:", np.angle(data_out)/pi*180
+        print "angle ref:", np.angle(ref)/pi*180
+        self.assertFloatTuplesAlmostEqual(ref, data_out, 5) 
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_dqpsk_mapper_ff)
+    gr_unittest.run(qa_dqpsk_soft_demapper_cc)

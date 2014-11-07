@@ -79,8 +79,8 @@ namespace gr {
         {
           for(int i=0; i<noutput_items; i++)
           {
-            // make sure the output lies in [-pi, pi]
-            out[i] = fmod(in[i] + d_mem[3] + 2*M_PI, 2*M_PI) - M_PI;
+            out[i] = fmod(in[i] + d_mem[3], 2*M_PI);
+            // std::cout << "i: " << i << " | " << in[i]*180/M_PI << " + " << d_mem[3]*180/M_PI << " = " << out[i]*180/M_PI << std::endl;
             d_mem.push_front(out[i]);
             d_symctr++;
             if(d_symctr == d_framelen)
@@ -95,7 +95,12 @@ namespace gr {
           // make sure the output lies in [-pi, pi]
           for(int i=0; i<noutput_items; i++)
           {
-            out[i] = fmod(in[i] + d_mem[3] + 2*M_PI, 2*M_PI) - M_PI;
+            out[i] = in[i] + d_mem[3];
+            if(out[i] > M_PI)
+              out[i] -= 2*M_PI;
+            else if(out[i] < -M_PI)
+              out[i] += 2*M_PI;  
+                        
             d_mem.push_front(-in[i]);
             d_symctr++;
             if(d_symctr == d_framelen)
@@ -106,7 +111,6 @@ namespace gr {
           }
         }
 
-        // Tell runtime system how many output items we produced.
         return noutput_items;
     }
 

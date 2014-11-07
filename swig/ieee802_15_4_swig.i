@@ -43,6 +43,7 @@
 #include "ieee802_15_4/matched_filter_ff.h"
 #include "ieee802_15_4/chips_to_bits_fb.h"
 #include "ieee802_15_4/access_code_removal_b.h"
+#include "ieee802_15_4/dqpsk_soft_demapper_cc.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -94,3 +95,5 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, matched_filter_ff);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, chips_to_bits_fb);
 %include "ieee802_15_4/access_code_removal_b.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, access_code_removal_b);
+%include "ieee802_15_4/dqpsk_soft_demapper_cc.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, dqpsk_soft_demapper_cc);

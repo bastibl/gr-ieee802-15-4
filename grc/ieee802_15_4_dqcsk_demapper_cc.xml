@@ -35,6 +35,6 @@
   </sink>
   <source>
     <name>out</name>
-    <type>float</type>
+    <type>complex</type>
   </source>
 </block>
