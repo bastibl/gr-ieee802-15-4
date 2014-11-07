@@ -36,5 +36,6 @@ install(FILES
     ieee802_15_4_matched_filter_ff.xml
     ieee802_15_4_chips_to_bits_fb.xml
     ieee802_15_4_access_code_removal_b.xml
-    ieee802_15_4_dqpsk_soft_demapper_cc.xml DESTINATION share/gnuradio/grc/blocks
+    ieee802_15_4_dqpsk_soft_demapper_cc.xml
+    ieee802_15_4_deinterleaver_ff.xml DESTINATION share/gnuradio/grc/blocks
 )

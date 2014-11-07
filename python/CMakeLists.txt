@@ -64,3 +64,4 @@ GR_ADD_TEST(qa_matched_filter_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR
 GR_ADD_TEST(qa_chips_to_bits_fb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_chips_to_bits_fb.py)
 GR_ADD_TEST(qa_access_code_removal_b ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_access_code_removal_b.py)
 GR_ADD_TEST(qa_dqpsk_soft_demapper_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dqpsk_soft_demapper_cc.py)
+GR_ADD_TEST(qa_deinterleaver_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_deinterleaver_ff.py)

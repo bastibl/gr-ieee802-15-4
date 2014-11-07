@@ -1,38 +1,20 @@
-<?xml version="1.0"?>
 <block>
-  <name>dqpsk_soft_demapper_cc</name>
+  <name>DQPSK Soft Demapper</name>
   <key>ieee802_15_4_dqpsk_soft_demapper_cc</key>
-  <category>ieee802_15_4</category>
+  <category>IEEE802.15.4</category>
   <import>import ieee802_15_4</import>
   <make>ieee802_15_4.dqpsk_soft_demapper_cc($framelen)</make>
-  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
-       Sub-nodes:
-       * name
-       * key (makes the value accessible as $keyname, e.g. in the make node)
-       * type -->
   <param>
-    <name>...</name>
-    <key>...</key>
-    <type>...</type>
+    <name>Frame length</name>
+    <key>framelen</key>
+    <type>int</type>
   </param>
-
-  <!-- Make one 'sink' node per input. Sub-nodes:
-       * name (an identifier for the GUI)
-       * type
-       * vlen
-       * optional (set to 1 for optional inputs) -->
   <sink>
     <name>in</name>
-    <type><!-- e.g. int, float, complex, byte, short, xxx_vector, ...--></type>
+    <type>complex</type>
   </sink>
-
-  <!-- Make one 'source' node per output. Sub-nodes:
-       * name (an identifier for the GUI)
-       * type
-       * vlen
-       * optional (set to 1 for optional inputs) -->
   <source>
     <name>out</name>
-    <type><!-- e.g. int, float, complex, byte, short, xxx_vector, ...--></type>
+    <type>complex</type>
   </source>
 </block>

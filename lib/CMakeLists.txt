@@ -46,7 +46,8 @@ list(APPEND ieee802_15_4_sources
     matched_filter_ff_impl.cc
     chips_to_bits_fb_impl.cc
     access_code_removal_b_impl.cc
-    dqpsk_soft_demapper_cc_impl.cc )
+    dqpsk_soft_demapper_cc_impl.cc
+    deinterleaver_ff_impl.cc )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}
