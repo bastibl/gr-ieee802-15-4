@@ -22,8 +22,10 @@
 from gnuradio import gr, gr_unittest
 from gnuradio import blocks
 import ieee802_15_4_swig as ieee802_15_4
+import pmt
+import time
 
-class qa_make_pair_with_blob (gr_unittest.TestCase):
+class qa_compare_blobs (gr_unittest.TestCase):
 
     def setUp (self):
         self.tb = gr.top_block ()
@@ -33,9 +35,25 @@ class qa_make_pair_with_blob (gr_unittest.TestCase):
 
     def test_001_t (self):
         # set up fg
-        self.tb.run ()
+        self.trigger = blocks.message_strobe(pmt.cons(pmt.intern("trigger"), pmt.intern("dummycdr")),10)
+        self.src_ref = ieee802_15_4.make_pair_with_blob((0,1,2,3))
+        self.src_test = ieee802_15_4.make_pair_with_blob((0,1,4,3))
+        self.snk = ieee802_15_4.compare_blobs()
+        self.tb.msg_connect(self.trigger, "strobe", self.src_ref, "in")
+        self.tb.msg_connect(self.trigger, "strobe", self.src_test, "in")
+        self.tb.msg_connect(self.src_ref, "out", self.snk, "ref")
+        self.tb.msg_connect(self.src_test, "out", self.snk, "test")
+        self.tb.start()
+        time.sleep(0.1)
+        self.tb.stop()
         # check data
-
+        bits_per_blob = 4*8
+        errors_per_blob = 2.0
+        ref_ber = errors_per_blob/bits_per_blob
+        ber = self.snk.get_ber()
+        print "ber: ", ber
+        print "ref ber:", ref_ber
+        self.assertTrue(ref_ber == ber)
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_make_pair_with_blob)
+    gr_unittest.run(qa_compare_blobs)

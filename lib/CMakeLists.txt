@@ -48,7 +48,8 @@ list(APPEND ieee802_15_4_sources
     access_code_removal_b_impl.cc
     dqpsk_soft_demapper_cc_impl.cc
     deinterleaver_ff_impl.cc
-    codeword_soft_demapper_fb_impl.cc )
+    codeword_soft_demapper_fb_impl.cc
+    compare_blobs_impl.cc )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}

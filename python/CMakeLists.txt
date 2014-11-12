@@ -29,7 +29,6 @@ list(APPEND python_sources
     css_mod.py
     css_demod.py
 )
-
 GR_PYTHON_INSTALL(
     FILES ${python_sources}
     DESTINATION ${GR_PYTHON_DIR}/ieee802_15_4
@@ -66,3 +65,4 @@ GR_ADD_TEST(qa_access_code_removal_b ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE
 GR_ADD_TEST(qa_dqpsk_soft_demapper_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dqpsk_soft_demapper_cc.py)
 GR_ADD_TEST(qa_deinterleaver_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_deinterleaver_ff.py)
 GR_ADD_TEST(qa_codeword_soft_demapper_fb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_codeword_soft_demapper_fb.py)
+GR_ADD_TEST(qa_compare_blobs ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_compare_blobs.py)

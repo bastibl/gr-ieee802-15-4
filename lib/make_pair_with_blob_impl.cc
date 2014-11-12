@@ -74,6 +74,7 @@ namespace gr {
 
       pmt::pmt_t blob = pmt::make_blob(&d_vec[0], d_vec.size());
       message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, blob));
+      // std::cout << "make_pair_with_blob received and sent a message" << std::endl;
     }
   } /* namespace ieee802_15_4 */
 } /* namespace gr */

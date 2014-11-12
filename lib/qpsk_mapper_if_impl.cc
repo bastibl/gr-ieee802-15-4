@@ -78,7 +78,10 @@ namespace gr {
           else if(in_I[i] == -1 && in_Q[i] == -1)
             out[i] = d_angle_tab[3];
           else
+          {
+            std::cerr << "QPSK mapper input: " << int(in_I[i]) << "/" << int(in_Q[i]) << std::endl;
             throw std::runtime_error("Invalid input value");
+          }
         }
 
         return noutput_items;

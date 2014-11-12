@@ -66,6 +66,7 @@ namespace gr {
     {
       pmt::pmt_t packet = pmt::make_blob(d_buf+d_len_SHR+d_len_PHR, d_len_payload);
       message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
+      // std::cout << "access_code_removal_b sent a message" << std::endl;
     }
 
     int
