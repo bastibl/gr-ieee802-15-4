@@ -32,7 +32,7 @@ class ber_awgn_comp_nogui(gr.top_block):
         # Variables
         ##################################################
         self.snr = snr = 0
-        self.c = c = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=127)
+        self.c = c = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=127)
 
         ##################################################
         # Blocks
@@ -75,7 +75,7 @@ class ber_awgn_comp_nogui(gr.top_block):
             sfd=c.SFD,
             nsamp_frame=c.nsamp_frame,
         )
-        self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), 10, 100, True, False)
+        self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), 10, -1, True, False)
         self.blocks_multiply_const_vxx_0_0 = blocks.multiply_const_vcc((1.1687, ))
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vcc((1.1687, ))
         self.blocks_add_xx_0_1 = blocks.add_vcc(1)
@@ -83,6 +83,9 @@ class ber_awgn_comp_nogui(gr.top_block):
         self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 10**(-snr/10), 0)
         self.comp_bits_sd = ieee802_15_4.compare_blobs()
         self.comp_bits_hd = ieee802_15_4.compare_blobs()
+
+        self.noise_snk = blocks.file_sink(gr.sizeof_gr_complex, "noise_sig.bin")
+        self.sig_snk = blocks.file_sink(gr.sizeof_gr_complex, "tx_sig.bin")
 
         ##################################################
         # Connections
@@ -96,6 +99,9 @@ class ber_awgn_comp_nogui(gr.top_block):
         self.connect((self.analog_noise_source_x_0_0, 0), (self.blocks_add_xx_0_1, 0))
         self.connect((self.blocks_add_xx_0_1, 0), (self.ieee802_15_4_css_phy_hd_0, 0))
 
+        self.connect(self.analog_noise_source_x_0_0, self.noise_snk)
+        self.connect(self.blocks_multiply_const_vxx_0, self.sig_snk)
+
         ##################################################
         # Asynch Message Connections
         ##################################################
@@ -106,7 +112,7 @@ class ber_awgn_comp_nogui(gr.top_block):
         self.msg_connect(self.ieee802_15_4_css_phy_hd_0, "rxout", self.comp_bits_hd, "test")
         self.msg_connect(self.ieee802_15_4_make_pair_with_blob_0, "out", self.comp_bits_hd, "ref")
         self.msg_connect(self.ieee802_15_4_make_pair_with_blob_0, "out", self.comp_bits_sd, "ref")
-        self.msg_connect(self.ieee802_15_4_css_phy_sd_0, "rxout", self.ieee802_15_4_make_pair_with_blob_0, "in")
+        # self.msg_connect(self.ieee802_15_4_css_phy_sd_0, "rxout", self.ieee802_15_4_make_pair_with_blob_0, "in")
 
     def get_snr(self):
         return self.snr
@@ -155,32 +161,59 @@ if __name__ == '__main__':
     if gr.enable_realtime_scheduling() != gr.RT_OK:
         print "Error: failed to enable realtime scheduling."
 
-    snr_vals = np.arange(-15,0,0.5)
-    min_err = 30
+    snr_vals = np.arange(-10.0,8.0,0.5)
+    min_err = 125 # this corresponds to bytes, so actually there are about 1000 bit errors simulated at the best BER
     min_ber = 0.00001
     min_len = int(min_err/min_ber)
     if min_len <= 1e3:
         raise Exception("min_len too short")
     print "Simulate from", min(snr_vals), "to", max(snr_vals), "dB SNR"
     print "Collect",min_len,"bytes per step"
+    old_len_res = 0
     ber_vals = []
-    for i in snr_vals:
+    for i in range(len(snr_vals)):
+        t0 = time.time()
         tb = None
         tb = ber_awgn_comp_nogui()
-        tb.set_snr(i)
+        tb.set_snr(snr_vals[i])
         tb.start()
+        time.sleep(1)
+        ber_hd = 1.0
+        ber_sd = 1.0
         while(True):
             len_res = [tb.comp_bits_hd.get_bits_compared(), tb.comp_bits_sd.get_bits_compared()]
-            print i, "dB:", 100.0*min(len_res)/min_len, "% done"
+            if len_res == old_len_res:
+                print "simulation got stuck, restart at current position"
+                tb.stop()
+                tb.wait()
+                t0 = time.time()
+                tb = None
+                tb = ber_awgn_comp_nogui()
+                tb.set_snr(snr_vals[i])
+                tb.start()      
+                time.sleep(1)
+                len_res = [tb.comp_bits_hd.get_bits_compared(), tb.comp_bits_sd.get_bits_compared()]         
+            print snr_vals[i], "dB:", 100.0*min(len_res)/min_len, "% done"
             if(min(len_res) >= min_len):
                 tb.stop()
+                tb.wait()
+                time.sleep(1)
                 break
-            time.sleep(2)
+            if(ber_hd == 0 and ber_sd == 0 ):
+                tb.stop()
+                tb.wait()
+                time.sleep(1)
+                break
+            time.sleep(10)
+            old_len_res = len_res
 
         ber_hd = tb.comp_bits_hd.get_ber()
         ber_sd = tb.comp_bits_sd.get_ber()
-        print "BER at", i, "dB SNR (SD/HD):", ber_hd, "/", ber_sd
+        print "BER at", snr_vals[i], "dB SNR (HD/SD):", ber_hd, "/", ber_sd
         ber_vals.append((ber_hd, ber_sd))
+        t_elapsed = time.time() - t0
+        print "approximately",t_elapsed*(len(snr_vals)-i-1)/60, "minutes remaining"
+        np.save("tmp_ber_awgn_css_slow_rate-"+str(tb.c.slow_rate)+"_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB", ber_vals)
 
     np.save("ber_awgn_css_slow_rate-"+str(tb.c.slow_rate)+"_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB_"+time.strftime("%Y-%m-%d_%H-%M-%S"), ber_vals)
     plt.plot(snr_vals, ber_vals)

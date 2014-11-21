@@ -84,7 +84,7 @@ if __name__ == '__main__':
     if gr.enable_realtime_scheduling() != gr.RT_OK:
         print "Error: failed to enable realtime scheduling."
 
-    snr_vals = np.arange(-15,0,0.5)
+    snr_vals = np.arange(-10,10,0.5)
     min_err = 30
     min_ber = 0.00001
     min_len = int(min_err/min_ber)
@@ -97,22 +97,25 @@ if __name__ == '__main__':
     print "Simulate from", min(snr_vals), "to", max(snr_vals), "dB SNR"
     print "Collect",min_len,"bytes per step"
     ber_vals = [];
-    for i in snr_vals:
+    for i in range(len(snr_vals)):
+        t0 = time.time()
         tb = None
         tb = ber_awgn_comp_nogui()
-        tb.set_snr(i)
+        tb.set_snr(snr_vals[i])
         tb.start()
         while(True):
             len_res = tb.comp_bits.get_bits_compared()
-            print i, "dB:", 100.0*len_res/min_len, "% done"
+            print snr_vals[i], "dB:", 100.0*len_res/min_len, "% done"
             time.sleep(1)
             if(len_res >= min_len):
                 tb.stop()
                 break
 
         ber = tb.comp_bits.get_ber()
-        print "BER at", i, "dB SNR: ", ber
+        print "BER at", snr_vals[i], "dB SNR: ", ber
         ber_vals.append(ber)
+        t_elapsed = time.time() - t0
+        print "approximately",t_elapsed*(len(snr_vals)-len(ber_vals))/60, "minutes remaining"
 
     np.save("ber_awgn_oqpsk_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB_"+time.strftime("%Y-%m-%d_%H-%M-%S"), ber_vals)
     plt.plot(snr_vals, ber_vals)
