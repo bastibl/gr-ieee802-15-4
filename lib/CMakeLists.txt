@@ -49,7 +49,8 @@ list(APPEND ieee802_15_4_sources
     dqpsk_soft_demapper_cc_impl.cc
     deinterleaver_ff_impl.cc
     codeword_soft_demapper_fb_impl.cc
-    compare_blobs_impl.cc )
+    compare_blobs_impl.cc
+    rayleigh_multipath_cc_impl.cc )
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}

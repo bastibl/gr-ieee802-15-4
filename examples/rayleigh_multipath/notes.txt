@@ -1,0 +1,13 @@
+NOTES
+
+The sampling rates of OQPSK and CSS are 4 MSps and 32 MSps, respectively. In order to simulate the same channel for both rates, the power delay profile is interpolated for the higher rate.
+As there are no real standardized industrial indoor channel power delay profiles, a simple exponential function is used for simulation. The values of the PDP mark the variance of the filter taps, which are Gaussian. There magnitude is Rayleigh-distributed which models a NLOS scenario.
+
+The PDP has a length of tau_max=320ns which limits the longest significant signal path to 320ns*3*10^8m/s = 96m
+
+pdp(tau) = e^(-a*tau)
+pdp(0) = 1 = 0 dB
+pdp(tau_max) = .001 = -30 dB
+a ~= 21586735
+
+There are 11 taps for 32 MSps and 2 taps for 4 MSps. Considering that this is already a fairly long PDP (for indoor channels), most of the time a single tap channel model for 4 MSps should suffice.
