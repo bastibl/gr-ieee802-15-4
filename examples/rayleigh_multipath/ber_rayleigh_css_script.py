@@ -23,7 +23,19 @@ import pmt
 import time
 import matplotlib.pyplot as plt
 
-class ber_awgn_comp_nogui(gr.top_block):
+# configuration parameters
+noise_ampl_vals = np.arange(-10.0,10.0,1.0)
+nbytes_per_frame = 127
+cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
+min_err = 10
+min_ber = 0.0001
+min_len = int(min_err/min_ber)
+nframes = float(min_len)/nbytes_per_frame
+nsamps_total = nframes*FIXME
+pdp = [np.exp(-21586735.0*tau) for tau in np.arange(0.0,320*1e-9, 1.0/(32*1e6))]
+coherence_time_samps = FIXME
+
+class ber_rayleigh_comp_nogui(gr.top_block):
 
     def __init__(self):
         gr.top_block.__init__(self, "BER AWGN Test CSS SD/HD vs OQPSK")
@@ -32,7 +44,7 @@ class ber_awgn_comp_nogui(gr.top_block):
         # Variables
         ##################################################
         self.snr = snr = 0
-        self.c = c = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=127)
+        self.c = c = cfg
 
         ##################################################
         # Blocks
@@ -75,6 +87,9 @@ class ber_awgn_comp_nogui(gr.top_block):
             sfd=c.SFD,
             nsamp_frame=c.nsamp_frame,
         )
+        self.ieee802_15_4_rayleigh_channel_sim_hd = ieee802_15_4.rayleigh_multipath_cc(pdp, coherence_time_samps) 
+        self.ieee802_15_4_rayleigh_channel_sim_sd = ieee802_15_4.rayleigh_multipath_cc(pdp, coherence_time_samps)
+        self.skip_fir_group_delay = blocks.skiphead(gr.sizeof_gr_complex, (len(pdp)-1)/2)
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), 10, -1, True, False)
         self.blocks_multiply_const_vxx_0_0 = blocks.multiply_const_vcc((1.1687, ))
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vcc((1.1687, ))
@@ -83,9 +98,6 @@ class ber_awgn_comp_nogui(gr.top_block):
         self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 10**(-snr/10), 0)
         self.comp_bits_sd = ieee802_15_4.compare_blobs()
         self.comp_bits_hd = ieee802_15_4.compare_blobs()
-
-        self.noise_snk = blocks.file_sink(gr.sizeof_gr_complex, "noise_sig.bin")
-        self.sig_snk = blocks.file_sink(gr.sizeof_gr_complex, "tx_sig.bin")
 
         ##################################################
         # Connections
@@ -174,7 +186,7 @@ if __name__ == '__main__':
     for i in range(len(snr_vals)):
         t0 = time.time()
         tb = None
-        tb = ber_awgn_comp_nogui()
+        tb = ber_rayleigh_comp_nogui()
         tb.set_snr(snr_vals[i])
         tb.start()
         time.sleep(1)
@@ -188,7 +200,7 @@ if __name__ == '__main__':
                 tb.wait()
                 t0 = time.time()
                 tb = None
-                tb = ber_awgn_comp_nogui()
+                tb = ber_rayleigh_comp_nogui()
                 tb.set_snr(snr_vals[i])
                 tb.start()      
                 time.sleep(1)
@@ -213,10 +225,10 @@ if __name__ == '__main__':
         ber_vals.append((ber_hd, ber_sd))
         t_elapsed = time.time() - t0
         print "approximately",t_elapsed*(len(snr_vals)-i-1)/60, "minutes remaining"
-        np.save("tmp_ber_awgn_css_slow_rate-"+str(tb.c.slow_rate)+"_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB", ber_vals)
+        np.save("tmp_ber_rayleigh_css_slow_rate-"+str(tb.c.slow_rate)+"_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB", ber_vals)
 
-    np.save("ber_awgn_css_slow_rate-"+str(tb.c.slow_rate)+"_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB_"+time.strftime("%Y-%m-%d_%H-%M-%S"), ber_vals)
+    np.save("ber_rayleigh_css_slow_rate-"+str(tb.c.slow_rate)+"_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB_"+time.strftime("%Y-%m-%d_%H-%M-%S"), ber_vals)
     plt.plot(snr_vals, ber_vals)
     plt.yscale('log')
-    plt.title("ber_awgn_css_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB_"+time.strftime("%Y-%m-%d_%H-%M-%S"))
+    plt.title("ber_rayleigh_css_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB_"+time.strftime("%Y-%m-%d_%H-%M-%S"))
     plt.show()

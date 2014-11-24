@@ -33,6 +33,7 @@ namespace gr {
       std::vector<float> d_pdp; // power delay profile
       int d_len_pdp;
       int d_coh_time_samps; // coherence time in samples
+      bool d_is_time_variant; // channel can be static or time variant, depending on if the coherence time is set > 0
       int d_samp_ctr; // counts samples to determine the time for the channel reset
       std::vector<gr_complex> d_taps; // the generated filter taps
       void generate_taps();

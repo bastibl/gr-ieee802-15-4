@@ -48,9 +48,13 @@ namespace gr {
       d_coh_time_samps(coherence_time_samps),
       d_samp_ctr(0)
     {
+      if(d_coh_time_samps > 0)
+        d_is_time_variant = true;
+      else
+        d_is_time_variant = false;
       d_len_pdp = d_pdp.size();
       d_taps.assign(d_len_pdp,0);
-      d_gen = std::default_random_engine(std::chrono::system_clock::now().time_since_epoch().count());
+      d_gen = std::default_random_engine(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
       generate_taps();
       
       set_history(1+d_len_pdp); 
@@ -76,20 +80,15 @@ namespace gr {
         e += std::real(d_taps[i]*std::conj(d_taps[i]));
       }
 
-      // normalize to a power of 1
+      // normalize to a power of 1 and let the first tap have phase 0
       for(int i=0; i<d_len_pdp; i++)
+      {
         d_taps[i] /= gr_complex(std::sqrt(e));
+        d_taps[i] *= std::polar(float(1.0),-std::arg(d_taps[0]));
+      }
 
       // reverse the tap order for easier convolution via volk dot product
       std::reverse(d_taps.begin(), d_taps.end());
-
-      // e=0;
-      // for(int i=0; i<d_len_pdp; i++)
-      // {
-      //   e += std::real(d_taps[i]*std::conj(d_taps[i]));
-      // }
-      // std::cout << "taps have total energy of: " << e << std::endl;           
-
     }
 
     int
@@ -104,7 +103,7 @@ namespace gr {
         {
           volk_32fc_x2_dot_prod_32fc(out+i, in+i, &d_taps[0], d_len_pdp); 
           d_samp_ctr++;
-          if(d_samp_ctr >= d_coh_time_samps)
+          if(d_samp_ctr >= d_coh_time_samps && d_is_time_variant)
           {
             generate_taps();  
             d_samp_ctr = 0;     

@@ -35,7 +35,7 @@ class qa_rayleigh_multipath_cc (gr_unittest.TestCase):
 
     def test_001_t (self):
         # set up fg
-        data_in = np.ones((100000,))
+        data_in = np.ones((1000000,))
         self.src = blocks.vector_source_c(data_in)
         self.rayleigh = ieee802_15_4.rayleigh_multipath_cc(np.ones((10,)),10)
         self.snk = blocks.vector_sink_c(1)
@@ -49,7 +49,6 @@ class qa_rayleigh_multipath_cc (gr_unittest.TestCase):
         # plt.plot(abs(np.array(self.rayleigh.taps()))**2)
         # plt.show()
         self.assertTrue(e_out-e_in < 1e-2);
-
 
 if __name__ == '__main__':
     gr_unittest.run(qa_rayleigh_multipath_cc)
