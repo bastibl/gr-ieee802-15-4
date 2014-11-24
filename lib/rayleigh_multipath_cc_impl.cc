@@ -25,7 +25,7 @@
 #include <gnuradio/io_signature.h>
 #include "rayleigh_multipath_cc_impl.h"
 #include <volk/volk.h>
-#include <ctime>
+#include <chrono>
 
 namespace gr {
   namespace ieee802_15_4 {
@@ -45,13 +45,12 @@ namespace gr {
               gr::io_signature::make(1,1, sizeof(gr_complex)),
               gr::io_signature::make(1,1, sizeof(gr_complex))),
       d_pdp(pdp),
-      d_coh_time_samps(coherence_time_samps)
+      d_coh_time_samps(coherence_time_samps),
+      d_samp_ctr(0)
     {
       d_len_pdp = d_pdp.size();
-      if(d_coh_time_samps != 0)
-        throw std::runtime_error("Only static channel behavior implemented");
-
       d_taps.assign(d_len_pdp,0);
+      d_gen = std::default_random_engine(std::chrono::system_clock::now().time_since_epoch().count());
       generate_taps();
       
       set_history(1+d_len_pdp); 
@@ -71,7 +70,9 @@ namespace gr {
       float e = 0;
       for(int i=0; i<d_len_pdp; i++)
       {
-        d_taps[i] = gr_complex(std::sqrt(d_pdp[i])/2*d_rand(d_gen), std::sqrt(d_pdp[i])/2*d_rand(d_gen));
+        float I = d_rand(d_gen);
+        float Q = d_rand(d_gen);
+        d_taps[i] = gr_complex(std::sqrt(d_pdp[i])/2*I, std::sqrt(d_pdp[i])/2*Q);
         e += std::real(d_taps[i]*std::conj(d_taps[i]));
       }
 
@@ -82,12 +83,12 @@ namespace gr {
       // reverse the tap order for easier convolution via volk dot product
       std::reverse(d_taps.begin(), d_taps.end());
 
-      e=0;
-      for(int i=0; i<d_len_pdp; i++)
-      {
-        e += std::real(d_taps[i]*std::conj(d_taps[i]));
-      }
-      std::cout << "taps have total energy of: " << e << std::endl;           
+      // e=0;
+      // for(int i=0; i<d_len_pdp; i++)
+      // {
+      //   e += std::real(d_taps[i]*std::conj(d_taps[i]));
+      // }
+      // std::cout << "taps have total energy of: " << e << std::endl;           
 
     }
 
@@ -100,7 +101,15 @@ namespace gr {
         gr_complex *out = (gr_complex *) output_items[0];
 
         for(int i=0; i<noutput_items; i++)
-          volk_32fc_x2_dot_prod_32fc(out+i, in+i, &d_taps[0], d_len_pdp);        
+        {
+          volk_32fc_x2_dot_prod_32fc(out+i, in+i, &d_taps[0], d_len_pdp); 
+          d_samp_ctr++;
+          if(d_samp_ctr >= d_coh_time_samps)
+          {
+            generate_taps();  
+            d_samp_ctr = 0;     
+          }
+        }
 
         // Tell runtime system how many output items we produced.
         return noutput_items;
@@ -108,4 +117,3 @@ namespace gr {
 
   } /* namespace ieee802_15_4 */
 } /* namespace gr */
-

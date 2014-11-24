@@ -35,9 +35,9 @@ class qa_rayleigh_multipath_cc (gr_unittest.TestCase):
 
     def test_001_t (self):
         # set up fg
-        data_in = np.ones((1000,))
+        data_in = np.ones((100000,))
         self.src = blocks.vector_source_c(data_in)
-        self.rayleigh = ieee802_15_4.rayleigh_multipath_cc(np.ones((10,)))
+        self.rayleigh = ieee802_15_4.rayleigh_multipath_cc(np.ones((10,)),10)
         self.snk = blocks.vector_sink_c(1)
         self.tb.connect(self.src, self.rayleigh, self.snk)
         self.tb.run ()
@@ -46,8 +46,8 @@ class qa_rayleigh_multipath_cc (gr_unittest.TestCase):
         e_out = sum(np.array(abs(np.array(self.snk.data()))**2))/len(self.snk.data())
         print "power of output signal: ", e_out
         print "power of input signal: ", e_in
-        plt.plot(abs(np.array(self.rayleigh.taps()))**2)
-        plt.show()
+        # plt.plot(abs(np.array(self.rayleigh.taps()))**2)
+        # plt.show()
         self.assertTrue(e_out-e_in < 1e-2);
 
 
