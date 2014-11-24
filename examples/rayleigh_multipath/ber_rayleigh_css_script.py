@@ -24,16 +24,19 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-noise_ampl_vals = np.arange(-10.0,10.0,1.0)
+noise_ampl_vals = np.arange(-10.0,8.0,1.0)
 nbytes_per_frame = 127
-cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
+cfg = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
 min_err = 10
 min_ber = 0.0001
 min_len = int(min_err/min_ber)
 nframes = float(min_len)/nbytes_per_frame
-nsamps_total = nframes*FIXME
+nsamps_total = nframes*cfg.nsamp_frame
 pdp = [np.exp(-21586735.0*tau) for tau in np.arange(0.0,320*1e-9, 1.0/(32*1e6))]
-coherence_time_samps = FIXME
+if len(pdp) % 2 == 0:
+    pdp.append(0)
+coherence_time_samps = cfg.nsamp_frame*10
+mean_power = 1
 
 class ber_rayleigh_comp_nogui(gr.top_block):
 
@@ -89,30 +92,31 @@ class ber_rayleigh_comp_nogui(gr.top_block):
         )
         self.ieee802_15_4_rayleigh_channel_sim_hd = ieee802_15_4.rayleigh_multipath_cc(pdp, coherence_time_samps) 
         self.ieee802_15_4_rayleigh_channel_sim_sd = ieee802_15_4.rayleigh_multipath_cc(pdp, coherence_time_samps)
-        self.skip_fir_group_delay = blocks.skiphead(gr.sizeof_gr_complex, (len(pdp)-1)/2)
+        self.skip_fir_group_delay_hd = blocks.skiphead(gr.sizeof_gr_complex, (len(pdp)-1)/2)
+        self.skip_fir_group_delay_sd = blocks.skiphead(gr.sizeof_gr_complex, (len(pdp)-1)/2)
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), 10, -1, True, False)
-        self.blocks_multiply_const_vxx_0_0 = blocks.multiply_const_vcc((1.1687, ))
-        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vcc((1.1687, ))
-        self.blocks_add_xx_0_1 = blocks.add_vcc(1)
-        self.blocks_add_xx_0 = blocks.add_vcc(1)
+        self.blocks_multiply_const_vxx_hd = blocks.multiply_const_vcc((1.1687, ))
+        self.blocks_multiply_const_vxx_sd = blocks.multiply_const_vcc((1.1687, ))
+        self.blocks_add_xx_hd = blocks.add_vcc(1)
+        self.blocks_add_xx_sd = blocks.add_vcc(1)
         self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 10**(-snr/10), 0)
         self.comp_bits_sd = ieee802_15_4.compare_blobs()
         self.comp_bits_hd = ieee802_15_4.compare_blobs()
+        self.sig_snk = blocks.file_sink(gr.sizeof_gr_complex, "css_sig.bin")
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_add_xx_0, 0), (self.ieee802_15_4_css_phy_sd_0, 0))
-        self.connect((self.ieee802_15_4_css_phy_sd_0, 0), (self.blocks_multiply_const_vxx_0, 0))
-        self.connect((self.analog_noise_source_x_0_0, 0), (self.blocks_add_xx_0, 1))
-        self.connect((self.blocks_multiply_const_vxx_0, 0), (self.blocks_add_xx_0, 0))
-        self.connect((self.ieee802_15_4_css_phy_hd_0, 0), (self.blocks_multiply_const_vxx_0_0, 0))
-        self.connect((self.blocks_multiply_const_vxx_0_0, 0), (self.blocks_add_xx_0_1, 1))
-        self.connect((self.analog_noise_source_x_0_0, 0), (self.blocks_add_xx_0_1, 0))
-        self.connect((self.blocks_add_xx_0_1, 0), (self.ieee802_15_4_css_phy_hd_0, 0))
+        self.connect((self.blocks_add_xx_sd, 0), (self.ieee802_15_4_css_phy_sd_0, 0))
+        self.connect((self.ieee802_15_4_css_phy_sd_0, 0), (self.blocks_multiply_const_vxx_sd, 0))
+        self.connect((self.analog_noise_source_x_0_0, 0), (self.blocks_add_xx_sd, 1))
+        self.connect((self.ieee802_15_4_css_phy_hd_0, 0), (self.blocks_multiply_const_vxx_hd, 0))
+        self.connect((self.analog_noise_source_x_0_0, 0), (self.blocks_add_xx_hd, 0))
+        self.connect((self.blocks_add_xx_hd, 0), (self.ieee802_15_4_css_phy_hd_0, 0))
+        self.connect(self.blocks_multiply_const_vxx_hd, self.ieee802_15_4_rayleigh_channel_sim_hd, self.skip_fir_group_delay_hd, (self.blocks_add_xx_hd,1))
+        self.connect(self.blocks_multiply_const_vxx_sd, self.ieee802_15_4_rayleigh_channel_sim_sd, self.skip_fir_group_delay_sd, (self.blocks_add_xx_sd,0))
 
-        self.connect(self.analog_noise_source_x_0_0, self.noise_snk)
-        self.connect(self.blocks_multiply_const_vxx_0, self.sig_snk)
+        self.connect(self.ieee802_15_4_css_phy_hd_0, self.sig_snk)
 
         ##################################################
         # Asynch Message Connections
@@ -172,6 +176,8 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     if gr.enable_realtime_scheduling() != gr.RT_OK:
         print "Error: failed to enable realtime scheduling."
+    
+    print "The channel changes a total of", nsamps_total/coherence_time_samps, "times every", float(coherence_time_samps)/cfg.nsamp_frame, "frames"
 
     snr_vals = np.arange(-10.0,8.0,0.5)
     min_err = 100
