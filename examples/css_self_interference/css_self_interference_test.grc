@@ -931,7 +931,7 @@
     </param>
   </block>
   <block>
-    <key>ieee802_15_4_css_phy</key>
+    <key>ieee802_15_4_css_phy_sd</key>
     <param>
       <key>id</key>
       <value>ieee802_15_4_css_phy_0</value>

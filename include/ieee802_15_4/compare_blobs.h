@@ -38,6 +38,7 @@ namespace gr {
      public:
       typedef boost::shared_ptr<compare_blobs> sptr;
       virtual int get_bits_compared() = 0;
+      virtual int get_errors_found() = 0;
       virtual float get_ber() = 0;
 
       /*!

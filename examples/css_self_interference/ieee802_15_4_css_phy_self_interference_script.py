@@ -7,8 +7,8 @@
 # Generated: Tue Nov 25 16:59:12 2014
 ##################################################
 
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_tx_only.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_tx_only.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -24,13 +24,14 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-20.0,0.0,1.0)
+snr_vals = np.arange(-20.0,-5.0,1.0)
 enable_vals = [0.0, 0.0, 0.0]
 nbytes_per_frame = 127
 min_err = 10
 min_ber = 0.00001
 min_len = int(min_err/min_ber)
-sleeptime = 1.0
+msg_interval = 10 # ms
+sleeptime = 10.0
 
 class ieee802_15_4_css_phy_self_interference(gr.top_block):
 
@@ -123,7 +124,8 @@ class ieee802_15_4_css_phy_self_interference(gr.top_block):
             nsamp_frame=c.nsamp_frame,
         )
         self.ieee802_15_4_compare_blobs_0 = ieee802_15_4.compare_blobs(False)
-        self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), 50, -1, True, False)
+        # self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), msg_interval, -1, True, False)
+        self.msg_strobe = blocks.message_strobe(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), msg_interval)
         self.blocks_multiply_const_vxx_1_1 = blocks.multiply_const_vcc((enable[1], ))
         self.blocks_multiply_const_vxx_1_0 = blocks.multiply_const_vcc((enable[2], ))
         self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vcc((enable[0], ))
@@ -150,11 +152,15 @@ class ieee802_15_4_css_phy_self_interference(gr.top_block):
         ##################################################
         # Asynch Message Connections
         ##################################################
-        self.msg_connect(self.foo_periodic_msg_source_0, "out", self.ieee802_15_4_make_pair_with_blob_0, "in")
+        # self.msg_connect(self.foo_periodic_msg_source_0, "out", self.ieee802_15_4_make_pair_with_blob_0, "in")
+        self.msg_connect(self.msg_strobe, "strobe", self.ieee802_15_4_make_pair_with_blob_0, "in")
         self.msg_connect(self.ieee802_15_4_make_pair_with_blob_0, "out", self.ieee802_15_4_css_phy_0, "txin")
-        self.msg_connect(self.foo_periodic_msg_source_0, "out", self.ieee802_15_4_make_pair_with_blob_0_2, "in")
-        self.msg_connect(self.foo_periodic_msg_source_0, "out", self.ieee802_15_4_make_pair_with_blob_0_0, "in")
-        self.msg_connect(self.foo_periodic_msg_source_0, "out", self.ieee802_15_4_make_pair_with_blob_0_1, "in")
+        # self.msg_connect(self.foo_periodic_msg_source_0, "out", self.ieee802_15_4_make_pair_with_blob_0_2, "in")
+        # self.msg_connect(self.foo_periodic_msg_source_0, "out", self.ieee802_15_4_make_pair_with_blob_0_0, "in")
+        # self.msg_connect(self.foo_periodic_msg_source_0, "out", self.ieee802_15_4_make_pair_with_blob_0_1, "in")
+        self.msg_connect(self.msg_strobe, "strobe", self.ieee802_15_4_make_pair_with_blob_0_2, "in")
+        self.msg_connect(self.msg_strobe, "strobe", self.ieee802_15_4_make_pair_with_blob_0_0, "in")
+        self.msg_connect(self.msg_strobe, "strobe", self.ieee802_15_4_make_pair_with_blob_0_1, "in")
         self.msg_connect(self.ieee802_15_4_make_pair_with_blob_0_2, "out", self.ieee802_15_4_css_phy_tx_only_0, "txin")
         self.msg_connect(self.ieee802_15_4_make_pair_with_blob_0_0, "out", self.ieee802_15_4_css_phy_tx_only_0_0, "txin")
         self.msg_connect(self.ieee802_15_4_make_pair_with_blob_0_1, "out", self.ieee802_15_4_css_phy_tx_only_0_1, "txin")
@@ -302,3 +308,4 @@ if __name__ == '__main__':
     plt.xlabel("SNR")
     plt.title("Influence of self interference on CSS transmissions in an AWGN channel")
     plt.show()
+    plt.savefig("ber_self_interference_css_slow_rate-"+str(tb.c.slow_rate)+"_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB_"+time.strftime("%Y-%m-%d_%H-%M-%S"))

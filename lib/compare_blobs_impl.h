@@ -44,6 +44,7 @@ namespace gr {
       void compare_bits();
 
       int get_bits_compared(){ return d_num_bits_compared; }
+      int get_errors_found(){ return d_num_errors_found; }
       float get_ber(){ return float(d_num_errors_found)/d_num_bits_compared; }
     };
 

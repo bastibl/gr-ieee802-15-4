@@ -6,9 +6,9 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_hd.py")
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_hd.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -84,8 +84,8 @@ if __name__ == '__main__':
     if gr.enable_realtime_scheduling() != gr.RT_OK:
         print "Error: failed to enable realtime scheduling."
 
-    snr_vals = np.arange(-10,10,0.5)
-    min_err = 30
+    snr_vals = np.arange(-10,8.0,0.5)
+    min_err = 10
     min_ber = 0.00001
     min_len = int(min_err/min_ber)
     if min_len <= 1e3:
