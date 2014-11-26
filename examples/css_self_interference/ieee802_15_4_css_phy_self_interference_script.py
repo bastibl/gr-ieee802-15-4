@@ -21,15 +21,16 @@ import ieee802_15_4
 import numpy as np
 import pmt
 import time
+import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-20.0,-5.0,1.0)
+snr_vals = np.arange(-20.0,0.0,1.0)
 enable_vals = [0.0, 0.0, 0.0]
 nbytes_per_frame = 127
-min_err = 1
-min_ber = 0.001
+min_err = 10
+min_ber = 0.00001
 min_len = int(min_err/min_ber)
-sleeptime = 2.0
+sleeptime = 1.0
 
 class ieee802_15_4_css_phy_self_interference(gr.top_block):
 
@@ -122,7 +123,7 @@ class ieee802_15_4_css_phy_self_interference(gr.top_block):
             nsamp_frame=c.nsamp_frame,
         )
         self.ieee802_15_4_compare_blobs_0 = ieee802_15_4.compare_blobs(False)
-        self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), 100, -1, True, False)
+        self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), 50, -1, True, False)
         self.blocks_multiply_const_vxx_1_1 = blocks.multiply_const_vcc((enable[1], ))
         self.blocks_multiply_const_vxx_1_0 = blocks.multiply_const_vcc((enable[2], ))
         self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vcc((enable[0], ))
@@ -286,10 +287,10 @@ if __name__ == '__main__':
                 time.sleep(sleeptime)
             ber = tb.ieee802_15_4_compare_blobs_0.get_ber()
             ber_vals[k,i] = ber
-            print "BER at", snr_vals[i], "dB SNR (SD):", ber_vals[k,i]
+            print "BER at", snr_vals[i], "dB SNR (SD) with", k, "interferers:", ber_vals[k,i]
             t_elapsed = time.time() - t0
-            print "approximately",t_elapsed*(len(snr_vals)-i-1)/60, "minutes remaining"
-            # np.save("tmp_ber_self_interference_css_slow_rate-"+str(tb.c.slow_rate)+"_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB", ber_vals)
+            print "approximately",t_elapsed*len(snr_vals)*(len(enable_vals)+1-k)/60-t_elapsed*(len(snr_vals)-i-1)/60, "minutes remaining"
+            np.save("tmp_ber_self_interference_css_slow_rate-"+str(tb.c.slow_rate)+"_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB", ber_vals)
 
     np.save("ber_self_interference_css_slow_rate-"+str(tb.c.slow_rate)+"_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB_"+time.strftime("%Y-%m-%d_%H-%M-%S"), ber_vals)
     for i in range(len(enable_vals)+1):
