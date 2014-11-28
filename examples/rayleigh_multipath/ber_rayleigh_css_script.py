@@ -23,16 +23,20 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-15.0, 10.0, 1.0)  # -5dB is a good starting point
+snr_vals = np.arange(-30.0, 10.0, 1.0)
 nbytes_per_frame = 127
-cfg = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
-min_err = int(5e3)
-min_len = int(1e6)
+cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
+min_err = int(1e3)
+min_len = int(1e5)
 nframes = float(min_len) / nbytes_per_frame
 nsamps_total = nframes * cfg.nsamp_frame
 pdp = [np.exp(-28782313.0 * tau) for tau in np.arange(0.0, 320 * 1e-9, 1.0 / (32 * 1e6))]
 if len(pdp) % 2 == 0:
     pdp.append(0)
+for i in range(len(pdp)):
+    if i%8 != 0:
+        pdp[i] = 0
+print "pdp:", pdp
 coherence_time_samps = int(cfg.nsamp_frame * 0.1)
 norm_fac = 1.1507
 msg_interval = 10  # ms
@@ -87,10 +91,9 @@ class ber_rayleigh_comp_nogui(gr.top_block):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_add_xx_sd, 0), (self.ieee802_15_4_css_phy_sd_0, 0))
-        self.connect((self.ieee802_15_4_css_phy_sd_0, 0), (self.blocks_multiply_const_vxx_sd, 0))
-        self.connect((self.analog_noise_source_x_0_0, 0), (self.blocks_add_xx_sd, 1))
-        self.connect(self.blocks_multiply_const_vxx_sd, self.ieee802_15_4_rayleigh_channel_sim_sd,
+        self.connect(self.analog_noise_source_x_0_0, (self.blocks_add_xx_sd,1))
+        self.connect(self.blocks_add_xx_sd, self.ieee802_15_4_css_phy_sd_0)
+        self.connect(self.ieee802_15_4_css_phy_sd_0, self.blocks_multiply_const_vxx_sd, self.ieee802_15_4_rayleigh_channel_sim_sd,
                      self.skip_fir_group_delay_sd, (self.blocks_add_xx_sd, 0))
 
         # self.connect(self.ieee802_15_4_css_phy_sd_0, self.sig_snk)
@@ -141,7 +144,7 @@ if __name__ == '__main__':
         coherence_time_samps) / cfg.nsamp_frame, "frames"
 
     if min_len <= 1e3:
-        raise Exception("min_len too short")
+        print "WARNING: min_len very short:", min_len
     print "Simulate from", min(snr_vals), "to", max(snr_vals), "dB snr"
     print "Collect", min_len, "bytes per step"
     old_len_res = 0
@@ -157,19 +160,10 @@ if __name__ == '__main__':
         while (True):
             len_res = tb.comp_bits_sd.get_bits_compared()
             if len_res == old_len_res:
-                print "simulation got stuck, restart at current position"
-                tb.stop()
-                tb.wait()
-                t0 = time.time()
-                tb = None
-                tb = ber_rayleigh_comp_nogui()
-                tb.set_snr(snr_vals[i])
-                tb.start()
-                time.sleep(1)
-                len_res = tb.comp_bits_sd.get_bits_compared()
+                print "simulation may be stuck"
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
             if (len_res >= min_len):
-                if (tb.comp_bits_sd.get_errors_found() >= min_err):
+                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() > 100*min_len):
                     print "Found a total of", tb.comp_bits_sd.get_errors_found(), " errors"
                     tb.stop()
                     break

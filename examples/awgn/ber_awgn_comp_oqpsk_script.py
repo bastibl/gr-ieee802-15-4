@@ -23,6 +23,15 @@ import pmt
 import time
 import matplotlib.pyplot as plt
 
+# configuration parameters
+snr_vals = np.arange(-30.0,-5.0,1.0)
+enable_vals = [0.0, 0.0, 0.0]
+nbytes_per_frame = 127
+min_err = 1e4
+min_len = 1e5
+msg_interval = 10 # ms
+sleeptime = 1.0
+
 class ber_awgn_comp_nogui(gr.top_block):
 
     def __init__(self):
@@ -45,7 +54,7 @@ class ber_awgn_comp_nogui(gr.top_block):
         # self.msg_trigger = blocks.message_strobe(pmt.cons(pmt.intern("trigger"), pmt.intern("dummy")), 1000)
         self.comp_bits = ieee802_15_4.compare_blobs(packet_error_mode=False)
         self.blocks_add_xx_0_0 = blocks.add_vcc(1)
-        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 10**(-snr/10), 0)
+        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 0.5*(10**(-snr/20)), 0)
 
         ##################################################
         # Connections
@@ -69,7 +78,7 @@ class ber_awgn_comp_nogui(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.analog_noise_source_x_0_0.set_amplitude(10**(-self.snr/10))
+        self.analog_noise_source_x_0_0.set_amplitude(0.5*(10**(-snr/20)))
 
     def get_c(self):
         return self.c
@@ -84,10 +93,6 @@ if __name__ == '__main__':
     if gr.enable_realtime_scheduling() != gr.RT_OK:
         print "Error: failed to enable realtime scheduling."
 
-    snr_vals = np.arange(-10,8.0,0.5)
-    min_err = 10
-    min_ber = 0.00001
-    min_len = int(min_err/min_ber)
     if min_len <= 1e3:
         raise Exception("min_len too short")
     min_ram_usage_mb = 2.0*min_len/1024/1024
@@ -106,10 +111,12 @@ if __name__ == '__main__':
         while(True):
             len_res = tb.comp_bits.get_bits_compared()
             print snr_vals[i], "dB:", 100.0*len_res/min_len, "% done"
-            time.sleep(1)
+            time.sleep(sleeptime)
             if(len_res >= min_len):
-                tb.stop()
-                break
+                if tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() > min_len*50:
+                    tb.stop()
+                    tb.wait()
+                    break
 
         ber = tb.comp_bits.get_ber()
         print "BER at", snr_vals[i], "dB SNR: ", ber
@@ -121,6 +128,7 @@ if __name__ == '__main__':
     plt.plot(snr_vals, ber_vals)
     plt.yscale('log')
     plt.title("ber_awgn_oqpsk_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB_"+time.strftime("%Y-%m-%d_%H-%M-%S"))
+    plt.savefig("ber_awgn_oqpsk_"+str(min(snr_vals))+"_to_"+str(max(snr_vals))+"dB_"+time.strftime("%Y-%m-%d_%H-%M-%S")+".pdf")
     plt.show()
 
 
