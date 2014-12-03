@@ -25,6 +25,7 @@
 #include <gnuradio/io_signature.h>
 #include "make_pair_with_blob_impl.h"
 #include <gnuradio/block_detail.h>
+#include <cstdlib>
 
 namespace gr {
   namespace ieee802_15_4 {
@@ -72,6 +73,8 @@ namespace gr {
       if(!pmt::is_pair(msg))
         throw std::runtime_error("Input PMT is not of type pair");
 
+      for(int i=0; i<d_vec.size(); i++)
+        d_vec[i] = std::rand() % 256;
       pmt::pmt_t blob = pmt::make_blob(&d_vec[0], d_vec.size());
       message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, blob));
       // std::cout << "make_pair_with_blob received and sent a message" << std::endl;
