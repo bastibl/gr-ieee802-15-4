@@ -6,7 +6,7 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -22,10 +22,10 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-15.0, 0.0, .5)
+snr_vals = np.arange(-15.0, -5.0, .25)
 nbytes_per_frame = 127
-min_err = 1000  # int(5e3)
-min_len = 1000000  # int(1e6)
+min_err = int(1e3)
+min_len = int(1e8)
 msg_interval = 1  # ms
 sleeptime = 1.0  # s
 interferer_freq = 100e3
@@ -100,13 +100,13 @@ if __name__ == '__main__':
         tb = ber_singletone_nogui()
         tb.set_snr(snr_vals[i])
         tb.start()
-        time.sleep(1)
+        time.sleep(.1)
         ber = 1.0
         while (True):
             len_res = tb.comp_bits.get_bits_compared()
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
             if (len_res >= min_len):
-                if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 10 * min_len):
+                if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 10 * min_len or tb.comp_bits.get_errors_found() == 0):
                     print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
                     tb.stop()
                     break
@@ -115,7 +115,7 @@ if __name__ == '__main__':
             if (ber == 0 ):
                 tb.stop()
                 tb.wait()
-                time.sleep(1)
+                time.sleep(.1)
                 break
             time.sleep(sleeptime)
             old_len_res = len_res

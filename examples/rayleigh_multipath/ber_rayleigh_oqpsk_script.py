@@ -6,8 +6,6 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_hd.py")
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
 execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
@@ -26,10 +24,9 @@ import matplotlib.pyplot as plt
 
 
 # configuration parameters
-snr_vals = np.arange(-5.0,20.0,5.0)
+snr_vals = np.arange(5.0,15.0,1.0)
 nbytes_per_frame = 127
-cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
-min_err = int(5e1)
+min_err = int(1e3)
 min_len = int(1e6)
 nframes = float(min_len)/nbytes_per_frame
 nsamps_frame = 4*8*(4+1+1+nbytes_per_frame)
@@ -52,21 +49,16 @@ class ber_rayleigh_comp_nogui(gr.top_block):
         # Variables
         ##################################################
         self.snr = snr = 0
-        self.c = c = cfg
 
         ##################################################
         # Blocks
         ##################################################
         self.ieee802_15_4_oqpsk_phy_nosync_0 = ieee802_15_4_oqpsk_phy_nosync(
-            payload_len=c.phy_packetsize_bytes,
+            payload_len=nbytes_per_frame,
         )
         self.ieee802_15_4_rayleigh_channel_sim = ieee802_15_4.rayleigh_multipath_cc(pdp, coherence_time_samps)
-        self.upsampler = filter.rational_resampler_ccc(8,1)
-        self.downsampler = filter.rational_resampler_ccc(1,8)
         self.skip_fir_group_delay = blocks.skiphead(gr.sizeof_gr_complex, group_delay)
-        self.skip_upsampler_group_delay = blocks.skiphead(gr.sizeof_gr_complex, 98)
-        self.skip_downsampler_group_delay = blocks.skiphead(gr.sizeof_gr_complex, 12)
-        self.ieee802_15_4_make_pair_with_blob_0 = ieee802_15_4.make_pair_with_blob(np.random.randint(0,256,(c.phy_packetsize_bytes,)))
+        self.ieee802_15_4_make_pair_with_blob_0 = ieee802_15_4.make_pair_with_blob(np.random.randint(0,256,(nbytes_per_frame,)))
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), 1, msg_interval, True, False)
         self.comp_bits = ieee802_15_4.compare_blobs(packet_error_mode=False)
         self.blocks_add_xx_0_0 = blocks.add_vcc(1)
@@ -76,13 +68,10 @@ class ber_rayleigh_comp_nogui(gr.top_block):
         # Connections
         ##################################################
         self.connect((self.analog_noise_source_x_0_0, 0), (self.blocks_add_xx_0_0, 1))
-        self.connect(self.ieee802_15_4_oqpsk_phy_nosync_0, self.upsampler)
-        self.connect(self.upsampler, self.skip_upsampler_group_delay, self.ieee802_15_4_rayleigh_channel_sim)
+        self.connect(self.ieee802_15_4_oqpsk_phy_nosync_0, self.ieee802_15_4_rayleigh_channel_sim)
         self.connect(self.ieee802_15_4_rayleigh_channel_sim, self.skip_fir_group_delay)
         self.connect(self.skip_fir_group_delay, (self.blocks_add_xx_0_0, 0))
-        self.connect((self.blocks_add_xx_0_0, 0), self.downsampler)
-        self.connect(self.downsampler, self.skip_downsampler_group_delay)
-        self.connect(self.skip_downsampler_group_delay, (self.ieee802_15_4_oqpsk_phy_nosync_0, 0))
+        self.connect((self.blocks_add_xx_0_0, 0), (self.ieee802_15_4_oqpsk_phy_nosync_0, 0))
 
         ##################################################
         # Asynch Message Connections

@@ -23,6 +23,7 @@ if __name__ == "__main__":
 	plt.xlabel("SNR")
 	plt.title("Comparison of IEEE 802.15.4 CSS/OQPSK PHY Layer in AWGN Channel")
 	plt.grid()
+	plt.savefig("ber_snr_awgn_oqpsk_css.pdf")
 	plt.show()
 
 	# Eb/N0 plot
@@ -50,6 +51,7 @@ if __name__ == "__main__":
 	plt.xlabel("Eb/N0")
 	plt.title("Comparison of IEEE 802.15.4 CSS and OQPSK PHY Layer in AWGN Channel")
 	plt.grid()
+	plt.savefig("ber_ebn0_awgn_oqpsk_css.pdf")
 	plt.show()
 
 
