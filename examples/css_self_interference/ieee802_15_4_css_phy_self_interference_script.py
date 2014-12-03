@@ -25,12 +25,15 @@ import matplotlib.pyplot as plt
 
 # configuration parameters
 snr_vals = np.arange(-25.0,-5.0,1.0)
+min_intf = 0
+max_intf = 3
 enable_vals = [0.0, 0.0, 0.0]
 nbytes_per_frame = 127
 min_err = 1e3
-min_len = 1e5
-msg_interval = 10 # ms
-sleeptime = 1.0
+min_len = 1e6
+msg_interval = 2 # ms
+sleeptime = 5.0
+slow_mode = True
 
 class ieee802_15_4_css_phy_self_interference(gr.top_block):
 
@@ -42,7 +45,7 @@ class ieee802_15_4_css_phy_self_interference(gr.top_block):
         ##################################################
         self.snr = snr = 0
         self.enable = enable = [0.0, 0.0, 0.0]
-        self.c = c = ieee802_15_4.css_phy(slow_rate=False, chirp_number=1)
+        self.c = c = ieee802_15_4.css_phy(slow_rate=slow_mode, chirp_number=1)
 
         ##################################################
         # Blocks
@@ -68,9 +71,14 @@ class ieee802_15_4_css_phy_self_interference(gr.top_block):
         self.ieee802_15_4_compare_blobs_0 = ieee802_15_4.compare_blobs(False)
         # self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), msg_interval, -1, True, False)
         self.msg_strobe = blocks.message_strobe(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), msg_interval)
-        self.src_i1 = blocks.file_source(gr.sizeof_gr_complex, "frame_127bytes_seq2.bin", repeat=True)
-        self.src_i2 = blocks.file_source(gr.sizeof_gr_complex, "frame_127bytes_seq3.bin", repeat=True)
-        self.src_i3 = blocks.file_source(gr.sizeof_gr_complex, "frame_127bytes_seq4.bin", repeat=True)
+        if slow_mode:
+            self.src_i1 = blocks.file_source(gr.sizeof_gr_complex, "frame_127bytes_seq2_slow.bin", repeat=True)
+            self.src_i2 = blocks.file_source(gr.sizeof_gr_complex, "frame_127bytes_seq3_slow.bin", repeat=True)
+            self.src_i3 = blocks.file_source(gr.sizeof_gr_complex, "frame_127bytes_seq4_slow.bin", repeat=True)
+        else:
+            self.src_i1 = blocks.file_source(gr.sizeof_gr_complex, "frame_127bytes_seq2_fast.bin", repeat=True)
+            self.src_i2 = blocks.file_source(gr.sizeof_gr_complex, "frame_127bytes_seq3_fast.bin", repeat=True)
+            self.src_i3 = blocks.file_source(gr.sizeof_gr_complex, "frame_127bytes_seq4_fast.bin", repeat=True)
         self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vcc((enable[1], ))
         self.blocks_multiply_const_vxx_2 = blocks.multiply_const_vcc((enable[2], ))
         self.blocks_multiply_const_vxx_3 = blocks.multiply_const_vcc((enable[0], ))
@@ -153,12 +161,12 @@ if __name__ == '__main__':
             tb = ieee802_15_4_css_phy_self_interference()
             tb.set_snr(snr_vals[i])
             tb.set_enable(enable_vals)
-            time.sleep(.5) # some setup time won't hurt
+            time.sleep(.1) # some setup time won't hurt
             tb.start()
             while(True):
                 len_res = tb.ieee802_15_4_compare_blobs_0.get_bits_compared()
                 if len_res >= min_len:
-                    if tb.ieee802_15_4_compare_blobs_0.get_errors_found() > min_err or len_res >= 50*min_len:
+                    if tb.ieee802_15_4_compare_blobs_0.get_errors_found() > min_err or len_res >= 3*min_len or tb.ieee802_15_4_compare_blobs_0.get_errors_found() == 0:
                         tb.stop()
                         tb.wait()
                         break

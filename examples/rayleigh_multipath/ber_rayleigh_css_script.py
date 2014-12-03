@@ -23,11 +23,11 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-30.0, 10.0, 1.0)
+snr_vals = np.arange(10.0, 15.0, 1.0)
 nbytes_per_frame = 127
-cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
-min_err = int(1e3)
-min_len = int(1e5)
+cfg = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
+min_err = int(5e2)
+min_len = int(1e6)
 nframes = float(min_len) / nbytes_per_frame
 nsamps_total = nframes * cfg.nsamp_frame
 pdp = [np.exp(-28782313.0 * tau) for tau in np.arange(0.0, 320 * 1e-9, 1.0 / (32 * 1e6))]
@@ -163,7 +163,7 @@ if __name__ == '__main__':
                 print "simulation may be stuck"
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
             if (len_res >= min_len):
-                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() > 100*min_len):
+                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() > 30*min_len):
                     print "Found a total of", tb.comp_bits_sd.get_errors_found(), " errors"
                     tb.stop()
                     break
