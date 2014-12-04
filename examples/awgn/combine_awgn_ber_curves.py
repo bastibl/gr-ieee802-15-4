@@ -27,15 +27,11 @@ if __name__ == "__main__":
 	plt.show()
 
 	# Eb/N0 plot
-	css_Eb_noSF = 19.0007 # sum(|norm_fac*chirp_seq|^2)/8 --> Energy per code bit
-	css_Eb_hiSF = css_Eb_noSF*32.0/6
-	css_Eb_loSF = css_Eb_noSF*4.0/3
 	# this Eb/N0 does not consider energy spent on headers, only the payload including the respective coding rate is considered because otherwise the number of payload bytes per frame would gain influence
-	css_EbN0_loSF = 10*np.log10(css_Eb_loSF) + snr_css_fast
-	css_EbN0_hiSF = 10*np.log10(css_Eb_hiSF) + snr_css_slow
+	css_EbN0_loSF = snr_css_fast + 10*np.log10(32e6/1e6)
+	css_EbN0_hiSF = snr_css_slow + 10*np.log10(32e6/250e3)
 	# OQPSK
-	oqpsk_Eb = 64.0/4 # the OQPSK signal has always magnitude 1; one codeword is 64 samples long and encodes 4 payload bits (in the 2450 MHz band)
-	oqpsk_EbN0 = 10*np.log10(oqpsk_Eb) + snr_oqpsk
+	oqpsk_EbN0 = snr_oqpsk + 10*np.log10(4e6/250e3)
 	# also plot uncoded BPSK for comparison (from MATLAB bertool)
 	bpsk_EbN0 = np.arange(-5.0,21.0,1.0)
 	bpsk_ber = np.array([0.213228018357620, 0.186113817483389, 0.158368318809598, 0.130644488522829, 0.103759095953406, 0.0786496035251426, 0.0562819519765415, 0.0375061283589260, 0.0228784075610853, 0.0125008180407376, 0.00595386714777866, 0.00238829078093281, 0.000772674815378444, 0.000190907774075993, 3.36272284196176e-05, 3.87210821552205e-06, 2.61306795357521e-07, 9.00601035062878e-09, 1.33293101753005e-10, 6.81018912878076e-13, 9.12395736262818e-16, 2.26739584445444e-19, 6.75896977065478e-24, 1.39601431090675e-29, 1.00107397357086e-36, 1.04424379188127e-45])
