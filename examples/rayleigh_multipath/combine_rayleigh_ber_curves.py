@@ -49,15 +49,11 @@ if __name__ == "__main__":
 
     # EbN0 plots
     f = plt.figure(1)
-    css_Eb_noSF = 19.0007 # sum(|norm_fac*chirp_seq|^2)/8 --> Energy per code bit
-    css_slow_Eb = css_Eb_noSF*32.0/6
-    css_fast_Eb = css_Eb_noSF*4.0/3
     # this Eb/N0 does not consider energy spent on headers, only the payload including the respective coding rate is considered because otherwise the number of payload bytes per frame would gain influence
-    css_fast_EbN0 = 10*np.log10(css_fast_Eb) + snr_css_fast
-    css_slow_EbN0 = 10*np.log10(css_slow_Eb) + snr_css_slow
+    css_fast_EbN0 =snr_css_fast + 10*np.log10(32e6/1e6)
+    css_slow_EbN0 = snr_css_slow + 10*np.log10(32e6/250e3)
     # OQPSK
-    oqpsk_Eb = 64.0/4 # the OQPSK signal has always magnitude 1; one codeword is 64 samples long and encodes 4 payload bits (in the 2450 MHz band)
-    oqpsk_EbN0 = 10*np.log10(oqpsk_Eb) + snr_oqpsk
+    oqpsk_EbN0 = snr_oqpsk + 10*np.log10(4e6/250e3)
     plt.plot(css_slow_EbN0, css_slow, label="CSS 250 kbps (SD)")
     plt.plot(css_fast_EbN0, css_fast, label="CSS 1 Mbps (SD)")
     plt.plot(oqpsk_EbN0, oqpsk, label="OQPSK")
@@ -69,7 +65,7 @@ if __name__ == "__main__":
     plt.ylim([1e-6,1])
     plt.ylabel("BER")
     plt.title("Bit Error Rates in Rayleigh Channel with AWGN")
-    plt.savefig("rayleigh_pdp_"+time.strftime("%Y-%m-%d_%H-%M-%S")+".pdf")
+    plt.savefig("ber_rayleigh_EbN0_"+time.strftime("%Y-%m-%d_%H-%M-%S")+".pdf")
 
     f2 = plt.figure(2)
     markerline, stemlines, baseline = plt.stem(t*1e9, pdp, '-', bottom=0.00001)
@@ -80,5 +76,5 @@ if __name__ == "__main__":
     plt.ylim([0.0001,8])
     plt.title("Power delay profile")
     plt.yscale('log')
-    plt.savefig("ber_rayleigh_EbN0_"+time.strftime("%Y-%m-%d_%H-%M-%S")+".pdf")
+    plt.savefig("rayleigh_pdp_"+time.strftime("%Y-%m-%d_%H-%M-%S")+".pdf")
 
