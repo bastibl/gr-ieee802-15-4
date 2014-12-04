@@ -6,8 +6,8 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
 
 from gnuradio import analog
 from gnuradio import blocks
@@ -36,13 +36,13 @@ msg_interval = 1  # ms
 sleeptime = .1  # s
 fs_oqpsk = 4e6
 fs_css = 32e6
-interferer_freq_oqpsk = np.arange(-fs_oqpsk/2, fs_oqpsk/2, 2e4)
+interferer_freq_oqpsk = np.arange(-fs_oqpsk/2, fs_oqpsk/2, 1e5)
 interferer_freq_css = np.arange(-fs_css/2, fs_css/2, 2e5)
 norm_fac = 1.1507
 
 en_oqpsk = True
-en_css_fast = True
-en_css_slow = True
+en_css_fast = False
+en_css_slow = False
 
 
 class ber_singletone_oqpsk(gr.top_block):
@@ -65,7 +65,7 @@ class ber_singletone_oqpsk(gr.top_block):
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")),
                                                                  msg_interval, -1, True, False)
         self.blocks_add_xx_sd = blocks.add_vcc(1)
-        self.singletone_src = analog.sig_source_c(fs_oqpsk, analog.GR_COS_WAVE, interferer_freq_oqpsk[0], 10 ** (-snr / 20))
+        self.singletone_src = analog.sig_source_c(fs_oqpsk, analog.GR_COS_WAVE, interferer_freq_oqpsk[0], np.sqrt(2) * (10 ** (-snr / 20)))
         self.comp_bits = ieee802_15_4.compare_blobs()
         # self.sig_snk = blocks.file_sink(gr.sizeof_gr_complex, "css_sig.bin")
 
@@ -133,7 +133,7 @@ class ber_singletone_css(gr.top_block):
                                                                  msg_interval, -1, True, False)
         self.blocks_multiply_const_vxx_sd = blocks.multiply_const_vcc((norm_fac, ))
         self.blocks_add_xx_sd = blocks.add_vcc(1)
-        self.singletone_src = analog.sig_source_c(fs_css, analog.GR_COS_WAVE, interferer_freq_css[0], 10**(-snr/20))
+        self.singletone_src = analog.sig_source_c(fs_css, analog.GR_COS_WAVE, interferer_freq_css[0], np.sqrt(2) * (10 ** (-snr / 20)))
         self.comp_bits = ieee802_15_4.compare_blobs()
         # self.sig_snk = blocks.file_sink(gr.sizeof_gr_complex, "css_sig.bin")
 
@@ -212,18 +212,12 @@ if __name__ == '__main__':
                 # print interferer_freq_oqpsk[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
                 if (len_res >= min_len):
                     if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 10 * min_len):
-                        print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
+                        print "Found a total of", tb.comp_bits.get_errors_found(), " errors in", tb.comp_bits.get_bits_compared(), "bits"
                         tb.stop()
                         break
                     else:
                         print "Found", tb.comp_bits.get_errors_found(), "of", min_err, "errors"
-                if (ber == 0 ):
-                    tb.stop()
-                    tb.wait()
-                    time.sleep(.1)
-                    break
                 time.sleep(sleeptime)
-                old_len_res = len_res
 
             ber = tb.comp_bits.get_ber()
             print "Step", i + 1, "/", len(interferer_freq_oqpsk), ": BER at", interferer_freq_oqpsk[i]/1e6, "MHz:", ber
@@ -236,20 +230,15 @@ if __name__ == '__main__':
         name = "ber_singletone_oqpsk_" + str(min(interferer_freq_oqpsk/1e6)) + "_to_" + str(
             max(interferer_freq_oqpsk/1e6)) + "MHz_" + time.strftime("%Y-%m-%d_%H-%M-%S")
         np.save(name, ber_vals)
-        try:
-            plt.plot(interferer_freq_oqpsk, ber_vals, label="SIR=" + str(snr_vals) + " dB")
-            plt.legend(loc='lower left')
-            plt.xlabel("Frequency [Hz]")
-            plt.xlim([-fs_oqpsk/2, fs_oqpsk/2])
-            plt.ylabel("BER")
-            plt.grid()
-            plt.yscale('log')
-            plt.title(name)
-            plt.savefig(name + ".pdf")
-            plt.clear()
-        except:
-            print "plotting OQPSK curve failed"
-            pass
+        plt.plot(interferer_freq_oqpsk, ber_vals, label="SIR=" + str(snr_vals) + " dB")
+        plt.legend(loc='lower left')
+        plt.xlabel("Frequency [Hz]")
+        plt.xlim([-fs_oqpsk/2, fs_oqpsk/2])
+        plt.ylabel("BER")
+        plt.grid()
+        plt.yscale('log')
+        plt.title(name)
+        plt.savefig(name + ".pdf")
 
     if en_css_fast:
         # CSS fast
@@ -297,20 +286,16 @@ if __name__ == '__main__':
         name = "ber_singletone_css_slow-rate-" + str(tb.c.slow_rate) + "_" + str(min(interferer_freq_css/1e6)) + "_to_" + str(
             max(interferer_freq_css/1e6)) + "MHz_" + time.strftime("%Y-%m-%d_%H-%M-%S")
         np.save(name, ber_vals)
-        try:
-            plt.plot(interferer_freq_css, ber_vals, label="SIR=" + str(snr_vals) + " dB")
-            plt.legend(loc='lower left')
-            plt.xlabel("Frequency [Hz]")
-            plt.xlim([-fs_css/2, fs_css/2])
-            plt.ylabel("BER")
-            plt.grid()
-            plt.yscale('log')
-            plt.title(name)
-            plt.savefig(name + ".pdf")
-            plt.clear()
-        except:
-            print "plotting CSS fast curves failed"
-            pass
+        plt.plot(interferer_freq_css, ber_vals, label="SIR=" + str(snr_vals) + " dB")
+        plt.legend(loc='lower left')
+        plt.xlabel("Frequency [Hz]")
+        plt.xlim([-fs_css/2, fs_css/2])
+        plt.ylabel("BER")
+        plt.grid()
+        plt.yscale('log')
+        plt.title(name)
+        plt.savefig(name + ".pdf")
+
 
     if en_css_slow:
         # CSS fast
@@ -359,17 +344,12 @@ if __name__ == '__main__':
         name = "ber_singletone_css_slow-rate-" + str(tb.c.slow_rate) + "_" + str(min(interferer_freq_css/1e6)) + "_to_" + str(
             max(interferer_freq_css/1e6)) + "MHz_" + time.strftime("%Y-%m-%d_%H-%M-%S")
         np.save(name, ber_vals)
-        try:
-            plt.plot(interferer_freq_css, ber_vals, label="SIR=" + str(snr_vals) + " dB")
-            plt.legend(loc='lower left')
-            plt.xlabel("Frequency [Hz]")
-            plt.xlim([-fs_css/2, fs_css/2])
-            plt.ylabel("BER")
-            plt.grid()
-            plt.yscale('log')
-            plt.title(name)
-            plt.savefig(name + ".pdf")
-            plt.clear()
-        except:
-            print "plotting CSS slow curve failed"
-            pass
+        plt.plot(interferer_freq_css, ber_vals, label="SIR=" + str(snr_vals) + " dB")
+        plt.legend(loc='lower left')
+        plt.xlabel("Frequency [Hz]")
+        plt.xlim([-fs_css/2, fs_css/2])
+        plt.ylabel("BER")
+        plt.grid()
+        plt.yscale('log')
+        plt.title(name)
+        plt.savefig(name + ".pdf")

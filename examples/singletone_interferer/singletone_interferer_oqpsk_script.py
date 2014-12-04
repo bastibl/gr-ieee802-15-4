@@ -22,10 +22,10 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-15.0, -5.0, .25)
+snr_vals = np.arange(-20.0, -0.0, .5)
 nbytes_per_frame = 127
 min_err = int(1e3)
-min_len = int(1e8)
+min_len = int(1e7)
 msg_interval = 1  # ms
 sleeptime = 1.0  # s
 interferer_freq = 100e3
@@ -34,7 +34,7 @@ fs = 4e6
 
 class ber_singletone_nogui(gr.top_block):
     def __init__(self):
-        gr.top_block.__init__(self, "BER CSS with singletone interferer")
+        gr.top_block.__init__(self, "BER OQPSK with singletone interferer")
 
         ##################################################
         # Variables
@@ -52,7 +52,7 @@ class ber_singletone_nogui(gr.top_block):
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")),
                                                                  msg_interval, -1, True, False)
         self.blocks_add_xx_sd = blocks.add_vcc(1)
-        self.singletone_src = analog.sig_source_c(fs, analog.GR_COS_WAVE, interferer_freq, 10 ** (-snr / 20))
+        self.singletone_src = analog.sig_source_c(fs, analog.GR_COS_WAVE, interferer_freq, np.sqrt(2) * (10 ** (-snr / 20)))
         self.comp_bits = ieee802_15_4.compare_blobs()
         # self.sig_snk = blocks.file_sink(gr.sizeof_gr_complex, "css_sig.bin")
 
@@ -106,7 +106,7 @@ if __name__ == '__main__':
             len_res = tb.comp_bits.get_bits_compared()
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
             if (len_res >= min_len):
-                if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 10 * min_len or tb.comp_bits.get_errors_found() == 0):
+                if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 1 * min_len or tb.comp_bits.get_errors_found() == 0):
                     print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
                     tb.stop()
                     break

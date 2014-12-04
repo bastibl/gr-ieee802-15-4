@@ -15,3 +15,5 @@ There are 11 taps for 32 MSps and 2 taps for 4 MSps. The taps that don't exist i
 II. Because there is currently no synchronization algorithm implemented that can deal with the phase shift of the incoming multipaths, the channel impulse response's first (and strongest) tap is normalized to zero phase. The other taps' phases are shifted accordingly so that the relative phase difference between the taps stays the same.
 
 III. Also due to the missing sync, the first samples of the continuous stream corresponding to the group delay of the channel filter have to be dropped because this is what a good synchronization algorithm would do. 
+
+IV. The error floor at 1e-4 can be derived using the exponential PDF for the energy of the channel taps

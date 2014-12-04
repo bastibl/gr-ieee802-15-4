@@ -22,13 +22,14 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-30.0,-5.0,1.0)
+snr_vals = np.arange(-10.0,-8.0,1.0)
 enable_vals = [0.0, 0.0, 0.0]
 nbytes_per_frame = 127
 min_err = 1e3
-min_len = 1e5
+min_len = 1e6
 msg_interval = 10 # ms
 sleeptime = 1.0
+slow_mode = True
 
 class ber_awgn_comp_nogui(gr.top_block):
 
@@ -39,7 +40,7 @@ class ber_awgn_comp_nogui(gr.top_block):
         # Variables
         ##################################################
         self.snr = snr = 0
-        self.c = c = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=127)
+        self.c = c = ieee802_15_4.css_phy(slow_rate=slow_mode, phy_packetsize_bytes=nbytes_per_frame)
 
         ##################################################
         # Blocks
@@ -134,7 +135,7 @@ if __name__ == '__main__':
             len_res = tb.comp_bits.get_bits_compared()
             print snr_vals[i], "dB:", 100.0*len_res/min_len, "% done"
             if(len_res >= min_len):
-                if tb.comp_bits.get_errors_found() > min_err or tb.comp_bits.get_bits_compared() > 50*min_len:
+                if tb.comp_bits.get_errors_found() > min_err or tb.comp_bits.get_bits_compared() > 10*min_len or tb.comp_bits.get_errors_found() == 0:
                     tb.stop()
                     tb.wait()
                     time.sleep(1)

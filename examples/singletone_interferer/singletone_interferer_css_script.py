@@ -23,13 +23,13 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-9.25, -8.5, .25)
+snr_vals = np.arange(-15.0, -0.0, .5)
 nbytes_per_frame = 127
 cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
 min_err = int(1e3)
-min_len = int(1e7)
+min_len = int(1e6)
 norm_fac = 1.1507
-msg_interval = 5  # ms
+msg_interval = 20  # ms
 sleeptime = 1.0 # s
 interferer_freq = 100e3
 fs = 32e6
@@ -73,7 +73,7 @@ class ber_singletone_nogui(gr.top_block):
                                                                  msg_interval, -1, True, False)
         self.blocks_multiply_const_vxx_sd = blocks.multiply_const_vcc((norm_fac, ))
         self.blocks_add_xx_sd = blocks.add_vcc(1)
-        self.singletone_src = analog.sig_source_c(fs, analog.GR_COS_WAVE, interferer_freq, 10**(-snr/20))
+        self.singletone_src = analog.sig_source_c(fs, analog.GR_COS_WAVE, interferer_freq, np.sqrt(2)*(10**(-snr/20)))
         self.comp_bits_sd = ieee802_15_4.compare_blobs()
         # self.sig_snk = blocks.file_sink(gr.sizeof_gr_complex, "css_sig.bin")
 
@@ -142,22 +142,16 @@ if __name__ == '__main__':
         tb.set_snr(snr_vals[i])
         tb.start()
         time.sleep(.1)
-        ber = 1.0
         while (True):
             len_res = tb.comp_bits_sd.get_bits_compared()
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
             if (len_res >= min_len):
-                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() >= 2*min_len or tb.comp_bits_sd.get_errors_found() == 0):
+                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() >= 4*min_len or tb.comp_bits_sd.get_errors_found() == 0):
                     print "Found a total of", tb.comp_bits_sd.get_errors_found(), " errors"
                     tb.stop()
                     break
                 else:
                     print "Found", tb.comp_bits_sd.get_errors_found(), "of", min_err, "errors"
-            if (ber == 0 ):
-                tb.stop()
-                tb.wait()
-                time.sleep(.1)
-                break
             time.sleep(sleeptime)
             old_len_res = len_res
 

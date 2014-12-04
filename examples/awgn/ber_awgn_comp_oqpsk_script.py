@@ -24,11 +24,11 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-30.0,-5.0,1.0)
+snr_vals = np.arange(-30.0,-0.0,1.0)
 enable_vals = [0.0, 0.0, 0.0]
 nbytes_per_frame = 127
-min_err = 1e4
-min_len = 1e5
+min_err = 1e3
+min_len = 1e6
 msg_interval = 10 # ms
 sleeptime = 1.0
 
@@ -112,8 +112,8 @@ if __name__ == '__main__':
             len_res = tb.comp_bits.get_bits_compared()
             print snr_vals[i], "dB:", 100.0*len_res/min_len, "% done"
             time.sleep(sleeptime)
-            if(len_res >= min_len):
-                if tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() > min_len*50:
+            if(len_res >= min_len ):
+                if tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() > min_len*10:
                     tb.stop()
                     tb.wait()
                     break

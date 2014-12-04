@@ -4,10 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-	oqpsk = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/awgn/ber_awgn_oqpsk_-30.0_to_-6.0dB_2014-11-28_14-34-27.npy")
-	css_fast = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/awgn/ber_awgn_css_slow_rate-False_-30.0_to_-6.0dB_2014-11-28_14-25-09.npy")
-	css_slow = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/awgn/tmp_ber_awgn_css_slow_rate-True_-30.0_to_-11.0dB.npy")
-	snr_oqpsk = np.arange(-25.0, 0.0, 1.0)
+	oqpsk = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/awgn/ber_awgn_oqpsk_-30.0_to_-1.0dB_2014-12-04_13-31-41.npy")
+	css_fast = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/awgn/ber_awgn_css_slow_rate-False_-30.0_to_-6.0dB_2014-12-04_13-42-42.npy")
+	css_slow = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/awgn/ber_awgn_css_slow_rate-True_-30.0_to_-11.0dB_2014-12-04_14-13-13.npy")
+	snr_oqpsk = np.arange(-30.0, 0.0, 1.0)
 	snr_css_fast = np.arange(-30.0, -5.0, 1.0)
 	snr_css_slow = np.arange(-30.0, -10.0, 1.0)
 
@@ -45,8 +45,8 @@ if __name__ == "__main__":
 	plt.plot(bpsk_EbN0, bpsk_ber, label="uncoded BPSK (theoretical)")
 	plt.legend(loc='lower left')
 	plt.yscale('log')
-	plt.xlim([-2,15])
-	plt.ylim([0.00001, 1])
+	plt.xlim([-5,10])
+	plt.ylim([0.00005, 1])
 	plt.ylabel("BER")
 	plt.xlabel("Eb/N0")
 	plt.title("Comparison of IEEE 802.15.4 CSS and OQPSK PHY Layer in AWGN Channel")

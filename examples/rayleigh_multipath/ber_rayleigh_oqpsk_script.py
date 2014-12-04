@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 
 
 # configuration parameters
-snr_vals = np.arange(5.0,15.0,1.0)
+snr_vals = np.arange(-25.0,15.0,1.0)
 nbytes_per_frame = 127
 min_err = int(1e3)
 min_len = int(1e6)
@@ -125,9 +125,10 @@ if __name__ == '__main__':
             print snr_vals[i], "dB:", 100.0*len_res/min_len, "% of minimum length done"
             time.sleep(sleeptime)
             if(len_res >= min_len):
-                if(tb.comp_bits.get_errors_found() >= min_err):
+                if(tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_errors_found() == 0 or tb.comp_bits.get_bits_compared() >= 10*min_len):
                     print "Found a total of", tb.comp_bits.get_errors_found(), "errors"
                     tb.stop()
+                    tb.wait()
                     break
                 else:
                     print "Found", tb.comp_bits.get_errors_found(), "/", min_err, "errors"
