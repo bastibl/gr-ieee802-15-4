@@ -27,9 +27,9 @@ snr_vals = np.arange(-15.0, -0.0, .5)
 nbytes_per_frame = 127
 cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
 min_err = int(1e3)
-min_len = int(1e6)
+min_len = int(2e6)
 norm_fac = 1.1507
-msg_interval = 20  # ms
+msg_interval = 15  # ms
 sleeptime = 1.0 # s
 interferer_freq = 100e3
 fs = 32e6
@@ -101,7 +101,7 @@ class ber_singletone_nogui(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.singletone_src.set_amplitude(10 ** (-snr / 20))
+        self.singletone_src.set_amplitude(np.sqrt(2) * (10 ** (-snr / 20)))
 
     def get_c(self):
         return self.c
@@ -146,7 +146,7 @@ if __name__ == '__main__':
             len_res = tb.comp_bits_sd.get_bits_compared()
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
             if (len_res >= min_len):
-                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() >= 4*min_len or tb.comp_bits_sd.get_errors_found() == 0):
+                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() >= 1*min_len or tb.comp_bits_sd.get_errors_found() == 0):
                     print "Found a total of", tb.comp_bits_sd.get_errors_found(), " errors"
                     tb.stop()
                     break

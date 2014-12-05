@@ -79,7 +79,7 @@ class ber_singletone_nogui(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.singletone_src.set_amplitude(10 ** (-snr / 20))
+        self.singletone_src.set_amplitude(np.sqrt(2) * (10 ** (-snr / 20)))
 
 
 if __name__ == '__main__':
@@ -101,7 +101,6 @@ if __name__ == '__main__':
         tb.set_snr(snr_vals[i])
         tb.start()
         time.sleep(.1)
-        ber = 1.0
         while (True):
             len_res = tb.comp_bits.get_bits_compared()
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
@@ -112,11 +111,6 @@ if __name__ == '__main__':
                     break
                 else:
                     print "Found", tb.comp_bits.get_errors_found(), "of", min_err, "errors"
-            if (ber == 0 ):
-                tb.stop()
-                tb.wait()
-                time.sleep(.1)
-                break
             time.sleep(sleeptime)
             old_len_res = len_res
 

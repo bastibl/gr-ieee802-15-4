@@ -37,6 +37,7 @@ if len(pdp) % 2 == 0:
 print "pdp:", pdp
 group_delay = (len(pdp)-1)/2
 coherence_time_samps = int(nsamps_frame*0.1)
+coherence_time_samps = 13670
 sleeptime = 1.0
 msg_interval = 50
 

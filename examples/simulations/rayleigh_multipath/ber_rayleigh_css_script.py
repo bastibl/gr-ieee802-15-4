@@ -38,6 +38,7 @@ for i in range(len(pdp)):
         pdp[i] = 0
 print "pdp:", pdp
 coherence_time_samps = int(cfg.nsamp_frame * 0.1)
+print coherence_time_samps
 norm_fac = 1.1507
 msg_interval = 10  # ms
 sleeptime = 1.0 # s

@@ -26,18 +26,18 @@ import matplotlib.pyplot as plt
 import gc
 
 # configuration parameters
-snr_vals = -20
+snr_vals = -18
 nbytes_per_frame = 127
 cfg_slow = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
 cfg_fast = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
-min_err = 1000  # int(5e3)
-min_len = 10000  # int(1e6)
+min_err = int(1e3)
+min_len = int(1e7)
 msg_interval = 1  # ms
 sleeptime = .1  # s
 fs_oqpsk = 4e6
 fs_css = 32e6
-interferer_freq_oqpsk = np.arange(-fs_oqpsk/2, fs_oqpsk/2, 1e5)
-interferer_freq_css = np.arange(-fs_css/2, fs_css/2, 2e5)
+interferer_freq_oqpsk = np.arange(100e3, 500e3, 100e3)
+interferer_freq_css = np.arange(-fs_css/2, fs_css/2, 1e6)
 norm_fac = 1.1507
 
 en_oqpsk = True
@@ -92,7 +92,7 @@ class ber_singletone_oqpsk(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.singletone_src.set_amplitude(10 ** (-snr / 20))
+        self.singletone_src.set_amplitude(np.sqrt(2) * (10 ** (-snr / 20)))
 
 class ber_singletone_css(gr.top_block):
     def __init__(self, cfg):
@@ -161,7 +161,7 @@ class ber_singletone_css(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.singletone_src.set_amplitude(10 ** (-snr / 20))
+        self.singletone_src.set_amplitude(np.sqrt(2) * (10 ** (-snr / 20)))
 
     def get_c(self):
         return self.c

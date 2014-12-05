@@ -5,9 +5,10 @@ import matplotlib.pyplot as plt
 import time
 
 if __name__ == "__main__":
-    oqpsk = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/rayleigh_multipath/ber_rayleigh_oqpsk_-25.0_to_14.0dB_2014-12-03_16-08-53.npy")
-    css_fast = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/rayleigh_multipath/ber_rayleigh_css_sd_slow_rate-False_-25.0_to_14.0dB_2014-12-03_16-27-26.npy")
-    css_slow = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/rayleigh_multipath/ber_rayleigh_css_sd_slow_rate-True_-25.0_to_14.0dB_2014-12-04_00-46-04.npy")
+    # oqpsk = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/rayleigh_multipath/ber_rayleigh_oqpsk_-25.0_to_14.0dB_2014-12-03_16-08-53.npy")
+    oqpsk = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_oqpsk_-25.0_to_14.0dB_2014-12-05_10-06-55.npy")
+    css_fast = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_css_sd_slow_rate-False_-25.0_to_14.0dB_2014-12-03_16-27-26.npy")
+    css_slow = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_css_sd_slow_rate-True_-25.0_to_14.0dB_2014-12-04_00-46-04.npy")
     snr_css_fast = np.arange(-25.0, 15.0, 1.0)
     snr_css_slow = np.arange(-25.0, 15.0, 1.0)
     snr_oqpsk = np.arange(-25.0, 15.0, 1.0)
