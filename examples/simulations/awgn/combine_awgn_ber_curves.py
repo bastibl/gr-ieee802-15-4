@@ -11,6 +11,9 @@ if __name__ == "__main__":
 	snr_css_fast = np.arange(-30.0, -5.0, 1.0)
 	snr_css_slow = np.arange(-30.0, -10.0, 1.0)
 
+	plt.rcParams.update({'font.size': 14})
+	plt.rcParams.update({'axes.labelsize': 'large'})
+
 	# # SNR plot
 	plt.plot(snr_css_slow, css_slow, label="CSS 250 kbps", marker='o')
 	plt.plot(snr_css_fast, css_fast, label="CSS 1 Mbps", marker='v')
