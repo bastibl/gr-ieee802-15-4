@@ -11,7 +11,8 @@ if __name__ == "__main__":
     snr_slow = np.arange(-25.0,-10.0,.5)
     snr_fast = np.arange(-25.0,-5.0,.5)
 
-    plt.rcParams.update({'font.size': 14})
+    plt.rcParams.update({'font.size': 16})
+    plt.rcParams.update({'axes.labelsize': 'large'})
     plt.rcParams.update({'axes.labelsize': 'large'})
 
     # Eb/N0 plot
@@ -27,7 +28,7 @@ if __name__ == "__main__":
     for i in range(4):
         plt.plot(EbN0_fast, css_fast[i,:], label="# interferer: "+str(i), marker = m[i])
     plt.grid()
-    plt.title("CSS PHY Self-Interference (1 Mbps)")
+    # plt.title("CSS PHY Self-Interference (1 Mbps)")
     plt.legend(loc = 'lower left')
     plt.xlabel("Eb/N0")
     plt.ylabel("BER")
@@ -41,7 +42,7 @@ if __name__ == "__main__":
         print len(snr_slow), len(css_slow[i,:])
         plt.plot(EbN0_slow, css_slow[i,:], label="# interferer: "+str(i), marker=m[i])
     plt.grid()
-    plt.title("CSS PHY Self-Interference (250 kbps)")
+    # plt.title("CSS PHY Self-Interference (250 kbps)")
     plt.legend(loc = 'lower left')
     plt.xlabel("Eb/N0")
     plt.ylabel("BER")
