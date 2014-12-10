@@ -26,23 +26,23 @@ import matplotlib.pyplot as plt
 import gc
 
 # configuration parameters
-snr_vals = -18
+snr_vals = -8.0
 nbytes_per_frame = 127
 cfg_slow = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
 cfg_fast = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
 min_err = int(1e3)
-min_len = int(1e7)
-msg_interval = 1  # ms
-sleeptime = .1  # s
+min_len = int(1e6)
+msg_interval = 10  # ms
+sleeptime = 1  # s
 fs_oqpsk = 4e6
 fs_css = 32e6
-interferer_freq_oqpsk = np.arange(100e3, 500e3, 100e3)
-interferer_freq_css = np.arange(-fs_css/2, fs_css/2, 1e6)
+interferer_freq_oqpsk = np.arange(-2e6, 2e6, 100e3)
+interferer_freq_css = np.arange(-fs_css/2, fs_css/2, 2e5)
 norm_fac = 1.1507
 
-en_oqpsk = True
-en_css_fast = False
-en_css_slow = False
+en_oqpsk = False
+en_css_slow = True
+en_css_fast = False 
 
 
 class ber_singletone_oqpsk(gr.top_block):
@@ -209,9 +209,9 @@ if __name__ == '__main__':
             ber = 1.0
             while (True):
                 len_res = tb.comp_bits.get_bits_compared()
-                # print interferer_freq_oqpsk[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
+                print interferer_freq_oqpsk[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
                 if (len_res >= min_len):
-                    if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 10 * min_len):
+                    if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= min_len):
                         print "Found a total of", tb.comp_bits.get_errors_found(), " errors in", tb.comp_bits.get_bits_compared(), "bits"
                         tb.stop()
                         break
@@ -245,12 +245,10 @@ if __name__ == '__main__':
         if min_len <= 1e3:
             print "WARNING: min_len very short:", min_len
         print "Collect", min_len, "bytes per step"
-        old_len_res = 0
         ber_vals = []
         for i in range(len(interferer_freq_css)):
             t0 = time.time()
             tb = None
-            gc.collect()
             tb = ber_singletone_css(cfg_fast)
             tb.set_snr(snr_vals)
             tb.singletone_src.set_frequency(interferer_freq_css[i])
@@ -261,7 +259,7 @@ if __name__ == '__main__':
                 len_res = tb.comp_bits.get_bits_compared()
                 print interferer_freq_css[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
                 if (len_res >= min_len):
-                    if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 10 * min_len):
+                    if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= min_len):
                         print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
                         tb.stop()
                         break
@@ -283,7 +281,7 @@ if __name__ == '__main__':
             np.save("tmp_ber_singletone_css_" + str(min(interferer_freq_css/1e6)) + "_to_" + str(
                 max(interferer_freq_css/1e6)) + "MHz", ber_vals)
 
-        name = "ber_singletone_css_slow-rate-" + str(tb.c.slow_rate) + "_" + str(min(interferer_freq_css/1e6)) + "_to_" + str(
+        name = "ber_singletone_css_slow-rate-False_" + str(min(interferer_freq_css/1e6)) + "_to_" + str(
             max(interferer_freq_css/1e6)) + "MHz_" + time.strftime("%Y-%m-%d_%H-%M-%S")
         np.save(name, ber_vals)
         plt.plot(interferer_freq_css, ber_vals, label="SIR=" + str(snr_vals) + " dB")
@@ -307,7 +305,6 @@ if __name__ == '__main__':
         for i in range(len(interferer_freq_css)):
             t0 = time.time()
             tb = None
-            gc.collect()
             tb = ber_singletone_css(cfg_slow)
             tb.set_snr(snr_vals)
             tb.singletone_src.set_frequency(interferer_freq_css[i])
@@ -318,7 +315,7 @@ if __name__ == '__main__':
                 len_res = tb.comp_bits.get_bits_compared()
                 print interferer_freq_css[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
                 if (len_res >= min_len):
-                    if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 10 * min_len):
+                    if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= min_len):
                         print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
                         tb.stop()
                         break
@@ -341,7 +338,7 @@ if __name__ == '__main__':
                 max(interferer_freq_css/1e6)) + "MHz", ber_vals)
             del tb
 
-        name = "ber_singletone_css_slow-rate-" + str(tb.c.slow_rate) + "_" + str(min(interferer_freq_css/1e6)) + "_to_" + str(
+        name = "ber_singletone_css_slow-rate-True_" + str(min(interferer_freq_css/1e6)) + "_to_" + str(
             max(interferer_freq_css/1e6)) + "MHz_" + time.strftime("%Y-%m-%d_%H-%M-%S")
         np.save(name, ber_vals)
         plt.plot(interferer_freq_css, ber_vals, label="SIR=" + str(snr_vals) + " dB")

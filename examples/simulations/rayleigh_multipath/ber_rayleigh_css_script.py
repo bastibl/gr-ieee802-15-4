@@ -23,9 +23,9 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-25.0, 15.0, 1.0)
+snr_vals = np.arange(-25.0, 10.0, 1.0)
 nbytes_per_frame = 127
-cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
+cfg = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
 min_err = int(5e2)
 min_len = int(1e6)
 nframes = float(min_len) / nbytes_per_frame
@@ -42,6 +42,7 @@ print coherence_time_samps
 norm_fac = 1.1507
 msg_interval = 10  # ms
 sleeptime = 1.0 # s
+skipsamps = 1 # simulates perfect sync
 
 
 class ber_rayleigh_comp_nogui(gr.top_block):
@@ -80,7 +81,7 @@ class ber_rayleigh_comp_nogui(gr.top_block):
             nsamp_frame=c.nsamp_frame,
         )
         self.ieee802_15_4_rayleigh_channel_sim_sd = ieee802_15_4.rayleigh_multipath_cc(pdp, coherence_time_samps)
-        self.skip_fir_group_delay_sd = blocks.skiphead(gr.sizeof_gr_complex, (len(pdp) - 1) / 2)
+        self.skip_fir_group_delay_sd = blocks.skiphead(gr.sizeof_gr_complex, skipsamps)
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")),
                                                                  msg_interval, -1, True, False)
         self.blocks_multiply_const_vxx_sd = blocks.multiply_const_vcc((norm_fac, ))
@@ -164,7 +165,7 @@ if __name__ == '__main__':
                 print "simulation may be stuck"
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
             if (len_res >= min_len):
-                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() > 10*min_len or tb.comp_bits_sd.get_errors_found() == 0):
+                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() > 50*min_len or tb.comp_bits_sd.get_errors_found() == 0):
                     print "Found a total of", tb.comp_bits_sd.get_errors_found(), " errors"
                     tb.stop()
                     break

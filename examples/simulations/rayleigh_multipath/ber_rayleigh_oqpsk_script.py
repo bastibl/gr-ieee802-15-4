@@ -24,10 +24,10 @@ import matplotlib.pyplot as plt
 
 
 # configuration parameters
-snr_vals = np.arange(-25.0,15.0,1.0)
+snr_vals = np.arange(-25.0,0.0,2.0)
 nbytes_per_frame = 127
-min_err = int(1e3)
-min_len = int(1e6)
+min_err = 0#int(1e3)
+min_len = 1e3#int(1e6)
 nframes = float(min_len)/nbytes_per_frame
 nsamps_frame = 4*8*(4+1+1+nbytes_per_frame)
 nsamps_total = nframes*nsamps_frame
@@ -40,6 +40,7 @@ coherence_time_samps = int(nsamps_frame*0.1)
 coherence_time_samps = 13670
 sleeptime = 1.0
 msg_interval = 50
+skipsamps = 1 # simulates perfect sync
 
 class ber_rayleigh_comp_nogui(gr.top_block):
 
@@ -58,7 +59,7 @@ class ber_rayleigh_comp_nogui(gr.top_block):
             payload_len=nbytes_per_frame,
         )
         self.ieee802_15_4_rayleigh_channel_sim = ieee802_15_4.rayleigh_multipath_cc(pdp, coherence_time_samps)
-        self.skip_fir_group_delay = blocks.skiphead(gr.sizeof_gr_complex, group_delay)
+        self.skip_fir_group_delay = blocks.skiphead(gr.sizeof_gr_complex, skipsamps)
         self.ieee802_15_4_make_pair_with_blob_0 = ieee802_15_4.make_pair_with_blob(np.random.randint(0,256,(nbytes_per_frame,)))
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), 1, msg_interval, True, False)
         self.comp_bits = ieee802_15_4.compare_blobs(packet_error_mode=False)
