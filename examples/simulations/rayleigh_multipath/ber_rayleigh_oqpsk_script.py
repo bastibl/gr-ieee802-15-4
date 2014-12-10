@@ -6,7 +6,7 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import filter
@@ -34,10 +34,11 @@ nsamps_total = nframes*nsamps_frame
 pdp = [np.exp(-28782313.0*tau) for tau in np.arange(0.0,320*1e-9, 1.0/(4e6))]
 if len(pdp) % 2 == 0:
     pdp.append(0)
+pdp[1] *= 10.0
 print "pdp:", pdp
 group_delay = (len(pdp)-1)/2
 coherence_time_samps = int(nsamps_frame*0.1)
-coherence_time_samps = 1000#13670
+coherence_time_samps = 10000#13670
 sleeptime = 1.0
 msg_interval = 50
 skipsamps = 1 # simulates perfect sync
