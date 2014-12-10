@@ -6,7 +6,7 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import filter
@@ -24,10 +24,10 @@ import matplotlib.pyplot as plt
 
 
 # configuration parameters
-snr_vals = np.arange(-25.0,0.0,2.0)
+snr_vals = np.arange(-25.0,-0.0,1.0)
 nbytes_per_frame = 127
-min_err = 0#int(1e3)
-min_len = 1e3#int(1e6)
+min_err = int(1e3)
+min_len = int(1e7)
 nframes = float(min_len)/nbytes_per_frame
 nsamps_frame = 4*8*(4+1+1+nbytes_per_frame)
 nsamps_total = nframes*nsamps_frame
@@ -37,7 +37,7 @@ if len(pdp) % 2 == 0:
 print "pdp:", pdp
 group_delay = (len(pdp)-1)/2
 coherence_time_samps = int(nsamps_frame*0.1)
-coherence_time_samps = 13670
+coherence_time_samps = 1000#13670
 sleeptime = 1.0
 msg_interval = 50
 skipsamps = 1 # simulates perfect sync
@@ -126,8 +126,8 @@ if __name__ == '__main__':
             len_res = tb.comp_bits.get_bits_compared()
             print snr_vals[i], "dB:", 100.0*len_res/min_len, "% of minimum length done"
             time.sleep(sleeptime)
-            if(len_res >= min_len):
-                if(tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_errors_found() == 0 or tb.comp_bits.get_bits_compared() >= 10*min_len):
+            if(len_res >= min_len or tb.comp_bits.get_errors_found() >= min_err):
+                if(tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_errors_found() == 0 or tb.comp_bits.get_bits_compared() >= 3*min_len):
                     print "Found a total of", tb.comp_bits.get_errors_found(), "errors"
                     tb.stop()
                     tb.wait()

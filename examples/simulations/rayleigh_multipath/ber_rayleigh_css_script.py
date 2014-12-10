@@ -6,8 +6,8 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -23,10 +23,10 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-25.0, 10.0, 1.0)
+snr_vals = np.arange(-30.0, -0.0, 1.0)
 nbytes_per_frame = 127
-cfg = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
-min_err = int(5e2)
+cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
+min_err = int(1e3)
 min_len = int(1e6)
 nframes = float(min_len) / nbytes_per_frame
 nsamps_total = nframes * cfg.nsamp_frame
@@ -37,7 +37,7 @@ for i in range(len(pdp)):
     if i%8 != 0:
         pdp[i] = 0
 print "pdp:", pdp
-coherence_time_samps = int(cfg.nsamp_frame * 0.1)
+coherence_time_samps = 8000#int(cfg.nsamp_frame * 0.1)
 print coherence_time_samps
 norm_fac = 1.1507
 msg_interval = 10  # ms
@@ -164,8 +164,8 @@ if __name__ == '__main__':
             if len_res == old_len_res:
                 print "simulation may be stuck"
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
-            if (len_res >= min_len):
-                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() > 50*min_len or tb.comp_bits_sd.get_errors_found() == 0):
+            if (len_res >= min_len or tb.comp_bits_sd.get_errors_found() >= min_err):
+                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() > 5*min_len or tb.comp_bits_sd.get_errors_found() == 0):
                     print "Found a total of", tb.comp_bits_sd.get_errors_found(), " errors"
                     tb.stop()
                     break
