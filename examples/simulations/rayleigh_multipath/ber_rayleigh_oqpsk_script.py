@@ -24,17 +24,15 @@ import matplotlib.pyplot as plt
 
 
 # configuration parameters
-snr_vals = np.arange(-25.0,-0.0,1.0)
+snr_vals = np.arange(-30.0,15.0,1.0)
 nbytes_per_frame = 127
-min_err = int(1e3)
-min_len = int(1e7)
+min_err = int(1e4)
+min_len = int(1e8)
 nframes = float(min_len)/nbytes_per_frame
 nsamps_frame = 4*8*(4+1+1+nbytes_per_frame)
 nsamps_total = nframes*nsamps_frame
-pdp = [np.exp(-28782313.0*tau) for tau in np.arange(0.0,320*1e-9, 1.0/(4e6))]
-if len(pdp) % 2 == 0:
-    pdp.append(0)
-print "pdp:", pdp
+pdp = [1, .1, 0]
+
 group_delay = (len(pdp)-1)/2
 coherence_time_samps = int(nsamps_frame*0.1)
 coherence_time_samps = 1000#13670

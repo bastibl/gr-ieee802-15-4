@@ -23,20 +23,14 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-30.0, -0.0, 1.0)
+snr_vals = np.arange(-30.0, 9.0, 1.0)
 nbytes_per_frame = 127
-cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
-min_err = int(1e3)
-min_len = int(1e6)
+cfg = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
+min_err = int(5e3)
+min_len = int(1e7)
 nframes = float(min_len) / nbytes_per_frame
 nsamps_total = nframes * cfg.nsamp_frame
-pdp = [np.exp(-28782313.0 * tau) for tau in np.arange(0.0, 320 * 1e-9, 1.0 / (32 * 1e6))]
-if len(pdp) % 2 == 0:
-    pdp.append(0)
-for i in range(len(pdp)):
-    if i%8 != 0:
-        pdp[i] = 0
-print "pdp:", pdp
+pdp = [1, 0, 0, 0, 0, 0, 0, 0, .1]
 coherence_time_samps = 8000#int(cfg.nsamp_frame * 0.1)
 print coherence_time_samps
 norm_fac = 1.1507

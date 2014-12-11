@@ -6,12 +6,12 @@ import time
 
 if __name__ == "__main__":
     # oqpsk = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/rayleigh_multipath/ber_rayleigh_oqpsk_-25.0_to_14.0dB_2014-12-03_16-08-53.npy")
-    oqpsk = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_oqpsk_-25.0_to_14.0dB_2014-12-05_10-06-55.npy")
-    css_fast = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_css_sd_slow_rate-False_-25.0_to_14.0dB_2014-12-03_16-27-26.npy")
-    css_slow = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_css_sd_slow_rate-True_-25.0_to_14.0dB_2014-12-04_00-46-04.npy")
-    snr_css_fast = np.arange(-25.0, 15.0, 1.0)
-    snr_css_slow = np.arange(-25.0, 15.0, 1.0)
-    snr_oqpsk = np.arange(-25.0, 15.0, 1.0)
+    oqpsk = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_oqpsk_-30.0_to_14.0dB_2014-12-11_15-29-34.npy")
+    css_fast = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_css_sd_slow_rate-False_-30.0_to_8.0dB_2014-12-11_15-47-10.npy")
+    css_slow = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_css_sd_slow_rate-True_-30.0_to_3.0dB.npy")
+    snr_css_fast = np.arange(-30.0, 9.0, 1.0)
+    snr_css_slow = np.arange(-30.0, 3.0, 1.0)
+    snr_oqpsk = np.arange(-30.0, 15.0, 1.0)
 
     t =  np.arange(0.0, 320 * 1e-9, 1.0 / (32 * 1e6))
     pdp = [np.exp(-28782313.0 * tau) for tau in t]
@@ -20,8 +20,11 @@ if __name__ == "__main__":
     for i in range(len(pdp)):
         if i%8 != 0:
             pdp[i] = 0
-    print pdp
+    pdp[8] = 0.1
 
+    plt.rcParams.update({'font.size': 14})
+    plt.rcParams.update({'axes.labelsize': 'large'})
+    plt.rcParams.update({'axes.labelsize': 'large'})
 
     # # SNR plots
     # f, axarr = plt.subplots(2)
@@ -55,27 +58,27 @@ if __name__ == "__main__":
     css_slow_EbN0 = snr_css_slow + 10*np.log10(32e6/250e3)
     # OQPSK
     oqpsk_EbN0 = snr_oqpsk + 10*np.log10(4e6/250e3)
-    plt.plot(css_slow_EbN0, css_slow, label="CSS 250 kbps (SD)")
-    plt.plot(css_fast_EbN0, css_fast, label="CSS 1 Mbps (SD)")
-    plt.plot(oqpsk_EbN0, oqpsk, label="OQPSK")
+    plt.plot(css_slow_EbN0, css_slow, label="CSS 250 kbps (SD)", marker='o')
+    plt.plot(css_fast_EbN0, css_fast, label="CSS 1 Mbps (SD)", marker='v')
+    plt.plot(oqpsk_EbN0, oqpsk, label="OQPSK", marker='s')
     plt.legend(loc='lower left')
     plt.grid()
     plt.yscale('log')
-    plt.xlim([-5, 25])
+    plt.xlim([-10, 23])
     plt.xlabel("Eb/N0")
-    plt.ylim([1e-6,1])
+    plt.ylim([1e-5,1])
     plt.ylabel("BER")
-    plt.title("Bit Error Rates in Rayleigh Channel with AWGN")
-    plt.savefig("ber_rayleigh_EbN0_"+time.strftime("%Y-%m-%d_%H-%M-%S")+".pdf")
+    # plt.title("Bit Error Rates in Rayleigh Channel with AWGN")
+    plt.savefig("ber_rayleigh_EbN0.pdf",bbox='tight')
 
     f2 = plt.figure(2)
     markerline, stemlines, baseline = plt.stem(t*1e9, pdp, '-', bottom=0.00001)
     plt.xlabel("Delay in ns")
     plt.xlim([-10, max(t)*1e9])
-    plt.ylabel("Normalized Power")
+    plt.ylabel("Mean Power")
     plt.grid()
-    plt.ylim([0.0001,8])
-    plt.title("Power delay profile")
+    plt.ylim([0.001,5])
+    # plt.title("Power delay profile")
     plt.yscale('log')
-    plt.savefig("rayleigh_pdp_"+time.strftime("%Y-%m-%d_%H-%M-%S")+".pdf")
+    plt.savefig("rayleigh_pdp.pdf",bbox='tight')
 
