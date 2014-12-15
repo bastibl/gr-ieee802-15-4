@@ -53,6 +53,7 @@ namespace gr {
       else
         d_is_time_variant = false;
       d_len_pdp = d_pdp.size();
+      normalize_pdp();
       d_taps.assign(d_len_pdp,0);
       d_gen = std::default_random_engine(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
       generate_taps();
@@ -68,22 +69,35 @@ namespace gr {
     }
 
     void
+    rayleigh_multipath_cc_impl::normalize_pdp()
+    {
+      float e = 0;
+      for(int i=0; i<d_len_pdp; i++)
+        e += d_pdp[i];
+      std::cout << "normalized taps: ";
+      for(int i=0; i<d_len_pdp; i++)
+      {
+        d_pdp[i] /= e;
+        std::cout << d_pdp[i] << " ";
+      }
+      std::cout << std::endl;
+    }
+
+    void
     rayleigh_multipath_cc_impl::generate_taps()
     {
       // the taps are rayleigh distributed and follow the given PDP
-      float e = 0;
       for(int i=0; i<d_len_pdp; i++)
       {
-        float I = d_rand(d_gen);
-        float Q = d_rand(d_gen);
-        d_taps[i] = gr_complex(std::sqrt(d_pdp[i])/2*I, std::sqrt(d_pdp[i])/2*Q);
-        e += std::real(d_taps[i]*std::conj(d_taps[i]));
+        double ampl = d_randn(d_gen)*std::sqrt(d_pdp[i]);
+        double phi = d_randu(d_gen)*2*M_PI;
+        // std::cout << "ampl: " << ampl << ", phi: " << phi << std::endl;
+        d_taps[i] = std::polar(ampl, phi);
       }
 
-      // normalize to a power of 1 and let the first tap have phase 0
+      // let the first tap have phase 0
       for(int i=0; i<d_len_pdp; i++)
       {
-        d_taps[i] /= gr_complex(std::sqrt(e));
         d_taps[i] *= std::polar(float(1.0),-std::arg(d_taps[0]));
       }
 

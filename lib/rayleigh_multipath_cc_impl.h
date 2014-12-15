@@ -38,7 +38,9 @@ namespace gr {
       std::vector<gr_complex> d_taps; // the generated filter taps
       void generate_taps();
       std::default_random_engine d_gen;
-      std::normal_distribution<float> d_rand; // random number generator
+      std::normal_distribution<float> d_randn; // standard normal distributed number generator
+      std::uniform_real_distribution<> d_randu; // uniformly distributed number generator [0,1]
+      void normalize_pdp();
 
      public:
       rayleigh_multipath_cc_impl(std::vector<float> pdp, int coherence_time_samps);

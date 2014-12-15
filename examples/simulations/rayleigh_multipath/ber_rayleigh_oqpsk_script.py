@@ -24,10 +24,10 @@ import matplotlib.pyplot as plt
 
 
 # configuration parameters
-snr_vals = np.arange(-30.0,15.0,1.0)
+snr_vals = np.arange(-30.0,20.0,1.0)
 nbytes_per_frame = 127
-min_err = int(1e4)
-min_len = int(1e8)
+min_err = int(1e5)
+min_len = int(1e7)
 nframes = float(min_len)/nbytes_per_frame
 nsamps_frame = 4*8*(4+1+1+nbytes_per_frame)
 nsamps_total = nframes*nsamps_frame
