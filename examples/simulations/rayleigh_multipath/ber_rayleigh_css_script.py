@@ -6,8 +6,8 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -30,8 +30,20 @@ min_err = int(1e5)
 min_len = int(5e7)
 nframes = float(min_len) / nbytes_per_frame
 nsamps_total = nframes * cfg.nsamp_frame
+<<<<<<< HEAD
 pdp = [1, 0, 0, 0, 0, 0, 0, 0, .1]
 coherence_time_samps = 8000#int(cfg.nsamp_frame * 0.1)
+=======
+pdp = [np.exp(-28782313.0 * tau) for tau in np.arange(0.0, 320 * 1e-9, 1.0 / (32 * 1e6))]
+if len(pdp) % 2 == 0:
+    pdp.append(0)
+for i in range(len(pdp)):
+    if i%8 != 0:
+        pdp[i] = 0
+pdp[8] *= 10.0
+print "pdp:", pdp
+coherence_time_samps = 80000#int(cfg.nsamp_frame * 0.1)
+>>>>>>> b835a4b908f8419f6b0a4c3ed8b8a1c35fe00b33
 print coherence_time_samps
 norm_fac = 1.1507
 msg_interval = 10  # ms
@@ -159,7 +171,11 @@ if __name__ == '__main__':
                 print "simulation may be stuck"
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
             if (len_res >= min_len or tb.comp_bits_sd.get_errors_found() >= min_err):
+<<<<<<< HEAD
                 if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() > 3*min_len or tb.comp_bits_sd.get_errors_found() == 0):
+=======
+                if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() > 5*min_len):
+>>>>>>> b835a4b908f8419f6b0a4c3ed8b8a1c35fe00b33
                     print "Found a total of", tb.comp_bits_sd.get_errors_found(), " errors"
                     tb.stop()
                     break
