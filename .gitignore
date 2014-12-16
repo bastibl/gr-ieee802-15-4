@@ -17,3 +17,4 @@ examples/css_oqpsk_perf_comp.py
 *.npy
 *.pdf
 .idea/*
+*.png

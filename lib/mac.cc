@@ -35,7 +35,9 @@ mac_impl(bool debug) :
 			gr::io_signature::make(0, 0, 0)),
 			d_msg_offset(0),
 			d_seq_nr(0),
-			d_debug(debug) {
+			d_debug(debug),
+			d_num_packet_errors(0),
+			d_num_packets_received(0) {
 
 	message_port_register_in(pmt::mp("app in"));
 	set_msg_handler(pmt::mp("app in"), boost::bind(&mac_impl::app_in, this, _1));
@@ -76,7 +78,9 @@ void mac_in(pmt::pmt_t msg) {
 	}
 
 	uint16_t crc = crc16((char*)pmt::blob_data(blob), data_len);
+	d_num_packets_received++;
 	if(crc) {
+		d_num_packet_errors++;
 		dout << "MAC: wrong crc. Dropping packet!" << std::endl;
 		return;
 	}
@@ -133,6 +137,7 @@ uint16_t crc16(char *buf, int len) {
 void generate_mac(const char *buf, int len) {
 
 	// FCF
+	// data frame, no security
 	d_msg[0] = 0x41;
 	d_msg[1] = 0x88;
 
@@ -170,12 +175,21 @@ void print_message() {
 	dout << std::endl;
 }
 
+int get_num_packet_errors(){ return d_num_packet_errors; }
+
+int get_num_packets_received(){ return d_num_packets_received; }
+
+float get_packet_error_ratio(){ return float(d_num_packet_errors)/d_num_packets_received; }
+
 private:
 	bool        d_debug;
 	int         d_msg_offset;
 	int         d_msg_len;
 	uint8_t     d_seq_nr;
 	char        d_msg[256];
+
+	int d_num_packet_errors;
+	int d_num_packets_received;
 };
 
 mac::sptr

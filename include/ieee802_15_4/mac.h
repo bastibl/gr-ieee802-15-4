@@ -26,6 +26,9 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API mac: virtual public block
 {
 public:
+	virtual int get_num_packet_errors() = 0;
+	virtual int get_num_packets_received() = 0;
+	virtual float get_packet_error_ratio() = 0;
 	
 	typedef boost::shared_ptr<mac> sptr;
 	static sptr make(bool debug= false);
