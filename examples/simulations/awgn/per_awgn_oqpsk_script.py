@@ -6,9 +6,9 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_hd.py")
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_hd.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -24,13 +24,13 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-20.0,0.0,1.0)
+snr_vals = np.arange(-20.0,-5.0,.5)
 enable_vals = [0.0, 0.0, 0.0]
 nbytes_phy_frame = 1
 nbytes_mac_frame = nbytes_phy_frame + 11
-min_err = 1e1
-min_len = 1e2
-msg_interval = 1 # ms
+min_err = 1e2
+min_len = 1e3
+msg_interval = 2 # ms
 sleeptime = 1.0
 
 class ber_awgn_comp_nogui(gr.top_block):
@@ -109,7 +109,7 @@ if __name__ == '__main__':
             print snr_vals[i], "dB:", 100.0*len_res/min_len, "% done"
             time.sleep(sleeptime)
             if(len_res >= min_len ):
-                if tb.mac.get_num_packet_errors() >= min_err or len_res > min_len*1:
+                if tb.mac.get_num_packet_errors() >= min_err or len_res > min_len*20:
                     tb.stop()
                     tb.wait()
                     break

@@ -6,7 +6,7 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -22,20 +22,20 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-20.0,0.0,1.0)
+snr_vals = np.arange(-25.0,-5.0,.5)
 enable_vals = [0.0, 0.0, 0.0]
 nbytes_phy_frame = 1
 nbytes_mac_frame = nbytes_phy_frame + 11
-min_err = 1e1
-min_len = 1e1
-msg_interval = 10 # ms
+min_err = 5e2
+min_len = 1e3
+msg_interval = 2 # ms
 sleeptime = 1.0
-slow_mode = False
+slow_mode = True
 
 class per_awgn_comp_nogui(gr.top_block):
 
     def __init__(self):
-        gr.top_block.__init__(self, "per AWGN Test CSS SD/HD vs OQPSK")
+        gr.top_block.__init__(self, "PER AWGN Test CSS SD/HD vs OQPSK")
 
         ##################################################
         # Variables
@@ -113,7 +113,7 @@ if __name__ == '__main__':
             len_res = tb.mac.get_num_packets_received()
             print snr_vals[i], "dB:", 100.0*len_res/min_len, "% done"
             if(len_res >= min_len):
-                if tb.mac.get_num_packet_errors() > min_err or tb.mac.get_num_packets_received() > 1*min_len or tb.mac.get_num_packet_errors() == 0:
+                if tb.mac.get_num_packet_errors() > min_err or tb.mac.get_num_packets_received() > 10*min_len:
                     tb.stop()
                     tb.wait()
                     time.sleep(1)
@@ -127,7 +127,7 @@ if __name__ == '__main__':
             old_len_res = len_res
 
         per = tb.mac.get_packet_error_ratio()
-        print "PER at", snr_vals[i], "dB SNR (SD):", per
+        print "PER at", snr_vals[i], "dB SNR (SD):", per, "(", tb.mac.get_num_packet_errors(), "/", tb.mac.get_num_packets_received(), ")"
         per_vals.append(per)
         t_elapsed = time.time() - t0
         print "approximately",t_elapsed*(len(snr_vals)-i-1)/60, "minutes remaining"
