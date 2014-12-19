@@ -16,12 +16,9 @@ if __name__ == "__main__":
     plt.rcParams.update({'axes.labelsize': 'large'})
 
     # Eb/N0 plot
-    Eb_noSF = 19.0007 # sum(|norm_fac*chirp_seq|^2)/8 --> Energy per code bit
-    Eb_slow = Eb_noSF*32.0/6
-    Eb_fast = Eb_noSF*4.0/3
     # this Eb/N0 does not consider energy spent on headers, only the payload including the respective coding rate is considered because otherwise the number of payload bytes per frame would gain influence
-    EbN0_fast = 10*np.log10(Eb_fast) + snr_fast
-    EbN0_slow = 10*np.log10(Eb_slow) + snr_slow
+    EbN0_fast = snr_fast + 10*np.log10(32e6/1e6)
+    EbN0_slow = snr_slow + 10*np.log10(32e6/250e3)
 
     f = plt.figure(1)
     m = ['o', 'v', 's', 'x']

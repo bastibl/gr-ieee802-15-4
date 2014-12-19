@@ -22,16 +22,18 @@ import numpy as np
 import pmt
 import time
 import matplotlib.pyplot as plt
+# import yappi
 
 # configuration parameters
-snr_vals = np.arange(-25.0, -10.0, .5) # -10 dB as upper limit for slow mode
+snr_vals = np.arange(-25.0, -5.0, .5) # -10 dB as upper limit for slow mode
 min_intf = 0
 max_intf = 3
 num_intf = max_intf - min_intf + 1
-nbytes_per_frame = 127
-min_err = 1e3
-min_len = 1e6
-msg_interval = 2  # ms
+nbytes_phy_frame = 1
+nbytes_mac_frame = nbytes_phy_frame + 11
+min_err = 5e2
+min_len = 5e3
+msg_interval = 1.5  # ms
 sleeptime = 1.0
 slow_mode = True
 
@@ -45,16 +47,16 @@ class ieee802_15_4_css_phy_self_interference(gr.top_block):
         ##################################################
         self.snr = snr = 0
         self.enable = enable = [0.0, 0.0, 0.0]
-        self.c = c = ieee802_15_4.css_phy(slow_rate=slow_mode, chirp_number=1, phy_packetsize_bytes=nbytes_per_frame)
+        self.c = c = ieee802_15_4.css_phy(slow_rate=slow_mode, chirp_number=1, phy_packetsize_bytes=nbytes_mac_frame)
 
         ##################################################
         # Blocks
         ##################################################
         self.ieee802_15_4_make_pair_with_blob_0 = ieee802_15_4.make_pair_with_blob(
-            np.random.randint(0, 256, (c.phy_packetsize_bytes,)))
+            np.random.randint(0, 256, (nbytes_phy_frame,)))
         self.ieee802_15_4_css_phy_0 = ieee802_15_4_css_phy_sd(
             phr=c.PHR,
-            nbytes_payload=c.phy_packetsize_bytes,
+            nbytes_payload=nbytes_mac_frame,
             bits_per_cw=c.bits_per_symbol,
             codewords=c.codewords,
             intlv_seq=c.intlv_seq,
@@ -69,6 +71,7 @@ class ieee802_15_4_css_phy_self_interference(gr.top_block):
             sfd=c.SFD,
             nsamp_frame=c.nsamp_frame,
         )
+        self.mac = ieee802_15_4.mac(debug=False)
         self.ieee802_15_4_compare_blobs_0 = ieee802_15_4.compare_blobs(False)
         # self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), msg_interval, -1, True, False)
         self.msg_strobe = blocks.message_strobe(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), msg_interval)
@@ -104,9 +107,9 @@ class ieee802_15_4_css_phy_self_interference(gr.top_block):
         # Asynch Message Connections
         ##################################################
         self.msg_connect(self.msg_strobe, "strobe", self.ieee802_15_4_make_pair_with_blob_0, "in")
-        self.msg_connect(self.ieee802_15_4_make_pair_with_blob_0, "out", self.ieee802_15_4_css_phy_0, "txin")
-        self.msg_connect(self.ieee802_15_4_css_phy_0, "rxout", self.ieee802_15_4_compare_blobs_0, "test")
-        self.msg_connect(self.ieee802_15_4_make_pair_with_blob_0, "out", self.ieee802_15_4_compare_blobs_0, "ref")
+        self.msg_connect(self.ieee802_15_4_make_pair_with_blob_0, "out", self.mac, "app in")
+        self.msg_connect(self.mac, "pdu out", self.ieee802_15_4_css_phy_0, "txin")
+        self.msg_connect(self.ieee802_15_4_css_phy_0, "rxout", self.mac, "pdu in")
 
 
     def get_snr(self):
@@ -152,12 +155,13 @@ if __name__ == '__main__':
     if gr.enable_realtime_scheduling() != gr.RT_OK:
         print "Error: failed to enable realtime scheduling."
 
-    ber_vals = np.ones((num_intf, len(snr_vals)))
+    # yappi.start()
+    per_vals = np.ones((num_intf, len(snr_vals)))
     for k in range(min_intf, max_intf + 1):
         enable_vals = [0.0, 0.0, 0.0]
         for i in range(k):
             enable_vals[i] = 1.0
-        ber = 1.0
+        per = 1.0
         for i in range(len(snr_vals)):
             t0 = time.time()
             tb = None
@@ -167,33 +171,34 @@ if __name__ == '__main__':
             time.sleep(.1)  # some setup time won't hurt
             tb.start()
             while (True):
-                len_res = tb.ieee802_15_4_compare_blobs_0.get_bits_compared()
+                len_res = tb.mac.get_num_packets_received()
                 if len_res >= min_len:
-                    if tb.ieee802_15_4_compare_blobs_0.get_errors_found() > min_err or len_res >= 1 * min_len or tb.ieee802_15_4_compare_blobs_0.get_errors_found() == 0:
+                    if tb.mac.get_num_packet_errors() > min_err or len_res >= 5 * min_len or tb.mac.get_num_packet_errors() == 0:
                         tb.stop()
                         tb.wait()
                         break
                     else:
-                        print "errors found:", tb.ieee802_15_4_compare_blobs_0.get_errors_found()
+                        print "errors found:", tb.mac.get_num_packet_errors()
                 print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
                 time.sleep(sleeptime)
-            ber = tb.ieee802_15_4_compare_blobs_0.get_ber()
-            ber_vals[k-min_intf, i] = ber
-            print "BER at", snr_vals[i], "dB SNR (SD) with", k, "interferers:", ber_vals[k-min_intf, i]
+            per = tb.mac.get_packet_error_ratio()
+            per_vals[k-min_intf, i] = per
+            print "PER at", snr_vals[i], "dB SNR (SD) with", k, "interferers:", per_vals[k-min_intf, i]
             t_elapsed = time.time() - t0
-            np.save("tmp_ber_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "_" + str(
-                min(snr_vals)) + "_to_" + str(max(snr_vals)) + "dB", ber_vals)
+            np.save("tmp_per_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "_" + str(
+                min(snr_vals)) + "_to_" + str(max(snr_vals)) + "dB", per_vals)
 
-    np.save("ber_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "_" + str(min(snr_vals)) + "_to_" + str(
-        max(snr_vals)) + "dB_" + time.strftime("%Y-%m-%d_%H-%M-%S"), ber_vals)
+    # yappi.get_func_stats().print_all()
+    np.save("per_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "packet-len-"+str(nbytes_mac_frame) +"bytes_" + str(min(snr_vals)) + "_to_" + str(
+        max(snr_vals)) + "dB_" + time.strftime("%Y-%m-%d_%H-%M-%S"), per_vals)
     for i in range(num_intf):
-        plt.plot(snr_vals, ber_vals[i, :], label="# interferers: " + str(min_intf+i))
+        plt.plot(snr_vals, per_vals[i, :], label="# interferers: " + str(min_intf+i))
     plt.legend(loc='lower left')
     plt.yscale('log')
     plt.grid()
     plt.ylabel("BER")
     plt.xlabel("SNR")
     plt.title("Influence of self interference on CSS transmissions in an AWGN channel")
-    plt.savefig("ber_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "_" + str(min(snr_vals)) + "_to_" + str(
+    plt.savefig("per_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "_" + str(min(snr_vals)) + "_to_" + str(
         max(snr_vals)) + "dB_" + time.strftime("%Y-%m-%d_%H-%M-%S") + ".pdf")
     plt.show()
