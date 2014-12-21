@@ -29,13 +29,13 @@ snr_vals = np.arange(-25.0, -5.0, .5) # -10 dB as upper limit for slow mode
 min_intf = 0
 max_intf = 3
 num_intf = max_intf - min_intf + 1
-nbytes_phy_frame = 1
+nbytes_phy_frame = 116 
 nbytes_mac_frame = nbytes_phy_frame + 11
 min_err = 5e2
-min_len = 5e3
+min_len = 1e3
 msg_interval = 1.5  # ms
 sleeptime = 1.0
-slow_mode = True
+slow_mode = True 
 
 
 class ieee802_15_4_css_phy_self_interference(gr.top_block):
@@ -185,11 +185,11 @@ if __name__ == '__main__':
             per_vals[k-min_intf, i] = per
             print "PER at", snr_vals[i], "dB SNR (SD) with", k, "interferers:", per_vals[k-min_intf, i]
             t_elapsed = time.time() - t0
-            np.save("tmp_per_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "_" + str(
+            np.save("tmp_per_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "_packet-len-"+str(nbytes_mac_frame)+"bytes_" + str(
                 min(snr_vals)) + "_to_" + str(max(snr_vals)) + "dB", per_vals)
 
     # yappi.get_func_stats().print_all()
-    np.save("per_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "packet-len-"+str(nbytes_mac_frame) +"bytes_" + str(min(snr_vals)) + "_to_" + str(
+    np.save("per_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "_packet-len-"+str(nbytes_mac_frame) +"bytes_" + str(min(snr_vals)) + "_to_" + str(
         max(snr_vals)) + "dB_" + time.strftime("%Y-%m-%d_%H-%M-%S"), per_vals)
     for i in range(num_intf):
         plt.plot(snr_vals, per_vals[i, :], label="# interferers: " + str(min_intf+i))
@@ -199,6 +199,6 @@ if __name__ == '__main__':
     plt.ylabel("BER")
     plt.xlabel("SNR")
     plt.title("Influence of self interference on CSS transmissions in an AWGN channel")
-    plt.savefig("per_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "_" + str(min(snr_vals)) + "_to_" + str(
+    plt.savefig("per_self_interference_css_slow_rate-" + str(tb.c.slow_rate) + "_packet-len-" + str(nbytes_mac_frame) + "bytes_" + str(min(snr_vals)) + "_to_" + str(
         max(snr_vals)) + "dB_" + time.strftime("%Y-%m-%d_%H-%M-%S") + ".pdf")
-    plt.show()
+#    plt.show()
