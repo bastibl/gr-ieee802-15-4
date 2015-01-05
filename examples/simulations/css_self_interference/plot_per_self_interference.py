@@ -13,7 +13,6 @@ if __name__ == "__main__":
 
     plt.rcParams.update({'font.size': 16})
     plt.rcParams.update({'axes.labelsize': 'large'})
-    plt.rcParams.update({'axes.labelsize': 'large'})
     xlow = 0.0
     xhigh = 12.5
     ylow = 1e-3

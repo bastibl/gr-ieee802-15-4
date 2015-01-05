@@ -6,7 +6,7 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -24,9 +24,9 @@ import matplotlib.pyplot as plt
 # configuration parameters
 snr_vals = np.arange(-20.0, -0.0, .5)
 nbytes_per_frame = 127
-min_err = int(1e3)
-min_len = int(1e7)
-msg_interval = 1  # ms
+min_err = int(1e6)
+min_len = int(3e7)
+msg_interval = 4  # ms
 sleeptime = 1.0  # s
 interferer_freq = 100e3
 fs = 4e6
@@ -104,7 +104,7 @@ if __name__ == '__main__':
         while (True):
             len_res = tb.comp_bits.get_bits_compared()
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
-            if (len_res >= min_len):
+            if (len_res >= min_len or tb.comp_bits.get_errors_found() >= 10*min_err):
                 if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 1 * min_len or tb.comp_bits.get_errors_found() == 0):
                     print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
                     tb.stop()

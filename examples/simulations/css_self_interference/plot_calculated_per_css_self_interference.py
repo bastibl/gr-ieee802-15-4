@@ -32,6 +32,9 @@ if __name__ == "__main__":
     m = ['o', 'v', 's', 'x']
     c = ['b', 'g', 'r', 'c']
 
+    plt.rcParams.update({'font.size': 10})
+    plt.rcParams.update({'axes.labelsize': 'large'})
+
     f1 = plt.figure(1)
     for i in range(4):
         plt.semilogy(calc_ebn0(snr_fast, rate_fast, fs), calc_per(ber_css_fast[i,:], nbytes_short_packet), label=str(nbytes_short_packet)+" byte with "+ str(i) + " interferer(s)", marker = m[i], color = c[i], linestyle = '-')
@@ -64,4 +67,4 @@ if __name__ == "__main__":
 
     plt.savefig("per_calc_css_slow_self_interference.pdf", bbox='tight')
 
-    plt.show()
+    # plt.show()

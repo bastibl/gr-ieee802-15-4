@@ -6,8 +6,8 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -23,15 +23,15 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-15.0, -0.0, .5)
+snr_vals = np.arange(-15.0, 5.0, .5)
 nbytes_per_frame = 127
-cfg = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
-min_err = int(1e3)
-min_len = int(2e6)
+cfg = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
+min_err = int(5e4)
+min_len = int(5e6)
 norm_fac = 1.1507
-msg_interval = 15  # ms
+msg_interval = 20  # ms
 sleeptime = 1.0 # s
-interferer_freq = 100e3
+interferer_freq = 1800e3
 fs = 32e6
 
 class ber_singletone_nogui(gr.top_block):
@@ -145,7 +145,7 @@ if __name__ == '__main__':
         while (True):
             len_res = tb.comp_bits_sd.get_bits_compared()
             print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
-            if (len_res >= min_len):
+            if (len_res >= min_len or tb.comp_bits_sd.get_errors_found() >= min_err):
                 if (tb.comp_bits_sd.get_errors_found() >= min_err or tb.comp_bits_sd.get_bits_compared() >= 1*min_len or tb.comp_bits_sd.get_errors_found() == 0):
                     print "Found a total of", tb.comp_bits_sd.get_errors_found(), " errors"
                     tb.stop()

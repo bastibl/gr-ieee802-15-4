@@ -23,7 +23,7 @@ if __name__ == "__main__":
     f = plt.figure(1)
     m = ['o', 'v', 's', 'x']
     for i in range(4):
-        plt.plot(EbN0_fast, css_fast[i,:], label="# interferer: "+str(i), marker = m[i])
+        plt.plot(EbN0_fast, css_fast[i,:], label=str(i) + " interferer(s)", marker = m[i])
     plt.grid()
     # plt.title("CSS PHY Self-Interference (1 Mbps)")
     plt.legend(loc = 'lower left')
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     f2 = plt.figure(2)
     for i in range(4):
         print len(snr_slow), len(css_slow[i,:])
-        plt.plot(EbN0_slow, css_slow[i,:], label="# interferer: "+str(i), marker=m[i])
+        plt.plot(EbN0_slow, css_slow[i,:], label=str(i) + " interferer(s)", marker=m[i])
     plt.grid()
     # plt.title("CSS PHY Self-Interference (250 kbps)")
     plt.legend(loc = 'lower left')
