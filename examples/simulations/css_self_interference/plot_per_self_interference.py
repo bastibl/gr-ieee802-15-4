@@ -1,5 +1,3 @@
-__author__ = 'wunsch'
-
 #! /usr/bin/env python
 
 import numpy as np

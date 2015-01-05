@@ -6,7 +6,7 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import filter
@@ -24,28 +24,17 @@ import matplotlib.pyplot as plt
 
 
 # configuration parameters
-snr_vals = np.arange(-30.0,20.0,1.0)
+snr_vals = np.arange(20.0,30.0,1.0)
 nbytes_per_frame = 127
-min_err = int(1e5)
+min_err = int(1e6)
 min_len = int(1e7)
 nframes = float(min_len)/nbytes_per_frame
 nsamps_frame = 4*8*(4+1+1+nbytes_per_frame)
 nsamps_total = nframes*nsamps_frame
-<<<<<<< HEAD
-pdp = [1, .1, 0]
-
-=======
-pdp = [np.exp(-28782313.0*tau) for tau in np.arange(0.0,320*1e-9, 1.0/(4e6))]
-if len(pdp) % 2 == 0:
-    pdp.append(0)
-pdp[1] *= 10.0
-print "pdp:", pdp
->>>>>>> b835a4b908f8419f6b0a4c3ed8b8a1c35fe00b33
-group_delay = (len(pdp)-1)/2
-coherence_time_samps = int(nsamps_frame*0.1)
-coherence_time_samps = 10000#13670
+pdp = [1, .01, 0]
+coherence_time_samps = 10000
 sleeptime = 1.0
-msg_interval = 50
+msg_interval = 3
 skipsamps = 1 # simulates perfect sync
 
 class ber_rayleigh_comp_nogui(gr.top_block):

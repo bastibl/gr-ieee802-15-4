@@ -30,7 +30,7 @@ if __name__ == "__main__":
     plt.xlabel("Eb/N0")
     plt.ylabel("BER")
     plt.yscale('log')
-    plt.xlim([-11,8])
+    plt.xlim([-10,8])
     plt.ylim([3e-5,1])
     plt.savefig("ber_css_fast_self_interference.pdf")
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     plt.ylabel("BER")
     plt.yscale('log')
     plt.ylim([3e-5,1])
-    plt.xlim([-5,9.5])
+    plt.xlim([-4,9.5])
 
     plt.savefig("ber_css_slow_self_interference.pdf")
 
