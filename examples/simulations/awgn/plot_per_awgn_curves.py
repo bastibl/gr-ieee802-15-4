@@ -7,24 +7,24 @@ if __name__ == "__main__":
     plt.rcParams.update({'axes.labelsize': 'medium'})
 
     # OQPSK
-    per_oqpsk_short = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/awgn/per_awgn_oqpsk_packetlen-12bytes_-20.0_to_-5.5dB_2014-12-17_10-05-08.npy")
-    per_oqpsk_long = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/awgn/per_awgn_oqpsk_packetlen-127bytes_-20.0_to_-5.5dB_2014-12-17_09-57-05.npy")
+    per_oqpsk_short = np.load("results/per_awgn_oqpsk_packetlen-12bytes_-20.0_to_-5.5dB_2014-12-17_10-05-08.npy")
+    per_oqpsk_long = np.load("results/per_awgn_oqpsk_packetlen-127bytes_-20.0_to_-5.5dB_2014-12-17_09-57-05.npy")
     snr_oqpsk = np.arange(-20.0, -5.0, 0.5)
     oqpsk_bandwidth = 4e6
     oqpsk_datarate = 250e3
     ebn0_oqpsk = snr_oqpsk + 10*np.log10(oqpsk_bandwidth/oqpsk_datarate)
 
     # CSS 1 Mbps
-    per_css_fast_short = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/awgn/per_awgn_css_slow_rate-False_packetlen-12bytes_-25.0_to_-5.5dB_2014-12-17_13-26-54.npy")
-    per_css_fast_long = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/awgn/per_awgn_css_slow_rate-False_packetlen-127bytes_-25.0_to_-5.5dB_2014-12-17_13-33-40.npy")
+    per_css_fast_short = np.load("results/per_awgn_css_slow_rate-False_packetlen-12bytes_-25.0_to_-5.5dB_2014-12-17_13-26-54.npy")
+    per_css_fast_long = np.load("results/per_awgn_css_slow_rate-False_packetlen-127bytes_-25.0_to_-5.5dB_2014-12-17_13-33-40.npy")
     snr_css = np.arange(-25.0, -5.0, 0.5)
     css_bandwidth = 32e6
     css_fast_datarate = 1e6
     ebn0_css_fast = snr_css + 10*np.log10(css_bandwidth/css_fast_datarate)
 
     # CSS 250 kbps
-    per_css_slow_short = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/awgn/per_awgn_css_slow_rate-True_packetlen-12bytes_-25.0_to_-5.5dB_2014-12-17_14-24-12.npy")
-    per_css_slow_long = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/simulations/awgn/per_awgn_css_slow_rate-True_packetlen-127bytes_-25.0_to_-5.5dB_2014-12-17_11-35-23.npy")
+    per_css_slow_short = np.load("results/per_awgn_css_slow_rate-True_packetlen-12bytes_-25.0_to_-5.5dB_2014-12-17_14-24-12.npy")
+    per_css_slow_long = np.load("results/per_awgn_css_slow_rate-True_packetlen-127bytes_-25.0_to_-5.5dB_2014-12-17_11-35-23.npy")
     snr_css_slow = np.arange(-25.0, -5.0, 0.5)
     css_slow_datarate = 250e3
     ebn0_css_slow = snr_css + 10*np.log10(css_bandwidth/css_slow_datarate)

@@ -19,8 +19,8 @@ def calc_ebn0(snr, rate, bw):
 
 
 if __name__ == "__main__":
-    ber_css_slow = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/css_self_interference/results/ber_self_interference_css_slow_rate-True_-25.0_to_-10.5dB_2014-12-03_15-48-06.npy")
-    ber_css_fast = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/css_self_interference/results/ber_self_interference_css_slow_rate-False_-25.0_to_-5.5dB_2014-12-03_14-07-00.npy")
+    ber_css_slow = np.load("results/ber_self_interference_css_slow_rate-True_-25.0_to_-10.5dB_2014-12-03_15-48-06.npy")
+    ber_css_fast = np.load("results/ber_self_interference_css_slow_rate-False_-25.0_to_-5.5dB_2014-12-03_14-07-00.npy")
     snr_slow = np.arange(-25.0, -10.0, .5)
     snr_fast = np.arange(-25.0, -5.0, .5)
     fs = 32e6

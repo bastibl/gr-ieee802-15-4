@@ -4,9 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-	oqpsk = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/awgn/ber_awgn_oqpsk_-30.0_to_-1.0dB_2014-12-04_13-31-41.npy")
-	css_fast = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/awgn/ber_awgn_css_slow_rate-False_-30.0_to_-6.0dB_2014-12-04_13-42-42.npy")
-	css_slow = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/awgn/ber_awgn_css_slow_rate-True_-30.0_to_-11.0dB_2014-12-04_14-13-13.npy")
+	oqpsk = np.load("results/ber_awgn_oqpsk_-30.0_to_-1.0dB_2014-12-04_13-31-41.npy")
+	css_fast = np.load("results/ber_awgn_css_slow_rate-False_-30.0_to_-6.0dB_2014-12-04_13-42-42.npy")
+	css_slow = np.load("results/ber_awgn_css_slow_rate-True_-30.0_to_-11.0dB_2014-12-04_14-13-13.npy")
 	snr_oqpsk = np.arange(-30.0, 0.0, 1.0)
 	snr_css_fast = np.arange(-30.0, -5.0, 1.0)
 	snr_css_slow = np.arange(-30.0, -10.0, 1.0)

@@ -4,10 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 if __name__ == "__main__":
-    css_slow_short = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/css_self_interference/results/per_self_interference_css_slow_rate-True_packet-len-12bytes_-25.0_to_-5.5dB_2014-12-21_22-02-11.npy")
-    css_slow_long = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/css_self_interference/results/per_self_interference_css_slow_rate-True_packet-len-127bytes_-25.0_to_-5.5dB.npy")
-    css_fast_short = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/css_self_interference/results/per_self_interference_css_slow_rate-False_packet-len-12bytes_-20.0_to_-0.5dB_2014-12-20_23-16-07.npy")
-    css_fast_long = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/css_self_interference/results/per_self_interference_css_slow_rate-False_packet-len-127bytes_-20.0_to_-0.5dB_2014-12-20_18-21-54.npy")
+    css_slow_short = np.load("results/per_self_interference_css_slow_rate-True_packet-len-12bytes_-25.0_to_-5.5dB_2014-12-21_22-02-11.npy")
+    css_slow_long = np.load("results/per_self_interference_css_slow_rate-True_packet-len-127bytes_-25.0_to_-5.5dB.npy")
+    css_fast_short = np.load("results/per_self_interference_css_slow_rate-False_packet-len-12bytes_-20.0_to_-0.5dB_2014-12-20_23-16-07.npy")
+    css_fast_long = np.load("results/per_self_interference_css_slow_rate-False_packet-len-127bytes_-20.0_to_-0.5dB_2014-12-20_18-21-54.npy")
     snr_slow = np.arange(-25.0,-5.0,.5)
     snr_fast = np.arange(-20.0,0.0,.5)
 

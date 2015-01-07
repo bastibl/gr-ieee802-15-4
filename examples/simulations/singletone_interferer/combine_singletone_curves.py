@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 import time
 
 if __name__ == "__main__":
-    oqpsk = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/singletone_interferer/ber_singletone_100kHz_oqpsk_-20.0_to_-0.5dB_2015-01-05_20-16-36.npy")
+    oqpsk = np.load("results/ber_singletone_100kHz_oqpsk_-20.0_to_-0.5dB_2015-01-05_20-16-36.npy")
     sir_oqpsk = np.arange(-20.0,-0.0, .5)
-    css_fast = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/singletone_interferer/ber_singletone_1800kHz_css_sd_slow_rate-False_-15.0_to_4.5dB_2015-01-05_18-19-35.npy")
+    css_fast = np.load("results/ber_singletone_1800kHz_css_sd_slow_rate-False_-15.0_to_4.5dB_2015-01-05_18-19-35.npy")
     sir_css_fast = np.arange(-15.0, 5.0, .5)
-    css_slow = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/singletone_interferer/ber_singletone_1800kHz_css_sd_slow_rate-True_-15.0_to_-0.5dB_2015-01-05_16-57-32.npy")
+    css_slow = np.load("results/ber_singletone_1800kHz_css_sd_slow_rate-True_-15.0_to_-0.5dB_2015-01-05_16-57-32.npy")
     sir_css_slow = np.arange(-15.0, 0.0, .5)
 
     plt.rcParams.update({'font.size': 18})

@@ -6,9 +6,9 @@ import time
 
 if __name__ == "__main__":
     # oqpsk = np.load("/home/wunsch/src/gr-ieee802-15-4/examples/rayleigh_multipath/ber_rayleigh_oqpsk_-25.0_to_14.0dB_2014-12-03_16-08-53.npy")
-    oqpsk = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_oqpsk_-30.0_to_19.0dB_2014-12-15_16-31-35.npy")
-    css_fast = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_css_sd_slow_rate-False_-30.0_to_9.0dB_2014-12-15_16-25-05.npy")
-    css_slow = np.load("/home/felixwunsch/src/gr-ieee802-15-4/examples/simulations/rayleigh_multipath/ber_rayleigh_css_sd_slow_rate-True_-30.0_to_6.0dB.npy")
+    oqpsk = np.load("results/ber_rayleigh_oqpsk_-30.0_to_19.0dB_2014-12-15_16-31-35.npy")
+    css_fast = np.load("results/ber_rayleigh_css_sd_slow_rate-False_-30.0_to_9.0dB_2014-12-15_16-25-05.npy")
+    css_slow = np.load("results/ber_rayleigh_css_sd_slow_rate-True_-30.0_to_6.0dB.npy")
     snr_css_fast = np.arange(-30.0, 10.0, 1.0)
     snr_css_slow = np.arange(-30.0, 6.0, 1.0)
     snr_oqpsk = np.arange(-30.0, 20.0, 1.0)
