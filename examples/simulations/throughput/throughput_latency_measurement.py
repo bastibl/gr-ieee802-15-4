@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 ########################################################################################################################
-# This script shall simulate the throughput and the latency of the IEEE 802.15.4 MAC in a direct peer-to-peer
-# communication between two devices.
+# This script shall simulate the throughput between MAC and higher layers and the latency of the IEEE 802.15.4 MAC in a
+# direct peer-to-peer communication between two devices.
 #
 # The standard offers several different medium access schemes: beacon-enabled (forming superframes) and nonbeacon-enabled
 #
@@ -51,71 +51,129 @@ vPhySymbolsPerOctet = [2.0, 1.3, 5.3]
 vPhySymbolDurationSec = [16e-6, 6e-6, 6e-6]
 macLIFSPeriod = 40
 macSIFSPeriod = 12
+aMacMaxSIFSFrameSize = 18 # in bytes, refers to the MPDU (MAC frame)
 t_ACK = macSIFSPeriod # this is still in symbols
-macMinNumBytesBeaconFrame = 13 # 2+1+4+0+2+1+1+0+2
-macNumBytesAckFrame = 4
+aMacMinNumBytesBeaconFrame = 13 # 2+1+4+0+2+1+1+0+2
+aMacNumBytesAckFrame = 5
 macMinNumBytesDataFrameOverhead = 7 # 2+1+2+0+2
 aPhyMaxNumBytesPayload = 127
+aPhyNumBitsPHR = 7
 aMacMaxBytesPayload = aPhyMaxNumBytesPayload - macMinNumBytesDataFrameOverhead
 
 # configuration parameters
 phy_mode = PHY_OQPSK
 mac_mode = MAC_UNSLOTTED
-bit_error_ratio = 1e-3
-collision_probability = 1e-2
+bit_error_ratio = np.logspace(-6.0, -2.0, 50)
+collision_probability = [0.5, 0.1, 0.0]
 nbytes_mac_payload = aMacMaxBytesPayload
 nbytes_mac_data_frame_overhead = macMinNumBytesDataFrameOverhead
 
 # simulation stop criteria
-bits_to_transmit = 1e9
-t_max = 10
+bytes_to_transmit = 1e9
+t_max = 1000
+
+# helper function
+def calc_phyFrameDuration(mode, phy_packet_size):
+    if mode == PHY_OQPSK:
+        return vPhySHRDuration[mode] + np.ceil((nbytes_phy_payload+1)*vPhySymbolsPerOctet[mode])
+    elif mode == PHY_CSS_FAST:
+        return vPhySHRDuration[mode] + (1.5 + 3.0/4*np.ceil(4.0/3*nbytes_phy_payload))*vPhySymbolsPerOctet[mode]
+    elif mode == PHY_CSS_SLOW:
+        return vPhySHRDuration[mode] + 3*np.ceil(1.0/3*(1.5 + nbytes_phy_payload))*vPhySymbolsPerOctet[mode]
+    else:
+        raise RuntimeError("Invalid mode")
 
 # parameters depending on the configuration
+nbytes_phy_payload = nbytes_mac_data_frame_overhead + nbytes_mac_payload
+phyDataFrameDuration = calc_phyFrameDuration(phy_mode, nbytes_phy_payload)
+phyAckFrameDuration = calc_phyFrameDuration(phy_mode, aMacNumBytesAckFrame)
 phySHRDuration = vPhySHRDuration[phy_mode]
 phySymbolsPerOctet = vPhySymbolsPerOctet[phy_mode]
 phySymbolDurationSec = vPhySymbolDurationSec[phy_mode]
 macAckWaitDuration = aUnitBackoffPeriod+aTurnaroundTime+phySHRDuration+np.ceil(6*phySymbolsPerOctet)
-macIFSPeriod = macLIFSPeriod # if ... else macSIFSPeriod FIXME: find the threshold for SIFS/LIFS
-nbytes_phy_payload = nbytes_mac_data_frame_overhead + nbytes_mac_payload
-macNumSymAckFrame = macNumBytesAckFrame*phySymbolsPerOctet
-csma = csma_unslotted(collision_probability)
+macIFSPeriod = macLIFSPeriod if nbytes_phy_payload > aMacMaxSIFSFrameSize else macSIFSPeriod
+csma = csma_unslotted()
 
-# FIXME: Is it enough to calculate the probabilities over the payload? PHY carries other binary information, too
-fail_prob_data_frame = 1 - (1 - bit_error_ratio)**(8*nbytes_phy_payload)
-fail_prob_ack_frame = 1 - (1 - bit_error_ratio)**(8*macNumBytesAckFrame)
-success_prob_transmission = (1 - fail_prob_ack_frame)*(1 - fail_prob_data_frame)
-print success_prob_transmission
-
-def tx_successful():
+def tx_successful(success_prob):
     randnum = np.random.randint(0,1e9)
-    if randnum < success_prob_transmission*1e9:
+    if randnum < success_prob*1e9:
         return True
     else:
         return False
 
 if __name__ == "__main__":
-    total_sym_elapsed = 0
-    total_bits_transmitted = 0
-    latencies = []
 
-    while total_sym_elapsed*phySymbolDurationSec < t_max and total_bits_transmitted < bits_to_transmit:
-        # initialize latency for this frame
-        latency = 0
-        bits_transmitted = 0
+    print "### Setup ###"
+    print "BER:", bit_error_ratio
+    print "Collision probability:", collision_probability
+    print "Data frame duration [ms]:", phyDataFrameDuration*phySymbolDurationSec*1000
+    print "ACK frame duration [ms]:", phyAckFrameDuration*phySymbolDurationSec*1000
+    print "t_ACK [ms]:", t_ACK*phySymbolDurationSec*1000
+    print "IFS [ms]:", macIFSPeriod*phySymbolDurationSec*1000
 
-        # run CSMA algorithm until the frame can be sent
-        success = False
-        while(success == False):
-            (success, delay) = csma.run()
-            latency += delay
+    res_throughput_bps = np.zeros((len(collision_probability), len(bit_error_ratio)))
+    res_latency_s = np.zeros((len(collision_probability), len(bit_error_ratio)))
 
-        # for a successful transmission, both data frame and ACK frame have to be received correctly
-        # FIXME: add latencies below!
-        if tx_successful():
-            bits_transmitted += nbytes_phy_payload
-            latency += nsym_data_frame + t_ACK + macNumSymAckFrame # FIXME: these have to be the PHY layer durations!
+    for c in range(len(collision_probability)):
+        print "collision probability:", collision_probability[c]
 
-        total_bits_transmitted += bits_transmitted
-        total_sym_elapsed += latency + macIFSPeriod
-        latencies.append(latency)
+        for b in range(len(bit_error_ratio)):
+            print "--- BER:", bit_error_ratio[b]
+            fail_prob_data_frame = 1 - (1 - bit_error_ratio[b])**(8*nbytes_phy_payload + aPhyNumBitsPHR)
+            fail_prob_ack_frame = 1 - (1 - bit_error_ratio[b])**(8*aMacNumBytesAckFrame + aPhyNumBitsPHR)
+            success_prob_transmission = (1 - fail_prob_ack_frame)*(1 - fail_prob_data_frame)
+
+            total_sym_elapsed = 0
+            total_bytes_transmitted = 0
+            latencies = []
+            min_latency = phyDataFrameDuration
+            cur_latency = min_latency # this is the minimal latency for a data frame
+            while total_sym_elapsed*phySymbolDurationSec < t_max and total_bytes_transmitted < bytes_to_transmit:
+                # initialize latency for this frame
+                sym_elapsed = 0
+                bytes_transmitted = 0
+
+                # run CSMA algorithm until the frame can be sent
+                success = False
+                while success == False:
+                    (success, delay) = csma.run(collision_probability[c])
+                    sym_elapsed += delay
+                    cur_latency += delay
+
+                # now a frame is sent.For a successful transmission, both data frame and ACK frame have to be received correctly
+                if tx_successful(success_prob_transmission):
+                    bytes_transmitted += nbytes_mac_payload
+                    sym_elapsed += phyDataFrameDuration + t_ACK + phyAckFrameDuration + macIFSPeriod
+                    latencies.append(cur_latency)
+                    cur_latency = min_latency
+                else:
+                    bytes_transmitted += 0
+                    sym_elapsed += phyDataFrameDuration + macAckWaitDuration
+                    cur_latency +=phyDataFrameDuration + macAckWaitDuration
+
+                total_sym_elapsed += sym_elapsed
+                total_bytes_transmitted += bytes_transmitted
+
+            res_latency_s[c][b] = np.mean(latencies)*phySymbolDurationSec
+            res_throughput_bps[c][b] = 8.0*total_bytes_transmitted/(total_sym_elapsed*phySymbolDurationSec)
+
+    f1 = plt.figure(1)
+    for i in range(res_throughput_bps.shape[0]):
+        plt.semilogx(bit_error_ratio, res_throughput_bps[i]/1000, label="collision probability: "+str(collision_probability[i]))
+    plt.xlabel("BER")
+    plt.ylim([0,100])
+    plt.ylabel("Average Throughput [kb/s]")
+    plt.legend(loc = 'lower left')
+    plt.grid()
+
+
+    f2 = plt.figure(2)
+    for i in range(res_throughput_bps.shape[0]):
+        plt.semilogx(bit_error_ratio, res_latency_s[i]*1000, label="collision probability: "+str(collision_probability[i]))
+    plt.xlabel("BER")
+    plt.ylim([0,200])
+    plt.ylabel("Average Latency [ms]")
+    plt.legend(loc = 'upper left')
+    plt.grid()
+    plt.show()
 

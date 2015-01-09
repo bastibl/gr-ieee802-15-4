@@ -11,20 +11,17 @@ SEND_SUCCESS = True
 SEND_FAILURE = False
 
 class csma_unslotted:
-    def __init__(self, collision_probability):
-        self.p_col = collision_probability
-
-    def medium_busy(self):
+    def medium_busy(self, p_col):
         fac = 1e12
         tmp = np.random.randint(0,fac)
-        if tmp < self.p_col*fac:
+        if tmp < p_col*fac:
             # print "\tMedium busy"
             return True
         else:
             # print "\tMedium idle"
             return False
 
-    def run(self):
+    def run(self, p_col):
         # reset everything
         NB = NB0
         BE = macMinBE
@@ -35,7 +32,7 @@ class csma_unslotted:
             backoff_units_elapsed += np.random.randint(0,2**BE)
 
             # CCA
-            if self.medium_busy():
+            if self.medium_busy(p_col):
                 NB += 1
                 BE = min(BE+1, macMaxBE)
                 if NB > macMaxCSMABackoffs:
