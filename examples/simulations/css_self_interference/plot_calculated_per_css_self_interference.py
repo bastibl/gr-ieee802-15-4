@@ -27,8 +27,10 @@ if __name__ == "__main__":
     rate_slow = 250e3
     rate_fast = 1e6
 
-    nbytes_short_packet = 5
-    nbytes_long_packet = 127
+    nbytes_short_PSDU = 5 # ACK frame
+    nbytes_short_packet = nbytes_short_PSDU + 7.0/8 # + PHR
+    nbytes_long_PSDU = 127
+    nbytes_long_packet = nbytes_long_PSDU + 7.0/8 # + PHR
     m = ['o', 'v', 's', 'x']
     c = ['b', 'g', 'r', 'c']
 
@@ -37,10 +39,10 @@ if __name__ == "__main__":
 
     f1 = plt.figure(1)
     for i in range(4):
-        plt.semilogy(calc_ebn0(snr_fast, rate_fast, fs), calc_per(ber_css_fast[i,:], nbytes_short_packet), label=str(nbytes_short_packet)+" byte with "+ str(i) + " interferer(s)", marker = m[i], color = c[i], linestyle = '-')
+        plt.semilogy(calc_ebn0(snr_fast, rate_fast, fs), calc_per(ber_css_fast[i,:], nbytes_short_packet), label=str(nbytes_short_PSDU)+" byte PSDU, "+ str(i) + " interferer(s)", marker = m[i], color = c[i], linestyle = '-')
 
     for i in range(4):
-        plt.semilogy(calc_ebn0(snr_fast, rate_fast, fs), calc_per(ber_css_fast[i,:], nbytes_long_packet), label=str(nbytes_long_packet)+" byte with "+ str(i) + " interferer(s)", marker = m[i], color = c[i], linestyle = '--')
+        plt.semilogy(calc_ebn0(snr_fast, rate_fast, fs), calc_per(ber_css_fast[i,:], nbytes_long_packet), label=str(nbytes_long_PSDU)+" byte PSDU, "+ str(i) + " interferer(s)", marker = m[i], color = c[i], linestyle = '--')
 
     plt.grid()
     plt.legend(loc='lower left')
@@ -53,10 +55,10 @@ if __name__ == "__main__":
 
     f2 = plt.figure(2)
     for i in range(4):
-        plt.semilogy(calc_ebn0(snr_slow, rate_slow, fs), calc_per(ber_css_slow[i,:], nbytes_short_packet), label=str(nbytes_short_packet)+" byte with "+ str(i) + " interferer(s)", marker = m[i], color = c[i], linestyle = '-')
+        plt.semilogy(calc_ebn0(snr_slow, rate_slow, fs), calc_per(ber_css_slow[i,:], nbytes_short_packet), label=str(nbytes_short_PSDU)+" byte PSDU, "+ str(i) + " interferer(s)", marker = m[i], color = c[i], linestyle = '-')
 
     for i in range(4):
-        plt.semilogy(calc_ebn0(snr_slow, rate_slow, fs), calc_per(ber_css_slow[i,:], nbytes_long_packet), label=str(nbytes_long_packet)+" byte with "+ str(i) + " interferer(s)", marker = m[i], color = c[i], linestyle = '--')
+        plt.semilogy(calc_ebn0(snr_slow, rate_slow, fs), calc_per(ber_css_slow[i,:], nbytes_long_packet), label=str(nbytes_long_PSDU)+" byte PSDU, "+ str(i) + " interferer(s)", marker = m[i], color = c[i], linestyle = '--')
 
     plt.grid()
     plt.legend(loc='lower left')

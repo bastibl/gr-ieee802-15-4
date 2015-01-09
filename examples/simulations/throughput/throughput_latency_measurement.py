@@ -75,7 +75,9 @@ phySHRDuration = vPhySHRDuration[phy_mode]
 phySymbolsPerOctet = vPhySymbolsPerOctet[phy_mode]
 phySymbolDurationSec = vPhySymbolDurationSec[phy_mode]
 macAckWaitDuration = aUnitBackoffPeriod+aTurnaroundTime+phySHRDuration+np.ceil(6*phySymbolsPerOctet)
+macIFSPeriod = macLIFSPeriod # if ... else macSIFSPeriod FIXME: find the threshold for SIFS/LIFS
 nbytes_phy_payload = nbytes_mac_data_frame_overhead + nbytes_mac_payload
+macNumSymAckFrame = macNumBytesAckFrame*phySymbolsPerOctet
 csma = csma_unslotted(collision_probability)
 
 # FIXME: Is it enough to calculate the probabilities over the payload? PHY carries other binary information, too
@@ -94,10 +96,12 @@ def tx_successful():
 if __name__ == "__main__":
     total_sym_elapsed = 0
     total_bits_transmitted = 0
+    latencies = []
 
     while total_sym_elapsed*phySymbolDurationSec < t_max and total_bits_transmitted < bits_to_transmit:
         # initialize latency for this frame
         latency = 0
+        bits_transmitted = 0
 
         # run CSMA algorithm until the frame can be sent
         success = False
@@ -108,6 +112,10 @@ if __name__ == "__main__":
         # for a successful transmission, both data frame and ACK frame have to be received correctly
         # FIXME: add latencies below!
         if tx_successful():
-            total_bits_transmitted += nbytes_phy_payload
-        total_sym_elapsed += latency*phySymbolDurationSec
+            bits_transmitted += nbytes_phy_payload
+            latency += nsym_data_frame + t_ACK + macNumSymAckFrame # FIXME: these have to be the PHY layer durations!
+
+        total_bits_transmitted += bits_transmitted
+        total_sym_elapsed += latency + macIFSPeriod
+        latencies.append(latency)
 
