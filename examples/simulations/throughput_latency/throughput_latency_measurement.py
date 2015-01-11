@@ -43,6 +43,7 @@ PHY_CSS_FAST = 1
 PHY_CSS_SLOW = 2
 MAC_UNSLOTTED = 0
 MAC_SLOTTED = 1
+vPhyModeStr = ['OQPSK', 'CSS1M', 'CSS250k']
 
 aUnitBackoffPeriod = 20
 aTurnaroundTime = 12
@@ -61,7 +62,7 @@ aPhyNumBitsPHR = 7
 aMacMaxBytesPayload = aPhyMaxNumBytesPayload - macMinNumBytesDataFrameOverhead
 
 # configuration parameters
-phy_mode = PHY_OQPSK
+phy_mode = PHY_CSS_SLOW
 mac_mode = MAC_UNSLOTTED
 bit_error_ratio = np.logspace(-6.0, -2.0, 50)
 collision_probability = [0.5, 0.1, 0.0]
@@ -84,6 +85,7 @@ def calc_phyFrameDuration(mode, phy_packet_size):
         raise RuntimeError("Invalid mode")
 
 # parameters depending on the configuration
+phy_mode_str = vPhyModeStr[phy_mode]
 nbytes_phy_payload = nbytes_mac_data_frame_overhead + nbytes_mac_payload
 phyDataFrameDuration = calc_phyFrameDuration(phy_mode, nbytes_phy_payload)
 phyAckFrameDuration = calc_phyFrameDuration(phy_mode, aMacNumBytesAckFrame)
@@ -157,16 +159,18 @@ if __name__ == "__main__":
             res_latency_s[c][b] = np.mean(latencies)*phySymbolDurationSec
             res_throughput_bps[c][b] = 8.0*total_bytes_transmitted/(total_sym_elapsed*phySymbolDurationSec)
 
+    # plot throughput
     f1 = plt.figure(1)
     for i in range(res_throughput_bps.shape[0]):
         plt.semilogx(bit_error_ratio, res_throughput_bps[i]/1000, label="collision probability: "+str(collision_probability[i]))
     plt.xlabel("BER")
-    plt.ylim([0,100])
+    plt.ylim([0,150])
     plt.ylabel("Average Throughput [kb/s]")
     plt.legend(loc = 'lower left')
     plt.grid()
+    # plt.savefig("throughput_unslotted_csma_"+phy_mode_str+"_"+str(nbytes_phy_payload)+"bytePSDU.pdf", bbox='tight')
 
-
+    # plot latency
     f2 = plt.figure(2)
     for i in range(res_throughput_bps.shape[0]):
         plt.semilogx(bit_error_ratio, res_latency_s[i]*1000, label="collision probability: "+str(collision_probability[i]))
@@ -175,5 +179,27 @@ if __name__ == "__main__":
     plt.ylabel("Average Latency [ms]")
     plt.legend(loc = 'upper left')
     plt.grid()
+    # plt.savefig("latency_unslotted_csma_"+phy_mode_str+"_"+str(nbytes_phy_payload)+"bytePSDU.pdf", bbox='tight')
+
+    np.savez("throughput_latency_unslotted_csma_"+phy_mode_str+"_"+str(nbytes_phy_payload)+"bytePSDU", res_latency_s = res_latency_s, res_throughput_bps=res_throughput_bps)
+
+    # combo plot
+    fig, ax1 = plt.subplots()
+    for i in range(res_throughput_bps.shape[0]):
+        ax1.semilogx(bit_error_ratio, res_throughput_bps[i]/1000, '-', label="collision probability: "+str(collision_probability[i]))
+    ax1.set_xlabel('BER')
+    ax1.set_ylabel('Throughput [kb/s]')
+    ax1.set_ylim([0,150])
+    ax1.legend(loc='upper left')
+    ax1.grid()
+
+    ax2 = ax1.twinx()
+    for i in range(res_throughput_bps.shape[0]):
+        ax2.semilogx(bit_error_ratio, res_latency_s[i]*1000, '--')
+    ax2.set_ylabel('Latency [ms]')
+    ax2.set_ylim([0,200])
+
+    plt.savefig("latency_throughput_unslotted_csma_"+phy_mode_str+"_"+str(nbytes_phy_payload)+"bytePSDU.pdf", bbox='tight')
+
     plt.show()
 
