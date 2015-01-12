@@ -50,6 +50,7 @@ aTurnaroundTime = 12
 vPhySHRDuration = [6.0, 6.0, 12.0]
 vPhySymbolsPerOctet = [2.0, 1.3, 5.3]
 vPhySymbolDurationSec = [16e-6, 6e-6, 6e-6]
+vPhyDataRate = [250e3, 1e6, 250e3] # this treats every information (incl. SHR & PHR) as data!
 macLIFSPeriod = 40
 macSIFSPeriod = 12
 aMacMaxSIFSFrameSize = 18 # in bytes, refers to the MPDU (MAC frame)
@@ -60,18 +61,18 @@ macMinNumBytesDataFrameOverhead = 7 # 2+1+2+0+2
 aPhyMaxNumBytesPayload = 127
 aPhyNumBitsPHR = 7
 aMacMaxBytesPayload = aPhyMaxNumBytesPayload - macMinNumBytesDataFrameOverhead
+macAvgCSMABackoff = 3.5 * aUnitBackoffPeriod # E[uniformdistribution(0...2**3)] = (7+1)/2 = 3.5
 
 # configuration parameters
 phy_mode = PHY_CSS_SLOW
 mac_mode = MAC_UNSLOTTED
-bit_error_ratio = np.logspace(-6.0, -2.0, 50)
+bit_error_ratio = np.logspace(-5.0, -2.0, 50)
 collision_probability = [0.5, 0.1, 0.0]
 nbytes_mac_payload = aMacMaxBytesPayload
 nbytes_mac_data_frame_overhead = macMinNumBytesDataFrameOverhead
 
 # simulation stop criteria
-bytes_to_transmit = 1e9
-t_max = 1000
+t_max = 100
 
 # helper function
 def calc_phyFrameDuration(mode, phy_packet_size):
@@ -92,9 +93,15 @@ phyAckFrameDuration = calc_phyFrameDuration(phy_mode, aMacNumBytesAckFrame)
 phySHRDuration = vPhySHRDuration[phy_mode]
 phySymbolsPerOctet = vPhySymbolsPerOctet[phy_mode]
 phySymbolDurationSec = vPhySymbolDurationSec[phy_mode]
+phyDataRate = vPhyDataRate[phy_mode]
 macAckWaitDuration = aUnitBackoffPeriod+aTurnaroundTime+phySHRDuration+np.ceil(6*phySymbolsPerOctet)
 macIFSPeriod = macLIFSPeriod if nbytes_phy_payload > aMacMaxSIFSFrameSize else macSIFSPeriod
 csma = csma_unslotted()
+
+phyPayloadDataRate =  8.0*nbytes_phy_payload/phyDataFrameDuration/phySymbolDurationSec
+
+# assuming no CSMA backoff and an acknowledged transmission
+macTheoreticalMaxDataRate = phyPayloadDataRate * nbytes_mac_payload/nbytes_phy_payload * phyDataFrameDuration / (macAvgCSMABackoff + phyDataFrameDuration + t_ACK + phyAckFrameDuration + macIFSPeriod)
 
 def tx_successful(success_prob):
     randnum = np.random.randint(0,1e9)
@@ -112,6 +119,7 @@ if __name__ == "__main__":
     print "ACK frame duration [ms]:", phyAckFrameDuration*phySymbolDurationSec*1000
     print "t_ACK [ms]:", t_ACK*phySymbolDurationSec*1000
     print "IFS [ms]:", macIFSPeriod*phySymbolDurationSec*1000
+    print "Theoretical max data rate [kb/s]:", macTheoreticalMaxDataRate/1000
 
     res_throughput_bps = np.zeros((len(collision_probability), len(bit_error_ratio)))
     res_latency_s = np.zeros((len(collision_probability), len(bit_error_ratio)))
@@ -120,7 +128,7 @@ if __name__ == "__main__":
         print "collision probability:", collision_probability[c]
 
         for b in range(len(bit_error_ratio)):
-            print "--- BER:", bit_error_ratio[b]
+            # print "--- BER:", bit_error_ratio[b]
             fail_prob_data_frame = 1 - (1 - bit_error_ratio[b])**(8*nbytes_phy_payload + aPhyNumBitsPHR)
             fail_prob_ack_frame = 1 - (1 - bit_error_ratio[b])**(8*aMacNumBytesAckFrame + aPhyNumBitsPHR)
             success_prob_transmission = (1 - fail_prob_ack_frame)*(1 - fail_prob_data_frame)
@@ -130,7 +138,7 @@ if __name__ == "__main__":
             latencies = []
             min_latency = phyDataFrameDuration
             cur_latency = min_latency # this is the minimal latency for a data frame
-            while total_sym_elapsed*phySymbolDurationSec < t_max and total_bytes_transmitted < bytes_to_transmit:
+            while total_sym_elapsed*phySymbolDurationSec < t_max:
                 # initialize latency for this frame
                 sym_elapsed = 0
                 bytes_transmitted = 0
@@ -159,43 +167,48 @@ if __name__ == "__main__":
             res_latency_s[c][b] = np.mean(latencies)*phySymbolDurationSec
             res_throughput_bps[c][b] = 8.0*total_bytes_transmitted/(total_sym_elapsed*phySymbolDurationSec)
 
-    # plot throughput
-    f1 = plt.figure(1)
-    for i in range(res_throughput_bps.shape[0]):
-        plt.semilogx(bit_error_ratio, res_throughput_bps[i]/1000, label="collision probability: "+str(collision_probability[i]))
-    plt.xlabel("BER")
-    plt.ylim([0,150])
-    plt.ylabel("Average Throughput [kb/s]")
-    plt.legend(loc = 'lower left')
-    plt.grid()
-    # plt.savefig("throughput_unslotted_csma_"+phy_mode_str+"_"+str(nbytes_phy_payload)+"bytePSDU.pdf", bbox='tight')
-
-    # plot latency
-    f2 = plt.figure(2)
-    for i in range(res_throughput_bps.shape[0]):
-        plt.semilogx(bit_error_ratio, res_latency_s[i]*1000, label="collision probability: "+str(collision_probability[i]))
-    plt.xlabel("BER")
-    plt.ylim([0,200])
-    plt.ylabel("Average Latency [ms]")
-    plt.legend(loc = 'upper left')
-    plt.grid()
-    # plt.savefig("latency_unslotted_csma_"+phy_mode_str+"_"+str(nbytes_phy_payload)+"bytePSDU.pdf", bbox='tight')
+    # # plot throughput
+    # f1 = plt.figure(1)
+    # for i in range(res_throughput_bps.shape[0]):
+    #     plt.semilogx(bit_error_ratio, res_throughput_bps[i]/1000, label="collision probability: "+str(collision_probability[i]))
+    # plt.xlabel("BER")
+    # plt.ylim([0,150])
+    # plt.ylabel("Average Throughput [kb/s]")
+    # plt.legend(loc = 'lower left')
+    # plt.grid()
+    # # plt.savefig("throughput_unslotted_csma_"+phy_mode_str+"_"+str(nbytes_phy_payload)+"bytePSDU.pdf", bbox='tight')
+    #
+    # # plot latency
+    # f2 = plt.figure(2)
+    # for i in range(res_throughput_bps.shape[0]):
+    #     plt.semilogx(bit_error_ratio, res_latency_s[i]*1000, label="collision probability: "+str(collision_probability[i]))
+    # plt.xlabel("BER")
+    # plt.ylim([0,200])
+    # plt.ylabel("Average Latency [ms]")
+    # plt.legend(loc = 'upper left')
+    # plt.grid()
+    # # plt.savefig("latency_unslotted_csma_"+phy_mode_str+"_"+str(nbytes_phy_payload)+"bytePSDU.pdf", bbox='tight')
 
     np.savez("throughput_latency_unslotted_csma_"+phy_mode_str+"_"+str(nbytes_phy_payload)+"bytePSDU", res_latency_s = res_latency_s, res_throughput_bps=res_throughput_bps)
 
     # combo plot
+    vThroughputYLim = [200, 800, 200]
+    throughputYLim = vThroughputYLim[phy_mode]
+    markers = ['o', 'v', 's', 'x']
     fig, ax1 = plt.subplots()
     for i in range(res_throughput_bps.shape[0]):
-        ax1.semilogx(bit_error_ratio, res_throughput_bps[i]/1000, '-', label="collision probability: "+str(collision_probability[i]))
+        ax1.semilogx(bit_error_ratio, res_throughput_bps[i]/1000,linestyle='-', label="collision probability: "+str(collision_probability[i]), marker=markers[i])
+    rate_formatted = "%0.1f" % (macTheoreticalMaxDataRate/1000,)
+    ax1.axhline(macTheoreticalMaxDataRate/1000, color='c', marker='p', label="theoretical max. data rate")
     ax1.set_xlabel('BER')
     ax1.set_ylabel('Throughput [kb/s]')
-    ax1.set_ylim([0,150])
+    ax1.set_ylim([0,throughputYLim])
     ax1.legend(loc='upper left')
     ax1.grid()
 
     ax2 = ax1.twinx()
     for i in range(res_throughput_bps.shape[0]):
-        ax2.semilogx(bit_error_ratio, res_latency_s[i]*1000, '--')
+        ax2.semilogx(bit_error_ratio, res_latency_s[i]*1000, linestyle='--', marker=markers[i])
     ax2.set_ylabel('Latency [ms]')
     ax2.set_ylim([0,200])
 
