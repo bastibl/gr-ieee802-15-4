@@ -2,14 +2,13 @@ from constants import *
 import numpy as np
 
 class parameters:
-    def __init__(self, phy_mode_str, ber, coll_prob, nbytes_mac_payload=aMacMaxNumDataBytesPayload,
+    def __init__(self, phy_mode_str, coll_prob, nbytes_mac_payload=aMacMaxNumDataBytesPayload,
                  nbytes_mac_data_frame_overhead=aMacMinNumBytesDataFrameOverhead,
                  macBeaconOrder=aMacMaxBeaconOrder, macSuperframeOrder=aMacMaxSuperframeOrder,
                  macBeaconInterval=aBaseSuperframeDuration*2**aMacMaxBeaconOrder,
                  macSuperframeDuration=aBaseSuperframeDuration*2**aMacMaxSuperframeOrder, macBatteryLifeExtension=False):
 
         self.phy_mode = vPhyModeDict[phy_mode_str]
-        self.ber = ber
         self.p_col = coll_prob
         self.nbytes_mac_payload = aMacMaxBytesPayload
         self.nbytes_mac_data_frame_overhead = nbytes_mac_data_frame_overhead
