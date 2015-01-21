@@ -8,7 +8,7 @@
 #
 # Beacon-enabled:
 # Superframes are formed by periodically transmitting beacons. The superframe consists of the beacon, the active and
-#     the inactive period. The beacon can be used by the coordinator to indicate pending messages for devices. The active
+# the inactive period. The beacon can be used by the coordinator to indicate pending messages for devices. The active
 #     period immediately follows the beacon and starts with the CAP followed by the CFP. The CAP uses a slotted
 #     CSMA-CA or ALOHA algorithm. The CFP consists of up to 7 guaranteed time slots (GTSs) that can be assigned to
 #     specific devices. Acknowledgment and beacon frames are sent without using a CSMA-CA mechanism.
@@ -78,14 +78,14 @@ collision_probability = [0.5, 0.1, 0.0]
 nbytes_mac_payload = aMacMaxBytesPayload
 nbytes_mac_data_frame_overhead = macMinNumBytesDataFrameOverhead
 # the following parameters are only relevant for slotted mode
-macBeaconOrder = aMacMaxBeaconOrder
-macSuperframeOrder = aMacMaxSuperframeOrder
+macBeaconOrder = 4  # aMacMaxBeaconOrder
+macSuperframeOrder = 2  # aMacMaxSuperframeOrder
 macBeaconInterval = aBaseSuperframeDuration * (2 ** macBeaconOrder)
 macSuperframeDuration = aBaseSuperframeDuration * (2 ** macSuperframeOrder)
 macBatteryLifeExtension = False
 
 # simulation stop criteria
-t_max = 5
+t_max = 100
 
 # helper function
 def calc_phyFrameDuration(mode, phy_packet_size):
@@ -117,6 +117,8 @@ phyPayloadDataRate = 8.0 * nbytes_phy_payload / phyDataFrameDuration / phySymbol
 # assuming no CSMA backoff and an acknowledged transmission
 macTheoreticalMaxDataRate = phyPayloadDataRate * nbytes_mac_payload / nbytes_phy_payload * phyDataFrameDuration / \
                             (macAvgCSMABackoff + phyDataFrameDuration + t_ACK + phyAckFrameDuration + macIFSPeriod)
+if mac_mode == MAC_SLOTTED:
+    macTheoreticalMaxDataRate *= float(macSuperframeDuration)/macBeaconInterval*float(macSuperframeDuration-phyBeaconDuration)/macSuperframeDuration
 
 
 def tx_successful(success_prob):
@@ -190,31 +192,44 @@ def send_slotted(p_succ, p_col):
 
         # send frame and see if it is successful
         if tx_successful(p_succ):
+            # print "delay [ms]:", cur_latency * phySymbolDurationSec * 1000
             bytes_transmitted += nbytes_mac_payload
             latencies.append(cur_latency)
             cur_latency = min_latency
             sym_elapsed += phyDataFrameDuration
+            csma.increment_time(phyDataFrameDuration + t_ACK + phyAckFrameDuration + macIFSPeriod)
             # align ACK frame to backoff boundary
-            sym_elapsed += aUnitBackoffPeriod - (
+            alignment_correction = aUnitBackoffPeriod - (
                 sym_elapsed % aUnitBackoffPeriod) + t_ACK + phyAckFrameDuration + macIFSPeriod
+            sym_elapsed += alignment_correction
+            csma.increment_time(alignment_correction)
         else:
             bytes_transmitted += 0
             sym_elapsed += phyDataFrameDuration + macAckWaitDuration
+            csma.increment_time(phyDataFrameDuration + macAckWaitDuration)
             cur_latency += phyDataFrameDuration + macAckWaitDuration
 
-        total_sym_elapsed += delay
+        total_sym_elapsed += sym_elapsed
         total_bytes_transmitted += bytes_transmitted
 
+    print "total_sym_elapsed:", total_sym_elapsed, "csma sym:", csma.t_total_sym
     return total_bytes_transmitted, total_sym_elapsed, latencies
+
 
 if __name__ == "__main__":
 
     # print configuration
     print "### Setup ###"
-    print "BER:", bit_error_ratio
+    print "PHY:", phy_mode_str
+    print "BER: from", min(bit_error_ratio), "to", max(bit_error_ratio)
     print "Collision probability:", collision_probability
     print "Data frame duration [ms]:", phyDataFrameDuration * phySymbolDurationSec * 1000
     print "ACK frame duration [ms]:", phyAckFrameDuration * phySymbolDurationSec * 1000
+    print "Min. complete transmission duration after CSMA[ms]:", (
+                                                                     phyDataFrameDuration + t_ACK + phyAckFrameDuration + macIFSPeriod) * phySymbolDurationSec * 1000
+    if mac_mode == MAC_SLOTTED:
+        print "Superframe duration [ms]:", macSuperframeDuration * phySymbolDurationSec * 1000
+        print "Beacon interval [ms]:", macBeaconInterval * phySymbolDurationSec * 1000
     print "t_ACK [ms]:", t_ACK * phySymbolDurationSec * 1000
     print "IFS [ms]:", macIFSPeriod * phySymbolDurationSec * 1000
     print "Theoretical max data rate [kb/s]:", macTheoreticalMaxDataRate / 1000
@@ -233,16 +248,16 @@ if __name__ == "__main__":
             success_prob_transmission = (1 - fail_prob_ack_frame) * (1 - fail_prob_data_frame)
 
             if mac_mode == MAC_UNSLOTTED:
-                (total_bytes_transmitted, total_sym_elapsed, latencies) = \
+                (ret_bytes_transmitted, ret_sym_elapsed, ret_latencies) = \
                     send_unslotted(success_prob_transmission, collision_probability[c])
             elif mac_mode == MAC_SLOTTED:
-                (total_bytes_transmitted, total_sym_elapsed, latencies) = \
+                (ret_bytes_transmitted, ret_sym_elapsed, ret_latencies) = \
                     send_slotted(success_prob_transmission, collision_probability[c])
             else:
                 raise NotImplementedError()
 
-            res_latency_s[c][b] = np.mean(latencies) * phySymbolDurationSec
-            res_throughput_bps[c][b] = 8.0 * total_bytes_transmitted / (total_sym_elapsed * phySymbolDurationSec)
+            res_latency_s[c][b] = np.mean(ret_latencies) * phySymbolDurationSec
+            res_throughput_bps[c][b] = 8.0 * ret_bytes_transmitted / (ret_sym_elapsed * phySymbolDurationSec)
 
     # save results in npz file
     np.savez(
@@ -261,7 +276,7 @@ if __name__ == "__main__":
     ax1.axhline(macTheoreticalMaxDataRate / 1000, color='c', marker='p', label="theoretical max. data rate")
     ax1.set_xlabel('BER')
     ax1.set_ylabel('Throughput [kb/s]')
-    #ax1.set_ylim([0, throughputYLim])
+    ax1.set_ylim([0, throughputYLim])
     ax1.legend(loc='upper left')
     ax1.grid()
 
