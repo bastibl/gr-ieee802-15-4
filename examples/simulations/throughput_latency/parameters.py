@@ -26,10 +26,10 @@ class parameters:
 
     def calc_phyFrameDuration(self, phy_packet_size):
         if self.phy_mode == PHY_OQPSK:
-            return vPhySHRDuration[self.phy_mode] + np.ceil((self.nbytes_phy_payload+1)*vPhySymbolsPerOctet[self.phy_mode])
+            return vPhySHRDuration[self.phy_mode] + np.ceil((phy_packet_size+1)*vPhySymbolsPerOctet[self.phy_mode])
         elif self.phy_mode == PHY_CSS1M:
-            return vPhySHRDuration[self.phy_mode] + (1.5 + 3.0/4*np.ceil(4.0/3*self.nbytes_phy_payload))*vPhySymbolsPerOctet[self.phy_mode]
+            return vPhySHRDuration[self.phy_mode] + (1.5 + 3.0/4*np.ceil(4.0/3*phy_packet_size))*vPhySymbolsPerOctet[self.phy_mode]
         elif self.phy_mode == PHY_CSS250k:
-            return vPhySHRDuration[self.phy_mode] + 3*np.ceil(1.0/3*(1.5 + self.nbytes_phy_payload))*vPhySymbolsPerOctet[self.phy_mode]
+            return vPhySHRDuration[self.phy_mode] + 3*np.ceil(1.0/3*(1.5 + phy_packet_size))*vPhySymbolsPerOctet[self.phy_mode]
         else:
             raise RuntimeError("Invalid mode")
