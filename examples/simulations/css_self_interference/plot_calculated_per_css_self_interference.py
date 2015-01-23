@@ -49,7 +49,7 @@ if __name__ == "__main__":
     plt.xlim([0,9.5])
     plt.ylim([5e-3, 2])
     plt.ylabel("PER")
-    plt.xlabel("Eb/N0")
+    plt.xlabel("Eb/N0 [dB]")
 
     plt.savefig("per_calc_css_fast_self_interference.pdf", bbox='tight')
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     plt.xlim([0,9.5])
     plt.ylim([5e-3, 2])
     plt.ylabel("PER")
-    plt.xlabel("Eb/N0")
+    plt.xlabel("Eb/N0 [dB]")
 
     plt.savefig("per_calc_css_slow_self_interference.pdf", bbox='tight')
 

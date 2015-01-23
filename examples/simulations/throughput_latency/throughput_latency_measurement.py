@@ -72,14 +72,14 @@ aBaseSuperframeDuration = 60 * 16
 
 # configuration parameters
 phy_mode = PHY_OQPSK
-mac_mode = MAC_UNSLOTTED
+mac_mode = MAC_SLOTTED
 bit_error_ratio = np.logspace(-5.0, -2.0, 50)
 collision_probability = [0.5, 0.1, 0.0]
 nbytes_mac_payload = aMacMaxBytesPayload
 nbytes_mac_data_frame_overhead = macMinNumBytesDataFrameOverhead
 # the following parameters are only relevant for slotted mode
-macBeaconOrder = aMacMaxBeaconOrder
-macSuperframeOrder = aMacMaxSuperframeOrder
+macBeaconOrder = 2  # aMacMaxBeaconOrder
+macSuperframeOrder = 1  # aMacMaxSuperframeOrder
 macBeaconInterval = aBaseSuperframeDuration * (2 ** macBeaconOrder)
 macSuperframeDuration = aBaseSuperframeDuration * (2 ** macSuperframeOrder)
 macBatteryLifeExtension = False
@@ -280,9 +280,14 @@ if __name__ == "__main__":
     ax2.set_ylabel('Latency [ms]')
     ax2.set_ylim([0, 200])
 
-    plt.savefig(
-        "latency_throughput_" + mac_mode_str + "_csma_" + phy_mode_str + "_" + str(nbytes_phy_payload) + "bytePSDU.pdf",
-        bbox='tight')
+    filename =  ""
+    if mac_mode == MAC_UNSLOTTED:
+        filename = "latency_throughput_" + mac_mode_str + "_csma_" + phy_mode_str + "_" + \
+            str(nbytes_phy_payload) + "bytePSDU.pdf"
+    elif mac_mode == MAC_SLOTTED:
+        filename = "latency_throughput_" + mac_mode_str + "_csma_" + phy_mode_str + "_" + \
+            str(nbytes_phy_payload) + "bytePSDU_SO"+str(macSuperframeOrder)+"_BO"+str(macBeaconOrder)+".pdf"
+    plt.savefig(filename, bbox='tight')
 
     plt.show()
 

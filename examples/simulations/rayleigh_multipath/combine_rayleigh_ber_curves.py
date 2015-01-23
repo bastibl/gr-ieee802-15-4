@@ -65,7 +65,7 @@ if __name__ == "__main__":
     plt.grid()
     plt.yscale('log')
     plt.xlim([-9, 24])
-    plt.xlabel("Eb/N0")
+    plt.xlabel("Eb/N0 [dB]")
     plt.ylim([1e-2,1])
     plt.ylabel("BER")
     # plt.title("Bit Error Rates in Rayleigh Channel with AWGN")
