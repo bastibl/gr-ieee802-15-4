@@ -72,13 +72,13 @@ if __name__ == "__main__":
     plt.savefig("ber_rayleigh_EbN0.pdf",bbox='tight')
 
     f2 = plt.figure(2)
-    markerline, stemlines, baseline = plt.stem(t*1e9, pdp, '-', bottom=0.00001)
+    plt.stem(t*1e9, pdp, '-', bottom=0.00001)
     plt.xlabel("Delay in ns")
     plt.xlim([-10, max(t)*1e9])
     plt.ylabel("Mean Power")
     plt.grid()
     plt.ylim([0.001,5])
     # plt.title("Power delay profile")
-    plt.yscale('log')
+    # plt.yscale('log')
     plt.savefig("rayleigh_pdp.pdf",bbox='tight')
 

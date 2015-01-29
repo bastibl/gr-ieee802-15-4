@@ -72,7 +72,7 @@ aBaseSuperframeDuration = 60 * 16
 
 # configuration parameters
 phy_mode = PHY_OQPSK
-mac_mode = MAC_SLOTTED
+mac_mode = MAC_UNSLOTTED
 bit_error_ratio = np.logspace(-5.0, -2.0, 50)
 collision_probability = [0.5, 0.1, 0.0]
 nbytes_mac_payload = aMacMaxBytesPayload
@@ -95,7 +95,7 @@ def calc_phyFrameDuration(mode, phy_packet_size):
         return vPhySHRDuration[mode] + (1.5 + 3.0 / 4 * np.ceil(4.0 / 3 * phy_packet_size)) * vPhySymbolsPerOctet[
             mode]
     elif mode == PHY_CSS_SLOW:
-        return vPhySHRDuration[mode] + 3 * np.ceil(1.0 / 3 * (1.5 + phy_packet_size)) * vPhySymbolsPerOctet[mode]
+        return vPhySHRDuration[mode] + 3.0 * np.ceil(1.0 / 3 * (1.5 + phy_packet_size)) * vPhySymbolsPerOctet[mode]
     else:
         raise RuntimeError("Invalid mode")
 

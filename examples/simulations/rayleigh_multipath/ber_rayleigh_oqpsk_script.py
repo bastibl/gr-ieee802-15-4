@@ -24,14 +24,14 @@ import matplotlib.pyplot as plt
 
 
 # configuration parameters
-snr_vals = np.arange(20.0,30.0,1.0)
+snr_vals = [100]  # np.arange(20.0,30.0,1.0)
 nbytes_per_frame = 127
-min_err = int(1e6)
-min_len = int(1e7)
+min_err = int(1e8)
+min_len = int(3e8)
 nframes = float(min_len)/nbytes_per_frame
 nsamps_frame = 4*8*(4+1+1+nbytes_per_frame)
 nsamps_total = nframes*nsamps_frame
-pdp = [1, .01, 0]
+pdp = [1, .1, 0]
 coherence_time_samps = 10000
 sleeptime = 1.0
 msg_interval = 3
@@ -119,10 +119,10 @@ if __name__ == '__main__':
         tb.start()
         while(True):
             len_res = tb.comp_bits.get_bits_compared()
-            print snr_vals[i], "dB:", 100.0*len_res/min_len, "% of minimum length done"
+            print snr_vals[i], "dB:", 100.0*len_res/min_len, "% done, BER approx.", 1.0*tb.comp_bits.get_errors_found()/(tb.comp_bits.get_bits_compared()+1)
             time.sleep(sleeptime)
             if(len_res >= min_len or tb.comp_bits.get_errors_found() >= min_err):
-                if(tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_errors_found() == 0 or tb.comp_bits.get_bits_compared() >= 3*min_len):
+                if(tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_errors_found() == 0 or tb.comp_bits.get_bits_compared() >= 1.0*min_len):
                     print "Found a total of", tb.comp_bits.get_errors_found(), "errors"
                     tb.stop()
                     tb.wait()

@@ -6,8 +6,8 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
 
 from gnuradio import analog
 from gnuradio import blocks
@@ -30,8 +30,9 @@ snr_vals = -8.0
 nbytes_per_frame = 127
 cfg_slow = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
 cfg_fast = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
-min_err = int(1e3)
-min_len = int(1e6)
+num_runs_per_freq = 10
+min_err = int(1e3)/num_runs_per_freq
+min_len = int(1e6)/num_runs_per_freq
 msg_interval = 10  # ms
 sleeptime = 1  # s
 fs_oqpsk = 4e6
@@ -40,8 +41,8 @@ interferer_freq_oqpsk = np.arange(-2e6, 2e6, 100e3)
 interferer_freq_css = np.arange(-fs_css/2, fs_css/2, 2e5)
 norm_fac = 1.1507
 
-en_oqpsk = False
-en_css_slow = True
+en_oqpsk = True
+en_css_slow = False
 en_css_fast = False 
 
 
@@ -66,6 +67,7 @@ class ber_singletone_oqpsk(gr.top_block):
                                                                  msg_interval, -1, True, False)
         self.blocks_add_xx_sd = blocks.add_vcc(1)
         self.singletone_src = analog.sig_source_c(fs_oqpsk, analog.GR_COS_WAVE, interferer_freq_oqpsk[0], np.sqrt(2) * (10 ** (-snr / 20)))
+        self.mult_const = blocks.multiply_const_cc(np.exp(1j*np.random.random()*2*np.pi))
         self.comp_bits = ieee802_15_4.compare_blobs()
         # self.sig_snk = blocks.file_sink(gr.sizeof_gr_complex, "css_sig.bin")
 
@@ -73,7 +75,7 @@ class ber_singletone_oqpsk(gr.top_block):
         # Connections
         ##################################################
         self.connect((self.ieee802_15_4_oqpsk_phy_nosync_0, 0), (self.blocks_add_xx_sd, 0))
-        self.connect((self.singletone_src, 0), (self.blocks_add_xx_sd, 1))
+        self.connect((self.singletone_src, 0), self.mult_const, (self.blocks_add_xx_sd, 1))
         self.connect((self.blocks_add_xx_sd, 0), (self.ieee802_15_4_oqpsk_phy_nosync_0, 0))
 
         # self.connect(self.ieee802_15_4_css_phy_sd_0, self.sig_snk)
@@ -198,28 +200,30 @@ if __name__ == '__main__':
         old_len_res = 0
         ber_vals = []
         for i in range(len(interferer_freq_oqpsk)):
-            tb=None
-            gc.collect()
-            t0 = time.time()
-            tb = ber_singletone_oqpsk()
-            tb.set_snr(snr_vals)
-            tb.singletone_src.set_frequency(interferer_freq_oqpsk[i])
-            tb.start()
-            time.sleep(.1)
-            ber = 1.0
-            while (True):
-                len_res = tb.comp_bits.get_bits_compared()
-                print interferer_freq_oqpsk[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
-                if (len_res >= min_len):
-                    if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= min_len):
-                        print "Found a total of", tb.comp_bits.get_errors_found(), " errors in", tb.comp_bits.get_bits_compared(), "bits"
-                        tb.stop()
-                        break
-                    else:
-                        print "Found", tb.comp_bits.get_errors_found(), "of", min_err, "errors"
-                time.sleep(sleeptime)
+            tmp_ber = []
+            for k in range(num_runs_per_freq):
+                tb = None
+                gc.collect()
+                t0 = time.time()
+                tb = ber_singletone_oqpsk()
+                tb.set_snr(snr_vals)
+                tb.singletone_src.set_frequency(interferer_freq_oqpsk[i])
+                tb.start()
+                time.sleep(.1)
+                while (True):
+                    len_res = tb.comp_bits.get_bits_compared()
+                    print interferer_freq_oqpsk[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
+                    if len_res >= min_len:
+                        if tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= min_len:
+                            print "Found a total of", tb.comp_bits.get_errors_found(), " errors in", tb.comp_bits.get_bits_compared(), "bits"
+                            tb.stop()
+                            break
+                        else:
+                            print "Found", tb.comp_bits.get_errors_found(), "of", min_err, "errors"
+                    time.sleep(sleeptime)
 
-            ber = tb.comp_bits.get_ber()
+                tmp_ber.append(tb.comp_bits.get_ber())
+            ber = np.mean(tmp_ber)
             print "Step", i + 1, "/", len(interferer_freq_oqpsk), ": BER at", interferer_freq_oqpsk[i]/1e6, "MHz:", ber
             ber_vals.append(ber)
             t_elapsed = time.time() - t0
