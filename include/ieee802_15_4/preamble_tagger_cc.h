@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2014 <+YOU OR YOUR COMPANY+>.
+ * Copyright 2015 <+YOU OR YOUR COMPANY+>.
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,11 @@
  */
 
 
-#ifndef INCLUDED_IEEE802_15_4_DQCSK_MAPPER_FC_H
-#define INCLUDED_IEEE802_15_4_DQCSK_MAPPER_FC_H
+#ifndef INCLUDED_IEEE802_15_4_PREAMBLE_TAGGER_CC_H
+#define INCLUDED_IEEE802_15_4_PREAMBLE_TAGGER_CC_H
 
 #include <ieee802_15_4/api.h>
-#include <gnuradio/block.h>
+#include <gnuradio/sync_block.h>
 
 namespace gr {
   namespace ieee802_15_4 {
@@ -33,24 +33,24 @@ namespace gr {
      * \ingroup ieee802_15_4
      *
      */
-    class IEEE802_15_4_API dqcsk_mapper_fc : virtual public gr::block
+    class IEEE802_15_4_API preamble_tagger_cc : virtual public gr::sync_block
     {
      public:
-      typedef boost::shared_ptr<dqcsk_mapper_fc> sptr;
+      typedef boost::shared_ptr<preamble_tagger_cc> sptr;
 
       /*!
-       * \brief Return a shared_ptr to a new instance of ieee802_15_4::dqcsk_mapper_fc.
+       * \brief Return a shared_ptr to a new instance of ieee802_15_4::preamble_tagger_cc.
        *
-       * To avoid accidental use of raw pointers, ieee802_15_4::dqcsk_mapper_fc's
+       * To avoid accidental use of raw pointers, ieee802_15_4::preamble_tagger_cc's
        * constructor is in a private implementation
-       * class. ieee802_15_4::dqcsk_mapper_fc::make is the public interface for
+       * class. ieee802_15_4::preamble_tagger_cc::make is the public interface for
        * creating new instances.
        */
-      static sptr make(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirp, int nsym_frame);
+      static sptr make(int len_preamble);
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_DQCSK_MAPPER_FC_H */
+#endif /* INCLUDED_IEEE802_15_4_PREAMBLE_TAGGER_CC_H */
 

@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2014 <+YOU OR YOUR COMPANY+>.
+ * Copyright 2015 <+YOU OR YOUR COMPANY+>.
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,34 +18,25 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802_15_4_DQCSK_MAPPER_FC_IMPL_H
-#define INCLUDED_IEEE802_15_4_DQCSK_MAPPER_FC_IMPL_H
+#ifndef INCLUDED_IEEE802_15_4_FRAME_BUFFER_CC_IMPL_H
+#define INCLUDED_IEEE802_15_4_FRAME_BUFFER_CC_IMPL_H
 
-#include <ieee802_15_4/dqcsk_mapper_fc.h>
+#include <ieee802_15_4/frame_buffer_cc.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class dqcsk_mapper_fc_impl : public dqcsk_mapper_fc
+    class frame_buffer_cc_impl : public frame_buffer_cc
     {
      private:
-      std::vector<gr_complex> d_chirp_seq;
-      std::vector<gr_complex> d_time_gap_1;
-      std::vector<gr_complex> d_time_gap_2;
-      int d_len_subchirp;
-      int d_num_subchirps;
-      int d_chirp_seq_ctr;
-      int d_subchirp_ctr;
       int d_nsym_frame;
-      int d_sym_ctr;
-      int max_len_timegap;
-
-      void reset();
-
+      std::vector<gr_complex> d_buf;
+      
      public:
-      dqcsk_mapper_fc_impl(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirps, int nsym_frame);
-      ~dqcsk_mapper_fc_impl();
+      frame_buffer_cc_impl(int nsym_frame);
+      ~frame_buffer_cc_impl();
 
+      // Where all the action really happens
       void forecast (int noutput_items, gr_vector_int &ninput_items_required);
 
       int general_work(int noutput_items,
@@ -57,5 +48,5 @@ namespace gr {
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_DQCSK_MAPPER_FC_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_FRAME_BUFFER_CC_IMPL_H */
 

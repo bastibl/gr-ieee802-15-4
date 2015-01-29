@@ -40,5 +40,10 @@ install(FILES
     ieee802_15_4_deinterleaver_ff.xml
     ieee802_15_4_codeword_soft_demapper_fb.xml
     ieee802_15_4_compare_blobs.xml
-    ieee802_15_4_rayleigh_multipath_cc.xml DESTINATION share/gnuradio/grc/blocks
+    ieee802_15_4_rayleigh_multipath_cc.xml
+    ieee802_15_4_simple_chirp_detector_cc.xml
+    ieee802_15_4_costas_loop_cc.xml
+    ieee802_15_4_frame_buffer_cc.xml
+    ieee802_15_4_multiuser_chirp_detector_cc.xml
+    ieee802_15_4_preamble_tagger_cc.xml DESTINATION share/gnuradio/grc/blocks
 )

@@ -68,7 +68,7 @@ void mac_in(pmt::pmt_t msg) {
 	// char* dblob = (char*) pmt::blob_data(blob);
 	// int dlen = pmt::blob_length(blob);
 	// for(int i=0; i<dlen; i++)
-	// 	dout << int(dblob[i]);
+	// 	dout << unsigned(dblob[i]);
 	// dout << std::endl;
 
 	size_t data_len = pmt::blob_length(blob);
@@ -108,10 +108,10 @@ void app_in(pmt::pmt_t msg) {
 		return;
 	}
 
-	dout << "MAC: received new message from APP of length " << pmt::blob_length(blob) << std::endl;
+	//dout << "MAC: received new message from APP of length " << pmt::blob_length(blob) << std::endl;
 
 	generate_mac((const char*)pmt::blob_data(blob), pmt::blob_length(blob));
-	print_message();
+	//print_message();
 	message_port_pub(pmt::mp("pdu out"), pmt::cons(pmt::PMT_NIL,
 			pmt::make_blob(d_msg, d_msg_len)));
 }
@@ -160,9 +160,6 @@ void generate_mac(const char *buf, int len) {
 	d_msg[10 + len] = crc >> 8;
 
 	d_msg_len = 9 + len + 2;
-
-	// dout << std::dec << "msg len " << d_msg_len <<
-	//         "    len " << len << std::endl;
 }
 
 void print_message() {

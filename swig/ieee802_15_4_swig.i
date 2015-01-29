@@ -33,6 +33,7 @@
 #include "ieee802_15_4/qpsk_mapper_if.h"
 #include "ieee802_15_4/dqpsk_mapper_ff.h"
 #include "ieee802_15_4/dqcsk_mapper_fc.h"
+#include "ieee802_15_4/multiuser_chirp_detector_cc.h"
 #include "ieee802_15_4/preamble_sfd_prefixer_ii.h"
 #include "ieee802_15_4/dqcsk_demapper_cc.h"
 #include "ieee802_15_4/qpsk_demapper_fi.h"
@@ -48,6 +49,10 @@
 #include "ieee802_15_4/codeword_soft_demapper_fb.h"
 #include "ieee802_15_4/compare_blobs.h"
 #include "ieee802_15_4/rayleigh_multipath_cc.h"
+#include "ieee802_15_4/simple_chirp_detector_cc.h"
+#include "ieee802_15_4/costas_loop_cc.h"
+#include "ieee802_15_4/frame_buffer_cc.h"
+#include "ieee802_15_4/preamble_tagger_cc.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -89,6 +94,8 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_demapper_ib);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, zeropadding_removal_b);
 %include "ieee802_15_4/phr_removal.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, phr_removal);
+%include "ieee802_15_4/multiuser_chirp_detector_cc.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, multiuser_chirp_detector_cc);
 
 %include "ieee802_15_4/make_pair_with_blob.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, make_pair_with_blob);
@@ -109,3 +116,12 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_soft_demapper_fb);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, compare_blobs);
 %include "ieee802_15_4/rayleigh_multipath_cc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, rayleigh_multipath_cc);
+%include "ieee802_15_4/simple_chirp_detector_cc.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, simple_chirp_detector_cc);
+%include "ieee802_15_4/costas_loop_cc.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, costas_loop_cc);
+
+%include "ieee802_15_4/frame_buffer_cc.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, frame_buffer_cc);
+%include "ieee802_15_4/preamble_tagger_cc.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, preamble_tagger_cc);
