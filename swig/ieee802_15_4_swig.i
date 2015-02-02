@@ -48,6 +48,7 @@
 #include "ieee802_15_4/codeword_soft_demapper_fb.h"
 #include "ieee802_15_4/compare_blobs.h"
 #include "ieee802_15_4/rayleigh_multipath_cc.h"
+#include "ieee802_15_4/chirp_detector_cc.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -109,3 +110,5 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_soft_demapper_fb);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, compare_blobs);
 %include "ieee802_15_4/rayleigh_multipath_cc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, rayleigh_multipath_cc);
+%include "ieee802_15_4/chirp_detector_cc.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, chirp_detector_cc);

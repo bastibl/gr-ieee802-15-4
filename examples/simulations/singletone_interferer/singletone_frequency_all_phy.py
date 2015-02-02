@@ -30,7 +30,7 @@ snr_vals = -8.0
 nbytes_per_frame = 127
 cfg_slow = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
 cfg_fast = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
-num_runs_per_freq = 10
+num_runs_per_freq = 8
 min_err = int(1e3)/num_runs_per_freq
 min_len = int(1e6)/num_runs_per_freq
 msg_interval = 10  # ms

@@ -67,3 +67,4 @@ GR_ADD_TEST(qa_deinterleaver_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}
 GR_ADD_TEST(qa_codeword_soft_demapper_fb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_codeword_soft_demapper_fb.py)
 GR_ADD_TEST(qa_compare_blobs ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_compare_blobs.py)
 GR_ADD_TEST(qa_rayleigh_multipath_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_rayleigh_multipath_cc.py)
+GR_ADD_TEST(qa_chirp_detector_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_chirp_detector_cc.py)
