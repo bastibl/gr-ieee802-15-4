@@ -42,6 +42,7 @@ install(FILES
     codeword_soft_demapper_fb.h
     compare_blobs.h
     rayleigh_multipath_cc.h
-    chirp_detector_cc.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+    chirp_detector_cc.h
+    costas_loop_cc.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

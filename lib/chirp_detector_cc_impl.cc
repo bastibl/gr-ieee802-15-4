@@ -132,12 +132,14 @@ namespace gr {
     int
     chirp_detector_cc_impl::required_input_items()
     {
+      int ret = 0;
       if(d_state == STATE_SEARCH)
-        return d_len_subchirp;
+        ret = d_len_subchirp;
       else if(d_state == STATE_TRACKING)
-        return d_len_subchirp + std::max(d_time_gap_1, d_time_gap_2);
+        return ret = d_len_subchirp + std::max(d_time_gap_1, d_time_gap_2);
       else
         throw std::runtime_error("Invalid state");
+      return 10*ret;
     }
     int
     chirp_detector_cc_impl::general_work (int noutput_items,
@@ -160,6 +162,7 @@ namespace gr {
             if(corr_over_threshold(sym))
             {
               dout << "#SEARCH# " << std::norm(sym) << ": chirp #" << d_subchirp_ctr << " detected" << std::endl;
+              std::cout << "Chirp detector: SEARCH->TRACKING" << std::endl;
               d_state = STATE_TRACKING;
               samples_consumed += dist_to_next_subchirp();
               out[samples_produced] = sym;
@@ -187,6 +190,7 @@ namespace gr {
               dout << "#TRACK# " << std::norm(sym) << ": no symbol detected at expected position - reset" << std::endl;
               samples_consumed += 1;
               dout << "#TRACK# " << "advance by 1 samples" << std::endl;
+              std::cout << "Chirp detector: TRACKING->SEARCH" << std::endl;
               reset();
             }
           }
