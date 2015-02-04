@@ -22,6 +22,7 @@
 from gnuradio import gr, gr_unittest
 from gnuradio import blocks
 import ieee802_15_4_swig as ieee802_15_4
+import numpy as np
 
 class qa_costas_loop_cc (gr_unittest.TestCase):
 
@@ -31,11 +32,55 @@ class qa_costas_loop_cc (gr_unittest.TestCase):
     def tearDown (self):
         self.tb = None
 
-    def test_001_t (self):
+    def test_001_t (self): # perfect sync
         # set up fg
         self.tb.run ()
+        nsym = 1000
+        data_in = 2*(np.random.randint(0,2,nsym)-0.5) + 2j*(np.random.randint(0,2,nsym)-0.5) # stream of random qpsk symbols
+        data_in[0] = 1+1j
+        src = blocks.vector_source_c(data_in)
+        costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), 0)
+        snk = blocks.vector_sink_c()
+        self.tb.connect(src, costas, snk)
+        self.tb.run()
         # check data
+        data_out = snk.data()
+        self.assertComplexTuplesAlmostEqual(np.angle(data_in), np.angle(data_out))
+
+    def test_002_t (self): # phase offset
+        # set up fg
+        self.tb.run ()
+        nsym = 1000
+        phi_off = np.pi*0.75
+        data_in = 2*(np.random.randint(0,2,nsym)-0.5) + 2j*(np.random.randint(0,2,nsym)-0.5) # stream of random qpsk symbols
+        data_in[0] = 1+1j
+        data_in_off = data_in*np.exp(1j*phi_off)
+        src = blocks.vector_source_c(data_in_off)
+        costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), 0)
+        snk = blocks.vector_sink_c()
+        self.tb.connect(src, costas, snk)
+        self.tb.run()
+        # check data
+        data_out = snk.data()
+        self.assertComplexTuplesAlmostEqual(np.angle(data_in), np.angle(data_out))
+
+    def test_003_t (self): # frequency offset
+        # set up fg
+        self.tb.run ()
+        nsym = 1000
+        phi_off = np.arange(nsym)*np.pi/7
+        data_in = 2*(np.random.randint(0,2,nsym)-0.5) + 2j*(np.random.randint(0,2,nsym)-0.5) # stream of random qpsk symbols
+        data_in[0] = 1+1j
+        data_in_off = data_in*np.exp(1j*phi_off)
+        src = blocks.vector_source_c(data_in_off)
+        costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), 0)
+        snk = blocks.vector_sink_c()
+        self.tb.connect(src, costas, snk)
+        self.tb.run()
+        # check data
+        data_out = snk.data()
+        self.assertComplexTuplesAlmostEqual(np.angle(data_in), np.angle(data_out))
 
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_costas_loop_cc, "qa_costas_loop_cc.xml")
+    gr_unittest.run(qa_costas_loop_cc)

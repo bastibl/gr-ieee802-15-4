@@ -68,13 +68,21 @@ namespace gr {
     int
     costas_loop_cc_impl::get_nearest_index(gr_complex p)
     {
+      dout << "\t diff angles between " << p << " and constellation points: " << std::endl;;
       for(int k = 0; k < d_M; k++)
+      {
         d_diff[k] = std::arg(p/d_const[k]);
+        dout << "\t\t" << "arg(" << p << "/" << d_const[k] << "=" << d_diff[k] << std::endl;
+      }
+      dout << std::endl;
       int min_ind = 0;
       for(int k = 1; k < d_M; k++)
       {
-        if(abs(d_diff[k]) < abs(d_diff[k-1]))
+        if(std::abs(d_diff[k]) < std::abs(d_diff[min_ind]))
+        {
+          dout << "\t" << std::abs(d_diff[k]) << "<" << std::abs(d_diff[min_ind]) << std::endl;
           min_ind = k;
+        }
       }
       return min_ind;
     }
@@ -93,18 +101,19 @@ namespace gr {
           {
             if(d_initial_index != NO_INIT_PHASE) // assign first incoming symbol to a fixed constellation point
             {
-              dout << "First run, initialize phase offset as distance to a fixed constellation point" << std::endl;
+              dout << "First run, initialize phase offset as angular distance to index " << d_initial_index << std::endl;
               d_phase_offset = std::arg(in[i]/d_const[d_initial_index]);
               out[i] = d_const[d_initial_index];
               d_last_index = d_initial_index;
             }
             else // choose nearest constellation point
             {
-              dout << "First run, initialize phase offset as distance to nearest constellation symbol" << std::endl;
-              int min_ind = get_nearest_index(in[i]);
-              d_phase_offset = d_diff[min_ind];
-              out[i] = d_const[min_ind];
-              d_last_index = min_ind;
+              dout << "First run, initialize phase offset as angular distance to nearest constellation symbol" << std::endl;
+              int nearest_sym_index = get_nearest_index(in[i]);
+              dout << "Nearest symbol index: " << nearest_sym_index << std::endl;
+              d_phase_offset = d_diff[nearest_sym_index];
+              out[i] = d_const[nearest_sym_index];
+              d_last_index = nearest_sym_index;
             }
           }
           else // shift with last phase offset and assign incoming symbol to the next nearest constellation point
@@ -112,11 +121,12 @@ namespace gr {
             dout << "shift phase offset to nearest constellation symbol" << std::endl;
             gr_complex sym = in[i] * std::polar(float(1.0), -d_phase_offset);
             int nearest_sym_index = get_nearest_index(sym);
+            dout << "Nearest symbol index: " << nearest_sym_index << std::endl;
             out[i] = d_const[nearest_sym_index];
             d_phase_offset = fmod(d_phase_offset + d_diff[nearest_sym_index], 2*M_PI);
             d_last_index = nearest_sym_index;
           }
-          dout << "return symbol: " << out[i] << ", phase offset: " << d_phase_offset << " rad" << std::endl;
+          dout << "input symbol: " << in[i] << ",return symbol: " << out[i] << ", phase offset: " << d_phase_offset << " rad" << std::endl;
         }
 
         // Tell runtime system how many output items we produced.

@@ -41,7 +41,7 @@ namespace gr {
       void reset();
 
      public:
-      #define dout true && std::cout // turn false to true to enable debug output
+      #define dout false && std::cout // turn false to true to enable debug output
       costas_loop_cc_impl(std::vector<gr_complex> constellation_points, int initial_index);
       ~costas_loop_cc_impl();
 
