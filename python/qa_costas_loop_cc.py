@@ -32,7 +32,7 @@ class qa_costas_loop_cc (gr_unittest.TestCase):
     def tearDown (self):
         self.tb = None
 
-    def test_001_t (self): # perfect sync
+    def test_001_t (self): # perfect sync, known start
         # set up fg
         self.tb.run ()
         nsym = 1000
@@ -47,7 +47,21 @@ class qa_costas_loop_cc (gr_unittest.TestCase):
         data_out = snk.data()
         self.assertComplexTuplesAlmostEqual(np.angle(data_in), np.angle(data_out))
 
-    def test_002_t (self): # phase offset
+    def test_002_t (self): # perfect sync, random start
+        # set up fg
+        self.tb.run ()
+        nsym = 1000
+        data_in = 2*(np.random.randint(0,2,nsym)-0.5) + 2j*(np.random.randint(0,2,nsym)-0.5) # stream of random qpsk symbols
+        src = blocks.vector_source_c(data_in)
+        costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), -1)
+        snk = blocks.vector_sink_c()
+        self.tb.connect(src, costas, snk)
+        self.tb.run()
+        # check data
+        data_out = snk.data()
+        self.assertComplexTuplesAlmostEqual(np.angle(data_in), np.angle(data_out))
+
+    def test_003_t (self): # phase offset
         # set up fg
         self.tb.run ()
         nsym = 1000
@@ -64,7 +78,7 @@ class qa_costas_loop_cc (gr_unittest.TestCase):
         data_out = snk.data()
         self.assertComplexTuplesAlmostEqual(np.angle(data_in), np.angle(data_out))
 
-    def test_003_t (self): # frequency offset
+    def test_004_t (self): # frequency offset
         # set up fg
         self.tb.run ()
         nsym = 1000

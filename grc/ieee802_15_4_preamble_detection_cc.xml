@@ -1,0 +1,25 @@
+<block>
+  <name>Preamble Detection</name>
+  <key>ieee802_15_4_preamble_detection_cc</key>
+  <category>IEEE802_15_4</category>
+  <import>import ieee802_15_4</import>
+  <make>ieee802_15_4.preamble_detection_cc($len_preamble, $preamble_sym)</make>
+  <param>
+    <name>Length of preamble</name>
+    <key>len_preamble</key>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Preamble Symbol</name>
+    <key>preamble_sym</key>
+    <type>complex</type>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>complex</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>complex</type>
+  </source>
+</block>
