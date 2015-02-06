@@ -33,9 +33,19 @@ class qa_frame_buffer_cc (gr_unittest.TestCase):
 
     def test_001_t (self):
         # set up fg
+        data_in = range(50)
+        frame_len = 20
+        src = blocks.vector_source_c(data_in)
+        framer = ieee802_15_4.frame_buffer_cc(frame_len)
+        snk = blocks.vector_sink_c()
+        self.tb.connect(src, framer, snk)
         self.tb.run ()
         # check data
+        data_out = snk.data()
+        print data_in
+        print data_out
+        self.assertComplexTuplesAlmostEqual(data_out, range(40))
 
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_frame_buffer_cc, "qa_frame_buffer_cc.xml")
+    gr_unittest.run(qa_frame_buffer_cc)

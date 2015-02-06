@@ -58,7 +58,7 @@ namespace gr {
     void
     frame_buffer_cc_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
-        /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
+        ninput_items_required[0] = noutput_items;
     }
 
     int
@@ -72,24 +72,25 @@ namespace gr {
 
         int samples_consumed = 0;
         int samples_produced = 0;
-        int samples_available = ninput_items[0];
 
         std::vector<tag_t> tags;
         get_tags_in_range(tags, 0, nitems_read(0), nitems_read(0) + ninput_items[0], pmt::string_to_symbol("SOP"));
         if(tags.size() > 0)
         {
-          //FIXME
+          uint64_t tag_pos = tags[tags.size()-1].offset - nitems_read(0);
+          std::cout << "Frame buffer: found SOP tag at pos " << tags[tags.size()-1].offset << ", consume " << tag_pos << " samples and reset" << std::endl;
+          samples_consumed += tag_pos;
+          d_buf.clear();
         }
 
-        while(samples_available > 0)
+        while(ninput_items[0] - samples_consumed > 0)
         {
           d_buf.push_back(in[samples_consumed]);
           samples_consumed++;
-          samples_available--;
           if(d_buf.size() == d_nsym_frame)
           {
-            std::cout << "Complete frame received, return samples" << std::endl;
-            memcpy(out, in, sizeof(gr_complex)*d_nsym_frame);
+            // std::cout << "Frame buffer: Received complete frame" << std::endl;
+            memcpy(out+samples_produced, &*d_buf.begin(), sizeof(gr_complex)*d_nsym_frame);
             d_buf.clear();
             samples_produced += d_nsym_frame;
           }

@@ -74,7 +74,6 @@ namespace gr {
         const gr_complex *in = (const gr_complex *) input_items[0];
         gr_complex *out = (gr_complex *) output_items[0];
 
-        int samples_available = noutput_items;
         int samples_produced = 0;
         int samples_consumed = 0;
 
@@ -86,7 +85,6 @@ namespace gr {
           uint64_t tag_pos = tags[tags.size()-1].offset - nitems_read(0);
           std::cout << "Preamble detector: found FCP tag at pos " << tags[tags.size()-1].offset << ", consume " << tag_pos << " samples and reset" << std::endl;
           samples_consumed += tag_pos;
-          samples_available -= tag_pos;
           d_preamble_detected = false;
           d_buf.clear();
         }
@@ -98,14 +96,13 @@ namespace gr {
         if(!d_preamble_detected)
         {
           dout << "push samples into buffer: ";
-          while(samples_available > 0)
+          while(noutput_items - samples_consumed > 0)
           {
             d_buf.push_back(in[samples_consumed]);
             samples_consumed++;
-            samples_available--;
             if(d_buf.size() > 1)
             {
-              if(std::abs(std::arg(d_buf[d_buf.size()-1]/d_buf[d_buf.size()-2])) < 1e-2) // check if new symbol  phase is roughly equal to the last symbol
+              if(std::abs(std::arg(d_buf[d_buf.size()-1]/d_buf[d_buf.size()-2])) < M_PI/4) // check if new symbol  phase is roughly equal to the last symbol
               {
                 dout << ".";
                 if(d_buf.full()) // as soon as the buffer is full, a complete preamble has been received
@@ -124,6 +121,7 @@ namespace gr {
               }
               else // erase all previous symbols if the current is not equal to them
               {
+                std::cout << "Preamble detector: Reset after " << d_buf.size() << " equal symbols" << std::endl;
                 d_buf.erase(d_buf.begin(), d_buf.begin()+d_buf.size()-1);
               }
             }
@@ -134,14 +132,14 @@ namespace gr {
         if(d_preamble_detected)
         {
           dout << "push input buffer directly to output" << std::endl;
-          int nsym = std::min(samples_available, noutput_items - samples_produced);
+          int nsym = std::min(noutput_items - samples_consumed, noutput_items - samples_produced);
           memcpy(out+samples_produced, in+samples_consumed, sizeof(gr_complex)*nsym);
           samples_consumed += nsym;
           samples_produced += nsym;
         }
 
-        for(int i = 0; i < samples_produced; i++)
-          out[i] *= std::polar(float(1.0), d_phi_off);
+        // for(int i = 0; i < samples_produced; i++)
+        //   out[i] *= std::polar(float(1.0), d_phi_off);
         dout << "consume: " << samples_consumed << ", produce: " << samples_produced << std::endl;
         consume_each (samples_consumed);
         return samples_produced;

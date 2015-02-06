@@ -62,7 +62,7 @@ class qa_preamble_detection_cc (gr_unittest.TestCase):
         self.tb.run ()
         # check data
         data_out = snk.data()
-        self.assertComplexTuplesAlmostEqual(data_out, data_in*np.exp(-1j*phi_off), 5)
+        self.assertComplexTuplesAlmostEqual(data_out, data_in, 5)
 
 if __name__ == '__main__':
     gr_unittest.run(qa_preamble_detection_cc)

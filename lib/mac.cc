@@ -108,10 +108,10 @@ void app_in(pmt::pmt_t msg) {
 		return;
 	}
 
-	dout << "MAC: received new message from APP of length " << pmt::blob_length(blob) << std::endl;
+	//dout << "MAC: received new message from APP of length " << pmt::blob_length(blob) << std::endl;
 
 	generate_mac((const char*)pmt::blob_data(blob), pmt::blob_length(blob));
-	print_message();
+	//print_message();
 	message_port_pub(pmt::mp("pdu out"), pmt::cons(pmt::PMT_NIL,
 			pmt::make_blob(d_msg, d_msg_len)));
 }
