@@ -51,6 +51,7 @@
 #include "ieee802_15_4/chirp_detector_cc.h"
 #include "ieee802_15_4/costas_loop_cc.h"
 #include "ieee802_15_4/preamble_detection_cc.h"
+#include "ieee802_15_4/frame_buffer_cc.h"
 %}
 
 %include "ieee802_15_4/access_code_prefixer.h"
@@ -118,3 +119,5 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, chirp_detector_cc);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, costas_loop_cc);
 %include "ieee802_15_4/preamble_detection_cc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, preamble_detection_cc);
+%include "ieee802_15_4/frame_buffer_cc.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, frame_buffer_cc);

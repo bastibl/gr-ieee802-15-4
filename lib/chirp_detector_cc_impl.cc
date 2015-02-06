@@ -139,7 +139,7 @@ namespace gr {
         return ret = d_len_subchirp + std::max(d_time_gap_1, d_time_gap_2);
       else
         throw std::runtime_error("Invalid state");
-      return 10*ret;
+      return ret;
     }
     int
     chirp_detector_cc_impl::general_work (int noutput_items,
@@ -162,10 +162,11 @@ namespace gr {
             if(corr_over_threshold(sym))
             {
               dout << "#SEARCH# " << std::norm(sym) << ": chirp #" << d_subchirp_ctr << " detected" << std::endl;
-              std::cout << "Chirp detector: SEARCH->TRACKING" << std::endl;
+              std::cout << "Chirp detector: SEARCH->TRACKING, add FCP tag at pos " << nitems_written(0) + samples_produced << std::endl;
               d_state = STATE_TRACKING;
               samples_consumed += dist_to_next_subchirp();
               out[samples_produced] = sym;
+              add_item_tag(0, nitems_written(0) + samples_produced, pmt::string_to_symbol("FCP"), pmt::from_long(0));
               samples_produced++;
             }
             else

@@ -49,6 +49,7 @@ namespace gr {
     {
       d_buf = boost::circular_buffer<gr_complex>(d_len_preamble);
       set_output_multiple(len_preamble);
+      set_tag_propagation_policy(TPP_DONT);
     }
 
     /*
@@ -77,6 +78,23 @@ namespace gr {
         int samples_produced = 0;
         int samples_consumed = 0;
 
+        // check for preamble tag and reset, if found
+        std::vector<tag_t> tags;
+        get_tags_in_range(tags, 0, nitems_read(0), nitems_read(0) + ninput_items[0], pmt::string_to_symbol("FCP"));
+        if(tags.size() > 0)
+        {
+          uint64_t tag_pos = tags[tags.size()-1].offset - nitems_read(0);
+          std::cout << "Preamble detector: found FCP tag at pos " << tags[tags.size()-1].offset << ", consume " << tag_pos << " samples and reset" << std::endl;
+          samples_consumed += tag_pos;
+          samples_available -= tag_pos;
+          d_preamble_detected = false;
+          d_buf.clear();
+        }
+        else
+        {
+          dout << "Preamble detector: no tags in range " << nitems_read(0) << " to " << nitems_read(0) + ninput_items[0] << std::endl;
+        }
+
         if(!d_preamble_detected)
         {
           dout << "push samples into buffer: ";
@@ -87,16 +105,17 @@ namespace gr {
             samples_available--;
             if(d_buf.size() > 1)
             {
-              if(std::abs(std::arg(d_buf[d_buf.size()-1]/d_buf[d_buf.size()-2])) < 1e-3) // check if new symbol  phase is roughly equal to the last symbol
+              if(std::abs(std::arg(d_buf[d_buf.size()-1]/d_buf[d_buf.size()-2])) < 1e-2) // check if new symbol  phase is roughly equal to the last symbol
               {
                 dout << ".";
                 if(d_buf.full()) // as soon as the buffer is full, a complete preamble has been received
                 {
-                  dout << "Preamble detected" << std::endl;
+                  std::cout << "Preamble detector: Preamble detected" << std::endl;
                   d_preamble_detected = true;
                   if(noutput_items - samples_produced < d_buf.size()) // make sure there is enough space in the output buffer
                     throw std::runtime_error("Output buffer too small");
                   memcpy(out+samples_produced, d_buf.linearize(), sizeof(gr_complex)*d_buf.size()); // copy preamble into the output buffer
+                  add_item_tag(0, nitems_written(0) + samples_produced, pmt::string_to_symbol("SOP"), pmt::from_long(0)); // add tag to first samples of preamble
                   d_phi_off = std::arg(d_preamble_sym / d_buf[0]); // calculate phase offset
                   samples_produced += d_buf.size();
                   d_buf.clear();

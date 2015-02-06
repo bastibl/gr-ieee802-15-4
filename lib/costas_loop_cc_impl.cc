@@ -122,7 +122,7 @@ namespace gr {
             gr_complex sym = in[i] * std::polar(float(1.0), -d_phase_offset);
             int nearest_sym_index = get_nearest_index(sym);
             dout << "Nearest symbol index: " << nearest_sym_index << std::endl;
-            out[i] = d_const[nearest_sym_index];
+            out[i] = sym * std::polar(float(1.0), d_diff[nearest_sym_index]);
             d_phase_offset = fmod(d_phase_offset + d_diff[nearest_sym_index], 2*M_PI);
             d_last_index = nearest_sym_index;
           }

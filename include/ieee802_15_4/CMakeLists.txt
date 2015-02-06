@@ -44,6 +44,7 @@ install(FILES
     rayleigh_multipath_cc.h
     chirp_detector_cc.h
     costas_loop_cc.h
-    preamble_detection_cc.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
+    preamble_detection_cc.h
+    frame_buffer_cc.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

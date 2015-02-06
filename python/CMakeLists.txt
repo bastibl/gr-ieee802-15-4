@@ -70,3 +70,4 @@ GR_ADD_TEST(qa_rayleigh_multipath_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE
 GR_ADD_TEST(qa_chirp_detector_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_chirp_detector_cc.py)
 GR_ADD_TEST(qa_costas_loop_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_costas_loop_cc.py)
 GR_ADD_TEST(qa_preamble_detection_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_preamble_detection_cc.py)
+GR_ADD_TEST(qa_frame_buffer_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_frame_buffer_cc.py)
