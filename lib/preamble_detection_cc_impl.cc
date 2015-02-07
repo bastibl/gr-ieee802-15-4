@@ -107,7 +107,7 @@ namespace gr {
                 dout << ".";
                 if(d_buf.full()) // as soon as the buffer is full, a complete preamble has been received
                 {
-                  std::cout << "Preamble detector: Preamble detected" << std::endl;
+                  std::cout << "Preamble detector: Preamble detected. Start returning symbols." << std::endl;
                   d_preamble_detected = true;
                   if(noutput_items - samples_produced < d_buf.size()) // make sure there is enough space in the output buffer
                     throw std::runtime_error("Output buffer too small");

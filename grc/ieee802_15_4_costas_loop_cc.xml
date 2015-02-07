@@ -1,7 +1,7 @@
 <block>
   <name>Costas Loop</name>
   <key>ieee802_15_4_costas_loop_cc</key>
-  <category>IEEE802_15_4</category>
+  <category>IEEE802.15.4</category>
   <import>import ieee802_15_4</import>
   <make>ieee802_15_4.costas_loop_cc($constellation_points, $initial_index)</make>
   <param>

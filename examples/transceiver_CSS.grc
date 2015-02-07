@@ -69,7 +69,7 @@
     <key>variable</key>
     <param>
       <key>id</key>
-      <value>text_msg</value>
+      <value>samp_rate</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -77,7 +77,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"Hello World! Now supporting CSS!"</value>
+      <value>32e6</value>
     </param>
     <param>
       <key>alias</key>
@@ -85,7 +85,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(160, 267)</value>
+      <value>(32, 195)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -123,7 +123,7 @@
     <key>variable</key>
     <param>
       <key>id</key>
-      <value>samp_rate</value>
+      <value>text_msg</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -131,7 +131,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>32e6</value>
+      <value>"Hello World! Now supporting CSS!"</value>
     </param>
     <param>
       <key>alias</key>
@@ -139,7 +139,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(32, 195)</value>
+      <value>(160, 267)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -399,57 +399,6 @@
     <param>
       <key>_coordinate</key>
       <value>(816, 67)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_rime_stack</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_rime_stack_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>bc_channels</key>
-      <value>[129]</value>
-    </param>
-    <param>
-      <key>uc_channels</key>
-      <value>[131]</value>
-    </param>
-    <param>
-      <key>ruc_channels</key>
-      <value>[132]</value>
-    </param>
-    <param>
-      <key>rime_add</key>
-      <value>[23,42]</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(416, 208)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -813,45 +762,6 @@
     <param>
       <key>_rotation</key>
       <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_mac</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_mac_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>debug</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(416, 352)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
     </param>
   </block>
   <block>
@@ -2602,6 +2512,116 @@
     </param>
   </block>
   <block>
+    <key>analog_sig_source_x</key>
+    <param>
+      <key>id</key>
+      <value>analog_sig_source_x_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>samp_rate</key>
+      <value>samp_rate</value>
+    </param>
+    <param>
+      <key>waveform</key>
+      <value>analog.GR_SIN_WAVE</value>
+    </param>
+    <param>
+      <key>freq</key>
+      <value>freq_off</value>
+    </param>
+    <param>
+      <key>amp</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>offset</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(824, 876)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_rime_stack</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_rime_stack_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>bc_channels</key>
+      <value>[129]</value>
+    </param>
+    <param>
+      <key>uc_channels</key>
+      <value>[131]</value>
+    </param>
+    <param>
+      <key>ruc_channels</key>
+      <value>[132]</value>
+    </param>
+    <param>
+      <key>rime_add</key>
+      <value>[23,42]</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(416, 208)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
     <key>ieee802_15_4_css_phy</key>
     <param>
       <key>id</key>
@@ -2701,62 +2721,42 @@
     </param>
   </block>
   <block>
-    <key>variable_slider</key>
+    <key>ieee802_15_4_mac</key>
     <param>
       <key>id</key>
-      <value>delay</value>
+      <value>ieee802_15_4_mac_0</value>
     </param>
     <param>
       <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
-      <key>label</key>
-      <value>delay</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>min</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>max</key>
-      <value>1000</value>
-    </param>
-    <param>
-      <key>num_steps</key>
-      <value>100</value>
-    </param>
-    <param>
-      <key>style</key>
-      <value>wx.SL_HORIZONTAL</value>
-    </param>
-    <param>
-      <key>converver</key>
-      <value>float_converter</value>
-    </param>
-    <param>
-      <key>grid_pos</key>
-      <value></value>
-    </param>
-    <param>
-      <key>notebook</key>
-      <value></value>
+      <key>debug</key>
+      <value>True</value>
     </param>
     <param>
       <key>alias</key>
       <value></value>
     </param>
     <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
       <key>_coordinate</key>
-      <value>(952, 572)</value>
+      <value>(416, 352)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>0</value>
+      <value>180</value>
     </param>
   </block>
   <block>
@@ -2819,62 +2819,62 @@
     </param>
   </block>
   <block>
-    <key>analog_sig_source_x</key>
+    <key>variable_slider</key>
     <param>
       <key>id</key>
-      <value>analog_sig_source_x_0</value>
+      <value>delay</value>
     </param>
     <param>
       <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
-      <key>type</key>
-      <value>complex</value>
+      <key>label</key>
+      <value>delay</value>
     </param>
     <param>
-      <key>samp_rate</key>
-      <value>samp_rate</value>
-    </param>
-    <param>
-      <key>waveform</key>
-      <value>analog.GR_SIN_WAVE</value>
-    </param>
-    <param>
-      <key>freq</key>
-      <value>freq_off</value>
-    </param>
-    <param>
-      <key>amp</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>offset</key>
+      <key>value</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>min</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>max</key>
+      <value>1000</value>
+    </param>
+    <param>
+      <key>num_steps</key>
+      <value>100</value>
+    </param>
+    <param>
+      <key>style</key>
+      <value>wx.SL_HORIZONTAL</value>
+    </param>
+    <param>
+      <key>converver</key>
+      <value>float_converter</value>
+    </param>
+    <param>
+      <key>grid_pos</key>
+      <value></value>
+    </param>
+    <param>
+      <key>notebook</key>
+      <value></value>
     </param>
     <param>
       <key>alias</key>
       <value></value>
     </param>
     <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
       <key>_coordinate</key>
-      <value>(824, 876)</value>
+      <value>(952, 572)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>180</value>
+      <value>0</value>
     </param>
   </block>
   <block>
@@ -2893,7 +2893,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>35e3</value>
+      <value>0</value>
     </param>
     <param>
       <key>min</key>
@@ -2943,12 +2943,6 @@
     <sink_key>in</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_rime_stack_0</source_block_id>
-    <sink_block_id>blocks_socket_pdu_0_0</sink_block_id>
-    <source_key>bcout</source_key>
-    <sink_key>pdus</sink_key>
-  </connection>
-  <connection>
     <source_block_id>blocks_message_strobe_0</source_block_id>
     <sink_block_id>ieee802_15_4_rime_stack_0</sink_block_id>
     <source_key>strobe</source_key>
@@ -2965,12 +2959,6 @@
     <sink_block_id>ieee802_15_4_rime_stack_0</sink_block_id>
     <source_key>app out</source_key>
     <sink_key>fromMAC</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_rime_stack_0</source_block_id>
-    <sink_block_id>ieee802_15_4_mac_0</sink_block_id>
-    <source_key>toMAC</source_key>
-    <sink_key>app in</sink_key>
   </connection>
   <connection>
     <source_block_id>ieee802_15_4_mac_0</source_block_id>
@@ -3010,21 +2998,9 @@
   </connection>
   <connection>
     <source_block_id>ieee802_15_4_css_phy_1</source_block_id>
-    <sink_block_id>ieee802_15_4_mac_0</sink_block_id>
-    <source_key>rxout</source_key>
-    <sink_key>pdu in</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_css_phy_1</source_block_id>
     <sink_block_id>wxgui_fftsink2_1</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_css_phy_1</source_block_id>
-    <sink_block_id>blocks_message_debug_1</sink_block_id>
-    <source_key>rxout</source_key>
-    <sink_key>print_pdu</sink_key>
   </connection>
   <connection>
     <source_block_id>ieee802_15_4_css_phy_1</source_block_id>
@@ -3073,5 +3049,29 @@
     <sink_block_id>blocks_throttle_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_rime_stack_0</source_block_id>
+    <sink_block_id>ieee802_15_4_mac_0</sink_block_id>
+    <source_key>toMAC</source_key>
+    <sink_key>app in</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_rime_stack_0</source_block_id>
+    <sink_block_id>blocks_socket_pdu_0_0</sink_block_id>
+    <source_key>bcout</source_key>
+    <sink_key>pdus</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_css_phy_1</source_block_id>
+    <sink_block_id>blocks_message_debug_1</sink_block_id>
+    <source_key>rxout</source_key>
+    <sink_key>print_pdu</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_css_phy_1</source_block_id>
+    <sink_block_id>ieee802_15_4_mac_0</sink_block_id>
+    <source_key>rxout</source_key>
+    <sink_key>pdu in</sink_key>
   </connection>
 </flow_graph>

@@ -89,7 +89,7 @@ namespace gr {
           samples_consumed++;
           if(d_buf.size() == d_nsym_frame)
           {
-            // std::cout << "Frame buffer: Received complete frame" << std::endl;
+            std::cout << "Frame buffer: Received complete frame" << std::endl;
             memcpy(out+samples_produced, &*d_buf.begin(), sizeof(gr_complex)*d_nsym_frame);
             d_buf.clear();
             samples_produced += d_nsym_frame;
