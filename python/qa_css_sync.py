@@ -170,15 +170,13 @@ class qa_css_sync (gr_unittest.TestCase):
         preamble_out = snk_preamble.data()[:ref_len]
         ref_preamble = np.concatenate((sym_in1, sym_in2, sym_in3))
 
-        try:
-            self.assertComplexTuplesAlmostEqual(preamble_out, ref_preamble, 5)
-        except:
-            f, axarr = plt.subplots(2,1)
-            axarr[0].plot(np.real(ref_preamble - preamble_out))
-            axarr[0].set_title('real')
-            axarr[1].plot(np.imag(ref_preamble - preamble_out))
-            axarr[1].set_title('imag')
-            plt.show()
+        self.assertComplexTuplesAlmostEqual(preamble_out, ref_preamble, 5)
+        # f, axarr = plt.subplots(2,1)
+        # axarr[0].plot(np.real(ref_preamble - preamble_out))
+        # axarr[0].set_title('real')
+        # axarr[1].plot(np.imag(ref_preamble - preamble_out))
+        # axarr[1].set_title('imag')
+        # plt.show()
 
     # def test_003_t (self): # late entry
     #     print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY"

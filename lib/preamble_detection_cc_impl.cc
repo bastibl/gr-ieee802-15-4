@@ -47,6 +47,8 @@ namespace gr {
       d_preamble_detected(false),
       d_phi_off(0.0)
     {
+      if(d_len_preamble < 2)
+        throw std::runtime_error("Preamble must be at least 2 symbols long");
       d_buf = boost::circular_buffer<gr_complex>(d_len_preamble);
       set_output_multiple(len_preamble);
       set_tag_propagation_policy(TPP_DONT);
@@ -106,37 +108,47 @@ namespace gr {
         if(!d_preamble_detected)
         {
           dout << "push samples into buffer: ";
-          while(num_returnable_items(ninput_items[0], noutput_items, samples_consumed, samples_produced) > 0)
+          while(num_returnable_items(ninput_items[0], noutput_items, samples_consumed, samples_produced) >= 2)
           {
-            d_buf.push_back(in[samples_consumed]);
-            samples_consumed++;
-            if(d_buf.size() > 1)
+            if(d_buf.size() == 0) // if buffer is empty, push first symbol in
             {
-              if(std::abs(std::arg(d_buf[d_buf.size()-1]/d_buf[d_buf.size()-2])) < M_PI/4) // check if new symbol  phase is roughly equal to the last symbol
+              d_buf.push_back(in[samples_consumed]);
+              samples_consumed++;
+            }
+
+            // as soon as the buffer is full, a complete preamble has been received. 
+            // then wait for the next different symbol that marks the end of the preamble.
+            // in case of a late entry there might be leading symbols that are equal to the preamble symbols
+
+            float phase_diff = std::abs(std::arg(in[samples_consumed]/d_buf[d_buf.size()-1]));
+            if(phase_diff < M_PI/4 && !d_buf.full()) // buffer is filling and we have a matching symbol phase
+            {
+              d_buf.push_back(in[samples_consumed]);
+              samples_consumed++;
+              dout << ".";
+            }
+            else if(phase_diff < M_PI/4 && d_buf.full())  // buffer is full and we wait for a different symbol (start of SFD)
+            {
+              samples_consumed++; // drop sample
+            }
+            else if(phase_diff >= M_PI/4 && !d_buf.full()) // buffer is not full but we already got a different symbol --> no preamble, drop buffer
+            {
+              d_buf.clear();
+            }
+            else // buffer is full and we have a different symbol --> preamble end detected! return buffer and change state to preamble_detected == true
+            {
+              std::cout << "Preamble detector: Preamble detected at pos " << nitems_read(0)+samples_consumed << ". Start returning symbols." << std::endl;
+              d_preamble_detected = true;
+              if(noutput_items - samples_produced < d_buf.size()) // make sure there is enough space in the output buffer
               {
-                dout << ".";
-                // as soon as the buffer is full, a complete preamble has been received. 
-                // now wait for the next different symbol that marks the end of the preamble.
-                // in case of a late entry there might be leading symbols that are equal to the preamble symbols
-                if(d_buf.full()) 
-                {
-                  std::cout << "Preamble detector: Preamble detected at pos " << nitems_read(0)+samples_consumed << ". Start returning symbols." << std::endl;
-                  d_preamble_detected = true;
-                  if(noutput_items - samples_produced < d_buf.size()) // make sure there is enough space in the output buffer
-                    throw std::runtime_error("Output buffer too small");
-                  memcpy(out+samples_produced, d_buf.linearize(), sizeof(gr_complex)*d_buf.size()); // copy preamble into the output buffer
-                  add_item_tag(0, nitems_written(0) + samples_produced, pmt::string_to_symbol("SOP"), pmt::from_long(0)); // add tag to first samples of preamble
-                  d_phi_off = std::arg(d_preamble_sym / d_buf[0]); // calculate phase offset
-                  samples_produced += d_buf.size();
-                  d_buf.clear();
-                  break;
-                }
+                std::cout << "noutput_items: " << noutput_items << ", samples_produced: " << samples_produced << ", buffer size: " << d_buf.size() << std::endl;
+                throw std::runtime_error("Output buffer too small");
               }
-              else // erase all previous symbols if the current is not equal to them
-              {
-                // std::cout << "Preamble detector: Reset after " << d_buf.size() << " equal symbols" << std::endl;
-                d_buf.erase(d_buf.begin(), d_buf.begin()+d_buf.size()-1);
-              }
+              memcpy(out+samples_produced, d_buf.linearize(), sizeof(gr_complex)*d_buf.size()); // copy preamble into the output buffer
+              add_item_tag(0, nitems_written(0) + samples_produced, pmt::string_to_symbol("SOP"), pmt::from_long(0)); // add tag to first samples of preamble
+              samples_produced += d_buf.size();
+              d_buf.clear();
+              break;
             }
           }
           dout << std::endl;
