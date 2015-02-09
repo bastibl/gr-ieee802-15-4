@@ -35,6 +35,7 @@ namespace gr {
       bool d_preamble_detected;
       boost::circular_buffer<gr_complex> d_buf;
       float d_phi_off;
+      int num_returnable_items(int in_avail, int out_avail, int nread, int nwritten){ return std::min(in_avail - nread, out_avail - nwritten); }
       #define dout false && std::cout // turn false to true to enable debug output
 
      public:

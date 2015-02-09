@@ -86,11 +86,16 @@ namespace gr {
           std::cout << "Preamble detector: found FCP tag at pos " << tags[tags.size()-1].offset << std::endl;
           if(d_preamble_detected)
           {
-            memcpy(out, in, sizeof(gr_complex)*tag_pos);
-            samples_produced += tag_pos;
+            int items_to_return = num_returnable_items(ninput_items[0], noutput_items, samples_consumed, samples_produced);
+            memcpy(out, in, sizeof(gr_complex)*items_to_return);
+            samples_produced += items_to_return;
+            samples_consumed += items_to_return;
+            d_preamble_detected = false;
           }
-          samples_consumed += tag_pos;
-          d_preamble_detected = false;
+          else
+          {
+            samples_consumed += tag_pos;
+          }
           d_buf.clear();
         }
         else
@@ -101,7 +106,7 @@ namespace gr {
         if(!d_preamble_detected)
         {
           dout << "push samples into buffer: ";
-          while(noutput_items - samples_consumed > 0)
+          while(num_returnable_items(ninput_items[0], noutput_items, samples_consumed, samples_produced) > 0)
           {
             d_buf.push_back(in[samples_consumed]);
             samples_consumed++;
@@ -110,9 +115,12 @@ namespace gr {
               if(std::abs(std::arg(d_buf[d_buf.size()-1]/d_buf[d_buf.size()-2])) < M_PI/4) // check if new symbol  phase is roughly equal to the last symbol
               {
                 dout << ".";
-                if(d_buf.full()) // as soon as the buffer is full, a complete preamble has been received
+                // as soon as the buffer is full, a complete preamble has been received. 
+                // now wait for the next different symbol that marks the end of the preamble.
+                // in case of a late entry there might be leading symbols that are equal to the preamble symbols
+                if(d_buf.full()) 
                 {
-                  std::cout << "Preamble detector: Preamble detected. Start returning symbols." << std::endl;
+                  std::cout << "Preamble detector: Preamble detected at pos " << nitems_read(0)+samples_consumed << ". Start returning symbols." << std::endl;
                   d_preamble_detected = true;
                   if(noutput_items - samples_produced < d_buf.size()) // make sure there is enough space in the output buffer
                     throw std::runtime_error("Output buffer too small");
@@ -126,7 +134,7 @@ namespace gr {
               }
               else // erase all previous symbols if the current is not equal to them
               {
-                std::cout << "Preamble detector: Reset after " << d_buf.size() << " equal symbols" << std::endl;
+                // std::cout << "Preamble detector: Reset after " << d_buf.size() << " equal symbols" << std::endl;
                 d_buf.erase(d_buf.begin(), d_buf.begin()+d_buf.size()-1);
               }
             }
@@ -137,7 +145,7 @@ namespace gr {
         if(d_preamble_detected)
         {
           dout << "push input buffer directly to output" << std::endl;
-          int nsym = std::min(noutput_items - samples_consumed, noutput_items - samples_produced);
+          int nsym = num_returnable_items(ninput_items[0], noutput_items, samples_consumed, samples_produced);
           memcpy(out+samples_produced, in+samples_consumed, sizeof(gr_complex)*nsym);
           samples_consumed += nsym;
           samples_produced += nsym;
@@ -145,7 +153,7 @@ namespace gr {
 
         // for(int i = 0; i < samples_produced; i++)
         //   out[i] *= std::polar(float(1.0), d_phi_off);
-        dout << "consume: " << samples_consumed << ", produce: " << samples_produced << std::endl;
+        std::cout << "consume: " << samples_consumed << ", produce: " << samples_produced << std::endl;
         consume_each (samples_consumed);
         return samples_produced;
     }
