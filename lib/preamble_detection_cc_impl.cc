@@ -50,7 +50,7 @@ namespace gr {
       if(d_len_preamble < 2)
         throw std::runtime_error("Preamble must be at least 2 symbols long");
       d_buf = boost::circular_buffer<gr_complex>(d_len_preamble);
-      set_output_multiple(len_preamble);
+      set_output_multiple(len_preamble*10);
       set_tag_propagation_policy(TPP_DONT);
     }
 
@@ -86,28 +86,33 @@ namespace gr {
         {
           uint64_t tag_pos = tags[tags.size()-1].offset - nitems_read(0);
           std::cout << "Preamble detector: found FCP tag at pos " << tags[tags.size()-1].offset << std::endl;
-          if(d_preamble_detected)
+          if(d_preamble_detected) // return all samples until the reset happens
           {
-            int items_to_return = num_returnable_items(ninput_items[0], noutput_items, samples_consumed, samples_produced);
-            memcpy(out, in, sizeof(gr_complex)*items_to_return);
-            samples_produced += items_to_return;
-            samples_consumed += items_to_return;
-            d_preamble_detected = false;
+            std::cout << "Preamble detector: Return all samples between current position and FCP tag" << std::endl;
+            int rem_space_output = noutput_items - samples_produced;
+            if(tag_pos <= rem_space_output)
+            {
+              d_preamble_detected = false;
+              d_buf.clear();
+              memcpy(out+samples_produced, in+samples_consumed, sizeof(gr_complex)*tag_pos);
+              samples_produced += tag_pos;
+              samples_consumed += tag_pos;
+            }
+            else // there are more samples between now and the new tag than we can fit into the output buffer
+            {
+              memcpy(out+samples_produced, in+samples_consumed, sizeof(gr_complex)*rem_space_output);
+              samples_produced += rem_space_output;
+              samples_consumed += rem_space_output;              
+            }
           }
-          else
-          {
-            samples_consumed += tag_pos;
-          }
-          d_buf.clear();
         }
         else
         {
-          dout << "Preamble detector: no tags in range " << nitems_read(0) << " to " << nitems_read(0) + ninput_items[0] << std::endl;
+          std::cout << "Preamble detector: no tags in range " << nitems_read(0) << " to " << nitems_read(0) + ninput_items[0] << std::endl;
         }
 
         if(!d_preamble_detected)
         {
-          dout << "push samples into buffer: ";
           while(num_returnable_items(ninput_items[0], noutput_items, samples_consumed, samples_produced) >= 2)
           {
             if(d_buf.size() == 0) // if buffer is empty, push first symbol in
@@ -125,19 +130,21 @@ namespace gr {
             {
               d_buf.push_back(in[samples_consumed]);
               samples_consumed++;
-              dout << ".";
+              // std::cout << "Preamble detector: push sample into buffer" << std::endl;
             }
             else if(phase_diff < M_PI/4 && d_buf.full())  // buffer is full and we wait for a different symbol (start of SFD)
             {
+              std::cout << "Preamble detector: drop sample waiting for end of preamble" << std::endl;
               samples_consumed++; // drop sample
             }
             else if(phase_diff >= M_PI/4 && !d_buf.full()) // buffer is not full but we already got a different symbol --> no preamble, drop buffer
             {
+              // std::cout << "Preamble detector: reset buffer" << std::endl;
               d_buf.clear();
             }
             else // buffer is full and we have a different symbol --> preamble end detected! return buffer and change state to preamble_detected == true
             {
-              std::cout << "Preamble detector: Preamble detected at pos " << nitems_read(0)+samples_consumed << ". Start returning symbols." << std::endl;
+              std::cout << "Preamble detector: Preamble detected. Start returning symbols." << std::endl;
               d_preamble_detected = true;
               if(noutput_items - samples_produced < d_buf.size()) // make sure there is enough space in the output buffer
               {
@@ -151,7 +158,6 @@ namespace gr {
               break;
             }
           }
-          dout << std::endl;
         }
 
         if(d_preamble_detected)
@@ -163,8 +169,6 @@ namespace gr {
           samples_produced += nsym;
         }
 
-        // for(int i = 0; i < samples_produced; i++)
-        //   out[i] *= std::polar(float(1.0), d_phi_off);
         std::cout << "consume: " << samples_consumed << ", produce: " << samples_produced << std::endl;
         consume_each (samples_consumed);
         return samples_produced;

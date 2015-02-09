@@ -46,6 +46,7 @@ namespace gr {
     {
       d_buf.clear();
       set_output_multiple(d_nsym_frame);
+      set_tag_propagation_policy(TPP_DONT);
     }
 
     /*
@@ -74,11 +75,11 @@ namespace gr {
         int samples_produced = 0;
 
         std::vector<tag_t> tags;
-        get_tags_in_range(tags, 0, nitems_read(0), nitems_read(0) + ninput_items[0], pmt::string_to_symbol("SOP"));
+        get_tags_in_range(tags, 0, nitems_read(0), nitems_read(0) + ninput_items[0], pmt::string_to_symbol("SOF"));
         if(tags.size() > 0)
         {
           uint64_t tag_pos = tags[tags.size()-1].offset - nitems_read(0);
-          std::cout << "Frame buffer: found SOP tag at pos " << tags[tags.size()-1].offset << ", consume " << tag_pos << " samples and reset" << std::endl;
+          std::cout << "Frame buffer: found SOF tag at pos " << tags[tags.size()-1].offset << ", consume " << tag_pos << " samples and reset" << std::endl;
           samples_consumed += tag_pos;
           d_buf.clear();
         }
@@ -90,7 +91,7 @@ namespace gr {
           if(d_buf.size() == d_nsym_frame)
           {
             std::cout << "Frame buffer: Received complete frame" << std::endl;
-            memcpy(out+samples_produced, &*d_buf.begin(), sizeof(gr_complex)*d_nsym_frame);
+            memcpy(out+samples_produced, &d_buf[0], sizeof(gr_complex)*d_nsym_frame);
             d_buf.clear();
             samples_produced += d_nsym_frame;
           }
