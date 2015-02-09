@@ -83,7 +83,12 @@ namespace gr {
         if(tags.size() > 0)
         {
           uint64_t tag_pos = tags[tags.size()-1].offset - nitems_read(0);
-          std::cout << "Preamble detector: found FCP tag at pos " << tags[tags.size()-1].offset << ", consume " << tag_pos << " samples and reset" << std::endl;
+          std::cout << "Preamble detector: found FCP tag at pos " << tags[tags.size()-1].offset << std::endl;
+          if(d_preamble_detected)
+          {
+            memcpy(out, in, sizeof(gr_complex)*tag_pos);
+            samples_produced += tag_pos;
+          }
           samples_consumed += tag_pos;
           d_preamble_detected = false;
           d_buf.clear();

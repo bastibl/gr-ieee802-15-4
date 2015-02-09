@@ -34,7 +34,7 @@ class qa_css_sync (gr_unittest.TestCase):
     def tearDown (self):
         self.tb = None
 
-    def test_001_t (self):
+    def test_001_t (self): # full frames with zeros inbetween
         print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY"
         m = ieee802_15_4_installed.css_modulator()
         bits_in, bb_in = m.modulate_random()
@@ -42,7 +42,7 @@ class qa_css_sync (gr_unittest.TestCase):
         print "Number of DQPSK symbols per frame:", len(sym_in)
 
         zeros = np.zeros((50,))
-        data_in = np.concatenate((bb_in, zeros, bb_in, zeros, bb_in, bb_in, bb_in))
+        data_in = np.concatenate((bb_in, zeros, bb_in, zeros, bb_in, bb_in, bb_in, bb_in))
         src = blocks.vector_source_c(data_in)
         det = ieee802_15_4.chirp_detector_cc(m.chirp_seq, len(m.time_gap_1), len(m.time_gap_2), 38, 0.95)
         snk_det = blocks.vector_sink_c()
@@ -50,10 +50,13 @@ class qa_css_sync (gr_unittest.TestCase):
         snk_costas = blocks.vector_sink_c()
         preamble = ieee802_15_4.preamble_detection_cc(len(m.preamble), m.preamble[0])
         snk_preamble = blocks.vector_sink_c()
-        self.tb.connect(src, det, costas, preamble)
+        frame_buffer = ieee802_15_4.frame_buffer_cc(len(sym_in))
+        snk_framebuffer = blocks.vector_sink_c()
+        self.tb.connect(src, det, costas, preamble, frame_buffer)
         self.tb.connect(det, snk_det)
         self.tb.connect(costas, snk_costas)
         self.tb.connect(preamble, snk_preamble)
+        self.tb.connect(frame_buffer, snk_framebuffer)
         self.tb.run()
 
         ref = np.concatenate((sym_in, sym_in, sym_in))
@@ -71,17 +74,87 @@ class qa_css_sync (gr_unittest.TestCase):
         self.assertComplexTuplesAlmostEqual(costas_out, ref, 5)
 
         preamble_out = snk_preamble.data()[:len(sym_in)*3]
-        f, axarr = plt.subplots(3,1)
-        axarr[0].plot(abs(preamble_out - ref))
-        axarr[0].set_title("diff preamble costas (abs)")
-        axarr[1].plot(np.real(costas_out))
-        axarr[1].set_title("real part of costas output")
-        axarr[2].plot(np.real(preamble_out))
-        axarr[2].set_title("real part of preamble output")
-        plt.suptitle("post preamble detector")
-        plt.show()
-        self.assertComplexTuplesAlmostEqual(preamble_out, ref, 5)
+        framebuffer_out = snk_framebuffer.data()[:len(sym_in)*3]
 
+        print "len(data_in):", len(data_in)
+        print "len(det_out):", len(det_out)
+        print "len(costas_out):", len(costas_out)
+        print "len(preamble_out):", len(preamble_out)
+        print "len(framebuffer_out):", len(framebuffer_out)
+
+        f, axarr = plt.subplots(3,1)
+        axarr[0].plot(abs(framebuffer_out - ref))
+        axarr[0].set_title("diff preamble ref (abs)")
+        axarr[1].plot(np.real(det_out))
+        axarr[1].set_title("real part of chirp det output")
+        axarr[2].plot(np.real(framebuffer_out))
+        axarr[2].set_title("real part of frambuffer output")
+        plt.suptitle("post framebuffer")
+        plt.show()
+        self.assertComplexTuplesAlmostEqual(framebuffer_out, ref, 5)
+
+    def test_002_t (self): # interrupted frames
+        print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY"
+        m = ieee802_15_4_installed.css_modulator()
+        bits_in1, bb_in1 = m.modulate_random()
+        sym_in1 = m.frame_DQPSK
+        bits_in2, bb_in2 = m.modulate_random()
+        sym_in2 = m.frame_DQPSK
+        bits_in3, bb_in3 = m.modulate_random()
+        sym_in3 = m.frame_DQPSK
+        print "Number of DQPSK symbols per frame:", len(sym_in1)
+
+        zeros = np.zeros((50,))
+        data_in = np.concatenate((bb_in1, bb_in2, bb_in2[:len(bb_in2)/2], zeros, bb_in3, bb_in3, bb_in3, bb_in3, bb_in3))
+        src = blocks.vector_source_c(data_in)
+        det = ieee802_15_4.chirp_detector_cc(m.chirp_seq, len(m.time_gap_1), len(m.time_gap_2), 38, 0.95)
+        snk_det = blocks.vector_sink_c()
+        costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), -1)
+        snk_costas = blocks.vector_sink_c()
+        preamble = ieee802_15_4.preamble_detection_cc(len(m.preamble), m.preamble[0])
+        snk_preamble = blocks.vector_sink_c()
+        frame_buffer = ieee802_15_4.frame_buffer_cc(len(sym_in1))
+        snk_framebuffer = blocks.vector_sink_c()
+        self.tb.connect(src, det, costas, preamble, frame_buffer)
+        self.tb.connect(det, snk_det)
+        self.tb.connect(costas, snk_costas)
+        self.tb.connect(preamble, snk_preamble)
+        self.tb.connect(frame_buffer, snk_framebuffer)
+        self.tb.run()
+
+        ref = np.concatenate((sym_in1, sym_in2, sym_in3))
+
+        det_out = snk_det.data()[:len(sym_in1)*3]
+        # plt.plot(abs(det_out - ref))
+        # plt.title("post chirp detector")
+        # plt.show()
+        # self.assertComplexTuplesAlmostEqual(det_out, data_in[:len(det_out)], 5)
+
+        costas_out = snk_costas.data()[:len(sym_in1)*3]
+        # plt.plot(abs(costas_out - ref))
+        # plt.title("post costas loop")
+        # plt.show()
+        # self.assertComplexTuplesAlmostEqual(costas_out, data_in[:len(costas_out)], 5)
+
+        preamble_out = snk_preamble.data()[:len(sym_in1)*3]
+        framebuffer_out = snk_framebuffer.data()[:len(sym_in1)*3]
+
+        # print "len(data_in):", len(data_in)
+        # print "len(det_out):", len(det_out)
+        # print "len(costas_out):", len(costas_out)
+        # print "len(preamble_out):", len(preamble_out)
+        # print "len(framebuffer_out):", len(framebuffer_out)
+
+        f, axarr = plt.subplots(3,1)
+        axarr[0].plot(abs(framebuffer_out - ref))
+        axarr[0].set_title("diff framebuffer to ref (abs)")
+        axarr[1].plot(np.real(ref))
+        axarr[1].set_title("real part of ref output")
+        axarr[2].plot(np.real(framebuffer_out))
+        axarr[2].set_title("real part of framebuffer output")
+        plt.suptitle("post framebuffer")
+        plt.show()
+        self.assertComplexTuplesAlmostEqual(framebuffer_out, ref, 5)
 
 if __name__ == '__main__':
     gr_unittest.run(qa_css_sync)
