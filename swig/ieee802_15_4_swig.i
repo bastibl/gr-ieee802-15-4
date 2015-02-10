@@ -48,9 +48,8 @@
 #include "ieee802_15_4/codeword_soft_demapper_fb.h"
 #include "ieee802_15_4/compare_blobs.h"
 #include "ieee802_15_4/rayleigh_multipath_cc.h"
-#include "ieee802_15_4/chirp_detector_cc.h"
+#include "ieee802_15_4/simple_chirp_detector_cc.h"
 #include "ieee802_15_4/costas_loop_cc.h"
-#include "ieee802_15_4/preamble_detection_cc.h"
 #include "ieee802_15_4/frame_buffer_cc.h"
 #include "ieee802_15_4/preamble_tagger_cc.h"
 %}
@@ -114,12 +113,11 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_soft_demapper_fb);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, compare_blobs);
 %include "ieee802_15_4/rayleigh_multipath_cc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, rayleigh_multipath_cc);
-%include "ieee802_15_4/chirp_detector_cc.h"
-GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, chirp_detector_cc);
+%include "ieee802_15_4/simple_chirp_detector_cc.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, simple_chirp_detector_cc);
 %include "ieee802_15_4/costas_loop_cc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, costas_loop_cc);
-%include "ieee802_15_4/preamble_detection_cc.h"
-GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, preamble_detection_cc);
+
 %include "ieee802_15_4/frame_buffer_cc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, frame_buffer_cc);
 %include "ieee802_15_4/preamble_tagger_cc.h"

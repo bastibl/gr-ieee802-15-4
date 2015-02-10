@@ -25,12 +25,12 @@ import ieee802_15_4 as ieee802_15_4_installed # css_phy is not found in the just
 import ieee802_15_4_swig as ieee802_15_4
 import numpy as np
 
-class qa_chirp_detector_cc (gr_unittest.TestCase):
+class qa_simple_chirp_detector_cc (gr_unittest.TestCase):
 
     def setUp (self):
     	print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY ieee802_15_4!"
         self.tb = gr.top_block ()
-        self.p = ieee802_15_4_installed.css_phy()
+        self.p = ieee802_15_4_installed.css_modulator()
 
     def tearDown (self):
         self.tb = None
@@ -38,7 +38,8 @@ class qa_chirp_detector_cc (gr_unittest.TestCase):
     def test_001_t (self): # two chirp sequences with alternating time gaps
         # set up fg
         print "test_001_t"
-        data_in = np.concatenate((self.p.chirp_seq, self.p.time_gap_1, self.p.chirp_seq, self.p.time_gap_2))
+        zeros = np.zeros((1000,))
+        data_in = np.concatenate((self.p.chirp_seq, self.p.time_gap_1, self.p.chirp_seq, self.p.time_gap_2, zeros))
         src = blocks.vector_source_c(data_in)
         det = ieee802_15_4.chirp_detector_cc(self.p.chirp_seq, len(self.p.time_gap_1), len(self.p.time_gap_2), 38, 0.99)
         snk = blocks.vector_sink_c()
@@ -84,4 +85,4 @@ class qa_chirp_detector_cc (gr_unittest.TestCase):
 
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_chirp_detector_cc)
+    gr_unittest.run(qa_simple_chirp_detector_cc)

@@ -59,7 +59,7 @@ namespace gr {
     void
     frame_buffer_cc_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
-        ninput_items_required[0] = 2*d_nsym_frame;
+        ninput_items_required[0] = 3*d_nsym_frame;
     }
 
     int
@@ -77,23 +77,29 @@ namespace gr {
         std::vector<tag_t> tags;
         get_tags_in_range(tags, 0, nitems_read(0), nitems_read(0) + ninput_items[0], pmt::string_to_symbol("SOF"));
 
-        // NOTE: This simple algorithm may drop symbols if there are SOF tags less than d_nsym_frame symbols away from each other
-        if(tags.size() > 0)
+        if(tags.size() >= 2)
         {
           uint64_t first_tag_pos = tags[0].offset - nitems_read(0);
-          // std::cout << "Frame buffer: found SOF tag at pos " << tags[0].offset << std::endl;
+          uint64_t second_tag_pos = tags[1].offset - nitems_read(0);
+          std::cout << "Frame buffer: found SOF tags at pos " << tags[0].offset << " and " << tags[1].offset << std::endl;
+          std::cout << "Frame buffer: Consume " << first_tag_pos << " samples." << std::endl;
           samples_consumed += first_tag_pos;
-
-          if(ninput_items[0] - samples_consumed >= d_nsym_frame)
+          if(second_tag_pos - first_tag_pos < d_nsym_frame)
           {
-            std::cout << "Frame buffer: Return frame" << std::endl;
+            std::cout << "Frame buffer: Incomplete frame detected, drop " << second_tag_pos - first_tag_pos << " symbols." << std::endl;
+            samples_consumed += second_tag_pos - first_tag_pos;
+          }
+          else if(ninput_items[0] - samples_consumed >= d_nsym_frame)
+          {
+            std::cout << "Frame buffer: Return frame of " << d_nsym_frame << " samples" << std::endl;
             memcpy(out, in+samples_consumed, sizeof(gr_complex)*d_nsym_frame);
             samples_consumed += d_nsym_frame;
             samples_produced += d_nsym_frame;
           }
         }
+        else
+          throw std::runtime_error("Frame buffer: Not enough tags in range");
 
-        std::cout << "Framebuffer: return " << samples_produced << " samples" << std::endl;
         consume_each (samples_consumed);
         return samples_produced;
     }
