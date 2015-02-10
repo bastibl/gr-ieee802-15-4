@@ -40,7 +40,7 @@ class qa_dqcsk_mapper_fc (gr_unittest.TestCase):
         cfg = phy()
         data_in = [0 for i in range(12)]
         self.src = blocks.vector_source_f(data_in)
-        self.dqcsk = ieee802_15_4.dqcsk_mapper_fc(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps)
+        self.dqcsk = ieee802_15_4.dqcsk_mapper_fc(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps, 120)
         self.snk = blocks.vector_sink_c(1)
         self.tb.connect(self.src, self.dqcsk, self.snk)
         self.tb.run ()
@@ -60,7 +60,7 @@ class qa_dqcsk_mapper_fc (gr_unittest.TestCase):
         cfg = phy()
         data_in = [0, np.pi/2, np.pi, -np.pi/2]
         self.src = blocks.vector_source_f(data_in)
-        self.dqcsk = ieee802_15_4.dqcsk_mapper_fc(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps)
+        self.dqcsk = ieee802_15_4.dqcsk_mapper_fc(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps, 4)
         self.snk = blocks.vector_sink_c(1)
         self.tb.connect(self.src, self.dqcsk, self.snk)
         self.tb.run ()
@@ -78,7 +78,7 @@ class qa_dqcsk_mapper_fc (gr_unittest.TestCase):
         cfg = phy()
         data_in = np.pi/2*np.random.randint(-1,3,(1000,))
         self.src = blocks.vector_source_f(data_in)
-        self.dqcsk = ieee802_15_4.dqcsk_mapper_fc(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps)
+        self.dqcsk = ieee802_15_4.dqcsk_mapper_fc(cfg.chirp_seq, cfg.time_gap_1, cfg.time_gap_2, c.n_sub, cfg.n_subchirps, 1000)
         self.snk = blocks.vector_sink_c(1)
         self.tb.connect(self.src, self.dqcsk, self.snk)
         self.tb.run ()

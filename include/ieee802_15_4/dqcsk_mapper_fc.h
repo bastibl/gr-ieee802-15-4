@@ -46,7 +46,7 @@ namespace gr {
        * class. ieee802_15_4::dqcsk_mapper_fc::make is the public interface for
        * creating new instances.
        */
-      static sptr make(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirp);
+      static sptr make(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirp, int nsym_frame);
     };
 
   } // namespace ieee802_15_4

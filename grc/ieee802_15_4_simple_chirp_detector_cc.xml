@@ -1,5 +1,5 @@
 <block>
-  <name>Chirp Detector</name>
+  <name>Simple Chirp Detector</name>
   <key>ieee802_15_4_simple_chirp_detector_cc</key>
   <category>IEEE802.15.4</category>
   <import>import ieee802_15_4</import>

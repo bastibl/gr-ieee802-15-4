@@ -69,7 +69,7 @@
     <key>variable</key>
     <param>
       <key>id</key>
-      <value>text_msg</value>
+      <value>c</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -77,7 +77,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"Hello World! Now supporting CSS!!"</value>
+      <value>ieee802_15_4.css_phy(phy_packetsize_bytes=len(text_msg)+15)</value>
     </param>
     <param>
       <key>alias</key>
@@ -85,7 +85,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(160, 267)</value>
+      <value>(184, 67)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -123,7 +123,7 @@
     <key>variable</key>
     <param>
       <key>id</key>
-      <value>c</value>
+      <value>text_msg</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -131,7 +131,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>ieee802_15_4.css_phy(phy_packetsize_bytes=len(text_msg)+15)</value>
+      <value>"Hello World! Now supporting CSS!!"</value>
     </param>
     <param>
       <key>alias</key>
@@ -139,7 +139,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(184, 67)</value>
+      <value>(160, 267)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -715,6 +715,10 @@
       <value>gain</value>
     </param>
     <param>
+      <key>norm_gain0</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant0</key>
       <value></value>
     </param>
@@ -729,6 +733,10 @@
     <param>
       <key>gain1</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain1</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant1</key>
@@ -747,6 +755,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain2</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant2</key>
       <value></value>
     </param>
@@ -761,6 +773,10 @@
     <param>
       <key>gain3</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain3</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant3</key>
@@ -779,6 +795,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain4</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant4</key>
       <value></value>
     </param>
@@ -793,6 +813,10 @@
     <param>
       <key>gain5</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain5</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant5</key>
@@ -811,6 +835,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain6</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant6</key>
       <value></value>
     </param>
@@ -825,6 +853,10 @@
     <param>
       <key>gain7</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain7</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant7</key>
@@ -843,6 +875,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain8</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant8</key>
       <value></value>
     </param>
@@ -857,6 +893,10 @@
     <param>
       <key>gain9</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain9</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant9</key>
@@ -875,6 +915,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain10</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant10</key>
       <value></value>
     </param>
@@ -889,6 +933,10 @@
     <param>
       <key>gain11</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain11</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant11</key>
@@ -907,6 +955,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain12</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant12</key>
       <value></value>
     </param>
@@ -921,6 +973,10 @@
     <param>
       <key>gain13</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain13</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant13</key>
@@ -939,6 +995,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain14</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant14</key>
       <value></value>
     </param>
@@ -953,6 +1013,10 @@
     <param>
       <key>gain15</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain15</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant15</key>
@@ -971,6 +1035,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain16</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant16</key>
       <value></value>
     </param>
@@ -985,6 +1053,10 @@
     <param>
       <key>gain17</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain17</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant17</key>
@@ -1003,6 +1075,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain18</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant18</key>
       <value></value>
     </param>
@@ -1017,6 +1093,10 @@
     <param>
       <key>gain19</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain19</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant19</key>
@@ -1035,6 +1115,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain20</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant20</key>
       <value></value>
     </param>
@@ -1049,6 +1133,10 @@
     <param>
       <key>gain21</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain21</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant21</key>
@@ -1067,6 +1155,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain22</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant22</key>
       <value></value>
     </param>
@@ -1081,6 +1173,10 @@
     <param>
       <key>gain23</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain23</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant23</key>
@@ -1099,6 +1195,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain24</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant24</key>
       <value></value>
     </param>
@@ -1113,6 +1213,10 @@
     <param>
       <key>gain25</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain25</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant25</key>
@@ -1131,6 +1235,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain26</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant26</key>
       <value></value>
     </param>
@@ -1145,6 +1253,10 @@
     <param>
       <key>gain27</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain27</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant27</key>
@@ -1163,6 +1275,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain28</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant28</key>
       <value></value>
     </param>
@@ -1177,6 +1293,10 @@
     <param>
       <key>gain29</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain29</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant29</key>
@@ -1195,6 +1315,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain30</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant30</key>
       <value></value>
     </param>
@@ -1209,6 +1333,10 @@
     <param>
       <key>gain31</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain31</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant31</key>
@@ -1398,6 +1526,10 @@
       <value>gain</value>
     </param>
     <param>
+      <key>norm_gain0</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant0</key>
       <value></value>
     </param>
@@ -1412,6 +1544,10 @@
     <param>
       <key>gain1</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain1</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant1</key>
@@ -1430,6 +1566,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain2</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant2</key>
       <value></value>
     </param>
@@ -1444,6 +1584,10 @@
     <param>
       <key>gain3</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain3</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant3</key>
@@ -1462,6 +1606,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain4</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant4</key>
       <value></value>
     </param>
@@ -1476,6 +1624,10 @@
     <param>
       <key>gain5</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain5</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant5</key>
@@ -1494,6 +1646,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain6</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant6</key>
       <value></value>
     </param>
@@ -1508,6 +1664,10 @@
     <param>
       <key>gain7</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain7</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant7</key>
@@ -1526,6 +1686,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain8</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant8</key>
       <value></value>
     </param>
@@ -1540,6 +1704,10 @@
     <param>
       <key>gain9</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain9</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant9</key>
@@ -1558,6 +1726,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain10</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant10</key>
       <value></value>
     </param>
@@ -1572,6 +1744,10 @@
     <param>
       <key>gain11</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain11</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant11</key>
@@ -1590,6 +1766,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain12</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant12</key>
       <value></value>
     </param>
@@ -1604,6 +1784,10 @@
     <param>
       <key>gain13</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain13</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant13</key>
@@ -1622,6 +1806,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain14</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant14</key>
       <value></value>
     </param>
@@ -1636,6 +1824,10 @@
     <param>
       <key>gain15</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain15</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant15</key>
@@ -1654,6 +1846,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain16</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant16</key>
       <value></value>
     </param>
@@ -1668,6 +1864,10 @@
     <param>
       <key>gain17</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain17</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant17</key>
@@ -1686,6 +1886,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain18</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant18</key>
       <value></value>
     </param>
@@ -1700,6 +1904,10 @@
     <param>
       <key>gain19</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain19</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant19</key>
@@ -1718,6 +1926,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain20</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant20</key>
       <value></value>
     </param>
@@ -1732,6 +1944,10 @@
     <param>
       <key>gain21</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain21</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant21</key>
@@ -1750,6 +1966,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain22</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant22</key>
       <value></value>
     </param>
@@ -1764,6 +1984,10 @@
     <param>
       <key>gain23</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain23</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant23</key>
@@ -1782,6 +2006,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain24</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant24</key>
       <value></value>
     </param>
@@ -1796,6 +2024,10 @@
     <param>
       <key>gain25</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain25</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant25</key>
@@ -1814,6 +2046,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain26</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant26</key>
       <value></value>
     </param>
@@ -1828,6 +2064,10 @@
     <param>
       <key>gain27</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain27</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant27</key>
@@ -1846,6 +2086,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain28</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant28</key>
       <value></value>
     </param>
@@ -1860,6 +2104,10 @@
     <param>
       <key>gain29</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain29</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant29</key>
@@ -1878,6 +2126,10 @@
       <value>0</value>
     </param>
     <param>
+      <key>norm_gain30</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>ant30</key>
       <value></value>
     </param>
@@ -1892,6 +2144,10 @@
     <param>
       <key>gain31</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>norm_gain31</key>
+      <value>False</value>
     </param>
     <param>
       <key>ant31</key>
@@ -2372,57 +2628,6 @@
     <param>
       <key>_rotation</key>
       <value>180</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_throttle</key>
-    <param>
-      <key>id</key>
-      <value>blocks_throttle_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>samples_per_second</key>
-      <value>samp_rate/1000</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>ignoretag</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(224, 566)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
     </param>
   </block>
   <block>
@@ -3028,6 +3233,57 @@
     <param>
       <key>_coordinate</key>
       <value>(952, 572)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_throttle</key>
+    <param>
+      <key>id</key>
+      <value>blocks_throttle_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>samples_per_second</key>
+      <value>samp_rate/500</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>ignoretag</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(224, 566)</value>
     </param>
     <param>
       <key>_rotation</key>

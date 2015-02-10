@@ -3,7 +3,7 @@
   <key>ieee802_15_4_dqcsk_mapper_fc</key>
   <category>IEEE802.15.4</category>
   <import>import ieee802_15_4</import>
-  <make>ieee802_15_4.dqcsk_mapper_fc($chirp_seq, $time_gap_1, $time_gap_2, $len_subchirp, $num_subchirps)</make>
+  <make>ieee802_15_4.dqcsk_mapper_fc($chirp_seq, $time_gap_1, $time_gap_2, $len_subchirp, $num_subchirps, $nsym_frame)</make>
   <param>
     <name>Chirp Sequence</name>
     <key>chirp_seq</key>
@@ -29,6 +29,11 @@
     <key>num_subchirps</key>
     <type>int</type>
   </param>
+  <param>
+    <name>Num symbols per Frame</name>
+    <key>nsym_frame</key>
+    <type>int</type>
+  </param>  
   <sink>
     <name>in</name>
     <type>float</type>

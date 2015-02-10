@@ -81,8 +81,8 @@ namespace gr {
         {
           uint64_t first_tag_pos = tags[0].offset - nitems_read(0);
           uint64_t second_tag_pos = tags[1].offset - nitems_read(0);
-          std::cout << "Frame buffer: found SOF tags at pos " << tags[0].offset << " and " << tags[1].offset << std::endl;
-          std::cout << "Frame buffer: Consume " << first_tag_pos << " samples." << std::endl;
+          // std::cout << "Frame buffer: found SOF tags at pos " << tags[0].offset << " and " << tags[1].offset << std::endl;
+          // std::cout << "Frame buffer: Consume " << first_tag_pos << " samples." << std::endl;
           samples_consumed += first_tag_pos;
           if(second_tag_pos - first_tag_pos < d_nsym_frame)
           {
@@ -91,14 +91,19 @@ namespace gr {
           }
           else if(ninput_items[0] - samples_consumed >= d_nsym_frame)
           {
-            std::cout << "Frame buffer: Return frame of " << d_nsym_frame << " samples" << std::endl;
+            // std::cout << "Frame buffer: Return frame of " << d_nsym_frame << " samples" << std::endl;
             memcpy(out, in+samples_consumed, sizeof(gr_complex)*d_nsym_frame);
             samples_consumed += d_nsym_frame;
             samples_produced += d_nsym_frame;
           }
         }
-        else
-          throw std::runtime_error("Frame buffer: Not enough tags in range");
+        else // if there are no two tags in range, consume samples up to the next tag or all samples if no tags are present
+        {
+          if(tags.size() == 1)
+            samples_consumed += tags[0].offset - nitems_read(0);
+          else
+            samples_consumed += ninput_items[0];
+        }
 
         consume_each (samples_consumed);
         return samples_produced;

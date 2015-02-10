@@ -35,9 +35,15 @@ namespace gr {
       int d_len_subchirp;
       int d_num_subchirps;
       int d_chirp_seq_ctr;
+      int d_subchirp_ctr;
+      int d_nsym_frame;
+      int d_sym_ctr;
+      int max_len_timegap;
+
+      void reset();
 
      public:
-      dqcsk_mapper_fc_impl(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirps);
+      dqcsk_mapper_fc_impl(std::vector<gr_complex> chirp_seq, std::vector<gr_complex> time_gap_1, std::vector<gr_complex> time_gap_2, int len_subchirp, int num_subchirps, int nsym_frame);
       ~dqcsk_mapper_fc_impl();
 
       void forecast (int noutput_items, gr_vector_int &ninput_items_required);
