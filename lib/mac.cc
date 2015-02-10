@@ -68,7 +68,7 @@ void mac_in(pmt::pmt_t msg) {
 	// char* dblob = (char*) pmt::blob_data(blob);
 	// int dlen = pmt::blob_length(blob);
 	// for(int i=0; i<dlen; i++)
-	// 	dout << int(dblob[i]);
+	// 	dout << unsigned(dblob[i]);
 	// dout << std::endl;
 
 	size_t data_len = pmt::blob_length(blob);
@@ -142,7 +142,9 @@ void generate_mac(const char *buf, int len) {
 	d_msg[1] = 0x88;
 
 	// seq nr
-	d_msg[2] = d_seq_nr++;
+	//FIXME insert static seq nr for debug purposes
+	// d_msg[2] = d_seq_nr++;
+	d_msg[2] = 0x55;
 
 	// addr info
 	d_msg[3] = 0xcd;
@@ -152,7 +154,10 @@ void generate_mac(const char *buf, int len) {
 	d_msg[7] = 0x40;
 	d_msg[8] = 0xe8;
 
-	std::memcpy(d_msg + 9, buf, len);
+	// FIXME: insert static message content for debug purposes
+	// std::memcpy(d_msg + 9, buf, len);
+	for(int i=0; i<len; i++)
+		d_msg[9+i] = 65+i;
 
 	uint16_t crc = crc16(d_msg, len + 9);
 

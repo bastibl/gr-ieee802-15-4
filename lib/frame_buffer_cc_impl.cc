@@ -59,7 +59,7 @@ namespace gr {
     void
     frame_buffer_cc_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
-        ninput_items_required[0] = noutput_items;
+        ninput_items_required[0] = 2*d_nsym_frame;
     }
 
     int
@@ -76,27 +76,24 @@ namespace gr {
 
         std::vector<tag_t> tags;
         get_tags_in_range(tags, 0, nitems_read(0), nitems_read(0) + ninput_items[0], pmt::string_to_symbol("SOF"));
+
+        // NOTE: This simple algorithm may drop symbols if there are SOF tags less than d_nsym_frame symbols away from each other
         if(tags.size() > 0)
         {
-          uint64_t tag_pos = tags[tags.size()-1].offset - nitems_read(0);
-          std::cout << "Frame buffer: found SOF tag at pos " << tags[tags.size()-1].offset << ", consume " << tag_pos << " samples and reset" << std::endl;
-          samples_consumed += tag_pos;
-          d_buf.clear();
-        }
+          uint64_t first_tag_pos = tags[0].offset - nitems_read(0);
+          // std::cout << "Frame buffer: found SOF tag at pos " << tags[0].offset << std::endl;
+          samples_consumed += first_tag_pos;
 
-        while(ninput_items[0] - samples_consumed > 0)
-        {
-          d_buf.push_back(in[samples_consumed]);
-          samples_consumed++;
-          if(d_buf.size() == d_nsym_frame)
+          if(ninput_items[0] - samples_consumed >= d_nsym_frame)
           {
-            std::cout << "Frame buffer: Received complete frame" << std::endl;
-            memcpy(out+samples_produced, &d_buf[0], sizeof(gr_complex)*d_nsym_frame);
-            d_buf.clear();
+            std::cout << "Frame buffer: Return frame" << std::endl;
+            memcpy(out, in+samples_consumed, sizeof(gr_complex)*d_nsym_frame);
+            samples_consumed += d_nsym_frame;
             samples_produced += d_nsym_frame;
           }
         }
 
+        std::cout << "Framebuffer: return " << samples_produced << " samples" << std::endl;
         consume_each (samples_consumed);
         return samples_produced;
     }

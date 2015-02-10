@@ -162,11 +162,11 @@ namespace gr {
             if(corr_over_threshold(sym))
             {
               dout << "#SEARCH# " << std::norm(sym) << ": chirp #" << d_subchirp_ctr << " detected" << std::endl;
-              std::cout << "Chirp detector: SEARCH->TRACKING, add FCP tag at pos " << nitems_written(0) + samples_produced << std::endl;
+              std::cout << "Chirp detector: SEARCH->TRACKING after about " << (nitems_read(0) + samples_consumed)/192*4 << " DQPSK symbols" << std::endl;
               d_state = STATE_TRACKING;
               samples_consumed += dist_to_next_subchirp();
               out[samples_produced] = sym;
-              add_item_tag(0, nitems_written(0) + samples_produced, pmt::string_to_symbol("FCP"), pmt::from_long(0));
+              // add_item_tag(0, nitems_written(0) + samples_produced, pmt::string_to_symbol("FCP"), pmt::from_long(0));
               samples_produced++;
             }
             else

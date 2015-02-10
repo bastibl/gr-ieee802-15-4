@@ -870,41 +870,6 @@
     </param>
   </block>
   <block>
-    <key>ieee802_15_4_qpsk_mapper_if</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_qpsk_mapper_if_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(856, 382)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-  </block>
-  <block>
     <key>blocks_deinterleave</key>
     <param>
       <key>id</key>
@@ -1456,45 +1421,6 @@
     </param>
   </block>
   <block>
-    <key>ieee802_15_4_dqpsk_soft_demapper_cc</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_dqpsk_soft_demapper_cc_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>framelen</key>
-      <value>sym_per_frame</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(464, 734)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
     <key>ieee802_15_4_codeword_soft_demapper_fb</key>
     <param>
       <key>id</key>
@@ -1972,53 +1898,6 @@
     </param>
   </block>
   <block>
-    <key>blocks_multiply_const_vxx</key>
-    <param>
-      <key>id</key>
-      <value>blocks_multiply_const_vxx_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>const</key>
-      <value>np.exp(1j*np.pi/4)</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(624, 734)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
     <key>blocks_complex_to_float</key>
     <param>
       <key>id</key>
@@ -2051,135 +1930,6 @@
     <param>
       <key>_coordinate</key>
       <value>(872, 726)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_complex_to_arg</key>
-    <param>
-      <key>id</key>
-      <value>blocks_complex_to_arg_0_0_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(616, 582)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_file_sink</key>
-    <param>
-      <key>id</key>
-      <value>blocks_file_sink_0_1_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>file</key>
-      <value>pre_costas_arg.bin</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>unbuffered</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>append</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(784, 521)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_costas_loop_cc</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_costas_loop_cc_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>constellation_points</key>
-      <value>(1+1j, -1+1j, -1-1j, 1-1j)</value>
-    </param>
-    <param>
-      <key>initial_index</key>
-      <value>-1</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(128, 607)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2235,49 +1985,6 @@
     <param>
       <key>_coordinate</key>
       <value>(144, 716)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_preamble_detection_cc</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_preamble_detection_cc_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>len_preamble</key>
-      <value>len(preamble)</value>
-    </param>
-    <param>
-      <key>preamble_sym</key>
-      <value>(1+1j)</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(320, 607)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2418,18 +2125,69 @@
     </param>
   </block>
   <block>
-    <key>blocks_complex_to_arg</key>
+    <key>blocks_file_sink</key>
     <param>
       <key>id</key>
-      <value>blocks_complex_to_arg_0_0</value>
+      <value>blocks_file_sink_0_1</value>
     </param>
     <param>
       <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
+      <key>file</key>
+      <value>post_sync_arg.bin</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
       <key>vlen</key>
       <value>1</value>
+    </param>
+    <param>
+      <key>unbuffered</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>append</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(552, 505)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_costas_loop_cc</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_costas_loop_cc_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>constellation_points</key>
+      <value>(1+1j, -1+1j, -1-1j, 1-1j)</value>
+    </param>
+    <param>
+      <key>initial_index</key>
+      <value>-1</value>
     </param>
     <param>
       <key>alias</key>
@@ -2449,7 +2207,85 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(336, 566)</value>
+      <value>(128, 607)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_preamble_tagger_cc</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_preamble_tagger_cc_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>len_preamble</key>
+      <value>len(preamble)</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(312, 614)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_dqpsk_soft_demapper_cc</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_dqpsk_soft_demapper_cc_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>framelen</key>
+      <value>sym_per_frame</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(424, 734)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2496,10 +2332,88 @@
     </param>
   </block>
   <block>
+    <key>blocks_complex_to_arg</key>
+    <param>
+      <key>id</key>
+      <value>blocks_complex_to_arg_0_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(296, 566)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_complex_to_arg</key>
+    <param>
+      <key>id</key>
+      <value>blocks_complex_to_arg_0_0_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(616, 582)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
     <key>blocks_file_sink</key>
     <param>
       <key>id</key>
-      <value>blocks_file_sink_0_1</value>
+      <value>blocks_file_sink_0_1_0</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -2507,7 +2421,7 @@
     </param>
     <param>
       <key>file</key>
-      <value>post_sync_arg.bin</value>
+      <value>pre_costas_arg.bin</value>
     </param>
     <param>
       <key>type</key>
@@ -2535,7 +2449,222 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(552, 505)</value>
+      <value>(784, 521)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_multiply_const_vxx</key>
+    <param>
+      <key>id</key>
+      <value>blocks_multiply_const_vxx_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>const</key>
+      <value>np.exp(1j*np.pi/4)</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(624, 734)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_complex_to_arg</key>
+    <param>
+      <key>id</key>
+      <value>blocks_complex_to_arg_0_0_0_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(840, 638)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_file_sink</key>
+    <param>
+      <key>id</key>
+      <value>blocks_file_sink_0_1_0_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>file</key>
+      <value>qpsk_rx.bin</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>unbuffered</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>append</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1008, 585)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_qpsk_mapper_if</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_qpsk_mapper_if_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(856, 382)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_file_sink</key>
+    <param>
+      <key>id</key>
+      <value>blocks_file_sink_0_1_0_0_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>file</key>
+      <value>qpsk_tx.bin</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>unbuffered</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>append</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(720, 449)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2729,12 +2858,6 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_dqpsk_soft_demapper_cc_0</source_block_id>
-    <sink_block_id>blocks_multiply_const_vxx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
     <source_block_id>ieee802_15_4_chirp_detector_cc_0</source_block_id>
     <sink_block_id>ieee802_15_4_costas_loop_cc_0</sink_block_id>
     <source_key>0</source_key>
@@ -2759,18 +2882,6 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_preamble_detection_cc_0</source_block_id>
-    <sink_block_id>ieee802_15_4_frame_buffer_cc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_costas_loop_cc_0</source_block_id>
-    <sink_block_id>ieee802_15_4_preamble_detection_cc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
     <source_block_id>ieee802_15_4_costas_loop_cc_0</source_block_id>
     <sink_block_id>blocks_complex_to_mag_0</sink_block_id>
     <source_key>0</source_key>
@@ -2783,20 +2894,50 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
+    <source_block_id>ieee802_15_4_costas_loop_cc_0</source_block_id>
+    <sink_block_id>ieee802_15_4_preamble_tagger_cc_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_preamble_tagger_cc_0</source_block_id>
+    <sink_block_id>ieee802_15_4_frame_buffer_cc_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_dqpsk_soft_demapper_cc_0</source_block_id>
+    <sink_block_id>blocks_multiply_const_vxx_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
     <source_block_id>ieee802_15_4_chirp_detector_cc_0</source_block_id>
     <sink_block_id>blocks_complex_to_arg_0_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_chirp_detector_cc_0</source_block_id>
-    <sink_block_id>ieee802_15_4_preamble_detection_cc_0</sink_block_id>
+    <source_block_id>ieee802_15_4_frame_buffer_cc_0</source_block_id>
+    <sink_block_id>blocks_complex_to_arg_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>ieee802_15_4_frame_buffer_cc_0</source_block_id>
-    <sink_block_id>blocks_complex_to_arg_0_0</sink_block_id>
+    <source_block_id>blocks_complex_to_arg_0_0_0_0</source_block_id>
+    <sink_block_id>blocks_file_sink_0_1_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_multiply_const_vxx_0</source_block_id>
+    <sink_block_id>blocks_complex_to_arg_0_0_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_15_4_qpsk_mapper_if_0</source_block_id>
+    <sink_block_id>blocks_file_sink_0_1_0_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

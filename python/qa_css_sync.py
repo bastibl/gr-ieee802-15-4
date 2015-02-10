@@ -49,7 +49,7 @@ class qa_css_sync (gr_unittest.TestCase):
     #     snk_det = blocks.vector_sink_c()
     #     costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), -1)
     #     snk_costas = blocks.vector_sink_c()
-    #     preamble = ieee802_15_4.preamble_detection_cc(len(m.preamble), m.preamble[0])
+    #     preamble = ieee802_15_4.preamble_tagger_cc(len(m.preamble))
     #     snk_preamble = blocks.vector_sink_c()
     #     frame_buffer = ieee802_15_4.frame_buffer_cc(len(sym_in))
     #     snk_framebuffer = blocks.vector_sink_c()
@@ -62,26 +62,26 @@ class qa_css_sync (gr_unittest.TestCase):
 
     #     ref = np.concatenate((sym_in, sym_in, sym_in))
 
-    #     det_out = snk_det.data()[:len(sym_in)*3]
-    #     # plt.plot(abs(det_out - ref))
-    #     # plt.title("post chirp detector")
-    #     # plt.show()
-    #     self.assertComplexTuplesAlmostEqual(det_out, ref, 5)
+    #     # det_out = snk_det.data()[:len(sym_in)*3]
+    #     # # plt.plot(abs(det_out - ref))
+    #     # # plt.title("post chirp detector")
+    #     # # plt.show()
+    #     # self.assertComplexTuplesAlmostEqual(det_out, ref, 5)
 
-    #     costas_out = snk_costas.data()[:len(sym_in)*3]
-    #     # plt.plot(abs(costas_out - ref))
-    #     # plt.title("post costas loop")
-    #     # plt.show()
-    #     self.assertComplexTuplesAlmostEqual(costas_out, ref, 5)
+    #     # costas_out = snk_costas.data()[:len(sym_in)*3]
+    #     # # plt.plot(abs(costas_out - ref))
+    #     # # plt.title("post costas loop")
+    #     # # plt.show()
+    #     # self.assertComplexTuplesAlmostEqual(costas_out, ref, 5)
 
-    #     preamble_out = snk_preamble.data()[:len(sym_in)*3]
+    #     # preamble_out = snk_preamble.data()[:len(sym_in)*3]
     #     framebuffer_out = snk_framebuffer.data()[:len(sym_in)*3]
 
-    #     print "len(data_in):", len(data_in)
-    #     print "len(det_out):", len(det_out)
-    #     print "len(costas_out):", len(costas_out)
-    #     print "len(preamble_out):", len(preamble_out)
-    #     print "len(framebuffer_out):", len(framebuffer_out)
+    #     # print "len(data_in):", len(data_in)
+    #     # print "len(det_out):", len(det_out)
+    #     # print "len(costas_out):", len(costas_out)
+    #     # print "len(preamble_out):", len(preamble_out)
+    #     # print "len(framebuffer_out):", len(framebuffer_out)
 
     #     # f, axarr = plt.subplots(3,1)
     #     # axarr[0].plot(abs(framebuffer_out - ref))
@@ -113,7 +113,7 @@ class qa_css_sync (gr_unittest.TestCase):
     #     snk_det = blocks.vector_sink_c()
     #     costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), -1)
     #     snk_costas = blocks.vector_sink_c()
-    #     preamble = ieee802_15_4.preamble_detection_cc(len(m.preamble), m.preamble[0])
+    #     preamble = ieee802_15_4.preamble_tagger_cc(len(m.preamble))
     #     snk_preamble = blocks.vector_sink_c()
     #     frame_buffer = ieee802_15_4.frame_buffer_cc(len(sym_in1))
     #     snk_framebuffer = blocks.vector_sink_c()
@@ -126,71 +126,17 @@ class qa_css_sync (gr_unittest.TestCase):
 
     #     ref = np.concatenate((sym_in1, sym_in2, sym_in3))
 
-    #     det_out = snk_det.data()[:len(sym_in1)*3]
-    #     self.assertComplexTuplesAlmostEqual(det_out, ref, 5)
+    #     # det_out = snk_det.data()[:len(sym_in1)*3]
+    #     # self.assertComplexTuplesAlmostEqual(det_out, ref, 5)
 
-    #     costas_out = snk_costas.data()[:len(sym_in1)*3]
-    #     self.assertComplexTuplesAlmostEqual(costas_out, ref, 5)
+    #     # costas_out = snk_costas.data()[:len(sym_in1)*3]
+    #     # self.assertComplexTuplesAlmostEqual(costas_out, ref, 5)
 
-    #     preamble_out = snk_preamble.data()[:len(sym_in1)*3]
-    #     self.assertComplexTuplesAlmostEqual(preamble_out, ref, 5)
+    #     # preamble_out = snk_preamble.data()[:len(sym_in1)*3]
+    #     # self.assertComplexTuplesAlmostEqual(preamble_out, ref, 5)
 
     #     framebuffer_out = snk_framebuffer.data()[:len(sym_in1)*3]
     #     self.assertComplexTuplesAlmostEqual(framebuffer_out, ref, 5)
-
-    # def test_003_t (self): # late entry
-    #     print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY"
-    #     print "Test late entry"
-    #     m = ieee802_15_4_installed.css_modulator()
-    #     bits_in1, bb_in1 = m.modulate_random()
-    #     sym_in1 = m.frame_DQPSK
-    #     bits_in2, bb_in2 = m.modulate_random()
-    #     sym_in2 = m.frame_DQPSK
-    #     bits_in3, bb_in3 = m.modulate_random()
-    #     sym_in3 = m.frame_DQPSK
-    #     print "Number of DQPSK symbols per frame:", len(sym_in1)
-
-    #     zeros = np.zeros((50,))
-    #     ncopies = 100
-    #     data_part = np.concatenate((zeros, bb_in2[-10*192:], bb_in1, bb_in1))
-    #     data_mult = np.tile(data_part, (ncopies,))
-    #     data_in = np.concatenate((data_mult, np.zeros((ncopies,)), np.tile(data_part, (5,))))
-    #     src = blocks.vector_source_c(data_in)
-    #     det = ieee802_15_4.chirp_detector_cc(m.chirp_seq, len(m.time_gap_1), len(m.time_gap_2), 38, 0.95)
-    #     snk_det = blocks.vector_sink_c()
-    #     # preamble = ieee802_15_4.preamble_detection_cc(len(m.preamble), m.preamble[0])
-    #     preamble = ieee802_15_4.preamble_tagger_cc(len(m.preamble))
-    #     snk_preamble = blocks.vector_sink_c()
-    #     snk_framebuffer = blocks.vector_sink_c()
-    #     self.tb.connect(src, det, preamble, snk_preamble)
-    #     self.tb.connect(det, snk_det)
-    #     self.tb.run()
-
-    #     det_ref_len = (len(sym_in1)*2+40)*ncopies
-    #     det_out = snk_det.data()[:det_ref_len]
-    #     ref_det_part = np.concatenate((sym_in2[-40:], sym_in1, sym_in1))
-    #     ref_det = np.tile(ref_det_part, (ncopies,))
-    #     self.assertComplexTuplesAlmostEqual(det_out, ref_det, 5)
-
-    #     preamble_ref_len = det_ref_len
-    #     preamble_out = snk_preamble.data()[:preamble_ref_len]
-    #     ref_preamble = ref_det
-    #     f, axarr = plt.subplots(3,1)
-    #     axarr[0].plot(np.real(ref_preamble))
-    #     axarr[0].set_title("real ref")
-    #     axarr[1].plot(np.real(preamble_out))
-    #     axarr[1].set_title("real preamble output")
-    #     axarr[2].plot(abs(ref_preamble-preamble_out))
-    #     axarr[2].set_title("abs diff ref preamble")
-    #     plt.show()
-
-    #     self.assertComplexTuplesAlmostEqual(preamble_out, ref_preamble, 5)
-    #     # f, axarr = plt.subplots(2,1)
-    #     # axarr[0].plot(np.real(ref_preamble - preamble_out))
-    #     # axarr[0].set_title('real')
-    #     # axarr[1].plot(np.imag(ref_preamble - preamble_out))
-    #     # axarr[1].set_title('imag')
-    #     # plt.show()
 
     def test_003_t (self): # late entry
         print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY"
@@ -205,7 +151,11 @@ class qa_css_sync (gr_unittest.TestCase):
         print "Number of DQPSK symbols per frame:", len(sym_in1)
 
         zeros = np.zeros((50,))
-        data_in = np.concatenate((bb_in1[-2*192:], bb_in1, bb_in2, bb_in3, bb_in3, bb_in3, bb_in3, bb_in3))
+        nsym_early = 8
+        data_part = np.concatenate((bb_in1[-nsym_early*192/4:], bb_in1, bb_in2, bb_in3, bb_in3, bb_in3))
+        ncopies = 1
+        data = np.tile(data_part, (ncopies,))
+        data_in = np.concatenate((data, bb_in3, bb_in3, bb_in3))
         src = blocks.vector_source_c(data_in)
         det = ieee802_15_4.chirp_detector_cc(m.chirp_seq, len(m.time_gap_1), len(m.time_gap_2), 38, 0.95)
         snk_det = blocks.vector_sink_c()
@@ -222,9 +172,10 @@ class qa_css_sync (gr_unittest.TestCase):
         self.tb.connect(frame_buffer, snk_framebuffer)
         self.tb.run()
 
-        ref_len = len(sym_in1)*3
+        ref_len = (len(sym_in1)*3 + nsym_early)*ncopies
         det_out = snk_det.data()[:ref_len]
-        ref_det = np.concatenate((sym_in1[-8:], sym_in1, sym_in2, sym_in3))[:ref_len]
+        ref_det_part = np.concatenate((sym_in1[-nsym_early:], sym_in1, sym_in2, sym_in3))
+        ref_det = np.tile(ref_det_part, (ncopies,))
         self.assertComplexTuplesAlmostEqual(det_out, ref_det, 5)
 
         costas_out = snk_costas.data()[:ref_len]
@@ -235,10 +186,250 @@ class qa_css_sync (gr_unittest.TestCase):
         ref_preamble = ref_costas
         self.assertComplexTuplesAlmostEqual(preamble_out, ref_preamble, 5)
         
-        framebuffer_out = snk_framebuffer.data()[:ref_len]
-        ref_framebuffer = np.concatenate((sym_in1, sym_in2, sym_in3))
+        framebuffer_out = snk_framebuffer.data()[:ref_len-ncopies*nsym_early]
+        ref_framebuffer_part = np.concatenate((sym_in1, sym_in2, sym_in3))
+        ref_framebuffer = np.tile(ref_framebuffer_part, (ncopies,))
 
         self.assertComplexTuplesAlmostEqual(framebuffer_out, ref_framebuffer, 5)
+
+    # def test_004_t (self):
+    #     print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY"
+    #     print "Test interrupted frames at symbol boundary without zeros inbetween"
+    #     m = ieee802_15_4_installed.css_modulator()
+    #     bits_in1, bb_in1 = m.modulate_random()
+    #     len_bb = len(bb_in1)
+    #     sym_in1 = m.frame_DQPSK
+    #     len_frame = len(sym_in1)
+    #     bits_in2, bb_in2 = m.modulate_random()
+    #     sym_in2 = m.frame_DQPSK
+    #     bits_in3, bb_in3 = m.modulate_random()
+    #     sym_in3 = m.frame_DQPSK
+    #     print "Number of DQPSK symbols per frame:", len(sym_in1)
+
+    #     zeros = np.zeros((50000,))
+    #     data_part = np.concatenate((bb_in1, bb_in2[:len_bb/2], bb_in2, bb_in3))
+    #     ncopies = 10
+    #     data = np.tile(data_part, (ncopies,))
+    #     data_in = np.concatenate((data, bb_in3, bb_in3, bb_in3)) # pad some frames
+    #     src = blocks.vector_source_c(data_in)
+    #     det = ieee802_15_4.chirp_detector_cc(m.chirp_seq, len(m.time_gap_1), len(m.time_gap_2), 38, 0.999)
+    #     snk_det = blocks.vector_sink_c()
+    #     costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), -1)
+    #     snk_costas = blocks.vector_sink_c()
+    #     preamble = ieee802_15_4.preamble_tagger_cc(len(m.preamble))
+    #     snk_preamble = blocks.vector_sink_c()
+    #     frame_buffer = ieee802_15_4.frame_buffer_cc(len(sym_in1))
+    #     snk_framebuffer = blocks.vector_sink_c()
+    #     self.tb.connect(src, det, costas, preamble, frame_buffer)
+    #     self.tb.connect(det, snk_det)
+    #     self.tb.connect(costas, snk_costas)
+    #     self.tb.connect(preamble, snk_preamble)
+    #     self.tb.connect(frame_buffer, snk_framebuffer)
+    #     self.tb.run()
+
+    #     ref_len = int(len_frame*3.5*ncopies)
+    #     det_out = snk_det.data()[:ref_len]
+    #     ref_det_part = np.concatenate((sym_in1, sym_in2[:len_frame/2], sym_in2, sym_in3))
+    #     ref_det = np.tile(ref_det_part, (ncopies,))
+    #     self.assertComplexTuplesAlmostEqual(det_out, ref_det, 5)
+
+    #     costas_out = snk_costas.data()[:ref_len]
+    #     ref_costas = ref_det
+    #     self.assertComplexTuplesAlmostEqual(costas_out, ref_costas, 5)
+
+    #     preamble_out = snk_preamble.data()[:ref_len]
+    #     ref_preamble = ref_costas
+    #     self.assertComplexTuplesAlmostEqual(preamble_out, ref_preamble, 5)
+
+    #     framebuffer_out = snk_framebuffer.data()[:ref_len-ncopies*len_frame/2]
+    #     ref_framebuffer_part = np.concatenate((sym_in1, sym_in2[:len_frame/2], sym_in2[:len_frame/2], sym_in3))
+    #     ref_framebuffer = np.tile(ref_framebuffer_part, (ncopies,))
+
+    #     self.assertComplexTuplesAlmostEqual(framebuffer_out, ref_framebuffer, 5)       
+
+    # def test_005_t (self):
+    #     print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY"
+    #     print "Test interrupted frames at symbol boundary with zeros inbetween"
+    #     m = ieee802_15_4_installed.css_modulator()
+    #     bits_in1, bb_in1 = m.modulate_random()
+    #     len_bb = len(bb_in1)
+    #     sym_in1 = m.frame_DQPSK
+    #     len_frame = len(sym_in1)
+    #     bits_in2, bb_in2 = m.modulate_random()
+    #     sym_in2 = m.frame_DQPSK
+    #     bits_in3, bb_in3 = m.modulate_random()
+    #     sym_in3 = m.frame_DQPSK
+    #     print "Number of DQPSK symbols per frame:", len(sym_in1)
+
+    #     zeros = np.zeros((100,))
+    #     data_part = np.concatenate((bb_in1, bb_in2[:192*30], zeros, bb_in2[192*30:], bb_in3))
+    #     ncopies = 10
+    #     data = np.tile(data_part, (ncopies,))
+    #     data_in = np.concatenate((data, bb_in3, bb_in3, bb_in3)) # pad some frames
+    #     src = blocks.vector_source_c(data_in)
+    #     det = ieee802_15_4.chirp_detector_cc(m.chirp_seq, len(m.time_gap_1), len(m.time_gap_2), 38, 0.999)
+    #     snk_det = blocks.vector_sink_c()
+    #     costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), -1)
+    #     snk_costas = blocks.vector_sink_c()
+    #     preamble = ieee802_15_4.preamble_tagger_cc(len(m.preamble))
+    #     snk_preamble = blocks.vector_sink_c()
+    #     frame_buffer = ieee802_15_4.frame_buffer_cc(len(sym_in1))
+    #     snk_framebuffer = blocks.vector_sink_c()
+    #     self.tb.connect(src, det, costas, preamble, frame_buffer)
+    #     self.tb.connect(det, snk_det)
+    #     self.tb.connect(costas, snk_costas)
+    #     self.tb.connect(preamble, snk_preamble)
+    #     self.tb.connect(frame_buffer, snk_framebuffer)
+    #     self.tb.run()
+
+    #     ref_len = len_frame*3*ncopies
+    #     det_out = snk_det.data()[:ref_len]
+    #     ref_det_part = np.concatenate((sym_in1, sym_in2, sym_in3))
+    #     ref_det = np.tile(ref_det_part, (ncopies,))
+    #     self.assertComplexTuplesAlmostEqual(det_out, ref_det, 5)
+
+    #     costas_out = snk_costas.data()[:ref_len]
+    #     ref_costas = ref_det
+    #     self.assertComplexTuplesAlmostEqual(costas_out, ref_costas, 5)
+
+    #     preamble_out = snk_preamble.data()[:ref_len]
+    #     ref_preamble = ref_costas
+    #     self.assertComplexTuplesAlmostEqual(preamble_out, ref_preamble, 5)
+
+    #     framebuffer_out = snk_framebuffer.data()[:ref_len]
+    #     ref_framebuffer_part = np.concatenate((sym_in1, sym_in2, sym_in3))
+    #     ref_framebuffer = np.tile(ref_framebuffer_part, (ncopies,))
+
+    #     self.assertComplexTuplesAlmostEqual(framebuffer_out, ref_framebuffer, 5) 
+
+    # def test_006_t (self):
+    #     print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY"
+    #     print "Test interrupted frames during chirp ramp with zeros inbetween"
+    #     m = ieee802_15_4_installed.css_modulator()
+    #     bits_in1, bb_in1 = m.modulate_random()
+    #     len_bb = len(bb_in1)
+    #     sym_in1 = m.frame_DQPSK
+    #     len_frame = len(sym_in1)
+    #     bits_in2, bb_in2 = m.modulate_random()
+    #     sym_in2 = m.frame_DQPSK
+    #     bits_in3, bb_in3 = m.modulate_random()
+    #     sym_in3 = m.frame_DQPSK
+    #     print "Number of DQPSK symbols per frame:", len(sym_in1)
+
+    #     zeros = np.zeros((100,))
+    #     data_in = np.concatenate((bb_in1[:192*30-15], zeros, bb_in1[192*30+15:], bb_in2, bb_in1, bb_in2, bb_in3))
+    #     src = blocks.vector_source_c(data_in)
+    #     det = ieee802_15_4.chirp_detector_cc(m.chirp_seq, len(m.time_gap_1), len(m.time_gap_2), 38, 0.999)
+    #     snk_det = blocks.vector_sink_c()
+    #     costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), -1)
+    #     snk_costas = blocks.vector_sink_c()
+    #     preamble = ieee802_15_4.preamble_tagger_cc(len(m.preamble))
+    #     snk_preamble = blocks.vector_sink_c()
+    #     frame_buffer = ieee802_15_4.frame_buffer_cc(len(sym_in1))
+    #     snk_framebuffer = blocks.vector_sink_c()
+    #     self.tb.connect(src, det, costas, preamble, frame_buffer)
+    #     self.tb.connect(det, snk_det)
+    #     self.tb.connect(costas, snk_costas)
+    #     self.tb.connect(preamble, snk_preamble)
+    #     self.tb.connect(frame_buffer, snk_framebuffer)
+    #     self.tb.run()
+
+    #     ref_len = len_frame*3
+    #     det_out = snk_det.data()[-ref_len:]
+    #     ref_det = np.concatenate((sym_in1, sym_in2, sym_in3))
+    #     # f, axarr = plt.subplots(3,1)
+    #     # axarr[0].plot(abs(ref_det - det_out))
+    #     # axarr[0].set_title('diff abs')
+    #     # axarr[1].plot(np.real(ref_det))
+    #     # axarr[1].plot(np.imag(ref_det))
+    #     # axarr[1].set_title('ref')
+    #     # axarr[2].plot(np.real(det_out))
+    #     # axarr[2].plot(np.imag(det_out))
+    #     # axarr[2].set_title('det out')
+    #     # plt.suptitle('chirp detector output')
+    #     # plt.show()
+    #     self.assertComplexTuplesAlmostEqual(det_out, ref_det, 5)
+
+    #     costas_out = snk_costas.data()[-ref_len:]
+    #     ref_costas = ref_det
+    #     self.assertComplexTuplesAlmostEqual(costas_out, ref_costas, 5)
+
+    #     preamble_out = snk_preamble.data()[-ref_len:]
+    #     ref_preamble = ref_costas
+    #     self.assertComplexTuplesAlmostEqual(preamble_out, ref_preamble, 5)
+
+    #     framebuffer_out = snk_framebuffer.data()[:ref_len]
+    #     ref_framebuffer_part = np.concatenate((sym_in1, sym_in2, sym_in3))
+    #     ref_framebuffer = np.tile(ref_framebuffer_part, (ncopies,))
+
+    #     self.assertComplexTuplesAlmostEqual(framebuffer_out, ref_framebuffer, 5) 
+
+    # def test_006_t (self):
+    #     print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY"
+    #     print "Test interrupted frames during chirp ramp with zeros inbetween"
+    #     m = ieee802_15_4_installed.css_modulator()
+    #     bits_in1, bb_in1 = m.modulate_random()
+    #     len_bb = len(bb_in1)
+    #     sym_in1 = m.frame_DQPSK
+    #     len_frame = len(sym_in1)
+    #     bits_in2, bb_in2 = m.modulate_random()
+    #     sym_in2 = m.frame_DQPSK
+    #     bits_in3, bb_in3 = m.modulate_random()
+    #     sym_in3 = m.frame_DQPSK
+    #     print "Number of DQPSK symbols per frame:", len(sym_in1)
+
+    #     zeros = np.zeros((100,))
+    #     data_part = np.concatenate((bb_in1[:192*30-15], zeros, bb_in1[192*30+15:], bb_in2, bb_in3))
+    #     ncopies = 1
+    #     data = np.tile(data_part, (ncopies,))
+    #     data_in = np.concatenate((data, bb_in3, bb_in3, bb_in3)) # pad some frames
+    #     src = blocks.vector_source_c(data_in)
+    #     det = ieee802_15_4.chirp_detector_cc(m.chirp_seq, len(m.time_gap_1), len(m.time_gap_2), 38, 0.999)
+    #     snk_det = blocks.vector_sink_c()
+    #     costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), -1)
+    #     snk_costas = blocks.vector_sink_c()
+    #     preamble = ieee802_15_4.preamble_tagger_cc(len(m.preamble))
+    #     snk_preamble = blocks.vector_sink_c()
+    #     frame_buffer = ieee802_15_4.frame_buffer_cc(len(sym_in1))
+    #     snk_framebuffer = blocks.vector_sink_c()
+    #     self.tb.connect(src, det, costas, preamble, frame_buffer)
+    #     self.tb.connect(det, snk_det)
+    #     self.tb.connect(costas, snk_costas)
+    #     self.tb.connect(preamble, snk_preamble)
+    #     self.tb.connect(frame_buffer, snk_framebuffer)
+    #     self.tb.run()
+
+    #     ref_len = (len_frame*3)*ncopies
+    #     det_out = snk_det.data()[:ref_len]
+    #     ref_det_part = np.concatenate((sym_in1, sym_in2, sym_in3))
+    #     ref_det = np.tile(ref_det_part, (ncopies,))
+    #     f, axarr = plt.subplots(3,1)
+    #     axarr[0].plot(abs(ref_det - det_out))
+    #     axarr[0].set_title('diff abs')
+    #     axarr[1].plot(np.real(ref_det))
+    #     axarr[1].plot(np.imag(ref_det))
+    #     axarr[1].set_title('ref')
+    #     axarr[2].plot(np.real(det_out))
+    #     axarr[2].plot(np.imag(det_out))
+    #     axarr[2].set_title('det out')
+    #     plt.suptitle('chirp detector output')
+    #     plt.show()
+    #     self.assertComplexTuplesAlmostEqual(det_out, ref_det, 5)
+
+    #     costas_out = snk_costas.data()[:ref_len]
+    #     ref_costas = ref_det
+    #     self.assertComplexTuplesAlmostEqual(costas_out, ref_costas, 5)
+
+    #     preamble_out = snk_preamble.data()[:ref_len]
+    #     ref_preamble = ref_costas
+    #     self.assertComplexTuplesAlmostEqual(preamble_out, ref_preamble, 5)
+
+    #     framebuffer_out = snk_framebuffer.data()[:ref_len]
+    #     ref_framebuffer_part = np.concatenate((sym_in1, sym_in2, sym_in3))
+    #     ref_framebuffer = np.tile(ref_framebuffer_part, (ncopies,))
+
+    #     self.assertComplexTuplesAlmostEqual(framebuffer_out, ref_framebuffer, 5) 
+
 
 if __name__ == '__main__':
     gr_unittest.run(qa_css_sync)
