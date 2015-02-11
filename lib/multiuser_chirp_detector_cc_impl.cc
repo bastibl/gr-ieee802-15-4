@@ -23,25 +23,25 @@
 #endif
 
 #include <gnuradio/io_signature.h>
-#include "chirp_detector_cc_impl.h"
+#include "multiuser_chirp_detector_cc_impl.h"
 #include <volk/volk.h>
 
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    chirp_detector_cc::sptr
-    chirp_detector_cc::make(std::vector<gr_complex> chirp_seq, int time_gap_1, int time_gap_2, int len_subchirp, float threshold)
+    multiuser_chirp_detector_cc::sptr
+    multiuser_chirp_detector_cc::make(std::vector<gr_complex> chirp_seq, int time_gap_1, int time_gap_2, int len_subchirp, float threshold)
     {
       return gnuradio::get_initial_sptr
-        (new chirp_detector_cc_impl(chirp_seq, time_gap_1, time_gap_2, len_subchirp, threshold));
+        (new multiuser_chirp_detector_cc_impl(chirp_seq, time_gap_1, time_gap_2, len_subchirp, threshold));
     }
 
     /*
      * The private constructor
      */
-    chirp_detector_cc_impl::chirp_detector_cc_impl(std::vector<gr_complex> chirp_seq, int time_gap_1, int time_gap_2, int len_subchirp, float threshold)
-      : gr::block("chirp_detector_cc",
+    multiuser_chirp_detector_cc_impl::multiuser_chirp_detector_cc_impl(std::vector<gr_complex> chirp_seq, int time_gap_1, int time_gap_2, int len_subchirp, float threshold)
+      : gr::block("multiuser_chirp_detector_cc",
               gr::io_signature::make(1, 1, sizeof(gr_complex)),
               gr::io_signature::make(1, 1, sizeof(gr_complex))),
       d_chirp_seq(chirp_seq),
@@ -63,19 +63,19 @@ namespace gr {
     /*
      * Our virtual destructor.
      */
-    chirp_detector_cc_impl::~chirp_detector_cc_impl()
+    multiuser_chirp_detector_cc_impl::~multiuser_chirp_detector_cc_impl()
     {
     }
 
     void
-    chirp_detector_cc_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+    multiuser_chirp_detector_cc_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
       ninput_items_required[0] = required_input_items();
       dout << "forecast() requests at least " << required_input_items() << " input items" << std::endl;
     }
 
     void
-    chirp_detector_cc_impl::reset()
+    multiuser_chirp_detector_cc_impl::reset()
     {
       d_state = STATE_SEARCH;
       d_chirp_ctr = 0;
@@ -83,7 +83,7 @@ namespace gr {
     }
 
     gr_complex
-    chirp_detector_cc_impl::correlate_current_subchirp(const gr_complex* buf)
+    multiuser_chirp_detector_cc_impl::correlate_current_subchirp(const gr_complex* buf)
     {
       gr_complex corrval = 0;
       volk_32fc_x2_conjugate_dot_prod_32fc(&corrval, buf, &d_chirp_seq[d_subchirp_ctr*d_len_subchirp], d_len_subchirp);
@@ -96,7 +96,7 @@ namespace gr {
     }
 
     bool 
-    chirp_detector_cc_impl::corr_over_threshold(gr_complex corrval)
+    multiuser_chirp_detector_cc_impl::corr_over_threshold(gr_complex corrval)
     {
       if(std::norm(corrval) > d_threshold)
         return true;
@@ -105,7 +105,7 @@ namespace gr {
     }
 
     int 
-    chirp_detector_cc_impl::dist_to_next_subchirp()
+    multiuser_chirp_detector_cc_impl::dist_to_next_subchirp()
     {
       d_subchirp_ctr++;
 
@@ -130,7 +130,7 @@ namespace gr {
     }
 
     int
-    chirp_detector_cc_impl::required_input_items()
+    multiuser_chirp_detector_cc_impl::required_input_items()
     {
       int ret = 0;
       if(d_state == STATE_SEARCH)
@@ -142,7 +142,7 @@ namespace gr {
       return ret;
     }
     int
-    chirp_detector_cc_impl::general_work (int noutput_items,
+    multiuser_chirp_detector_cc_impl::general_work (int noutput_items,
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items)

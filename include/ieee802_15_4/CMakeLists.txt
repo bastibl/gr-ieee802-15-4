@@ -45,7 +45,7 @@ install(FILES
     simple_chirp_detector_cc.h
     costas_loop_cc.h
     frame_buffer_cc.h
-    chirp_detector_cc.h
+    multiuser_chirp_detector_cc.h
     preamble_tagger_cc.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
 	COMPONENT "ieee802_15_4_devel"
 )

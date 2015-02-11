@@ -18,15 +18,15 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802_15_4_CHIRP_DETECTOR_CC_IMPL_H
-#define INCLUDED_IEEE802_15_4_CHIRP_DETECTOR_CC_IMPL_H
+#ifndef INCLUDED_IEEE802_15_4_MULTIUSER_CHIRP_DETECTOR_CC_IMPL_H
+#define INCLUDED_IEEE802_15_4_MULTIUSER_CHIRP_DETECTOR_CC_IMPL_H
 
-#include <ieee802_15_4/chirp_detector_cc.h>
+#include <ieee802_15_4/multiuser_chirp_detector_cc.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class chirp_detector_cc_impl : public chirp_detector_cc
+    class multiuser_chirp_detector_cc_impl : public multiuser_chirp_detector_cc
     {
      private:
       std::vector<gr_complex> d_chirp_seq;
@@ -50,8 +50,8 @@ namespace gr {
      public:
       #define dout false && std::cout // turn false to true to enable debug output
 
-      chirp_detector_cc_impl(std::vector<gr_complex> chirp_seq, int time_gap_1, int time_gap_2, int len_subchirp, float threshold);
-      ~chirp_detector_cc_impl();
+      multiuser_chirp_detector_cc_impl(std::vector<gr_complex> chirp_seq, int time_gap_1, int time_gap_2, int len_subchirp, float threshold);
+      ~multiuser_chirp_detector_cc_impl();
 
       // Where all the action really happens
       void forecast (int noutput_items, gr_vector_int &ninput_items_required);
@@ -65,5 +65,5 @@ namespace gr {
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_CHIRP_DETECTOR_CC_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_MULTIUSER_CHIRP_DETECTOR_CC_IMPL_H */
 

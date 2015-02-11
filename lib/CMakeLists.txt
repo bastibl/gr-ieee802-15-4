@@ -54,7 +54,7 @@ list(APPEND ieee802_15_4_sources
     simple_chirp_detector_cc_impl.cc
     costas_loop_cc_impl.cc
     frame_buffer_cc_impl.cc
-    chirp_detector_cc_impl.cc    
+    multiuser_chirp_detector_cc_impl.cc    
     preamble_tagger_cc_impl.cc )
 
 list(APPEND ieee802_15_4_libs

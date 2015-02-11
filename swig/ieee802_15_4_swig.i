@@ -33,7 +33,7 @@
 #include "ieee802_15_4/qpsk_mapper_if.h"
 #include "ieee802_15_4/dqpsk_mapper_ff.h"
 #include "ieee802_15_4/dqcsk_mapper_fc.h"
-#include "ieee802_15_4/chirp_detector_cc.h"
+#include "ieee802_15_4/multiuser_chirp_detector_cc.h"
 #include "ieee802_15_4/preamble_sfd_prefixer_ii.h"
 #include "ieee802_15_4/dqcsk_demapper_cc.h"
 #include "ieee802_15_4/qpsk_demapper_fi.h"
@@ -94,8 +94,8 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_demapper_ib);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, zeropadding_removal_b);
 %include "ieee802_15_4/phr_removal.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, phr_removal);
-%include "ieee802_15_4/chirp_detector_cc.h"
-GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, chirp_detector_cc);
+%include "ieee802_15_4/multiuser_chirp_detector_cc.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, multiuser_chirp_detector_cc);
 
 %include "ieee802_15_4/make_pair_with_blob.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, make_pair_with_blob);

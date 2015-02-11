@@ -25,7 +25,7 @@ import ieee802_15_4 as ieee802_15_4_installed # css_phy is not found in the just
 import ieee802_15_4_swig as ieee802_15_4
 import numpy as np
 
-class qa_multiuser_chirp_detector_cc (gr_unittest.TestCase):
+class qa_multiuser_multiuser_chirp_detector_cc (gr_unittest.TestCase):
 
     def setUp (self):
     	print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY ieee802_15_4!"
@@ -84,4 +84,4 @@ class qa_multiuser_chirp_detector_cc (gr_unittest.TestCase):
 
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_multiuser_chirp_detector_cc)
+    gr_unittest.run(qa_multiuser_multiuser_chirp_detector_cc)
