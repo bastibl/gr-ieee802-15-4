@@ -77,11 +77,12 @@ namespace gr {
         std::vector<tag_t> tags;
         get_tags_in_range(tags, 0, nitems_read(0), nitems_read(0) + ninput_items[0], pmt::string_to_symbol("SOF"));
 
+        // NOTE: This algorithm causes a delay of one frame length. Considering that packets may arrive infrequently, this could be an issue
         if(tags.size() >= 2)
         {
           uint64_t first_tag_pos = tags[0].offset - nitems_read(0);
           uint64_t second_tag_pos = tags[1].offset - nitems_read(0);
-          // std::cout << "Frame buffer: found SOF tags at pos " << tags[0].offset << " and " << tags[1].offset << std::endl;
+          std::cout << "Frame buffer: found SOF tags at pos " << tags[0].offset << " and " << tags[1].offset << std::endl;
           // std::cout << "Frame buffer: Consume " << first_tag_pos << " samples." << std::endl;
           samples_consumed += first_tag_pos;
           if(second_tag_pos - first_tag_pos < d_nsym_frame)
@@ -102,7 +103,10 @@ namespace gr {
           if(tags.size() == 1)
             samples_consumed += tags[0].offset - nitems_read(0);
           else
+          {
             samples_consumed += ninput_items[0];
+            std::cout << "Frame buffer: No tags found, consume input buffer" << std::endl;
+          }
         }
 
         consume_each (samples_consumed);
