@@ -7,7 +7,7 @@
 ##################################################
 
 execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
-execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_nosync.py")
 
 from gnuradio import analog
 from gnuradio import blocks
@@ -30,20 +30,20 @@ snr_vals = -8.0
 nbytes_per_frame = 127
 cfg_slow = ieee802_15_4.css_phy(slow_rate=True, phy_packetsize_bytes=nbytes_per_frame)
 cfg_fast = ieee802_15_4.css_phy(slow_rate=False, phy_packetsize_bytes=nbytes_per_frame)
-num_runs_per_freq = 8
+num_runs_per_freq = 5
 min_err = int(1e3)/num_runs_per_freq
 min_len = int(1e6)/num_runs_per_freq
 msg_interval = 10  # ms
-sleeptime = 1  # s
+sleeptime = .3  # s
 fs_oqpsk = 4e6
 fs_css = 32e6
-interferer_freq_oqpsk = np.arange(-2e6, 2e6, 100e3)
-interferer_freq_css = np.arange(-fs_css/2, fs_css/2, 2e5)
+interferer_freq_oqpsk = np.arange(-2e6, 2e6, 500e3)
+interferer_freq_css = np.arange(-13e6, 13e6, 5e5)
 norm_fac = 1.1507
 
-en_oqpsk = True
+en_oqpsk = False
 en_css_slow = False
-en_css_fast = False 
+en_css_fast = True
 
 
 class ber_singletone_oqpsk(gr.top_block):
@@ -114,7 +114,7 @@ class ber_singletone_css(gr.top_block):
         )
         self.ieee802_15_4_make_pair_with_blob_0 = ieee802_15_4.make_pair_with_blob(
             np.random.randint(0, 256, (c.phy_packetsize_bytes,)))
-        self.ieee802_15_4_css_phy_sd_0 = ieee802_15_4_css_phy_sd(
+        self.ieee802_15_4_css_phy_sd_0 = ieee802_15_4_css_phy_nosync(
             phr=c.PHR,
             nbytes_payload=c.phy_packetsize_bytes,
             bits_per_cw=c.bits_per_symbol,
@@ -251,33 +251,36 @@ if __name__ == '__main__':
         print "Collect", min_len, "bytes per step"
         ber_vals = []
         for i in range(len(interferer_freq_css)):
+            tmp_ber = []
             t0 = time.time()
-            tb = None
-            tb = ber_singletone_css(cfg_fast)
-            tb.set_snr(snr_vals)
-            tb.singletone_src.set_frequency(interferer_freq_css[i])
-            tb.start()
-            time.sleep(.1)
-            ber = 1.0
-            while (True):
-                len_res = tb.comp_bits.get_bits_compared()
-                print interferer_freq_css[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
-                if (len_res >= min_len):
-                    if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= min_len):
-                        print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
+            for k in range(num_runs_per_freq):
+                tb = None
+                tb = ber_singletone_css(cfg_fast)
+                tb.set_snr(snr_vals)
+                tb.singletone_src.set_frequency(interferer_freq_css[i])
+                tb.start()
+                time.sleep(.1)
+                ber = 1.0
+                while (True):
+                    len_res = tb.comp_bits.get_bits_compared()
+                    print interferer_freq_css[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
+                    if (len_res >= min_len):
+                        if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= min_len):
+                            print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
+                            tb.stop()
+                            break
+                        else:
+                            print "Found", tb.comp_bits.get_errors_found(), "of", min_err, "errors"
+                    if (ber == 0 ):
                         tb.stop()
+                        tb.wait()
+                        time.sleep(.1)
                         break
-                    else:
-                        print "Found", tb.comp_bits.get_errors_found(), "of", min_err, "errors"
-                if (ber == 0 ):
-                    tb.stop()
-                    tb.wait()
-                    time.sleep(.1)
-                    break
-                time.sleep(sleeptime)
-                old_len_res = len_res
+                    time.sleep(sleeptime)
+                    old_len_res = len_res
+                tmp_ber.append(tb.comp_bits.get_ber())
 
-            ber = tb.comp_bits.get_ber()
+            ber = np.mean(tmp_ber)
             print "Step", i + 1, "/", len(interferer_freq_css), ": BER at", interferer_freq_css[i]/1e6, "MHz:", ber
             ber_vals.append(ber)
             t_elapsed = time.time() - t0
@@ -300,40 +303,43 @@ if __name__ == '__main__':
 
 
     if en_css_slow:
-        # CSS fast
+        # CSS slow
         if min_len <= 1e3:
             print "WARNING: min_len very short:", min_len
         print "Collect", min_len, "bytes per step"
         old_len_res = 0
         ber_vals = []
         for i in range(len(interferer_freq_css)):
+            tmp_ber = []
             t0 = time.time()
-            tb = None
-            tb = ber_singletone_css(cfg_slow)
-            tb.set_snr(snr_vals)
-            tb.singletone_src.set_frequency(interferer_freq_css[i])
-            tb.start()
-            time.sleep(.1)
-            ber = 1.0
-            while (True):
-                len_res = tb.comp_bits.get_bits_compared()
-                print interferer_freq_css[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
-                if (len_res >= min_len):
-                    if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= min_len):
-                        print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
+            for k in range(num_runs_per_freq):
+                tb = None
+                tb = ber_singletone_css(cfg_slow)
+                tb.set_snr(snr_vals)
+                tb.singletone_src.set_frequency(interferer_freq_css[i])
+                tb.start()
+                time.sleep(.1)
+                ber = 1.0
+                while (True):
+                    len_res = tb.comp_bits.get_bits_compared()
+                    print interferer_freq_css[i]/1000000, "MHz:", 100.0 * len_res / min_len, "% done"
+                    if (len_res >= min_len):
+                        if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= min_len):
+                            print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
+                            tb.stop()
+                            break
+                        else:
+                            print "Found", tb.comp_bits.get_errors_found(), "of", min_err, "errors"
+                    if (ber == 0 ):
                         tb.stop()
+                        tb.wait()
+                        time.sleep(.1)
                         break
-                    else:
-                        print "Found", tb.comp_bits.get_errors_found(), "of", min_err, "errors"
-                if (ber == 0 ):
-                    tb.stop()
-                    tb.wait()
-                    time.sleep(.1)
-                    break
-                time.sleep(sleeptime)
-                old_len_res = len_res
+                    time.sleep(sleeptime)
+                    old_len_res = len_res
+                tmp_ber.append(tb.comp_bits.get_ber())
 
-            ber = tb.comp_bits.get_ber()
+            ber = np.mean(tmp_ber)
             print "Step", i + 1, "/", len(interferer_freq_css), ": BER at", interferer_freq_css[i]/1e6, "MHz:", ber
             ber_vals.append(ber)
             t_elapsed = time.time() - t0

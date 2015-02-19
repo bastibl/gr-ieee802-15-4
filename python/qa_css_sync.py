@@ -317,7 +317,7 @@ class qa_css_sync (gr_unittest.TestCase):
         sym_in3 = m.frame_DQPSK
         print "Number of DQPSK symbols per frame:", len(sym_in1)
 
-        zeros = np.ones((50,))
+        zeros = np.ones((5000,))
         data_in = np.concatenate((bb_in1[:192*30-25], zeros, bb_in1[192*30+24:], bb_in2, bb_in1, bb_in2, bb_in3, bb_in3, bb_in3))
         src = blocks.vector_source_c(data_in)
         det = ieee802_15_4.simple_chirp_detector_cc(m.chirp_seq, len(m.time_gap_1), len(m.time_gap_2), 38, 0.999)

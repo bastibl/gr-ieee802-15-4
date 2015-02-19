@@ -22,10 +22,11 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-20.0, -0.0, .5)
+snr_vals = np.arange(-20.0, -0.5, .5)
 nbytes_per_frame = 127
-min_err = int(1e6)
-min_len = int(3e7)
+nruns_per_freq = 10
+min_err = int(3e6)/nruns_per_freq
+min_len = int(5e7)/nruns_per_freq
 msg_interval = 4  # ms
 sleeptime = 1.0  # s
 interferer_freq = 100e3
@@ -52,6 +53,7 @@ class ber_singletone_nogui(gr.top_block):
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")),
                                                                  msg_interval, -1, True, False)
         self.blocks_add_xx_sd = blocks.add_vcc(1)
+        self.mult_const = blocks.multiply_const_cc(np.exp(1j*np.random.random()*2*np.pi))
         self.singletone_src = analog.sig_source_c(fs, analog.GR_COS_WAVE, interferer_freq, np.sqrt(2) * (10 ** (-snr / 20)))
         self.comp_bits = ieee802_15_4.compare_blobs()
         # self.sig_snk = blocks.file_sink(gr.sizeof_gr_complex, "css_sig.bin")
@@ -60,7 +62,7 @@ class ber_singletone_nogui(gr.top_block):
         # Connections
         ##################################################
         self.connect((self.ieee802_15_4_oqpsk_phy_nosync_0, 0), (self.blocks_add_xx_sd, 0))
-        self.connect((self.singletone_src, 0), (self.blocks_add_xx_sd, 1))
+        self.connect((self.singletone_src, 0), self.mult_const, (self.blocks_add_xx_sd, 1))
         self.connect((self.blocks_add_xx_sd, 0), (self.ieee802_15_4_oqpsk_phy_nosync_0, 0))
 
         # self.connect(self.ieee802_15_4_css_phy_sd_0, self.sig_snk)
@@ -96,26 +98,29 @@ if __name__ == '__main__':
     ber_vals = []
     for i in range(len(snr_vals)):
         t0 = time.time()
-        tb = None
-        tb = ber_singletone_nogui()
-        tb.set_snr(snr_vals[i])
-        tb.start()
-        time.sleep(.1)
-        while (True):
-            len_res = tb.comp_bits.get_bits_compared()
-            print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
-            if (len_res >= min_len or tb.comp_bits.get_errors_found() >= 10*min_err):
-                if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 1 * min_len or tb.comp_bits.get_errors_found() == 0):
-                    print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
-                    tb.stop()
-                    break
-                else:
-                    print "Found", tb.comp_bits.get_errors_found(), "of", min_err, "errors"
-            time.sleep(sleeptime)
-            old_len_res = len_res
+        tmp_ber = []
+        for k in range(nruns_per_freq):
+            tb = None
+            tb = ber_singletone_nogui()
+            tb.set_snr(snr_vals[i])
+            tb.start()
+            time.sleep(.1)
+            while (True):
+                len_res = tb.comp_bits.get_bits_compared()
+                print snr_vals[i], "dB:", 100.0 * len_res / min_len, "% done"
+                if (len_res >= min_len or tb.comp_bits.get_errors_found() >= 10*min_err):
+                    if (tb.comp_bits.get_errors_found() >= min_err or tb.comp_bits.get_bits_compared() >= 1 * min_len or tb.comp_bits.get_errors_found() == 0):
+                        print "Found a total of", tb.comp_bits.get_errors_found(), " errors"
+                        tb.stop()
+                        break
+                    else:
+                        print "Found", tb.comp_bits.get_errors_found(), "of", min_err, "errors"
+                time.sleep(sleeptime)
+                old_len_res = len_res
+            tmp_ber.append(tb.comp_bits.get_ber())
 
-        ber = tb.comp_bits.get_ber()
-        print "Step", i + 1, "/", len(snr_vals), ": BER at", snr_vals[i], "dB snr:", ber
+        ber = np.mean(tmp_ber)
+        print "Step", i + 1, "/", len(snr_vals), ": BER at", snr_vals[i], "dB SNR:", ber
         ber_vals.append(ber)
         t_elapsed = time.time() - t0
         print "approximately", t_elapsed * (len(snr_vals) - i - 1) / 60, "minutes remaining"

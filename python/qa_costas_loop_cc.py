@@ -65,7 +65,7 @@ class qa_costas_loop_cc (gr_unittest.TestCase):
         # set up fg
         self.tb.run ()
         nsym = 1000
-        phi_off = np.pi*0.75
+        phi_off = np.pi*0.2
         data_in = 2*(np.random.randint(0,2,nsym)-0.5) + 2j*(np.random.randint(0,2,nsym)-0.5) # stream of random qpsk symbols
         data_in[0] = 1+1j
         data_in_off = data_in*np.exp(1j*phi_off)
@@ -78,7 +78,24 @@ class qa_costas_loop_cc (gr_unittest.TestCase):
         data_out = snk.data()
         self.assertComplexTuplesAlmostEqual(np.angle(data_in), np.angle(data_out))
 
-    def test_004_t (self): # frequency offset
+    def test_004_t (self): # phase offset, lock to "wrong" symbol
+        # set up fg
+        self.tb.run ()
+        nsym = 1000
+        phi_off = np.pi*0.4
+        data_in = 2*(np.random.randint(0,2,nsym)-0.5) + 2j*(np.random.randint(0,2,nsym)-0.5) # stream of random qpsk symbols
+        data_in[0] = 1+1j
+        data_in_off = data_in*np.exp(1j*phi_off)
+        src = blocks.vector_source_c(data_in_off)
+        costas = ieee802_15_4.costas_loop_cc((1+1j, -1+1j, -1-1j, 1-1j), 0)
+        snk = blocks.vector_sink_c()
+        self.tb.connect(src, costas, snk)
+        self.tb.run()
+        # check data
+        data_out = snk.data()
+        self.assertComplexTuplesAlmostEqual(np.angle(data_in*np.exp(1j*np.pi/2)), np.angle(data_out))
+
+    def test_005_t (self): # frequency offset
         # set up fg
         self.tb.run ()
         nsym = 1000

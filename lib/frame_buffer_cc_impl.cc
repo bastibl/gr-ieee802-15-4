@@ -83,7 +83,8 @@ namespace gr {
           uint64_t first_tag_pos = tags[0].offset - nitems_read(0);
           uint64_t second_tag_pos = tags[1].offset - nitems_read(0);
           std::cout << "Frame buffer: found SOF tags at pos " << tags[0].offset << " and " << tags[1].offset << std::endl;
-          // std::cout << "Frame buffer: Consume " << first_tag_pos << " samples." << std::endl;
+          if(first_tag_pos==second_tag_pos)
+            throw std::runtime_error("Frame Buffer: Two SOF tags at same position");          // std::cout << "Frame buffer: Consume " << first_tag_pos << " samples." << std::endl;
           samples_consumed += first_tag_pos;
           if(second_tag_pos - first_tag_pos < d_nsym_frame)
           {
@@ -93,6 +94,9 @@ namespace gr {
           else if(ninput_items[0] - samples_consumed >= d_nsym_frame)
           {
             // std::cout << "Frame buffer: Return frame of " << d_nsym_frame << " samples" << std::endl;
+            // for(int i=0; i<d_nsym_frame; i++)
+            //   std::cout << *(in+samples_consumed+i) << ", ";
+            // std::cout << std::endl;
             memcpy(out, in+samples_consumed, sizeof(gr_complex)*d_nsym_frame);
             samples_consumed += d_nsym_frame;
             samples_produced += d_nsym_frame;

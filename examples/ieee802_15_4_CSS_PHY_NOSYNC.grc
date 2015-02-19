@@ -3,6 +3,69 @@
 <flow_graph>
   <timestamp>Thu Nov 27 15:41:20 2014</timestamp>
   <block>
+    <key>options</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_css_phy_nosync</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>title</key>
+      <value>IEEE 802.15.4 CSS PHY NO SYNC</value>
+    </param>
+    <param>
+      <key>author</key>
+      <value>Felix Wunsch</value>
+    </param>
+    <param>
+      <key>description</key>
+      <value>IEEE 802.15.4 CSS (Chirp Spread Spectrum) physical layer with Soft Decision</value>
+    </param>
+    <param>
+      <key>window_size</key>
+      <value>1280, 1280</value>
+    </param>
+    <param>
+      <key>generate_options</key>
+      <value>hb</value>
+    </param>
+    <param>
+      <key>category</key>
+      <value>IEEE802.15.4</value>
+    </param>
+    <param>
+      <key>run_options</key>
+      <value>prompt</value>
+    </param>
+    <param>
+      <key>run</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>max_nouts</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>realtime_scheduling</key>
+      <value></value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(10, 10)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
     <key>ieee802_15_4_phr_prefixer_c</key>
     <param>
       <key>id</key>
@@ -500,61 +563,6 @@
     <param>
       <key>_coordinate</key>
       <value>(672, 395)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_dqcsk_mapper_fc</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_dqcsk_mapper_fc_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>chirp_seq</key>
-      <value>chirp_seq</value>
-    </param>
-    <param>
-      <key>time_gap_1</key>
-      <value>time_gap_1</value>
-    </param>
-    <param>
-      <key>time_gap_2</key>
-      <value>time_gap_2</value>
-    </param>
-    <param>
-      <key>len_subchirp</key>
-      <value>len_sub</value>
-    </param>
-    <param>
-      <key>num_subchirps</key>
-      <value>num_subchirps</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(424, 371)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2011,66 +2019,62 @@
     </param>
   </block>
   <block>
-    <key>options</key>
+    <key>ieee802_15_4_dqcsk_mapper_fc</key>
     <param>
       <key>id</key>
-      <value>ieee802_15_4_css_phy_nosync</value>
+      <value>ieee802_15_4_dqcsk_mapper_fc_0</value>
     </param>
     <param>
       <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
-      <key>title</key>
-      <value>IEEE 802.15.4 CSS PHY NO SYNC</value>
+      <key>chirp_seq</key>
+      <value>chirp_seq</value>
     </param>
     <param>
-      <key>author</key>
-      <value>Felix Wunsch</value>
+      <key>time_gap_1</key>
+      <value>time_gap_1</value>
     </param>
     <param>
-      <key>description</key>
-      <value>IEEE 802.15.4 CSS (Chirp Spread Spectrum) physical layer with Soft Decision</value>
+      <key>time_gap_2</key>
+      <value>time_gap_2</value>
     </param>
     <param>
-      <key>window_size</key>
-      <value>1280, 1280</value>
+      <key>len_subchirp</key>
+      <value>len_sub</value>
     </param>
     <param>
-      <key>generate_options</key>
-      <value>hb</value>
+      <key>num_subchirps</key>
+      <value>num_subchirps</value>
     </param>
     <param>
-      <key>category</key>
-      <value>IEEE802.15.4</value>
-    </param>
-    <param>
-      <key>run_options</key>
-      <value>prompt</value>
-    </param>
-    <param>
-      <key>run</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>max_nouts</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>realtime_scheduling</key>
-      <value></value>
+      <key>nsym_frame</key>
+      <value>sym_per_frame</value>
     </param>
     <param>
       <key>alias</key>
       <value></value>
     </param>
     <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
       <key>_coordinate</key>
-      <value>(10, 10)</value>
+      <value>(424, 371)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>0</value>
+      <value>180</value>
     </param>
   </block>
   <connection>

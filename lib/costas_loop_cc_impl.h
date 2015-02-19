@@ -29,16 +29,11 @@ namespace gr {
     class costas_loop_cc_impl : public costas_loop_cc
     {
      private:
-      static const int NO_INIT_PHASE = -1;
-      static const int FIRST_RUN = -1;
       std::vector<gr_complex> d_const;
       int d_M;
-      int d_initial_index;
-      int d_last_index;
       float* d_diff;
       float d_phase_offset;
       int get_nearest_index(gr_complex p);
-      void reset();
 
      public:
       #define dout false && std::cout // turn false to true to enable debug output

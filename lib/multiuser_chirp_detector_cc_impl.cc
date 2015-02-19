@@ -166,7 +166,8 @@ namespace gr {
               d_state = STATE_TRACKING;
               samples_consumed += dist_to_next_subchirp();
               out[samples_produced] = sym;
-              // add_item_tag(0, nitems_written(0) + samples_produced, pmt::string_to_symbol("FCP"), pmt::from_long(0));
+              add_item_tag(0, nitems_written(0) + samples_produced, pmt::string_to_symbol("RESYNC"), pmt::from_long(0));
+              std::cout << "Chirp Detector: Resync after " << nitems_written(0) + samples_produced << " symbols" << std::endl;
               samples_produced++;
             }
             else
@@ -191,7 +192,7 @@ namespace gr {
               dout << "#TRACK# " << std::norm(sym) << ": no symbol detected at expected position - reset" << std::endl;
               samples_consumed += 1;
               dout << "#TRACK# " << "advance by 1 samples" << std::endl;
-              std::cout << "Chirp detector: TRACKING->SEARCH" << std::endl;
+              std::cout << "Chirp detector: TRACKING->SEARCH after " << nitems_written(0) + samples_produced << " symbols" << std::endl;
               reset();
             }
           }
