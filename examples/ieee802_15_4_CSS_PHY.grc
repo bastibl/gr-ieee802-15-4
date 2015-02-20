@@ -66,49 +66,6 @@
     </param>
   </block>
   <block>
-    <key>ieee802_15_4_codeword_mapper_bi</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_codeword_mapper_bi_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>bits_per_cw</key>
-      <value>bits_per_cw</value>
-    </param>
-    <param>
-      <key>codewords</key>
-      <value>codewords</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(832, 191)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
     <key>parameter</key>
     <param>
       <key>id</key>
@@ -180,45 +137,6 @@
     <param>
       <key>_coordinate</key>
       <value>(800, -7)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_zeropadding_b</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_zeropadding_b_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>nzeros</key>
-      <value>nzeros_padding</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(504, 246)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1206,49 +1124,6 @@
     </param>
   </block>
   <block>
-    <key>ieee802_15_4_dqpsk_mapper_ff</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_dqpsk_mapper_ff_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>framelen</key>
-      <value>sym_per_frame</value>
-    </param>
-    <param>
-      <key>forward</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(664, 375)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-  </block>
-  <block>
     <key>ieee802_15_4_codeword_soft_demapper_fb</key>
     <param>
       <key>id</key>
@@ -1723,80 +1598,6 @@
     <param>
       <key>_rotation</key>
       <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_dqpsk_soft_demapper_cc</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_dqpsk_soft_demapper_cc_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>framelen</key>
-      <value>sym_per_frame</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(424, 734)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_qpsk_mapper_if</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_qpsk_mapper_if_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(856, 382)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
     </param>
   </block>
   <block>
@@ -2339,10 +2140,10 @@
     </param>
   </block>
   <block>
-    <key>ieee802_15_4_multiuser_chirp_detector_cc</key>
+    <key>ieee802_15_4_simple_chirp_detector_cc</key>
     <param>
       <key>id</key>
-      <value>ieee802_15_4_multiuser_chirp_detector_cc_0</value>
+      <value>ieee802_15_4_simple_chirp_detector_cc_0</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -2386,7 +2187,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(112, 772)</value>
+      <value>(136, 668)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2394,10 +2195,10 @@
     </param>
   </block>
   <block>
-    <key>ieee802_15_4_simple_chirp_detector_cc</key>
+    <key>ieee802_15_4_multiuser_chirp_detector_cc</key>
     <param>
       <key>id</key>
-      <value>ieee802_15_4_simple_chirp_detector_cc_0</value>
+      <value>ieee802_15_4_multiuser_chirp_detector_cc_0</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -2441,7 +2242,206 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(136, 668)</value>
+      <value>(136, 708)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_dqpsk_soft_demapper_cc</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_dqpsk_soft_demapper_cc_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>framelen</key>
+      <value>sym_per_frame</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(384, 766)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_dqpsk_mapper_ff</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_dqpsk_mapper_ff_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>framelen</key>
+      <value>sym_per_frame</value>
+    </param>
+    <param>
+      <key>forward</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(664, 375)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_qpsk_mapper_if</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_qpsk_mapper_if_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(856, 382)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_zeropadding_b</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_zeropadding_b_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>nzeros</key>
+      <value>nzeros_padding</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(504, 246)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>ieee802_15_4_codeword_mapper_bi</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_codeword_mapper_bi_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>bits_per_cw</key>
+      <value>bits_per_cw</value>
+    </param>
+    <param>
+      <key>codewords</key>
+      <value>codewords</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(832, 191)</value>
     </param>
     <param>
       <key>_rotation</key>
