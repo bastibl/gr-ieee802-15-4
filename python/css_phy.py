@@ -33,12 +33,10 @@ class physical_layer:
         self.nsamp_frame = self.calc_nsamp_frame(self.nsym_frame)
 
     def calc_nsym_frame(self):
-        nbits_payload = len(self.PHR) + self.phy_packetsize_bytes * 8 + 2 * self.padded_zeros
+        nbits_payload = len(self.PHR) + self.phy_packetsize_bytes * 8 + self.padded_zeros
         nsym_payload = float(nbits_payload) / 2 / self.coderate
         nsym_header = len(self.preamble) + len(self.SFD)
         nsym_frame = nsym_header + nsym_payload
-        if nsym_frame % 4 != 0:
-            raise Exception("Invalid frame length")
         return int(nsym_frame)
 
 
@@ -52,13 +50,10 @@ class physical_layer:
     def calc_padded_zeros(self):
         if self.slow_rate == True:
             k = np.ceil(1.0 / 3 * self.phy_packetsize_bytes + 0.5)
-            p = 12 * k - 6 - 4 * self.phy_packetsize_bytes
+            p = 24 * k - 12 - 2 * self.phy_packetsize_bytes
         else:
             k = np.ceil(4.0 / 3 * self.phy_packetsize_bytes) + 2
-            # k can have values 2+m*4
-            if (k - 2) % 4 != 0:
-                k += 4 - (k - 2) % 4
-            p = round(3.0 / 4 * k - self.phy_packetsize_bytes - 3.0 / 2)
+            p = 6 * k - 8*self.phy_packetsize_bytes - 12
         return int(p)
 
     def gen_rcfilt(self):

@@ -76,7 +76,7 @@ namespace gr {
           }
           if(ctr >= d_len_preamble && std::abs(std::arg(in[i+1]/in[i])) > M_PI/4) // first SFD symbol after preamble has different phase
           {
-            std::cout << "Preamble tagger: Add SOF tag after " << nitems_read(0) + i - (d_len_preamble - 1) << " symbols" << std::endl;
+            // std::cout << "Preamble tagger: Add SOF tag after " << nitems_read(0) + i - (d_len_preamble - 1) << " symbols" << std::endl;
             add_item_tag(0, nitems_written(0)+i-(d_len_preamble-1), pmt::string_to_symbol("SOF"), pmt::from_long(0));
             ctr = 1;
           }
