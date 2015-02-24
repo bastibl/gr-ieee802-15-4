@@ -9,9 +9,11 @@ if __name__ == "__main__":
     oqpsk = np.load("results/ber_rayleigh_oqpsk_-30.0_to_19.0dB_2014-12-15_16-31-35.npy")
     css_fast = np.load("results/ber_rayleigh_css_sd_slow_rate-False_-30.0_to_9.0dB_2014-12-15_16-25-05.npy")
     css_slow = np.load("results/ber_rayleigh_css_sd_slow_rate-True_-30.0_to_6.0dB.npy")
-    snr_css_fast = np.arange(-30.0, 10.0, 1.0)
-    snr_css_slow = np.arange(-30.0, 6.0, 1.0)
-    snr_oqpsk = np.arange(-30.0, 20.0, 1.0)
+    print "NOTE: This script applies a correction factor of +3dB to the SNR because there was a mistake in the simulation. The mistake is now fixed."
+    snr_correction = 10*np.log10(2)
+    snr_css_fast = np.arange(-30.0, 10.0, 1.0) + snr_correction
+    snr_css_slow = np.arange(-30.0, 6.0, 1.0) + snr_correction
+    snr_oqpsk = np.arange(-30.0, 20.0, 1.0) + snr_correction
 
     t =  np.arange(0.0, 320 * 1e-9, 1.0 / (32 * 1e6))
     pdp = [np.exp(-28782313.0 * tau) for tau in t]
@@ -64,7 +66,7 @@ if __name__ == "__main__":
     plt.legend(loc='lower left')
     plt.grid()
     plt.yscale('log')
-    plt.xlim([-9, 24])
+    plt.xlim([-9+snr_correction, 24+snr_correction])
     plt.xlabel("Eb/N0 [dB]")
     plt.ylim([1e-2,1])
     plt.ylabel("BER")

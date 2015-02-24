@@ -68,7 +68,7 @@ class per_awgn_comp_nogui(gr.top_block):
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), msg_interval, -1, True, False)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vcc((1.1507, ))
         self.blocks_add_xx_0 = blocks.add_vcc(1)
-        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 0.5*(10**(-snr/20)), 0)
+        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, np.sqrt(0.5)*(10**(-snr/20)), 0)
         self.mac = ieee802_15_4.mac(debug=False)
 
         ##################################################
@@ -89,7 +89,7 @@ class per_awgn_comp_nogui(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.analog_noise_source_x_0_0.set_amplitude(0.5*(10**(-snr/20)))
+        self.analog_noise_source_x_0_0.set_amplitude(np.sqrt(0.5)*(10**(-snr/20)))
 
 if __name__ == '__main__':
     parser = OptionParser(option_class=eng_option, usage="%prog: [options]")

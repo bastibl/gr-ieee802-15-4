@@ -8,13 +8,15 @@ if __name__ == "__main__":
     css_slow_long = np.load("results/per_self_interference_css_slow_rate-True_packet-len-127bytes_-25.0_to_-5.5dB.npy")
     css_fast_short = np.load("results/per_self_interference_css_slow_rate-False_packet-len-12bytes_-20.0_to_-0.5dB_2014-12-20_23-16-07.npy")
     css_fast_long = np.load("results/per_self_interference_css_slow_rate-False_packet-len-127bytes_-20.0_to_-0.5dB_2014-12-20_18-21-54.npy")
-    snr_slow = np.arange(-25.0,-5.0,.5)
-    snr_fast = np.arange(-20.0,0.0,.5)
+    print "NOTE: This script applies a correction factor of +3dB to the SNR because there was a mistake in the simulation. The mistake is now fixed."
+    snr_correction = 10*np.log10(2)
+    snr_slow = np.arange(-25.0,-5.0,.5) + snr_correction
+    snr_fast = np.arange(-20.0,0.0,.5) + snr_correction
 
     plt.rcParams.update({'font.size': 16})
     plt.rcParams.update({'axes.labelsize': 'large'})
-    xlow = 0.0
-    xhigh = 12.5
+    xlow = 0.0 + snr_correction
+    xhigh = 12.5 + snr_correction
     ylow = 1e-3
     yhigh = 1
 

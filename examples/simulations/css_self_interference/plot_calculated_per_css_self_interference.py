@@ -21,8 +21,10 @@ def calc_ebn0(snr, rate, bw):
 if __name__ == "__main__":
     ber_css_slow = np.load("results/ber_self_interference_css_slow_rate-True_-25.0_to_-10.5dB_2014-12-03_15-48-06.npy")
     ber_css_fast = np.load("results/ber_self_interference_css_slow_rate-False_-25.0_to_-5.5dB_2014-12-03_14-07-00.npy")
-    snr_slow = np.arange(-25.0, -10.0, .5)
-    snr_fast = np.arange(-25.0, -5.0, .5)
+    print "NOTE: This script applies a correction factor of +3dB to the SNR because there was a mistake in the simulation. The mistake is now fixed."
+    snr_correction = 10*np.log10(2)
+    snr_slow = np.arange(-25.0, -10.0, .5) + snr_correction
+    snr_fast = np.arange(-25.0, -5.0, .5) + snr_correction
     fs = 32e6
     rate_slow = 250e3
     rate_fast = 1e6
@@ -46,7 +48,7 @@ if __name__ == "__main__":
 
     plt.grid()
     plt.legend(loc='lower left')
-    plt.xlim([0,9.5])
+    plt.xlim([3,12.5])
     plt.ylim([5e-3, 2])
     plt.ylabel("PER")
     plt.xlabel("Eb/N0 [dB]")
@@ -62,7 +64,7 @@ if __name__ == "__main__":
 
     plt.grid()
     plt.legend(loc='lower left')
-    plt.xlim([0,9.5])
+    plt.xlim([3,12.5])
     plt.ylim([5e-3, 2])
     plt.ylabel("PER")
     plt.xlabel("Eb/N0 [dB]")

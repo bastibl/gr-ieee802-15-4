@@ -86,7 +86,7 @@ class ieee802_15_4_css_phy_self_interference(gr.top_block):
         self.blocks_multiply_const_vxx_norm = blocks.multiply_const_vcc((1.1507, ))
         self.blocks_add_xx_1 = blocks.add_vcc(1)
         self.blocks_add_xx_0 = blocks.add_vcc(1)
-        self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 0.5 * (10 ** (-snr / 20)), 0)
+        self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, np.sqrt(0.5) * (10 ** (-snr / 20)), 0)
 
         ##################################################
         # Connections
@@ -114,7 +114,7 @@ class ieee802_15_4_css_phy_self_interference(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.analog_noise_source_x_0.set_amplitude(0.5 * (10 ** (-self.snr / 20)))
+        self.analog_noise_source_x_0.set_amplitude(np.sqrt(0.5) * (10 ** (-self.snr / 20)))
 
     def get_enable(self):
         return self.enable

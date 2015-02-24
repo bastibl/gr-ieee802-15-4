@@ -6,7 +6,7 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_css_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -22,14 +22,14 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-10.0,-8.0,1.0)
+snr_vals = np.arange(-20.0,-5.0,1.0)
 enable_vals = [0.0, 0.0, 0.0]
 nbytes_per_frame = 127
 min_err = 1e3
 min_len = 1e6
 msg_interval = 10 # ms
 sleeptime = 1.0
-slow_mode = True
+slow_mode = False
 
 class ber_awgn_comp_nogui(gr.top_block):
 
@@ -46,7 +46,7 @@ class ber_awgn_comp_nogui(gr.top_block):
         # Blocks
         ##################################################
         self.ieee802_15_4_make_pair_with_blob_0 = ieee802_15_4.make_pair_with_blob(np.random.randint(0,256,(c.phy_packetsize_bytes,)))
-        self.ieee802_15_4_css_phy_sd_0 = ieee802_15_4_css_phy_sd(
+        self.ieee802_15_4_css_phy_sd_0 = ieee802_15_4_css_phy_nosync(
             phr=c.PHR,
             nbytes_payload=c.phy_packetsize_bytes,
             bits_per_cw=c.bits_per_symbol,

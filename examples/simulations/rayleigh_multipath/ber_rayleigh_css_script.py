@@ -79,7 +79,7 @@ class ber_rayleigh_comp_nogui(gr.top_block):
                                                                  msg_interval, -1, True, False)
         self.blocks_multiply_const_vxx_sd = blocks.multiply_const_vcc((norm_fac, ))
         self.blocks_add_xx_sd = blocks.add_vcc(1)
-        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 0.5 * (10 ** (-snr / 20)), 0)
+        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, np.sqrt(0.5) * (10 ** (-snr / 20)), 0)
         self.comp_bits_sd = ieee802_15_4.compare_blobs()
         # self.sig_snk = blocks.file_sink(gr.sizeof_gr_complex, "css_sig.bin")
 
@@ -107,7 +107,7 @@ class ber_rayleigh_comp_nogui(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.analog_noise_source_x_0_0.set_amplitude(0.5 * (10 ** (-snr / 20)))
+        self.analog_noise_source_x_0_0.set_amplitude(np.sqrt(0.5) * (10 ** (-snr / 20)))
 
     def get_c(self):
         return self.c

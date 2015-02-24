@@ -59,7 +59,7 @@ class ber_rayleigh_comp_nogui(gr.top_block):
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), 1, msg_interval, True, False)
         self.comp_bits = ieee802_15_4.compare_blobs(packet_error_mode=False)
         self.blocks_add_xx_0_0 = blocks.add_vcc(1)
-        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 0.5*(10**(-snr/20)), 0)
+        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, np.sqrt(0.5)*(10**(-snr/20)), 0)
 
         ##################################################
         # Connections
@@ -85,7 +85,7 @@ class ber_rayleigh_comp_nogui(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.analog_noise_source_x_0_0.set_amplitude(0.5 * (10 ** (-snr / 20)))
+        self.analog_noise_source_x_0_0.set_amplitude(np.sqrt(0.5) * (10 ** (-snr / 20)))
 
     def get_c(self):
         return self.c

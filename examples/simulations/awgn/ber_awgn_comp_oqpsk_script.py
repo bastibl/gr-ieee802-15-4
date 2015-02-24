@@ -6,9 +6,7 @@
 # Generated: Mon Nov 10 19:00:50 2014
 ##################################################
 
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_hd.py")
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_css_phy_sd.py")
-execfile("/home/wunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
+execfile("/home/felixwunsch/.grc_gnuradio/ieee802_15_4_oqpsk_phy_nosync.py")
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
@@ -24,7 +22,7 @@ import time
 import matplotlib.pyplot as plt
 
 # configuration parameters
-snr_vals = np.arange(-30.0,-0.0,1.0)
+snr_vals = np.arange(-20.0,-5.0,1.0)
 enable_vals = [0.0, 0.0, 0.0]
 nbytes_per_frame = 127
 min_err = 1e3
@@ -54,7 +52,7 @@ class ber_awgn_comp_nogui(gr.top_block):
         # self.msg_trigger = blocks.message_strobe(pmt.cons(pmt.intern("trigger"), pmt.intern("dummy")), 1000)
         self.comp_bits = ieee802_15_4.compare_blobs(packet_error_mode=False)
         self.blocks_add_xx_0_0 = blocks.add_vcc(1)
-        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 0.5*(10**(-snr/20)), 0)
+        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, np.sqrt(0.5)*(10**(-snr/20)), 0)
 
         ##################################################
         # Connections
@@ -78,7 +76,7 @@ class ber_awgn_comp_nogui(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.analog_noise_source_x_0_0.set_amplitude(0.5*(10**(-snr/20)))
+        self.analog_noise_source_x_0_0.set_amplitude(np.sqrt(0.5)*(10**(-snr/20)))
 
     def get_c(self):
         return self.c

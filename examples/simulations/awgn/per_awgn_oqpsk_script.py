@@ -54,7 +54,7 @@ class ber_awgn_comp_nogui(gr.top_block):
         self.ieee802_15_4_make_pair_with_blob_0 = ieee802_15_4.make_pair_with_blob(np.random.randint(0,256,(nbytes_phy_frame,)))
         self.foo_periodic_msg_source_0 = foo.periodic_msg_source(pmt.cons(pmt.PMT_NIL, pmt.string_to_symbol("trigger")), msg_interval, -1, True, False)
         self.blocks_add_xx_0_0 = blocks.add_vcc(1)
-        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 0.5*(10**(-snr/20)), 0)
+        self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, np.sqrt(0.5)*(10**(-snr/20)), 0)
 
         ##################################################
         # Connections
@@ -76,7 +76,7 @@ class ber_awgn_comp_nogui(gr.top_block):
 
     def set_snr(self, snr):
         self.snr = snr
-        self.analog_noise_source_x_0_0.set_amplitude(0.5*(10**(-snr/20)))
+        self.analog_noise_source_x_0_0.set_amplitude(np.sqrt(0.5)*(10**(-snr/20)))
 
     def get_c(self):
         return self.c

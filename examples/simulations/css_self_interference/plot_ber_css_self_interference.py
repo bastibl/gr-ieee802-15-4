@@ -8,8 +8,10 @@ import time
 if __name__ == "__main__":
     css_slow = np.load("results/ber_self_interference_css_slow_rate-True_-25.0_to_-10.5dB_2014-12-03_15-48-06.npy")
     css_fast = np.load("results/ber_self_interference_css_slow_rate-False_-25.0_to_-5.5dB_2014-12-03_14-07-00.npy")
-    snr_slow = np.arange(-25.0,-10.0,.5)
-    snr_fast = np.arange(-25.0,-5.0,.5)
+    print "NOTE: This script applies a correction factor of +3dB to the SNR because there was a mistake in the simulation. The mistake is now fixed."
+    snr_correction = 10*np.log10(2)
+    snr_slow = np.arange(-25.0,-10.0,.5) + snr_correction
+    snr_fast = np.arange(-25.0,-5.0,.5) + snr_correction
 
     plt.rcParams.update({'font.size': 16})
     plt.rcParams.update({'axes.labelsize': 'large'})
@@ -30,7 +32,7 @@ if __name__ == "__main__":
     plt.xlabel("Eb/N0 [dB]")
     plt.ylabel("BER")
     plt.yscale('log')
-    plt.xlim([-10,8])
+    plt.xlim([-7,11])
     plt.ylim([3e-5,1])
     plt.savefig("ber_css_fast_self_interference.pdf")
 
@@ -45,7 +47,7 @@ if __name__ == "__main__":
     plt.ylabel("BER")
     plt.yscale('log')
     plt.ylim([3e-5,1])
-    plt.xlim([-4,9.5])
+    plt.xlim([-1,12.5])
 
     plt.savefig("ber_css_slow_self_interference.pdf")
 
