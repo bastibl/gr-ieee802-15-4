@@ -48,7 +48,7 @@ if __name__ == "__main__":
     plt.plot(css_EbN0_hiSF, css_slow, label="CSS 250 kb/s", marker='o')
     plt.plot(css_EbN0_loSF, css_fast, label="CSS 1 Mb/s", marker='v')
     plt.plot(oqpsk_EbN0, oqpsk, label="OQPSK", marker='s')
-    plt.plot(bpsk_EbN0, bpsk_ber, label="uncoded BPSK \n(theoretical)", marker='x')
+    # plt.plot(bpsk_EbN0, bpsk_ber, label="uncoded BPSK \n(theoretical)", marker='x')
     plt.legend(loc='lower left')
     plt.yscale('log')
     plt.xlim([-5, 13])

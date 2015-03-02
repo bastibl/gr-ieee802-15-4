@@ -142,9 +142,7 @@ void generate_mac(const char *buf, int len) {
 	d_msg[1] = 0x88;
 
 	// seq nr
-	//FIXME insert static seq nr for debug purposes
-	// d_msg[2] = d_seq_nr++;
-	d_msg[2] = 0x55;
+	d_msg[2] = d_seq_nr++;
 
 	// addr info
 	d_msg[3] = 0xcd;
@@ -154,10 +152,7 @@ void generate_mac(const char *buf, int len) {
 	d_msg[7] = 0x40;
 	d_msg[8] = 0xe8;
 
-	// FIXME: insert static message content for debug purposes
-	// std::memcpy(d_msg + 9, buf, len);
-	for(int i=0; i<len; i++)
-		d_msg[9+i] = 65+i;
+	std::memcpy(d_msg + 9, buf, len);
 
 	uint16_t crc = crc16(d_msg, len + 9);
 
@@ -165,9 +160,6 @@ void generate_mac(const char *buf, int len) {
 	d_msg[10 + len] = crc >> 8;
 
 	d_msg_len = 9 + len + 2;
-
-	// dout << std::dec << "msg len " << d_msg_len <<
-	//         "    len " << len << std::endl;
 }
 
 void print_message() {

@@ -34,11 +34,11 @@ if __name__ == "__main__":
 
     # plot Eb/N0. The packet length is shorter than in the file name because the PHR (which is ~1 byte) has to be considered, too.
     plt.figure(1)
-    plt.semilogy(ebn0_css_slow, per_css_slow_short, label="CSS 250 kb/s: 11 byte PSDU", marker='o', color='b')
+    plt.semilogy(ebn0_css_slow, per_css_slow_short, label="CSS 250 kb/s: 12 byte PSDU", marker='o', color='b')
     plt.semilogy(ebn0_css_slow, per_css_slow_long, label="CSS 250 kb/s: 127 byte PSDU", marker='o', color='b', linestyle='--')
-    plt.semilogy(ebn0_css_fast, per_css_fast_short, label="CSS 1 Mb/s: 11 byte PSDU", marker='v', color='g')
-    plt.semilogy(ebn0_css_fast, per_css_fast_long, label="CSS 1 MB/s: 127 byte PSDU", marker='v', color='g', linestyle='--')
-    plt.semilogy(ebn0_oqpsk, per_oqpsk_short, label="OQPSK: 11 byte PSDU", marker='s', color='r')
+    plt.semilogy(ebn0_css_fast, per_css_fast_short, label="CSS 1 Mb/s: 12 byte PSDU", marker='v', color='g')
+    plt.semilogy(ebn0_css_fast, per_css_fast_long, label="CSS 1 Mb/s: 127 byte PSDU", marker='v', color='g', linestyle='--')
+    plt.semilogy(ebn0_oqpsk, per_oqpsk_short, label="OQPSK: 12 byte PSDU", marker='s', color='r')
     plt.semilogy(ebn0_oqpsk, per_oqpsk_long, label="OQPSK: 127 byte PSDU", marker='s', color='r', linestyle='--')
     plt.legend(loc='lower left')
     plt.grid()
@@ -51,11 +51,11 @@ if __name__ == "__main__":
 
     # plot SNR
     plt.figure(2)
-    plt.semilogy(snr_css, per_css_slow_short, label="CSS 250 kb/s: 11 byte PSDU", marker='o', color='b')
+    plt.semilogy(snr_css, per_css_slow_short, label="CSS 250 kb/s: 12 byte PSDU", marker='o', color='b')
     plt.semilogy(snr_css, per_css_slow_long, label="CSS 250 kb/s: 127 byte PSDU", marker='o', color='b', linestyle='--')
-    plt.semilogy(snr_css, per_css_fast_short, label="CSS 1 Mb/s: 11 byte PSDU", marker='v', color='g')
-    plt.semilogy(snr_css, per_css_fast_long, label="CSS 1 MB/s: 127 byte PSDU", marker='v', color='g', linestyle='--')
-    plt.semilogy(snr_oqpsk, per_oqpsk_short, label="OQPSK: 11 byte PSDU", marker='s', color='r')
+    plt.semilogy(snr_css, per_css_fast_short, label="CSS 1 Mb/s: 12 byte PSDU", marker='v', color='g')
+    plt.semilogy(snr_css, per_css_fast_long, label="CSS 1 Mb/s: 127 byte PSDU", marker='v', color='g', linestyle='--')
+    plt.semilogy(snr_oqpsk, per_oqpsk_short, label="OQPSK: 12 byte PSDU", marker='s', color='r')
     plt.semilogy(snr_oqpsk, per_oqpsk_long, label="OQPSK: 127 byte PSDU", marker='s', color='r', linestyle='--')
     # plt.legend(loc='lower left')
     plt.grid()

@@ -22,7 +22,8 @@ if __name__ == "__main__":
     for i in range(len(pdp)):
         if i%8 != 0:
             pdp[i] = 0
-    pdp[8] = 0.1
+    pdp[0] = 0.91
+    pdp[8] = 0.09
 
     plt.rcParams.update({'font.size': 14})
     plt.rcParams.update({'axes.labelsize': 'large'})
@@ -60,8 +61,8 @@ if __name__ == "__main__":
     css_slow_EbN0 = snr_css_slow + 10*np.log10(32e6/250e3)
     # OQPSK
     oqpsk_EbN0 = snr_oqpsk + 10*np.log10(4e6/250e3)
-    plt.plot(css_slow_EbN0, css_slow, label="CSS 250 kbps (SD)", marker='o')
-    plt.plot(css_fast_EbN0, css_fast, label="CSS 1 Mbps (SD)", marker='v')
+    plt.plot(css_slow_EbN0, css_slow, label="CSS 250 kbps", marker='o')
+    plt.plot(css_fast_EbN0, css_fast, label="CSS 1 Mbps", marker='v')
     plt.plot(oqpsk_EbN0, oqpsk, label="OQPSK", marker='s')
     plt.legend(loc='lower left')
     plt.grid()
@@ -74,12 +75,12 @@ if __name__ == "__main__":
     plt.savefig("ber_rayleigh_EbN0.pdf",bbox='tight')
 
     f2 = plt.figure(2)
-    plt.stem(t*1e9, pdp, '-', bottom=0.00001)
+    plt.stem(t*1e9, pdp, 'b', bottom=0.001)
     plt.xlabel("Delay in ns")
     plt.xlim([-10, max(t)*1e9])
     plt.ylabel("Mean Power")
     plt.grid()
-    plt.ylim([0.001,5])
+    plt.ylim([0.001,1])
     # plt.title("Power delay profile")
     # plt.yscale('log')
     plt.savefig("rayleigh_pdp.pdf",bbox='tight')
