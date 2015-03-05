@@ -5,6 +5,7 @@ This is an IEEE802.15.4 O-QPSK transceiver for GNU Radio v3.7. It is based on th
 Currently, it features the following:
 
 - The O-QPSK PHY encapsulated in a hierarchical block.
+- The CSS PHY, also encapsulated in a hierarchical block (Limitation: Packets need to have a fixed length). 
 - A block that implements the Rime communication stack. Rime is a lightweight communication stack designed for Wireless Sensor Networks and is part of the Contiki Operating System.
 - A transceiver flow graph with USRP <-> PHY <-> MAC <-> Network layer (Rime) <-> UDP Socket / APP which resembles pretty well the ISO/OSI structure.
 - A sample application which visualizes sensor values. The application shows how easy it is to connect an external program to the flow graph by using Socket PDU blocks.
@@ -42,12 +43,12 @@ sudo make install
 sudo ldconfig
 
 The  hierarchical block has to be installed separately:
-Open examples/ieee802_15_4_PHY.grc in gnuradio-companion and generate (hotkey F5) the flow graph. This installs the hierarchical block in your home, where gnuradio-companion can find it (typically ~/.grc_gnuradio).
+Open examples/ieee802_15_4_*_PHY.grc in gnuradio-companion and generate (hotkey F5) the flow graph. This installs the hierarchical block in your home, where gnuradio-companion can find it (typically ~/.grc_gnuradio).
 
 
 ### Usage
 
-Open the examples/transceiver.grc flow graph with gnuradio-companion and check if all blocks are connected. Enable either the UHD blocks to interface with real hardware or the Packet Pad block to loop back the samples. Open some Rime connections and connect messages sources or Socket PDUs. You can easily connect to the Socket PDU blocks with netcat. Netcat can be started for example with
+Open the examples/transceiver_*.grc flow graph with gnuradio-companion and check if all blocks are connected. Enable either the UHD blocks to interface with real hardware or the Packet Pad block to loop back the samples. Open some Rime connections and connect messages sources or Socket PDUs. You can easily connect to the Socket PDU blocks with netcat. Netcat can be started for example with
 
 nc -u localhost 52001
 
