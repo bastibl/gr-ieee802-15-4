@@ -88,7 +88,7 @@ namespace gr {
           samples_consumed += first_tag_pos;
           if(second_tag_pos - first_tag_pos < d_nsym_frame)
           {
-            std::cout << "Frame buffer: Incomplete frame detected, drop " << second_tag_pos - first_tag_pos << " symbols." << std::endl;
+            // std::cout << "Frame buffer: Incomplete frame detected, drop " << second_tag_pos - first_tag_pos << " symbols." << std::endl;
             samples_consumed += second_tag_pos - first_tag_pos;
           }
           else if(ninput_items[0] - samples_consumed >= d_nsym_frame)

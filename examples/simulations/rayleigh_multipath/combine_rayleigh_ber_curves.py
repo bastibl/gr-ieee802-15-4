@@ -15,15 +15,8 @@ if __name__ == "__main__":
     snr_css_slow = np.arange(-30.0, 6.0, 1.0) + snr_correction
     snr_oqpsk = np.arange(-30.0, 20.0, 1.0) + snr_correction
 
-    t =  np.arange(0.0, 320 * 1e-9, 1.0 / (32 * 1e6))
-    pdp = [np.exp(-28782313.0 * tau) for tau in t]
-    if len(pdp) % 2 == 0:
-        pdp.append(0)
-    for i in range(len(pdp)):
-        if i%8 != 0:
-            pdp[i] = 0
-    pdp[0] = 0.91
-    pdp[8] = 0.09
+    t =  [0, 250]
+    pdp = [0.91,0.09]
 
     plt.rcParams.update({'font.size': 14})
     plt.rcParams.update({'axes.labelsize': 'large'})
@@ -75,9 +68,9 @@ if __name__ == "__main__":
     plt.savefig("ber_rayleigh_EbN0.pdf",bbox='tight')
 
     f2 = plt.figure(2)
-    plt.stem(t*1e9, pdp, 'b', bottom=0.001)
+    plt.stem(t, pdp, 'b', bottom=0.001)
     plt.xlabel("Delay in ns")
-    plt.xlim([-10, max(t)*1e9])
+    plt.xlim([-10, 300])
     plt.ylabel("Mean Power")
     plt.grid()
     plt.ylim([0.001,1])
