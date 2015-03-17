@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <ieee802-15-4/mac.h>
+#include <ieee802_15_4/mac.h>
 #include <gnuradio/io_signature.h>
 #include <gnuradio/block_detail.h>
 
@@ -35,7 +35,9 @@ mac_impl(bool debug) :
 			gr::io_signature::make(0, 0, 0)),
 			d_msg_offset(0),
 			d_seq_nr(0),
-			d_debug(debug) {
+			d_debug(debug),
+			d_num_packet_errors(0),
+			d_num_packets_received(0) {
 
 	message_port_register_in(pmt::mp("app in"));
 	set_msg_handler(pmt::mp("app in"), boost::bind(&mac_impl::app_in, this, _1));
@@ -62,6 +64,13 @@ void mac_in(pmt::pmt_t msg) {
 		assert(false);
 	}
 
+	// dout << "MAC: frame content as char: ";
+	// char* dblob = (char*) pmt::blob_data(blob);
+	// int dlen = pmt::blob_length(blob);
+	// for(int i=0; i<dlen; i++)
+	// 	dout << unsigned(dblob[i]);
+	// dout << std::endl;
+
 	size_t data_len = pmt::blob_length(blob);
 	if(data_len < 11) {
 		dout << "MAC: frame too short. Dropping!" << std::endl;
@@ -69,9 +78,14 @@ void mac_in(pmt::pmt_t msg) {
 	}
 
 	uint16_t crc = crc16((char*)pmt::blob_data(blob), data_len);
+	d_num_packets_received++;
 	if(crc) {
+		d_num_packet_errors++;
 		dout << "MAC: wrong crc. Dropping packet!" << std::endl;
 		return;
+	}
+	else{
+		dout << "MAC: correct crc. Propagate packet to APP layer." << std::endl;
 	}
 
 	pmt::pmt_t mac_payload = pmt::make_blob((char*)pmt::blob_data(blob) + 9 , data_len - 9 - 2);
@@ -94,11 +108,10 @@ void app_in(pmt::pmt_t msg) {
 		return;
 	}
 
-	dout << "MAC: received new message" << std::endl;
-	dout << "message length " << pmt::blob_length(blob) << std::endl;
+	//dout << "MAC: received new message from APP of length " << pmt::blob_length(blob) << std::endl;
 
 	generate_mac((const char*)pmt::blob_data(blob), pmt::blob_length(blob));
-	print_message();
+	//print_message();
 	message_port_pub(pmt::mp("pdu out"), pmt::cons(pmt::PMT_NIL,
 			pmt::make_blob(d_msg, d_msg_len)));
 }
@@ -124,6 +137,7 @@ uint16_t crc16(char *buf, int len) {
 void generate_mac(const char *buf, int len) {
 
 	// FCF
+	// data frame, no security
 	d_msg[0] = 0x41;
 	d_msg[1] = 0x88;
 
@@ -146,9 +160,6 @@ void generate_mac(const char *buf, int len) {
 	d_msg[10 + len] = crc >> 8;
 
 	d_msg_len = 9 + len + 2;
-
-	dout << std::dec << "msg len " << d_msg_len <<
-	        "    len " << len << std::endl;
 }
 
 void print_message() {
@@ -161,12 +172,21 @@ void print_message() {
 	dout << std::endl;
 }
 
+int get_num_packet_errors(){ return d_num_packet_errors; }
+
+int get_num_packets_received(){ return d_num_packets_received; }
+
+float get_packet_error_ratio(){ return float(d_num_packet_errors)/d_num_packets_received; }
+
 private:
 	bool        d_debug;
 	int         d_msg_offset;
 	int         d_msg_len;
 	uint8_t     d_seq_nr;
 	char        d_msg[256];
+
+	int d_num_packet_errors;
+	int d_num_packets_received;
 };
 
 mac::sptr

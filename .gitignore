@@ -9,3 +9,12 @@ contiki/*.a
 contiki/*.map
 contiki/*.ihex
 contiki/*.sky
+examples/transceiver.py
+examples/transceiver_css.py
+examples/css_oqpsk_perf_comp.py
+*.npy
+*~
+*.npy
+*.pdf
+.idea/*
+*.png

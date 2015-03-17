@@ -1,0 +1,26 @@
+<block>
+  <name>Costas Loop</name>
+  <key>ieee802_15_4_costas_loop_cc</key>
+  <category>IEEE802.15.4</category>
+  <import>import ieee802_15_4</import>
+  <make>ieee802_15_4.costas_loop_cc($constellation_points, $initial_index)</make>
+  <param>
+    <name>Constellation Points</name>
+    <key>constellation_points</key>
+    <type>complex_vector</type>
+  </param>
+  <param>
+    <name>Initial Index</name>
+    <key>initial_index</key>
+    <value> -1</value>
+    <type>int</type>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>complex</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>complex</type>
+  </source>
+</block>
