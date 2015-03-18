@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <ieee802-15-4/packet_sink.h>
+#include <ieee802_15_4/packet_sink.h>
 #include <gnuradio/io_signature.h>
 #include <cstdio>
 #include <errno.h>
