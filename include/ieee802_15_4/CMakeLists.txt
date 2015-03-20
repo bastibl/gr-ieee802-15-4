@@ -38,7 +38,6 @@ install(FILES
     dqpsk_soft_demapper_cc.h
     deinterleaver_ff.h
     codeword_soft_demapper_fb.h
-    simple_chirp_detector_cc.h
     costas_loop_cc.h
     frame_buffer_cc.h
     multiuser_chirp_detector_cc.h
