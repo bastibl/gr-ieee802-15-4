@@ -33,14 +33,12 @@ install(FILES
     codeword_demapper_ib.h
     zeropadding_removal_b.h
     phr_removal.h
-    make_pair_with_blob.h
     matched_filter_ff.h
     chips_to_bits_fb.h
     access_code_removal_b.h
     dqpsk_soft_demapper_cc.h
     deinterleaver_ff.h
     codeword_soft_demapper_fb.h
-    compare_blobs.h
     rayleigh_multipath_cc.h
     simple_chirp_detector_cc.h
     costas_loop_cc.h

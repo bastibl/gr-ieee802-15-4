@@ -42,14 +42,12 @@ list(APPEND ieee802_15_4_sources
     codeword_demapper_ib_impl.cc
     zeropadding_removal_b_impl.cc
     phr_removal_impl.cc
-    make_pair_with_blob_impl.cc
     matched_filter_ff_impl.cc
     chips_to_bits_fb_impl.cc
     access_code_removal_b_impl.cc
     dqpsk_soft_demapper_cc_impl.cc
     deinterleaver_ff_impl.cc
     codeword_soft_demapper_fb_impl.cc
-    compare_blobs_impl.cc
     rayleigh_multipath_cc_impl.cc
     simple_chirp_detector_cc_impl.cc
     costas_loop_cc_impl.cc

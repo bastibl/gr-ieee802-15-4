@@ -32,14 +32,12 @@ install(FILES
     ieee802_15_4_codeword_demapper_ib.xml
     ieee802_15_4_zeropadding_removal_b.xml
     ieee802_15_4_phr_removal.xml
-    ieee802_15_4_make_pair_with_blob.xml
     ieee802_15_4_matched_filter_ff.xml
     ieee802_15_4_chips_to_bits_fb.xml
     ieee802_15_4_access_code_removal_b.xml
     ieee802_15_4_dqpsk_soft_demapper_cc.xml
     ieee802_15_4_deinterleaver_ff.xml
     ieee802_15_4_codeword_soft_demapper_fb.xml
-    ieee802_15_4_compare_blobs.xml
     ieee802_15_4_rayleigh_multipath_cc.xml
     ieee802_15_4_simple_chirp_detector_cc.xml
     ieee802_15_4_costas_loop_cc.xml

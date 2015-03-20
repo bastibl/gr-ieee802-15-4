@@ -40,14 +40,12 @@
 #include "ieee802_15_4/codeword_demapper_ib.h"
 #include "ieee802_15_4/zeropadding_removal_b.h"
 #include "ieee802_15_4/phr_removal.h"
-#include "ieee802_15_4/make_pair_with_blob.h"
 #include "ieee802_15_4/matched_filter_ff.h"
 #include "ieee802_15_4/chips_to_bits_fb.h"
 #include "ieee802_15_4/access_code_removal_b.h"
 #include "ieee802_15_4/dqpsk_soft_demapper_cc.h"
 #include "ieee802_15_4/deinterleaver_ff.h"
 #include "ieee802_15_4/codeword_soft_demapper_fb.h"
-#include "ieee802_15_4/compare_blobs.h"
 #include "ieee802_15_4/rayleigh_multipath_cc.h"
 #include "ieee802_15_4/simple_chirp_detector_cc.h"
 #include "ieee802_15_4/costas_loop_cc.h"
@@ -97,8 +95,6 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, phr_removal);
 %include "ieee802_15_4/multiuser_chirp_detector_cc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, multiuser_chirp_detector_cc);
 
-%include "ieee802_15_4/make_pair_with_blob.h"
-GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, make_pair_with_blob);
 
 %include "ieee802_15_4/matched_filter_ff.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, matched_filter_ff);
@@ -112,8 +108,7 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, dqpsk_soft_demapper_cc);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, deinterleaver_ff);
 %include "ieee802_15_4/codeword_soft_demapper_fb.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_soft_demapper_fb);
-%include "ieee802_15_4/compare_blobs.h"
-GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, compare_blobs);
+
 %include "ieee802_15_4/rayleigh_multipath_cc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, rayleigh_multipath_cc);
 %include "ieee802_15_4/simple_chirp_detector_cc.h"
