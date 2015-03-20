@@ -25,7 +25,6 @@
 #include "ieee802_15_4/mac.h"
 #include "ieee802_15_4/packet_sink.h"
 #include "ieee802_15_4/rime_stack.h"
-#include "ieee802_15_4/fragmentation.h"
 #include "ieee802_15_4/phr_prefixer.h"
 #include "ieee802_15_4/zeropadding_b.h"
 #include "ieee802_15_4/codeword_mapper_bi.h"
@@ -64,8 +63,6 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, mac);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, packet_sink);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, rime_stack);
 
-%include "ieee802_15_4/fragmentation.h"
-GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, fragmentation);
 %include "ieee802_15_4/phr_prefixer.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, phr_prefixer);
 %include "ieee802_15_4/zeropadding_b.h"

@@ -42,7 +42,6 @@ include(GrTest)
 
 set(GR_TEST_TARGET_DEPS gnuradio-ieee802-15-4)
 set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)
-GR_ADD_TEST(qa_fragmentation ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_fragmentation.py)
 GR_ADD_TEST(qa_phr_prefixer ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_phr_prefixer.py)
 GR_ADD_TEST(qa_zeropadding_b ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_zeropadding_b.py)
 GR_ADD_TEST(qa_codeword_mapper_bi ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_codeword_mapper_bi.py)
