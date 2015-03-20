@@ -47,7 +47,6 @@ list(APPEND ieee802_15_4_sources
     dqpsk_soft_demapper_cc_impl.cc
     deinterleaver_ff_impl.cc
     codeword_soft_demapper_fb_impl.cc
-    rayleigh_multipath_cc_impl.cc
     simple_chirp_detector_cc_impl.cc
     costas_loop_cc_impl.cc
     frame_buffer_cc_impl.cc
