@@ -1050,61 +1050,6 @@
     </param>
   </block>
   <block>
-    <key>ieee802_15_4_simple_chirp_detector_cc</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_simple_chirp_detector_cc_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>chirp_seq</key>
-      <value>chirp_seq</value>
-    </param>
-    <param>
-      <key>time_gap_1</key>
-      <value>len(time_gap_1)</value>
-    </param>
-    <param>
-      <key>time_gap_2</key>
-      <value>len(time_gap_2)</value>
-    </param>
-    <param>
-      <key>len_subchirp</key>
-      <value>len_sub</value>
-    </param>
-    <param>
-      <key>threshold</key>
-      <value>threshold</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(136, 668)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
     <key>ieee802_15_4_dqpsk_mapper_ff</key>
     <param>
       <key>id</key>
@@ -1418,61 +1363,6 @@
     <param>
       <key>_coordinate</key>
       <value>(304, 655)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_multiuser_chirp_detector_cc</key>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_multiuser_chirp_detector_cc_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>chirp_seq</key>
-      <value>chirp_seq</value>
-    </param>
-    <param>
-      <key>time_gap_1</key>
-      <value>len(time_gap_1)</value>
-    </param>
-    <param>
-      <key>time_gap_2</key>
-      <value>len(time_gap_2)</value>
-    </param>
-    <param>
-      <key>len_subchirp</key>
-      <value>len_sub</value>
-    </param>
-    <param>
-      <key>threshold</key>
-      <value>threshold</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(128, 636)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2366,6 +2256,61 @@
       <value>180</value>
     </param>
   </block>
+  <block>
+    <key>ieee802_15_4_multiuser_chirp_detector_cc</key>
+    <param>
+      <key>id</key>
+      <value>ieee802_15_4_multiuser_chirp_detector_cc_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>chirp_seq</key>
+      <value>chirp_seq</value>
+    </param>
+    <param>
+      <key>time_gap_1</key>
+      <value>len(time_gap_1)</value>
+    </param>
+    <param>
+      <key>time_gap_2</key>
+      <value>len(time_gap_2)</value>
+    </param>
+    <param>
+      <key>len_subchirp</key>
+      <value>len_sub</value>
+    </param>
+    <param>
+      <key>threshold</key>
+      <value>threshold</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(128, 635)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
   <connection>
     <source_block_id>ieee802_15_4_dqcsk_mapper_fc_0</source_block_id>
     <sink_block_id>blocks_stream_to_tagged_stream_0</sink_block_id>
@@ -2448,24 +2393,6 @@
     <source_block_id>blocks_complex_to_float_0</source_block_id>
     <sink_block_id>blocks_keep_m_in_n_0_0_0_0</sink_block_id>
     <source_key>1</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>pad_source_0</source_block_id>
-    <sink_block_id>ieee802_15_4_simple_chirp_detector_cc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_simple_chirp_detector_cc_0</source_block_id>
-    <sink_block_id>ieee802_15_4_costas_loop_cc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_simple_chirp_detector_cc_0</source_block_id>
-    <sink_block_id>pad_sink_1</sink_block_id>
-    <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
