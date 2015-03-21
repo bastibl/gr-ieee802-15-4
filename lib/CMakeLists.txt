@@ -55,6 +55,7 @@ list(APPEND ieee802_15_4_sources
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}
     ${GNURADIO_ALL_LIBRARIES}
+    ${LOG4CPP_LIBRARIES}
 )
 
 add_library(gnuradio-ieee802_15_4 SHARED ${ieee802_15_4_sources})

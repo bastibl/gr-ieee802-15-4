@@ -99,6 +99,13 @@ if(NOT PYTHONLIBS_FOUND)
 endif()
 
 ########################################################################
+# Setup logging options
+########################################################################
+
+include(GrMiscUtils)
+GR_LOGGING()
+
+########################################################################
 # On Apple only, set install name and use rpath correctly, if not already set
 ########################################################################
 if(APPLE)
@@ -126,12 +133,14 @@ include_directories(
     ${Boost_INCLUDE_DIRS}
     ${CPPUNIT_INCLUDE_DIRS}
     ${GNURADIO_RUNTIME_INCLUDE_DIRS}
+    ${LOG4CPP_INCLUDE_DIRS}
 )
 
 link_directories(
     ${Boost_LIBRARY_DIRS}
     ${CPPUNIT_LIBRARY_DIRS}
     ${GNURADIO_RUNTIME_LIBRARY_DIRS}
+    ${LOG4CPP_LIBRARY_DIRS}
 )
 
 set(GR_IEEE802_15_4_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "" FORCE)
