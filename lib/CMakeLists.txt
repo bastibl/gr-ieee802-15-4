@@ -55,6 +55,7 @@ list(APPEND ieee802_15_4_sources
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}
     ${GNURADIO_ALL_LIBRARIES}
+    ${VOLK_LIBRARIES}
     ${LOG4CPP_LIBRARIES}
 )
 
