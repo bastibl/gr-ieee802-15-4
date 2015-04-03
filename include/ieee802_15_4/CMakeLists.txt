@@ -32,7 +32,6 @@ install(FILES
     codeword_demapper_ib.h
     zeropadding_removal_b.h
     phr_removal.h
-    matched_filter_ff.h
     chips_to_bits_fb.h
     access_code_removal_b.h
     dqpsk_soft_demapper_cc.h

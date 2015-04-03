@@ -35,7 +35,6 @@
 #include "ieee802_15_4/frame_buffer_cc.h"
 #include "ieee802_15_4/interleaver_ii.h"
 #include "ieee802_15_4/mac.h"
-#include "ieee802_15_4/matched_filter_ff.h"
 #include "ieee802_15_4/multiuser_chirp_detector_cc.h"
 #include "ieee802_15_4/packet_sink.h"
 #include "ieee802_15_4/phr_prefixer.h"
@@ -78,8 +77,7 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, frame_buffer_cc);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, interleaver_ii);
 %include "ieee802_15_4/mac.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, mac);
-%include "ieee802_15_4/matched_filter_ff.h"
-GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, matched_filter_ff);
+
 %include "ieee802_15_4/multiuser_chirp_detector_cc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, multiuser_chirp_detector_cc);
 %include "ieee802_15_4/packet_sink.h"
