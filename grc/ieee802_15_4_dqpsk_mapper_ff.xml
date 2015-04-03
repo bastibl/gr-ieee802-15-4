@@ -12,16 +12,16 @@
   <param>
     <name>Direction</name>
     <key>forward</key>
-    <value>1</value>
-    <type>int</type>
+    <value>True</value>
+    <type>bool</type>
     <option>
         <name>Forward</name>
-        <key>1</key>
+        <key>True</key>
     </option>
     <option>
         <name>Reverse</name>
-        <key>0</key>
-    </option>    
+        <key>False</key>
+    </option>
   </param>
   <sink>
     <name>in</name>
