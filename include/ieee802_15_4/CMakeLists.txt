@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 install(FILES
-	access_code_prefixer.h
-	api.h
-	mac.h
-	packet_sink.h
-	rime_stack.h
-	phr_prefixer.h
+    access_code_prefixer.h
+    api.h
+    mac.h
+    packet_sink.h
+    rime_stack.h
+    phr_prefixer.h
     zeropadding_b.h
     codeword_mapper_bi.h
     interleaver_ii.h
@@ -40,5 +40,5 @@ install(FILES
     frame_buffer_cc.h
     multiuser_chirp_detector_cc.h
     preamble_tagger_cc.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
-	COMPONENT "ieee802_15_4_devel"
+    COMPONENT "ieee802_15_4_devel"
 )

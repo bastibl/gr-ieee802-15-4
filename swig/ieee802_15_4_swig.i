@@ -60,7 +60,6 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_demapper_ib);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_mapper_bi);
 %include "ieee802_15_4/codeword_soft_demapper_fb.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_soft_demapper_fb);
-
 %include "ieee802_15_4/deinterleaver_ff.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, deinterleaver_ff);
 %include "ieee802_15_4/dqcsk_demapper_cc.h"
@@ -77,7 +76,6 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, frame_buffer_cc);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, interleaver_ii);
 %include "ieee802_15_4/mac.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, mac);
-
 %include "ieee802_15_4/multiuser_chirp_detector_cc.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, multiuser_chirp_detector_cc);
 %include "ieee802_15_4/packet_sink.h"
