@@ -27,7 +27,6 @@
 #include "ieee802_15_4/codeword_demapper_ib.h"
 #include "ieee802_15_4/codeword_mapper_bi.h"
 #include "ieee802_15_4/codeword_soft_demapper_fb.h"
-#include "ieee802_15_4/costas_loop_cc.h"
 #include "ieee802_15_4/deinterleaver_ff.h"
 #include "ieee802_15_4/dqcsk_demapper_cc.h"
 #include "ieee802_15_4/dqcsk_mapper_fc.h"
@@ -62,8 +61,7 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_demapper_ib);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_mapper_bi);
 %include "ieee802_15_4/codeword_soft_demapper_fb.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_soft_demapper_fb);
-%include "ieee802_15_4/costas_loop_cc.h"
-GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, costas_loop_cc);
+
 %include "ieee802_15_4/deinterleaver_ff.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, deinterleaver_ff);
 %include "ieee802_15_4/dqcsk_demapper_cc.h"

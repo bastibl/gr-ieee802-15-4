@@ -38,7 +38,6 @@ install(FILES
     dqpsk_soft_demapper_cc.h
     deinterleaver_ff.h
     codeword_soft_demapper_fb.h
-    costas_loop_cc.h
     frame_buffer_cc.h
     multiuser_chirp_detector_cc.h
     preamble_tagger_cc.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
