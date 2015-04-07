@@ -1,9 +1,10 @@
-brief: An IEEE 802.15.4 (ZigBee) Transceiver
+brief: gr-ieee802-15-4
 author:
   - Bastian Bloessl <bloessl@ccs-labs.org>
   - Felix Wunsch <wunsch.felix@googlemail.com>
 copyright_owner:
   - Bastian Bloessl
+  - Felix Wunsch
   - Free Software Foundation
 dependencies:
   - gnuradio (>= 3.7.4)
