@@ -1,4 +1,4 @@
-brief: gr-ieee802-15-4
+title: gr-ieee802-15-4
 author:
   - Bastian Bloessl <bloessl@ccs-labs.org>
   - Felix Wunsch <wunsch.felix@googlemail.com>
@@ -6,15 +6,13 @@ copyright_owner:
   - Bastian Bloessl
   - Felix Wunsch
   - Free Software Foundation
-dependencies:
-  - gnuradio (>= 3.7.4)
 repo: https://github.com/bastibl/gr-ieee802-15-4.git
 tags:
-  - sdr
   - IEEE 802.15.4
   - ZigBee
+  - IoT
 website: http://www.ccs-labs.org/software/gr-ieee802-15-4/
-title: An IEEE 802.15.4 (ZigBee) Transceiver
+brief: An IEEE 802.15.4 (ZigBee) Transceiver
 icon: http://www.ccs-labs.org/software/gr-ieee802-15-4/gr-15-4-logo.png
 ---
 This is an IEEE802.15.4 transceiver for GNU Radio v3.7. It is based on the UCLA implementation (https://cgran.org/wiki/UCLAZigBee) of Thomas Schmid.
@@ -28,7 +26,8 @@ Currently, it features the following:
 - A sample application which visualizes sensor values. The application shows how easy it is to connect an external program to the flow graph by using Socket PDU blocks.
 - An IEEE 802.15.4 and Rime dissector for Wireshark.
 
-Some interesting properties:
+Some interesting stuff:
+
 - Packets can be piped to Wireshark.
 - The complete physical modulation is done with plain GNU Radio blocks.
 - It is interoperable with TelosB sensor motes.
