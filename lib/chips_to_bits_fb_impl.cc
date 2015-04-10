@@ -42,7 +42,8 @@ namespace gr {
     chips_to_bits_fb_impl::chips_to_bits_fb_impl(std::vector< std::vector< float > > chip_seq)
       : gr::sync_decimator("chips_to_bits_fb",
               gr::io_signature::make(1,1, sizeof(float)),
-              gr::io_signature::make(1,1, sizeof(unsigned char)), chip_seq[0].size()/std::log2(chip_seq.size())),
+              gr::io_signature::make(1,1, sizeof(unsigned char)),
+              (unsigned)(((float)chip_seq[0].size())/std::log2((float)chip_seq.size()))),
       d_chip_seq(chip_seq),
       d_bits_per_seq(std::log2(chip_seq.size())),
       d_len_chip_seq(chip_seq[0].size()),
