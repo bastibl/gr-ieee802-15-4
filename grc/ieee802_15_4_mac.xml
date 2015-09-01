@@ -24,18 +24,22 @@
 	<sink>
 		<name>pdu in</name>
 		<type>message</type>
+		<optional>1</optional>
 	</sink>
 	<sink>
 		<name>app in</name>
 		<type>message</type>
+		<optional>1</optional>
 	</sink>
 	<source>
 		<name>pdu out</name>
 		<type>message</type>
+		<optional>1</optional>
 	</source>
 	<source>
 		<name>app out</name>
 		<type>message</type>
+		<optional>1</optional>
 	</source>
 
 </block>
