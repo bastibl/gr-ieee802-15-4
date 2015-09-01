@@ -54,22 +54,11 @@ mac_impl(bool debug) :
 void mac_in(pmt::pmt_t msg) {
 	pmt::pmt_t blob;
 
-	if(pmt::is_eof_object(msg)) {
-		message_port_pub(pmt::mp("pdu out"), pmt::PMT_EOF);
-		detail().get()->set_done(true);
-		return;
-	} else if(pmt::is_pair(msg)) {
+	if(pmt::is_pair(msg)) {
 		blob = pmt::cdr(msg);
 	} else {
 		assert(false);
 	}
-
-	// dout << "MAC: frame content as char: ";
-	// char* dblob = (char*) pmt::blob_data(blob);
-	// int dlen = pmt::blob_length(blob);
-	// for(int i=0; i<dlen; i++)
-	// 	dout << unsigned(dblob[i]);
-	// dout << std::endl;
 
 	size_t data_len = pmt::blob_length(blob);
 	if(data_len < 11) {
