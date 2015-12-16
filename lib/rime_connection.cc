@@ -46,9 +46,10 @@ rime_connection::msg_to_string(pmt::pmt_t msg)
 	} else if(pmt::is_blob(msg)) {
 		return std::string(static_cast<const char *>(pmt::blob_data(msg)),
 				pmt::blob_length(msg));
-	} else {
-		assert(false);
 	}
+
+	throw std::runtime_error("rime connection: wrong message type");
+	return "";
 }
 
 
