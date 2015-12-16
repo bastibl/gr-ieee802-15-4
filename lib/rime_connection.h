@@ -35,7 +35,8 @@ namespace gr{
 		public:
 			static std::string msg_to_string(pmt::pmt_t msg);
 			rime_connection(rime_stack *block, uint16_t channel, pmt::pmt_t inport,
-							pmt::pmt_t outport, const uint8_t rime_add_mine[2]);
+				pmt::pmt_t outport, const uint8_t rime_add_mine[2]);
+			virtual ~rime_connection() {};
 			virtual void pack(pmt::pmt_t msg) = 0;
 			virtual void unpack(pmt::pmt_t msg) = 0;
 			uint16_t channel() const;
