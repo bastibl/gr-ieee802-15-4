@@ -63,6 +63,5 @@ GR_ADD_TEST(qa_dqpsk_soft_demapper_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURC
 GR_ADD_TEST(qa_deinterleaver_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_deinterleaver_ff.py)
 GR_ADD_TEST(qa_codeword_soft_demapper_fb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_codeword_soft_demapper_fb.py)
 GR_ADD_TEST(qa_frame_buffer_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_frame_buffer_cc.py)
-GR_ADD_TEST(qa_css_sync ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_css_sync.py)
 GR_ADD_TEST(qa_multiuser_chirp_detector_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_multiuser_chirp_detector_cc.py)
 GR_ADD_TEST(qa_preamble_tagger_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_preamble_tagger_cc.py)
