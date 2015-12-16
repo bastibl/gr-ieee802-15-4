@@ -47,22 +47,22 @@ class qa_deinterleaver_ff (gr_unittest.TestCase):
         self.assertFloatTuplesAlmostEqual(data_in, data_out) 
 
     def test_002_t (self):
-		# set up fg
-		cfg = phy(slow_rate=True)
-		data_in = range(3*len(cfg.intlv_seq))
-		self.src = blocks.vector_source_f(data_in)
-		self.intlv = ieee802_15_4.deinterleaver_ff(intlv_seq=cfg.intlv_seq)
-		self.snk = blocks.vector_sink_f(1)
-		self.tb.connect(self.src, self.intlv, self.snk)
-		self.tb.run ()
+        # set up fg
+        cfg = phy(slow_rate=True)
+        data_in = range(3*len(cfg.intlv_seq))
+        self.src = blocks.vector_source_f(data_in)
+        self.intlv = ieee802_15_4.deinterleaver_ff(intlv_seq=cfg.intlv_seq)
+        self.snk = blocks.vector_sink_f(1)
+        self.tb.connect(self.src, self.intlv, self.snk)
+        self.tb.run ()
 
-		# check data
-		data_out = self.snk.data()
-		ref = []
-		for n in range(3):
-			for i in range(len(cfg.intlv_seq)):
-				ref.append(data_in[n*len(cfg.intlv_seq)+cfg.intlv_seq[i]])       
-		self.assertFloatTuplesAlmostEqual(ref, data_out)              
+        # check data
+        data_out = self.snk.data()
+        ref = []
+        for n in range(3):
+            for i in range(len(cfg.intlv_seq)):
+                ref.append(data_in[n*len(cfg.intlv_seq)+cfg.intlv_seq[i]])
+        self.assertFloatTuplesAlmostEqual(ref, data_out)
 
 if __name__ == '__main__':
     gr_unittest.run(qa_deinterleaver_ff)
