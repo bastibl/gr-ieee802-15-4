@@ -70,27 +70,3 @@ install(TARGETS gnuradio-ieee802_15_4
     RUNTIME DESTINATION bin              # .dll file
 )
 
-########################################################################
-# Build and register unit test
-########################################################################
-include(GrTest)
-
-include_directories(${CPPUNIT_INCLUDE_DIRS})
-
-list(APPEND test_ieee802_15_4_sources
-    ${CMAKE_CURRENT_SOURCE_DIR}/test_ieee802_15_4.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/qa_ieee802_15_4.cc
-)
-
-add_executable(test-ieee802_15_4 ${test_ieee802_15_4_sources})
-
-target_link_libraries(
-  test-ieee802_15_4
-  ${GNURADIO_RUNTIME_LIBRARIES}
-  ${Boost_LIBRARIES}
-  ${CPPUNIT_LIBRARIES}
-  gnuradio-ieee802_15_4
-)
-
-GR_ADD_TEST(test_ieee802_15_4 test-ieee802_15_4)
-
