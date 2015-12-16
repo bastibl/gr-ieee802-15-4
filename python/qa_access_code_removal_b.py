@@ -59,7 +59,7 @@ class qa_access_code_removal_b (gr_unittest.TestCase):
         msg2 = self.snk.get_message(1)
         self.assertFloatTuplesAlmostEqual(data2, pmt.to_python(msg2)[1])
 
-    def test_001_t (self):
+    def test_002_t (self):
         # set up fg
         SHR = np.array([0x00, 0x00, 0x00, 0x00, 0xA7])
         PHR1 = np.array([2])
