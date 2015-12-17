@@ -1,6 +1,5 @@
 import css_constants
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 class physical_layer:

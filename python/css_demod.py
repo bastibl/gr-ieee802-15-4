@@ -1,7 +1,6 @@
 import css_constants
 import css_phy
 import numpy as np
-import matplotlib.pyplot as plt
 
 def c_corrcoef(a,b):
 	# formula: sum(a*conj(b))/(sum(a*conj(a))*sum(b*conj(b)))

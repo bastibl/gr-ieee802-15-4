@@ -1,7 +1,6 @@
 import css_constants
 import css_phy
 import numpy as np
-import matplotlib.pyplot as plt
 
 class modulator(css_phy.physical_layer):
 	def modulate_random(self):
