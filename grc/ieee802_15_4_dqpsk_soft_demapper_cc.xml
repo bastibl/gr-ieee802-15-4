@@ -1,7 +1,7 @@
 <block>
   <name>DQPSK Soft Demapper</name>
   <key>ieee802_15_4_dqpsk_soft_demapper_cc</key>
-  <category>IEEE802.15.4</category>
+  <category>[IEEE802.15.4]</category>
   <import>import ieee802_15_4</import>
   <make>ieee802_15_4.dqpsk_soft_demapper_cc($framelen)</make>
   <param>

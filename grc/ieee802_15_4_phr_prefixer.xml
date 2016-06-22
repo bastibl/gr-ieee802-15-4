@@ -1,7 +1,7 @@
 <block>
   <name>PHR Prefixer</name>
   <key>ieee802_15_4_phr_prefixer_c</key>
-  <category>IEEE802.15.4</category>
+  <category>[IEEE802.15.4]</category>
   <import>import ieee802_15_4</import>
   <make>ieee802_15_4.phr_prefixer($phr)</make>
   <param>

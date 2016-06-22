@@ -2,7 +2,7 @@
 <block>
   <name>RIME Stack</name>
   <key>ieee802_15_4_rime_stack</key>
-  <category>IEEE802.15.4</category>
+  <category>[IEEE802.15.4]</category>
   <import>import ieee802_15_4</import>
   <make>ieee802_15_4.rime_stack($bc_channels, $uc_channels, $ruc_channels, $rime_add)</make>
 

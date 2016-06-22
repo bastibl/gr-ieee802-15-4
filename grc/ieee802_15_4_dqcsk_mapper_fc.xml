@@ -1,7 +1,7 @@
 <block>
   <name>DQCSK Mapper</name>
   <key>ieee802_15_4_dqcsk_mapper_fc</key>
-  <category>IEEE802.15.4</category>
+  <category>[IEEE802.15.4]</category>
   <import>import ieee802_15_4</import>
   <make>ieee802_15_4.dqcsk_mapper_fc($chirp_seq, $time_gap_1, $time_gap_2, $len_subchirp, $num_subchirps, $nsym_frame)</make>
   <param>

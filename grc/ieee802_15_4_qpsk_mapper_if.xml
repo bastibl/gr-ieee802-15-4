@@ -1,7 +1,7 @@
 <block>
   <name>QPSK Mapper</name>
   <key>ieee802_15_4_qpsk_mapper_if</key>
-  <category>IEEE802.15.4</category>
+  <category>[IEEE802.15.4]</category>
   <import>import ieee802_15_4</import>
   <make>ieee802_15_4.qpsk_mapper_if()</make>
   <sink>

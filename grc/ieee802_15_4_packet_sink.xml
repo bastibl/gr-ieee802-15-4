@@ -2,7 +2,7 @@
 <block>
 	<name>Packet Sink</name>
 	<key>ieee802_15_4_packet_sink</key>
-	<category>IEEE802.15.4</category>
+	<category>[IEEE802.15.4]</category>
 	<import>import ieee802_15_4</import>
 	<make>ieee802_15_4.packet_sink($th)</make>
 
