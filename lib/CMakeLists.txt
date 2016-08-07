@@ -20,35 +20,36 @@
 include(GrPlatform) #define LIB_SUFFIX
 list(APPEND ieee802_15_4_sources
     access_code_prefixer.cc
+    access_code_removal_b_impl.cc
     bc_connection.cc
+    chips_to_bits_fb_impl.cc
+    codeword_demapper_ib_impl.cc
+    codeword_mapper_bi_impl.cc
+    codeword_soft_demapper_fb_impl.cc
+    deinterleaver_ff_impl.cc
+    dqcsk_demapper_cc_impl.cc
+    dqcsk_mapper_fc_impl.cc
+    dqpsk_mapper_ff_impl.cc
+    dqpsk_soft_demapper_cc_impl.cc
+    frame_buffer_cc_impl.cc
+    interleaver_ii_impl.cc
     mac.cc
+    multiuser_chirp_detector_cc_impl.cc
     packet_sink.cc
+    phr_prefixer_impl.cc
+    phr_removal_impl.cc
+    preamble_sfd_prefixer_ii_impl.cc
+    preamble_tagger_cc_impl.cc
+    qpsk_demapper_fi_impl.cc
+    qpsk_mapper_if_impl.cc
     rime_connection.cc
     rime_stack.cc
     ruc_connection.cc
     stubborn_sender.cc
     uc_connection.cc
-    phr_prefixer_impl.cc
     zeropadding_b_impl.cc
-    codeword_mapper_bi_impl.cc
-    interleaver_ii_impl.cc
-    qpsk_mapper_if_impl.cc
-    dqpsk_mapper_ff_impl.cc
-    dqcsk_mapper_fc_impl.cc
-    preamble_sfd_prefixer_ii_impl.cc
-    dqcsk_demapper_cc_impl.cc
-    qpsk_demapper_fi_impl.cc
-    codeword_demapper_ib_impl.cc
     zeropadding_removal_b_impl.cc
-    phr_removal_impl.cc
-    chips_to_bits_fb_impl.cc
-    access_code_removal_b_impl.cc
-    dqpsk_soft_demapper_cc_impl.cc
-    deinterleaver_ff_impl.cc
-    codeword_soft_demapper_fb_impl.cc
-    frame_buffer_cc_impl.cc
-    multiuser_chirp_detector_cc_impl.cc    
-    preamble_tagger_cc_impl.cc )
+)
 
 list(APPEND ieee802_15_4_libs
     ${Boost_LIBRARIES}
