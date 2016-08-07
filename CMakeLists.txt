@@ -103,12 +103,7 @@ if(NOT VOLK_FOUND)
     message(FATAL_ERROR "Volk required to compile ieee802_15_4")
 endif()
 
-########################################################################
-# Setup logging options
-########################################################################
-
 include(GrMiscUtils)
-GR_LOGGING()
 
 ########################################################################
 # On Apple only, set install name and use rpath correctly, if not already set
@@ -139,7 +134,6 @@ include_directories(
     ${CPPUNIT_INCLUDE_DIRS}
     ${GNURADIO_RUNTIME_INCLUDE_DIRS}
     ${VOLK_INCLUDE_DIRS}
-    ${LOG4CPP_INCLUDE_DIRS}
 )
 
 link_directories(
@@ -147,7 +141,6 @@ link_directories(
     ${CPPUNIT_LIBRARY_DIRS}
     ${GNURADIO_RUNTIME_LIBRARY_DIRS}
     ${VOLK_LIBRARY_DIRS}
-    ${LOG4CPP_LIBRARY_DIRS}
 )
 
 set(GR_IEEE802_15_4_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "" FORCE)
