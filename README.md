@@ -1,8 +1,13 @@
 Hi!
 
-This is an IEEE802.15.4 O-QPSK transceiver for GNU Radio v3.7. It is based on the UCLA implementation (https://cgran.org/wiki/UCLAZigBee) of Thomas Schmid.
+This is an IEEE802.15.4 O-QPSK transceiver for GNU Radio, based on Thomas Schmid's implementation.
 
-Currently, it features the following:
+## Development
+
+Like GNU Radio, this module uses *master* and *next* branches for development, which are supposed to be used with the corresponding GNU Radio branches.
+I recommend staying up-to-date by using the *next* branch.
+
+## Features
 
 - The O-QPSK PHY encapsulated in a hierarchical block.
 - The CSS PHY, also encapsulated in a hierarchical block (Limitation: Packets need to have a fixed length). 
@@ -16,23 +21,24 @@ Some interesting properties:
 - The complete physical modulation is done with plain GNU Radio blocks.
 - It is interoperable with TelosB sensor motes.
 - It is interoperable with Contiki.
-- It uses a block to tag packet bursts with tx_sob and tx_eob tags. This tags are understood by the UHD blocks and allow fast switching between transmission and reception.
+- It uses a block to tag packet bursts with `tx_sob` and `tx_eob` tags. This tags are understood by the UHD blocks and allow fast switching between transmission and reception.
 
 You can find the firmware that I used to test interoperability with TelosB motes in the contiki folder. The firmware is based on Contiki v2.6. There is another README file in the Contiki folder that describes how to compile and use the firmware.
 
-### Dependencies
+## Dependencies
 
-- g++ 4.6 (for C++11 support)
+- g++ >= 4.6 (for C++11 support)
 
-- gr-foo (Wireshark Connector, Packet Pad and Burst Tagger blocks)
+- gr-foo (Wireshark Connector, Packet Pad and Burst Tagger blocks) <br>
   https://github.com/bastibl/gr-foo.git
 
-- python-matplotlib (if you want to run the GUI sample application)
-  sudo apt-get install python-matplotlib
+- python-matplotlib (if you want to run the GUI sample application) <br>
+  `sudo apt-get install python-matplotlib`
 
 
-### Installation
+## Installation
 
+```
 git clone git://github.com/bastibl/gr-ieee802-15-4.git
 cd gr-ieee802-15-4
 mkdir build
@@ -41,16 +47,19 @@ cmake ..
 make
 sudo make install
 sudo ldconfig
+```
 
 The  hierarchical block has to be installed separately:
-Open examples/ieee802_15_4_*_PHY.grc in gnuradio-companion and generate (hotkey F5) the flow graph. This installs the hierarchical block in your home, where gnuradio-companion can find it (typically ~/.grc_gnuradio).
+Open `examples/ieee802_15_4_*_PHY.grc` in gnuradio-companion and generate (hotkey F5) the flow graph. This installs the hierarchical block in your home, where gnuradio-companion can find it (typically `~/.grc_gnuradio`).
 
 
-### Usage
+## Usage
 
-Open the examples/transceiver_*.grc flow graph with gnuradio-companion and check if all blocks are connected. Enable either the UHD blocks to interface with real hardware or the Packet Pad block to loop back the samples. Open some Rime connections and connect messages sources or Socket PDUs. You can easily connect to the Socket PDU blocks with netcat. Netcat can be started for example with
+Open the `examples/transceiver_*.grc` flow graph with gnuradio-companion and check if all blocks are connected. Enable either the UHD blocks to interface with real hardware or the Packet Pad block to loop back the samples. Open some Rime connections and connect messages sources or Socket PDUs. You can easily connect to the Socket PDU blocks with netcat. Netcat can be started for example with
 
+```
 nc -u localhost 52001
+```
 
 There are also startup scripts in the apps folder.
 
