@@ -61,6 +61,8 @@ static const unsigned int CHIP_MAPPING[] = {
 static const int MAX_PKT_LEN    = 128 -  1; // remove header and CRC
 static const int MAX_LQI_SAMPLES = 8; // Number of chip correlation samples to take
 
+#define DLT_IEEE802_15_4 195 /* http://www.tcpdump.org/linktypes.html */
+
 class packet_sink_impl : public packet_sink {
 public:
 
@@ -343,7 +345,9 @@ int general_work(int noutput, gr_vector_int& ninput_items,
 							unsigned char lqi = (scaled_lqi >= 256? 255 : scaled_lqi);
 
 							pmt::pmt_t meta = pmt::make_dict();
-							meta = pmt::dict_add(meta, pmt::mp("lqi"), pmt::from_long(lqi));
+							meta = pmt::dict_add(meta, pmt::mp("lqi"), pmt::from_long(lqi));  // 0..255, Zigbee std
+							meta = pmt::dict_add(meta, pmt::mp("qual"), pmt::from_float(lqi / 255.0)); // 0.0 to 1.0, RFtap
+							meta = pmt::dict_add(meta, pmt::mp("dlt"), pmt::from_long(DLT_IEEE802_15_4));  // Data Link Type
 
 							std::memcpy(buf, d_packet, d_packetlen_cnt);
 							pmt::pmt_t payload = pmt::make_blob(buf, d_packetlen_cnt);
