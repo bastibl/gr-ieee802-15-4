@@ -59,10 +59,10 @@ class physical_layer:
         alpha = 0.25
         rcfilt = np.ones((css_constants.n_sub,))
         half_plateau_width = round((1 - alpha) / (1 + alpha) * css_constants.n_sub / 2)
-        rcfilt[len(rcfilt) / 2 + half_plateau_width:] = [
+        rcfilt[int(len(rcfilt) / 2 + half_plateau_width):] = [
             0.5 * (1 + np.cos((1 + alpha) * np.pi / (alpha * css_constants.n_sub) * i)) for i in
             range(int(css_constants.n_sub / 2 - half_plateau_width))]
-        rcfilt[0:len(rcfilt) / 2 - half_plateau_width] = rcfilt[-1:len(rcfilt) / 2 + half_plateau_width - 1:-1]
+        rcfilt[0:int(len(rcfilt) / 2 - half_plateau_width)] = rcfilt[-1:int(len(rcfilt) / 2 + half_plateau_width - 1):-1]
         # force 0s at the edges
         rcfilt[0] = 0
         rcfilt[-1] = 0
