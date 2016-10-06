@@ -103,8 +103,6 @@ if(NOT VOLK_FOUND)
     message(FATAL_ERROR "Volk required to compile ieee802_15_4")
 endif()
 
-include(GrMiscUtils)
-
 ########################################################################
 # On Apple only, set install name and use rpath correctly, if not already set
 ########################################################################

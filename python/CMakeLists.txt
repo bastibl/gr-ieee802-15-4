@@ -38,13 +38,7 @@ GR_PYTHON_INSTALL(
 #####################################################################
 # Handle the unit tests
 #####################################################################
-set(GR_TEST_LIBRARY_DIRS "")
-set(GR_TEST_TARGET_DEPS gnuradio-ieee802_15_4)
-set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)
-
 include(GrTest)
-file(GLOB py_qa_test_files "qa_*.py")
-foreach(py_qa_test_file ${py_qa_test_files})
-  get_filename_component(py_qa_test_name ${py_qa_test_file} NAME_WE)
-  GR_ADD_TEST(${py_qa_test_name} ${QA_PYTHON_EXECUTABLE} ${PYTHON_DASH_B} ${py_qa_test_file})
-endforeach(py_qa_test_file)
+
+set(GR_TEST_TARGET_DEPS gnuradio-ieee802-15-4)
+set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)
