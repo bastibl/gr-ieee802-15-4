@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<block>
+    <name>IEEE802.15.4 SHCS MAC</name>
+    <key>ieee802_15_4_shcs_mac</key>
+    <category>[IEEE802.15.4]</category>
+    <import>import ieee802_15_4</import>
+    <make>ieee802_15_4.shcs_mac($debug)</make>
+
+    <param>
+        <name>Debug</name>
+        <key>debug</key>
+        <value>False</value>
+        <type>bool</type>
+
+        <option>
+            <name>Enable</name>
+            <key>True</key>
+        </option>
+        <option>
+            <name>Disable</name>
+            <key>False</key>
+        </option>
+    </param>
+    <sink>
+        <name>pdu in</name>
+        <type>message</type>
+        <optional>1</optional>
+    </sink>
+    <sink>
+        <name>app in</name>
+        <type>message</type>
+        <optional>1</optional>
+    </sink>
+    <source>
+        <name>pdu out</name>
+        <type>message</type>
+        <optional>1</optional>
+    </source>
+    <source>
+        <name>app out</name>
+        <type>message</type>
+        <optional>1</optional>
+    </source>
+    <source>
+        <name>usrp sink cmd</name>
+        <type>message</type>
+        <optional>1</optional>
+    </source>
+    <source>
+        <name>usrp source cmd</name>
+        <type>message</type>
+        <optional>1</optional>
+    </source>
+
+</block>
