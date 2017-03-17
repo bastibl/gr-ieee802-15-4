@@ -82,25 +82,30 @@ set(GRC_BLOCKS_DIR      ${GR_PKG_DATA_DIR}/grc/blocks)
 # Find gnuradio build dependencies
 ########################################################################
 set(GR_REQUIRED_COMPONENTS RUNTIME PMT BLOCKS)
+
 find_package(Gnuradio)
-find_package(CppUnit)
-find_package(PythonLibs 2)
-find_package(Volk)
-
 if(NOT GNURADIO_RUNTIME_FOUND)
-    message(FATAL_ERROR "GnuRadio Runtime required to compile ieee802_15_4")
+    message(FATAL_ERROR "GNU Radio required to compile gr-ieee802-15-4")
 endif()
 
+find_package(CppUnit)
 if(NOT CPPUNIT_FOUND)
-    message(FATAL_ERROR "CppUnit required to compile ieee802_15_4")
+    message(FATAL_ERROR "CppUnit required to compile gr-ieee802-15-4")
 endif()
 
+find_package(PythonLibs 2)
 if(NOT PYTHONLIBS_FOUND)
-    message(FATAL_ERROR "Python required to compile ieee802_15_4")
+    message(FATAL_ERROR "Python required to compile gr-ieee802-15-4")
 endif()
 
+find_package(Volk)
 if(NOT VOLK_FOUND)
-    message(FATAL_ERROR "Volk required to compile ieee802_15_4")
+    message(FATAL_ERROR "Volk required to compile gr-ieee802-15-4")
+endif()
+
+find_package(SWIG)
+if(NOT SWIG_FOUND)
+    message(FATAL_ERROR "SWIG required to compile gr-ieee802-15-4")
 endif()
 
 ########################################################################
