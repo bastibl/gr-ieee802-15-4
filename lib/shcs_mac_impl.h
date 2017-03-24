@@ -34,7 +34,7 @@ namespace gr {
        *
        * @param[in]   debug, turn on/off debugging messages.
        */
-      shcs_mac_impl(bool debug);
+      shcs_mac_impl(bool debug, bool nwk_dev_type);
 
       /**
        * @brief   Destructor.
@@ -74,6 +74,8 @@ namespace gr {
 
        int d_num_packet_errors;
        int d_num_packets_received;
+
+       bool       d_nwk_dev_type = gr::ieee802_15_4::SU;
 
       /**
        * @brief   Handle package from PHY layer and forward processed package

@@ -28,6 +28,11 @@
 namespace gr {
   namespace ieee802_15_4 {
 
+    enum NWK_TYPE : bool {
+      SUC,
+      SU
+    };
+
     /*!
      * \brief <+description of block+>
      * \ingroup ieee802_15_4
@@ -46,7 +51,7 @@ namespace gr {
        * class. ieee802_15_4::shcs_mac::make is the public interface for
        * creating new instances.
        */
-      static sptr make(bool debug);
+      static sptr make(bool debug, bool nwk_dev_type);
     };
 
   } // namespace ieee802_15_4

@@ -21,6 +21,21 @@
             <key>False</key>
         </option>
     </param>
+    <param>
+        <name>Network Device Type</name>
+        <key>nwk_dev_type</key>
+        <value>False</value>
+        <type>bool</type>
+
+        <option>
+            <name>SUC</name>
+            <key>True</key>
+        </option>
+        <option>
+            <name>SU</name>
+            <key>False</key>
+        </option>
+    </param>
     <sink>
         <name>pdu in</name>
         <type>message</type>

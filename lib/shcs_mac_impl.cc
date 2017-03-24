@@ -47,13 +47,13 @@ namespace gr {
   namespace ieee802_15_4 {
 
     /*------------------------------------------------------------------------*/
-    shcs_mac::sptr shcs_mac::make(bool debug)
+    shcs_mac::sptr shcs_mac::make(bool debug, bool nwk_dev_type)
     {
-      return gnuradio::get_initial_sptr(new shcs_mac_impl(debug));
+      return gnuradio::get_initial_sptr(new shcs_mac_impl(debug, nwk_dev_type));
     }
 
     /*------------------------------------------------------------------------*/
-    shcs_mac_impl::shcs_mac_impl(bool debug) :
+    shcs_mac_impl::shcs_mac_impl(bool debug, bool d_nwk_dev_type) :
     block ("shcs_mac",
           gr::io_signature::make(0, 0, 0),
           gr::io_signature::make(0, 0, 0)),
@@ -61,10 +61,12 @@ namespace gr {
           d_seq_nr(0),
           d_debug(debug),
           d_num_packet_errors(0),
-          d_num_packets_received(0)
+          d_num_packets_received(0),
+          d_nwk_dev_type(d_nwk_dev_type)
     {
-      /* Print hello message */
-      dout << "Hello, this SHCS MAC protocol, version 0.0.1" << endl;
+      /* Print hello message and time stamp */
+      dout << "Hello, this is SHCS MAC protocol implementation, version 0.0.2" << endl;
+      dout << "NWK device type: " << (d_nwk_dev_type==SUC ? "SUC" : "SU") << endl;
 
       /* Register message port from NWK Layer */
       message_port_register_in(pmt::mp("app in"));
@@ -83,6 +85,8 @@ namespace gr {
       /* Register command message ports to USRP blocks */
       message_port_register_out(pmt::mp("usrp sink cmd"));
       message_port_register_out(pmt::mp("usrp source cmd"));
+
+
     }
 
     /*------------------------------------------------------------------------*/
@@ -139,10 +143,10 @@ namespace gr {
         return;
       }
 
-      //dout << "MAC: received new message from APP of length " << pmt::blob_length(blob) << endl;
+      dout << "MAC: received new message from APP of length " << pmt::blob_length(blob) << endl;
 
       generate_mac((const char*)pmt::blob_data(blob), pmt::blob_length(blob));
-      //print_message();
+      print_message();
       message_port_pub(pmt::mp("pdu out"), pmt::cons(pmt::PMT_NIL,
           pmt::make_blob(d_msg, d_msg_len)));
     }
