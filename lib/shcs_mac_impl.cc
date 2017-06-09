@@ -33,6 +33,9 @@
 
 #include <gnuradio/io_signature.h>
 #include <gnuradio/block_detail.h>
+#include <gnuradio/thread/thread.h>
+#include <boost/random/uniform_int.hpp>
+#include <boost/random/mersenne_twister.hpp>
 #include <iostream>
 #include <iomanip>
 
@@ -53,7 +56,7 @@ namespace gr {
     }
 
     /*------------------------------------------------------------------------*/
-    shcs_mac_impl::shcs_mac_impl(bool debug, bool d_nwk_dev_type) :
+    shcs_mac_impl::shcs_mac_impl(bool debug, bool nwk_dev_type) :
     block ("shcs_mac",
           gr::io_signature::make(0, 0, 0),
           gr::io_signature::make(0, 0, 0)),
@@ -62,11 +65,11 @@ namespace gr {
           d_debug(debug),
           d_num_packet_errors(0),
           d_num_packets_received(0),
-          d_nwk_dev_type(d_nwk_dev_type)
+          d_nwk_dev_type(nwk_dev_type)
     {
       /* Print hello message and time stamp */
-      dout << "Hello, this is SHCS MAC protocol implementation, version 0.0.2" << endl;
-      dout << "NWK device type: " << (d_nwk_dev_type==SUC ? "SUC" : "SU") << endl;
+      dout << "Hello, this is SHCS MAC protocol implementation, version 0.0.7" << endl;
+      dout << "NWK device type: " << (nwk_dev_type==SUC ? "SU Coordinator" : "SU") << endl;
 
       /* Register message port from NWK Layer */
       message_port_register_in(pmt::mp("app in"));
@@ -86,14 +89,83 @@ namespace gr {
       message_port_register_out(pmt::mp("usrp sink cmd"));
       message_port_register_out(pmt::mp("usrp source cmd"));
 
+      /* Initialize channels list */
+      for (int count = 1; count < num_of_channels; count++) {
+          center_freqs[count] = center_freqs[count - 1] + channel_step;
+      }
+
+      GR_LOG_INFO(d_logger, "List of operating channels and center freq.: ");
+      for (int count = 0; count < num_of_channels; count++) {
+          GR_LOG_INFO(d_logger, boost::format{"%d: %e (Hz)"} % (count + 11)
+                      % center_freqs[count] );
+      }
+
+      /* Create control threads */
+      if (nwk_dev_type == SUC) {
+          /* Create control thread for Coordinator */
+          control_thread_ptr = boost::shared_ptr<gr::thread::thread>
+                  (new gr::thread::thread(boost::bind(&shcs_mac_impl::coor_control_thread, this)));
+      }
+      else {
+          /* Create control thread for SU */
+          control_thread_ptr = boost::shared_ptr<gr::thread::thread>
+                  (new gr::thread::thread(boost::bind(&shcs_mac_impl::su_control_thread, this)));
+      }
 
     }
 
     /*------------------------------------------------------------------------*/
     shcs_mac_impl::~shcs_mac_impl()
     {
+      GR_LOG_DEBUG(d_logger, "Destructor called.");
     }
 
+    /*------------------------------------------------------------------------*/
+    void shcs_mac_impl::coor_control_thread(void) {
+      GR_LOG_DEBUG(d_logger, "Coordinator control thread created.");
+
+      /* Waiting for everything to settle */
+      boost::this_thread::sleep_for(boost::chrono::seconds{3});
+
+      /* TODO: perform an energy scan to all channels and select the channel
+       * with the least measured energy.
+       * Currently, choose a random channel to set up network.
+       */
+      GR_LOG_DEBUG(d_logger, "Performing energy scan...");
+
+      boost::random::mt19937 rng;
+      boost::random::uniform_int_distribution<> channel_dist(0, num_of_channels-1);
+      int working_channel = channel_dist(rng);
+      GR_LOG_DEBUG(d_logger, boost::format("Working channel: %d (%e)")
+        % (working_channel + 11) % center_freqs[working_channel]);
+
+      /* Setup working channel on USRP */
+//      pmt::pmt_t command = pmt::make_dict();
+//      pmt::dict_add(command, pmt::mp("freq"), pmt::mp(center_freqs[working_channel]));
+//      pmt::dict_add(command, pmt::mp("bandwidth"), pmt::mp(bandwidth));
+//      pmt::dict_add(command, pmt::mp("rate"), pmt::mp(sampling_rate));
+
+      pmt::pmt_t command = pmt::cons(
+          pmt::mp("freq"),
+          pmt::mp(center_freqs[working_channel])
+      );
+
+      message_port_pub(pmt::mp("usrp sink cmd"), command);
+      message_port_pub(pmt::mp("usrp source cmd"), command);
+
+      int heartbeat = 0;
+      while (1) {
+          boost::this_thread::sleep_for(boost::chrono::seconds{1});
+          GR_LOG_DEBUG(d_logger, boost::format("Time #%d") % heartbeat++);
+      }
+
+    }
+
+    /*------------------------------------------------------------------------*/
+    void shcs_mac_impl::su_control_thread(void) {
+      GR_LOG_DEBUG(d_logger, "SU control thread created.");
+
+    }
 
     /*------------------------------------------------------------------------*/
     void shcs_mac_impl::mac_in(pmt::pmt_t msg) {

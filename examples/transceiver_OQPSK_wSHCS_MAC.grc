@@ -89,7 +89,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>2480000000</value>
+      <value>2405000000</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -401,7 +401,7 @@
     </param>
     <param>
       <key>period</key>
-      <value>1000</value>
+      <value>10000</value>
     </param>
   </block>
   <block>
@@ -704,6 +704,10 @@
     <param>
       <key>minoutbuf</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>nwk_dev_type</key>
+      <value>True</value>
     </param>
   </block>
   <block>
@@ -1083,7 +1087,7 @@
     </param>
     <param>
       <key>center_freq0</key>
-      <value>freq</value>
+      <value>2.405e9</value>
     </param>
     <param>
       <key>norm_gain0</key>
@@ -1906,7 +1910,7 @@
     </param>
     <param>
       <key>center_freq0</key>
-      <value>freq</value>
+      <value>2.405e9</value>
     </param>
     <param>
       <key>dc_offs_enb0</key>

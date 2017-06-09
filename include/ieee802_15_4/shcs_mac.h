@@ -28,9 +28,9 @@
 namespace gr {
   namespace ieee802_15_4 {
 
-    enum NWK_TYPE : bool {
-      SUC,
-      SU
+    enum NWK_TYPE {
+      SUC = true,
+      SU = false
     };
 
     /*!

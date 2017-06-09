@@ -23,6 +23,7 @@
 
 #include <ieee802_15_4/shcs_mac.h>
 
+
 namespace gr {
   namespace ieee802_15_4 {
 
@@ -75,15 +76,37 @@ namespace gr {
        int d_num_packet_errors;
        int d_num_packets_received;
 
-       bool       d_nwk_dev_type = gr::ieee802_15_4::SU;
+       /* network device type */
+       bool       d_nwk_dev_type;
 
-      /**
-       * @brief   Handle package from PHY layer and forward processed package
-       *          to upper layer.
-       *
-       * @param[in]   msg, message demodulated by PHY layer.
-       */
-      void mac_in(pmt::pmt_t msg);
+       /* wireless channel configuration */
+       static const int num_of_channels = 16;  // channel 11 -> 26: [2.405, ..., 2.480] GHz,
+       const double channel_step = 5e6; // 5MHz step between 2 channels.
+       double center_freqs[num_of_channels] = {2.405e9}; // channel 11: 2.405GHz.
+
+       const double bandwidth = 2e6;      // Hz, constant for LR-WPAN.
+       const double sampling_rate = 4e6;  // Hz,
+
+       /* Control thread */
+       boost::shared_ptr<gr::thread::thread> control_thread_ptr;
+
+       /**
+        * @brief   Control thread for Coordinator.
+        */
+       void coor_control_thread(void);
+
+       /**
+         * @brief   Control thread for SU.
+         */
+       void su_control_thread(void);
+
+       /**
+        * @brief   Handle package from PHY layer and forward processed package
+        *          to upper layer.
+        *
+        * @param[in]   msg, message demodulated by PHY layer.
+        */
+       void mac_in(pmt::pmt_t msg);
 
       /**
        * @brief   Handle package from NETWORK layer and forward processed
