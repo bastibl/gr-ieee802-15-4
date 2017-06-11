@@ -140,6 +140,7 @@ namespace gr {
         % (working_channel + 11) % center_freqs[working_channel]);
 
       /* Setup working channel on USRP */
+      /* TODO: dict is not working, still no idea why (2017.06.11) */
 //      pmt::pmt_t command = pmt::make_dict();
 //      pmt::dict_add(command, pmt::mp("freq"), pmt::mp(center_freqs[working_channel]));
 //      pmt::dict_add(command, pmt::mp("bandwidth"), pmt::mp(bandwidth));
@@ -152,6 +153,11 @@ namespace gr {
 
       message_port_pub(pmt::mp("usrp sink cmd"), command);
       message_port_pub(pmt::mp("usrp source cmd"), command);
+
+      /* TODO: Perform sensing, currently assume the current channel is available */
+
+      /* Broadcast beacon */
+
 
       int heartbeat = 0;
       while (1) {

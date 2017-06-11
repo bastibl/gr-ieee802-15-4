@@ -87,6 +87,9 @@ namespace gr {
        const double bandwidth = 2e6;      // Hz, constant for LR-WPAN.
        const double sampling_rate = 4e6;  // Hz,
 
+       const int Ts = 1000; // ms, slot duration (i.e. dwelling time of a channel hop).
+       const int Tf = Ts*num_of_channels; // ms, frame duration.
+
        /* Control thread */
        boost::shared_ptr<gr::thread::thread> control_thread_ptr;
 
