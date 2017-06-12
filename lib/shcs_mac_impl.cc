@@ -40,6 +40,7 @@
 #include <iomanip>
 
 #include "shcs_mac_impl.h"
+#include "shcs_ieee802154.h"
 
 using namespace gr::ieee802_15_4;
 using namespace std;
@@ -157,7 +158,20 @@ namespace gr {
       /* TODO: Perform sensing, currently assume the current channel is available */
 
       /* Broadcast beacon */
+      GR_LOG_DEBUG(d_logger, "Preparing beacon.");
 
+      uint8_t mhr[IEEE802154_MAX_HDR_LEN];
+      uint8_t flags = IEEE802154_FCF_TYPE_BEACON;
+      size_t mhr_len = 0;
+      le_uint16_t pan_id_le = byteorder_btols(byteorder_htons(pan_id));
+
+      if ((mhr_len = ieee802154_set_frame_hdr(mhr, NULL, 0, NULL, 0, pan_id_le,
+                                              pan_id_le, flags, d_seq_nr)) == 0) {
+          GR_LOG_DEBUG(d_logger, "Beacon header error.");
+      }
+      else {
+          GR_LOG_DEBUG(d_logger, )
+      }
 
       int heartbeat = 0;
       while (1) {

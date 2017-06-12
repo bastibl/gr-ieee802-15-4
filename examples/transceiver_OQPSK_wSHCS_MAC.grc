@@ -373,7 +373,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>0</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -820,7 +820,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(664, 596)</value>
+      <value>(664, 620)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1079,7 +1079,7 @@
     </param>
     <param>
       <key>ant0</key>
-      <value></value>
+      <value>TX/RX</value>
     </param>
     <param>
       <key>bw0</key>
@@ -1902,7 +1902,7 @@
     </param>
     <param>
       <key>ant0</key>
-      <value></value>
+      <value>RX2</value>
     </param>
     <param>
       <key>bw0</key>
