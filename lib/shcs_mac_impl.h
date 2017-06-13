@@ -89,9 +89,11 @@ namespace gr {
 
        const int Ts = 1000; // ms, slot duration (i.e. dwelling time of a channel hop).
        const int Tf = Ts*num_of_channels; // ms, frame duration.
+       const uint16_t Tss = 1; // ms, sensing duration.
 
        const uint16_t pan_id = 0x1234; // just a random number, for now.
        const uint16_t suc_saddr = 0x0000;
+       const uint16_t suc_rand_seed = 0x2345;
 
 
        /* Control thread */

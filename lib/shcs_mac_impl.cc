@@ -155,28 +155,47 @@ namespace gr {
       message_port_pub(pmt::mp("usrp sink cmd"), command);
       message_port_pub(pmt::mp("usrp source cmd"), command);
 
-      /* TODO: Perform sensing, currently assume the current channel is available */
-
-      /* Broadcast beacon */
-      GR_LOG_DEBUG(d_logger, "Preparing beacon.");
-
-      uint8_t mhr[IEEE802154_MAX_HDR_LEN];
-      uint8_t flags = IEEE802154_FCF_TYPE_BEACON;
-      size_t mhr_len = 0;
-      le_uint16_t pan_id_le = byteorder_btols(byteorder_htons(pan_id));
-
-      if ((mhr_len = ieee802154_set_frame_hdr(mhr, NULL, 0, NULL, 0, pan_id_le,
-                                              pan_id_le, flags, d_seq_nr)) == 0) {
-          GR_LOG_DEBUG(d_logger, "Beacon header error.");
-      }
-      else {
-          GR_LOG_DEBUG(d_logger, )
-      }
-
       int heartbeat = 0;
       while (1) {
           boost::this_thread::sleep_for(boost::chrono::seconds{1});
           GR_LOG_DEBUG(d_logger, boost::format("Time #%d") % heartbeat++);
+
+          /* TODO: Perform sensing, currently assume the current channel is available */
+
+          /* Broadcast beacon */
+          GR_LOG_DEBUG(d_logger, "Preparing beacon.");
+
+          uint8_t mhr[IEEE802154_MAX_HDR_LEN];
+          uint8_t flags = IEEE802154_FCF_TYPE_BEACON;
+          d_msg_len = 0;
+          le_uint16_t pan_id_le = byteorder_btols(byteorder_htons(pan_id));
+
+          if ((d_msg_len = ieee802154_set_frame_hdr(mhr, NULL, 0, NULL, 0, pan_id_le,
+                                                  pan_id_le, flags, d_seq_nr++)) == 0) {
+              GR_LOG_DEBUG(d_logger, "Beacon header error.");
+          }
+          else {
+              /* Copy header to MAC frame */
+              memcpy(d_msg, mhr, d_msg_len);
+
+              /* Prepare the beacon payload */
+              d_msg[d_msg_len++] = (uint8_t) (Tss);
+              d_msg[d_msg_len++] = (uint8_t) (Tss >> 8);
+              d_msg[d_msg_len++] = (uint8_t) (suc_rand_seed);
+              d_msg[d_msg_len++] = (uint8_t) (suc_rand_seed >> 8);
+
+              /* Calculate FCS */
+              uint16_t fcs = crc16(d_msg, d_msg_len);
+
+              /* Add FCS to frame */
+              d_msg[d_msg_len++] = (uint8_t) fcs;
+              d_msg[d_msg_len++] = (uint8_t) (fcs >> 8);
+
+              /* Broadcast beacon */
+              print_message();
+              message_port_pub(pmt::mp("pdu out"), pmt::cons(pmt::PMT_NIL,
+                        pmt::make_blob(d_msg, d_msg_len)));
+          }
       }
 
     }
