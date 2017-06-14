@@ -38,20 +38,7 @@ You can find the firmware that I used to test interoperability with TelosB motes
 
 ## Installation
 
-```
-git clone git://github.com/bastibl/gr-ieee802-15-4.git
-cd gr-ieee802-15-4
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
-sudo ldconfig
-```
-
-The  hierarchical block has to be installed separately:
-Open `examples/ieee802_15_4_*_PHY.grc` in gnuradio-companion and generate (hotkey F5) the flow graph. This installs the hierarchical block in your home, where gnuradio-companion can find it (typically `~/.grc_gnuradio`).
-
+Please see [www.wime-project.net](https://www.wime-project.net/installation/) for installation instrucitons.
 
 ## Usage
 
