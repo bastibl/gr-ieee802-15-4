@@ -1731,7 +1731,7 @@
     </param>
     <param>
       <key>dev_addr</key>
-      <value></value>
+      <value>serial=30F551E</value>
     </param>
     <param>
       <key>dev_args</key>
@@ -1743,7 +1743,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(664, 468)</value>
+      <value>(664, 444)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1902,7 +1902,7 @@
     </param>
     <param>
       <key>ant0</key>
-      <value>RX2</value>
+      <value>TX/RX</value>
     </param>
     <param>
       <key>bw0</key>
@@ -3066,7 +3066,7 @@
     </param>
     <param>
       <key>dev_addr</key>
-      <value></value>
+      <value>serial=30F551E</value>
     </param>
     <param>
       <key>dev_args</key>
@@ -3078,7 +3078,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(72, 492)</value>
+      <value>(64, 468)</value>
     </param>
     <param>
       <key>_rotation</key>

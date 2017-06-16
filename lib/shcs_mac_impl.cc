@@ -97,7 +97,7 @@ namespace gr {
 
       GR_LOG_INFO(d_logger, "List of operating channels and center freq.: ");
       for (int count = 0; count < num_of_channels; count++) {
-          GR_LOG_INFO(d_logger, boost::format{"%d: %e (Hz)"} % (count + 11)
+          GR_LOG_INFO(d_logger, boost::format{"%d: %e (Hz)"} % (count + first_channel_index)
                       % center_freqs[count] );
       }
 
@@ -128,17 +128,21 @@ namespace gr {
       /* Waiting for everything to settle */
       boost::this_thread::sleep_for(boost::chrono::seconds{3});
 
+      /* Initialize random seed */
+      suc_rand_seed = static_cast<uint16_t>(std::time(0));
+      GR_LOG_DEBUG(d_logger, boost::format("SUC random seed %d.") % suc_rand_seed);
+
       /* TODO: perform an energy scan to all channels and select the channel
        * with the least measured energy.
        * Currently, choose a random channel to set up network.
        */
       GR_LOG_DEBUG(d_logger, "Performing energy scan...");
 
-      boost::random::mt19937 rng;
+      boost::random::mt19937 rng(suc_rand_seed);
       boost::random::uniform_int_distribution<> channel_dist(0, num_of_channels-1);
       int working_channel = channel_dist(rng);
       GR_LOG_DEBUG(d_logger, boost::format("Working channel: %d (%e)")
-        % (working_channel + 11) % center_freqs[working_channel]);
+        % (working_channel + first_channel_index) % center_freqs[working_channel]);
 
       /* Setup working channel on USRP */
       /* TODO: dict is not working, still no idea why (2017.06.11) */
@@ -160,23 +164,47 @@ namespace gr {
           boost::this_thread::sleep_for(boost::chrono::seconds{1});
           GR_LOG_DEBUG(d_logger, boost::format("Time #%d") % heartbeat++);
 
+          /* Perform channel hopping */
+          working_channel = channel_dist(rng);
+          GR_LOG_DEBUG(d_logger, boost::format("Channel hopping -> new channel: %d (%e)")
+                  % (working_channel + first_channel_index) % center_freqs[working_channel]);
+
+          pmt::pmt_t command = pmt::cons(
+              pmt::mp("freq"),
+              pmt::mp(center_freqs[working_channel])
+          );
+
+          message_port_pub(pmt::mp("usrp sink cmd"), command);
+          message_port_pub(pmt::mp("usrp source cmd"), command);
+
           /* TODO: Perform sensing, currently assume the current channel is available */
 
           /* Broadcast beacon */
           GR_LOG_DEBUG(d_logger, "Preparing beacon.");
 
           uint8_t mhr[IEEE802154_MAX_HDR_LEN];
-          uint8_t flags = IEEE802154_FCF_TYPE_BEACON;
+          uint8_t flags = IEEE802154_FCF_TYPE_BEACON | IEEE802154_FCF_SRC_ADDR_SHORT
+              | IEEE802154_FCF_SRC_ADDR_VOID;
           d_msg_len = 0;
           le_uint16_t pan_id_le = byteorder_btols(byteorder_htons(pan_id));
 
-          if ((d_msg_len = ieee802154_set_frame_hdr(mhr, NULL, 0, NULL, 0, pan_id_le,
-                                                  pan_id_le, flags, d_seq_nr++)) == 0) {
+          if ((d_msg_len = ieee802154_set_frame_hdr(mhr, (uint8_t*)&suc_saddr, 2,
+                NULL, 0, pan_id_le, pan_id_le, flags, d_seq_nr++)) == 0) {
               GR_LOG_DEBUG(d_logger, "Beacon header error.");
           }
           else {
               /* Copy header to MAC frame */
               memcpy(d_msg, mhr, d_msg_len);
+
+              /* Superframe Specification field */
+              d_msg[d_msg_len++] = 0x00;
+              d_msg[d_msg_len++] = 0xc0;
+
+              /* GTS Specification field */
+              d_msg[d_msg_len++] = 0;
+
+              /* Pending Address Specification field */
+              d_msg[d_msg_len++] = 0;
 
               /* Prepare the beacon payload */
               d_msg[d_msg_len++] = (uint8_t) (Tss);
@@ -204,6 +232,44 @@ namespace gr {
     void shcs_mac_impl::su_control_thread(void) {
       GR_LOG_DEBUG(d_logger, "SU control thread created.");
 
+      /* Waiting for everything to settle */
+      boost::this_thread::sleep_for(boost::chrono::seconds{3});
+
+      /* Choose a random channel to set up network. */
+      boost::random::mt19937 rng; // default seed.
+      boost::random::uniform_int_distribution<> channel_dist(0, num_of_channels-1);
+      int working_channel = channel_dist(rng);
+      GR_LOG_DEBUG(d_logger, boost::format("Working channel: %d (%e)")
+        % (working_channel + first_channel_index) % center_freqs[working_channel]);
+
+      /* Setup working channel on USRP */
+      pmt::pmt_t command = pmt::cons(
+          pmt::mp("freq"),
+          pmt::mp(center_freqs[working_channel])
+      );
+
+      message_port_pub(pmt::mp("usrp sink cmd"), command);
+      message_port_pub(pmt::mp("usrp source cmd"), command);
+
+      int heartbeat = 0;
+      while (1) {
+          boost::this_thread::sleep_for(boost::chrono::seconds{1});
+          GR_LOG_DEBUG(d_logger, boost::format("Time #%d") % heartbeat++);
+
+          /* Perform channel hopping */
+          working_channel = channel_dist(rng);
+          GR_LOG_DEBUG(d_logger, boost::format("Channel hopping -> new channel: %d (%e)")
+                  % (working_channel + first_channel_index) % center_freqs[working_channel]);
+
+          pmt::pmt_t command = pmt::cons(
+              pmt::mp("freq"),
+              pmt::mp(center_freqs[working_channel])
+          );
+
+          message_port_pub(pmt::mp("usrp sink cmd"), command);
+          message_port_pub(pmt::mp("usrp source cmd"), command);
+      }
+
     }
 
     /*------------------------------------------------------------------------*/
@@ -230,8 +296,22 @@ namespace gr {
         return;
       }
       else{
-        dout << "MAC: correct crc. Propagate packet to APP layer." << endl;
+        //dout << "MAC: correct crc. Propagate packet to APP layer." << endl;
       }
+
+      if (d_nwk_dev_type == SU) {
+          uint8_t* frame_ptr = (uint8_t*)pmt::blob_data(blob);
+          if (frame_ptr[0] == 0x80 && frame_ptr[1] == 0x90) {
+              GR_LOG_DEBUG(d_logger, "Found beacon");
+              uint16_t recv_suc_id = frame_ptr[3] | ((uint16_t)frame_ptr[4] << 8);
+              uint16_t recv_rand_seed = frame_ptr[13] | ((uint16_t)frame_ptr[14] << 8);
+
+              GR_LOG_DEBUG(d_logger, boost::format("Received SUC ID: %x.") % recv_suc_id);
+              GR_LOG_DEBUG(d_logger, boost::format("Received random seed: %d.") % recv_rand_seed);
+
+          }
+      }
+
 
       pmt::pmt_t mac_payload = pmt::make_blob((char*)pmt::blob_data(blob) + 9 , data_len - 9 - 2);
 
@@ -314,7 +394,7 @@ namespace gr {
     void shcs_mac_impl::print_message() {
       for(int i = 0; i < d_msg_len; i++) {
         dout << setfill('0') << setw(2) << hex << ((unsigned int)d_msg[i] & 0xFF) << dec << " ";
-        if(i % 16 == 15) {
+        if(i % 16 == 19) {
           dout << endl;
         }
       }

@@ -80,9 +80,10 @@ namespace gr {
        bool       d_nwk_dev_type;
 
        /* wireless channel configuration */
-       static const int num_of_channels = 16;  // channel 11 -> 26: [2.405, ..., 2.480] GHz,
+       static const int num_of_channels = 2;  // channel 25 -> 26: [2.475, ..., 2.480] GHz,
        const double channel_step = 5e6; // 5MHz step between 2 channels.
-       double center_freqs[num_of_channels] = {2.405e9}; // channel 11: 2.405GHz.
+       const int first_channel_index = 25;
+       double center_freqs[num_of_channels] = {2.475e9}; // channel 25: 2.475GHz.
 
        const double bandwidth = 2e6;      // Hz, constant for LR-WPAN.
        const double sampling_rate = 4e6;  // Hz,
@@ -92,8 +93,9 @@ namespace gr {
        const uint16_t Tss = 1; // ms, sensing duration.
 
        const uint16_t pan_id = 0x1234; // just a random number, for now.
-       const uint16_t suc_saddr = 0x0000;
-       const uint16_t suc_rand_seed = 0x2345;
+       const uint16_t suc_saddr = 0x0000; // Coordinator default address.
+       const uint16_t su_saddr = 0x0101; // SU default address.
+       uint16_t suc_rand_seed = 0;
 
 
        /* Control thread */
