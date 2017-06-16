@@ -49,6 +49,8 @@ list(APPEND ieee802_15_4_sources
     uc_connection.cc
     zeropadding_b_impl.cc
     zeropadding_removal_b_impl.cc
+    shcs_mac_impl.cc
+    shcs_ieee802154.cc
 )
 
 list(APPEND ieee802_15_4_libs
