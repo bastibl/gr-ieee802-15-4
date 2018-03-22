@@ -26,22 +26,22 @@ class access_code_prefixer_impl : public access_code_prefixer {
 
 	public:
 
-	access_code_prefixer_impl() :
+	access_code_prefixer_impl(int pad, int preamble) :
 			block("access_code_prefixer",
-					gr::io_signature::make(0, 0, 0),
-					gr::io_signature::make(0, 0, 0)) {
+				gr::io_signature::make(0, 0, 0),
+				gr::io_signature::make(0, 0, 0)),
+			d_preamble(preamble) {
 
 	    message_port_register_out(pmt::mp("out"));
 
 	    message_port_register_in(pmt::mp("in"));
 	    set_msg_handler(pmt::mp("in"), boost::bind(&access_code_prefixer_impl::make_frame, this, _1));
+	    buf[0] = pad & 0xFF;
 
-	    buf[0] = 0x00;
-	    buf[1] = 0x00;
-	    buf[2] = 0x00;
-	    buf[3] = 0x00;
-	    buf[4] = 0xA7;
-
+	    for(int i = 4; i > 0; i--) {
+		buf[i] = d_preamble & 0xFF;
+		d_preamble >>= 8;
+	    }
 	}
 
 	~access_code_prefixer_impl() {
@@ -72,13 +72,14 @@ class access_code_prefixer_impl : public access_code_prefixer {
 	}
 
 	private:
-		char buf[256];
+		char		buf[256];
+		unsigned int	d_preamble;
 
 };
 
 access_code_prefixer::sptr
-access_code_prefixer::make() {
-	return gnuradio::get_initial_sptr(new access_code_prefixer_impl());
+access_code_prefixer::make(int pad, int preamble) {
+	return gnuradio::get_initial_sptr(new access_code_prefixer_impl(pad,preamble));
 }
 
 

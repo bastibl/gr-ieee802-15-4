@@ -23,21 +23,24 @@
 
 using namespace gr::ieee802_15_4;
 
-
 class mac_impl : public mac {
 public:
 
 #define dout d_debug && std::cout
 
-mac_impl(bool debug) :
+mac_impl(bool debug, int fcf, int seq_nr, int dst_pan, int dst, int src) :
 	block ("mac",
 			gr::io_signature::make(0, 0, 0),
 			gr::io_signature::make(0, 0, 0)),
-			d_msg_offset(0),
-			d_seq_nr(0),
-			d_debug(debug),
-			d_num_packet_errors(0),
-			d_num_packets_received(0) {
+	d_msg_offset(0),
+	d_debug(debug),
+	d_fcf(fcf),
+	d_seq_nr(seq_nr),
+	d_dst_pan(dst_pan),
+	d_dst(dst),
+	d_src(src),
+	d_num_packet_errors(0),
+	d_num_packets_received(0) {
 
 	message_port_register_in(pmt::mp("app in"));
 	set_msg_handler(pmt::mp("app in"), boost::bind(&mac_impl::app_in, this, _1));
@@ -127,19 +130,19 @@ void generate_mac(const char *buf, int len) {
 
 	// FCF
 	// data frame, no security
-	d_msg[0] = 0x41;
-	d_msg[1] = 0x88;
+	d_msg[0] = d_fcf & 0xFF;
+	d_msg[1] = (d_fcf>>8) & 0xFF;
 
 	// seq nr
 	d_msg[2] = d_seq_nr++;
 
 	// addr info
-	d_msg[3] = 0xcd;
-	d_msg[4] = 0xab;
-	d_msg[5] = 0xff;
-	d_msg[6] = 0xff;
-	d_msg[7] = 0x40;
-	d_msg[8] = 0xe8;
+	d_msg[3] = d_dst_pan & 0xFF;
+	d_msg[4] = (d_dst_pan>>8) & 0xFF;
+	d_msg[5] = d_dst & 0xFF;
+	d_msg[6] = (d_dst>>8) & 0xFF;
+	d_msg[7] = d_src & 0xFF;
+	d_msg[8] = (d_src>>8) & 0xFF;
 
 	std::memcpy(d_msg + 9, buf, len);
 
@@ -171,7 +174,11 @@ private:
 	bool        d_debug;
 	int         d_msg_offset;
 	int         d_msg_len;
+	uint16_t    d_fcf;
 	uint8_t     d_seq_nr;
+	uint16_t    d_dst_pan;
+	uint16_t    d_dst;
+	uint16_t    d_src;
 	char        d_msg[256];
 
 	int d_num_packet_errors;
@@ -179,6 +186,6 @@ private:
 };
 
 mac::sptr
-mac::make(bool debug) {
-	return gnuradio::get_initial_sptr(new mac_impl(debug));
+mac::make(bool debug, int fcf, int seq_nr, int dst_pan, int dst, int src) {
+	return gnuradio::get_initial_sptr(new mac_impl(debug,fcf,seq_nr,dst_pan,dst,src));
 }
