@@ -1911,7 +1911,7 @@
     </param>
     <param>
       <key>len_tag_name</key>
-      <value></value>
+      <value>pdu_length</value>
     </param>
     <param>
       <key>otw</key>
