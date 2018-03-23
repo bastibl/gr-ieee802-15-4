@@ -73,12 +73,20 @@
       <value>True</value>
     </param>
     <param>
+      <key>sizing_mode</key>
+      <value>fixed</value>
+    </param>
+    <param>
       <key>thread_safe_setters</key>
       <value></value>
     </param>
     <param>
       <key>title</key>
       <value>IEEE 802.15.4 Transceiver using OQPSK PHY</value>
+    </param>
+    <param>
+      <key>placement</key>
+      <value>(0,0)</value>
     </param>
   </block>
   <block>
@@ -588,8 +596,20 @@
       <value>True</value>
     </param>
     <param>
+      <key>dst</key>
+      <value>0xffff</value>
+    </param>
+    <param>
+      <key>dst_pan</key>
+      <value>0x1aaa</value>
+    </param>
+    <param>
       <key>_enabled</key>
       <value>True</value>
+    </param>
+    <param>
+      <key>fcf</key>
+      <value>0x8841</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -610,6 +630,14 @@
     <param>
       <key>minoutbuf</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>seq_nr</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>src</key>
+      <value>0x3344</value>
     </param>
   </block>
   <block>
@@ -632,7 +660,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(344, 472)</value>
+      <value>(360, 512)</value>
     </param>
     <param>
       <key>_rotation</key>
