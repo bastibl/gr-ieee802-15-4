@@ -31,7 +31,13 @@ public:
 	virtual float get_packet_error_ratio() = 0;
 	
 	typedef boost::shared_ptr<mac> sptr;
-	static sptr make(bool debug= false);
+	static sptr make(bool debug=false,
+          /* default values for receive sensitivity testing in Zigbee test spec 14-0332-01 */ 
+          int fcf=0x8841,
+          int seq_nr=0,
+          int dst_pan=0x1aaa,
+          int dst=0xffff,
+          int src=0x3344 );
 };
 
 }  // namespace ieee802_11
