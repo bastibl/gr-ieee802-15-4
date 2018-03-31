@@ -46,6 +46,7 @@ list(APPEND ieee802_15_4_sources
     rime_stack.cc
     ruc_connection.cc
     stubborn_sender.cc
+    sun_phr_prefixer_impl.cc
     uc_connection.cc
     zeropadding_b_impl.cc
     zeropadding_removal_b_impl.cc
