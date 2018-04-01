@@ -29,7 +29,7 @@ namespace gr {
   namespace ieee802_15_4 {
 
     /*!
-     * \brief <+description of block+>
+     * \brief Prepend SUN PHR
      * \ingroup ieee802_15_4
      *
      */

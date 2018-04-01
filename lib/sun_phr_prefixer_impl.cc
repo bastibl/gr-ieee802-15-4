@@ -47,7 +47,7 @@ namespace gr {
       // check input dimensions and prepare the buffer with the (static) PHR
       if(phr.size() != PHR_LEN)
         throw std::runtime_error("PHR size must be 12 (unpacked)");
-      d_buf = new unsigned char[127*8+PHR_LEN]; // maximum length
+      d_buf = new unsigned char[127+PHR_LEN]; // maximum length
       memcpy(d_buf, &phr[0], sizeof(unsigned char)*PHR_LEN);
 
       // define message ports
@@ -82,8 +82,9 @@ namespace gr {
       if(data_len > 127)
         throw std::runtime_error("Payload length exceeds the maximum 127 bytes"); 
       unsigned char* blob_ptr = (unsigned char*) pmt::blob_data(blob);
-      unpack(d_buf+PHR_LEN, blob_ptr, data_len);
-      pmt::pmt_t packet = pmt::make_blob(&d_buf[0], data_len*8+PHR_LEN);
+//      unpack(d_buf+PHR_LEN, blob_ptr, data_len);
+      memcpy(d_buf+PHR_LEN, blob_ptr, data_len);
+      pmt::pmt_t packet = pmt::make_blob(&d_buf[0], data_len+PHR_LEN);
       message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
     }
 
