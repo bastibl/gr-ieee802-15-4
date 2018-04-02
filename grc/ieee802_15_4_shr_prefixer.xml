@@ -1,9 +1,9 @@
 <block>
-  <name>New PHR Prefixer</name>
-  <key>ieee802_15_4_sun_phr_prefixer</key>
+  <name>SHR Prefixer</name>
+  <key>ieee802_15_4_shr_prefixer</key>
   <category>[IEEE802.15.4]</category>
   <import>import ieee802_15_4</import>
-  <make>ieee802_15_4.sun_phr_prefixer($phr)</make>
+  <make>ieee802_15_4.shr_prefixer($phr)</make>
   <param>
     <name>PHR</name>
     <key>phr</key>

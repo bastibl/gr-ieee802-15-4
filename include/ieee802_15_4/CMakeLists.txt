@@ -21,6 +21,7 @@ install(FILES
     codeword_demapper_ib.h
     codeword_mapper_bi.h
     codeword_soft_demapper_fb.h
+    crc_16.h
     deinterleaver_ff.h
     dqcsk_demapper_cc.h
     dqcsk_mapper_fc.h
@@ -33,11 +34,13 @@ install(FILES
     packet_sink.h
     phr_prefixer.h
     phr_removal.h
+    pn9_whitener.h
     preamble_sfd_prefixer_ii.h
     preamble_tagger_cc.h
     qpsk_demapper_fi.h
     qpsk_mapper_if.h
     rime_stack.h
+    shr_prefixer.h
     sun_phr_prefixer.h
     zeropadding_b.h
     zeropadding_removal_b.h

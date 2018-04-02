@@ -40,7 +40,7 @@ public:
           int src=0x3344 );
 };
 
-}  // namespace ieee802_11
+}  // namespace ieee802_15_4
 }  // namespace gr
 
 #endif /* INCLUDED_GR_IEEE802_15_4_MAC_H */

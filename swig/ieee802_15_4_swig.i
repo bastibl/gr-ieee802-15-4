@@ -27,6 +27,7 @@
 #include "ieee802_15_4/codeword_demapper_ib.h"
 #include "ieee802_15_4/codeword_mapper_bi.h"
 #include "ieee802_15_4/codeword_soft_demapper_fb.h"
+#include "ieee802_15_4/crc_16.h"
 #include "ieee802_15_4/deinterleaver_ff.h"
 #include "ieee802_15_4/dqcsk_demapper_cc.h"
 #include "ieee802_15_4/dqcsk_mapper_fc.h"
@@ -39,11 +40,13 @@
 #include "ieee802_15_4/packet_sink.h"
 #include "ieee802_15_4/phr_prefixer.h"
 #include "ieee802_15_4/phr_removal.h"
+#include "ieee802_15_4/pn9_whitener.h"
 #include "ieee802_15_4/preamble_sfd_prefixer_ii.h"
 #include "ieee802_15_4/preamble_tagger_cc.h"
 #include "ieee802_15_4/qpsk_demapper_fi.h"
 #include "ieee802_15_4/qpsk_mapper_if.h"
 #include "ieee802_15_4/rime_stack.h"
+#include "ieee802_15_4/shr_prefixer.h"
 #include "ieee802_15_4/sun_phr_prefixer.h"
 #include "ieee802_15_4/zeropadding_b.h"
 #include "ieee802_15_4/zeropadding_removal_b.h"
@@ -61,6 +64,8 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_demapper_ib);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_mapper_bi);
 %include "ieee802_15_4/codeword_soft_demapper_fb.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, codeword_soft_demapper_fb);
+%include "ieee802_15_4/crc_16.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, crc_16);
 %include "ieee802_15_4/deinterleaver_ff.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, deinterleaver_ff);
 %include "ieee802_15_4/dqcsk_demapper_cc.h"
@@ -85,6 +90,8 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, packet_sink);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, phr_prefixer);
 %include "ieee802_15_4/phr_removal.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, phr_removal);
+%include "ieee802_15_4/pn9_whitener.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, pn9_whitener);
 %include "ieee802_15_4/preamble_sfd_prefixer_ii.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, preamble_sfd_prefixer_ii);
 %include "ieee802_15_4/preamble_tagger_cc.h"
@@ -95,6 +102,8 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, qpsk_demapper_fi);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, qpsk_mapper_if);
 %include "ieee802_15_4/rime_stack.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, rime_stack);
+%include "ieee802_15_4/shr_prefixer.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, shr_prefixer);
 %include "ieee802_15_4/sun_phr_prefixer.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, sun_phr_prefixer);
 %include "ieee802_15_4/zeropadding_b.h"

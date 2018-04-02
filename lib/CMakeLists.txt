@@ -26,6 +26,7 @@ list(APPEND ieee802_15_4_sources
     codeword_demapper_ib_impl.cc
     codeword_mapper_bi_impl.cc
     codeword_soft_demapper_fb_impl.cc
+    crc_16_impl.cc
     deinterleaver_ff_impl.cc
     dqcsk_demapper_cc_impl.cc
     dqcsk_mapper_fc_impl.cc
@@ -38,6 +39,7 @@ list(APPEND ieee802_15_4_sources
     packet_sink.cc
     phr_prefixer_impl.cc
     phr_removal_impl.cc
+    pn9_whitener_impl.cc
     preamble_sfd_prefixer_ii_impl.cc
     preamble_tagger_cc_impl.cc
     qpsk_demapper_fi_impl.cc
@@ -45,6 +47,7 @@ list(APPEND ieee802_15_4_sources
     rime_connection.cc
     rime_stack.cc
     ruc_connection.cc
+    shr_prefixer_impl.cc
     stubborn_sender.cc
     sun_phr_prefixer_impl.cc
     uc_connection.cc

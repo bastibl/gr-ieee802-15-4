@@ -24,23 +24,23 @@
 
 #include <gnuradio/io_signature.h>
 #include <gnuradio/block_detail.h>
-#include "sun_phr_prefixer_impl.h"
+#include "crc_16_impl.h"
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    sun_phr_prefixer::sptr
-    sun_phr_prefixer::make(std::vector<unsigned char> phr)
+    crc_16::sptr
+    crc_16::make(std::vector<unsigned char> phr)
     {
       return gnuradio::get_initial_sptr
-        (new sun_phr_prefixer_impl(phr));
+        (new crc_16_impl(phr));
     }
 
     /*
      * The private constructor
      */
-    sun_phr_prefixer_impl::sun_phr_prefixer_impl(std::vector<unsigned char> phr)
-      : gr::block("sun_phr_prefixer",
+    crc_16_impl::crc_16_impl(std::vector<unsigned char> phr)
+      : gr::block("crc_16",
               gr::io_signature::make(0,0,0),
               gr::io_signature::make(0,0,0)),
               d_phr_size(sizeof(unsigned char)*phr.size())
@@ -57,19 +57,19 @@ namespace gr {
       // define message ports
       message_port_register_out(pmt::mp("out"));
       message_port_register_in(pmt::mp("in"));
-      set_msg_handler(pmt::mp("in"), boost::bind(&sun_phr_prefixer_impl::prefix_phr, this, _1));
+      set_msg_handler(pmt::mp("in"), boost::bind(&crc_16_impl::prefix_phr, this, _1));
     }
 
     /*
      * Our virtual destructor.
      */
-    sun_phr_prefixer_impl::~sun_phr_prefixer_impl()
+    crc_16_impl::~crc_16_impl()
     {
       delete[] d_buf;
     }
 
     void
-    sun_phr_prefixer_impl::prefix_phr(pmt::pmt_t msg)
+    crc_16_impl::prefix_phr(pmt::pmt_t msg)
     {
       if(pmt::is_eof_object(msg)) 
       {

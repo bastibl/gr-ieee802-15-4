@@ -52,5 +52,5 @@ namespace gr {
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_PHR_PREFIXER_H */
+#endif /* INCLUDED_IEEE802_15_4_SUN_PHR_PREFIXER_H */
 

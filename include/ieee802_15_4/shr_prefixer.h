@@ -18,36 +18,39 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802_15_4_SUN_PHR_PREFIXER_IMPL_H
-#define INCLUDED_IEEE802_15_4_SUN_PHR_PREFIXER_IMPL_H
 
-#include <ieee802_15_4/sun_phr_prefixer.h>
+#ifndef INCLUDED_IEEE802_15_4_SHR_PREFIXER_H
+#define INCLUDED_IEEE802_15_4_SHR_PREFIXER_H
+
+#include <ieee802_15_4/api.h>
+#include <gnuradio/block.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class sun_phr_prefixer_impl : public sun_phr_prefixer
+    /*!
+     * \brief Prepend SUN PHR
+     * \ingroup ieee802_15_4
+     *
+     */
+    class IEEE802_15_4_API shr_prefixer : virtual public gr::block
     {
-     private:
-      const static int MAX_PREAMBLE_LEN = 8;
-      const static int MAX_SFD_LEN = 4;
-      const static int MAX_PHR_LEN = 8;
-      const static int MAX_PSDU_LEN = 2048; // Includes CRC, FCS, or MFR
-      const static int MAX_PPDU_LEN = MAX_PREAMBLE_LEN + MAX_SFD_LEN + MAX_PHR_LEN + MAX_PSDU_LEN;
-      const static int MAX_FCS_LEN = 4; // Same as MFR
-
-      unsigned char* d_buf;
-      unsigned char d_phr_size;
-
-      void prefix_phr(pmt::pmt_t msg);
-
      public:
-      sun_phr_prefixer_impl(std::vector<unsigned char> phr);
-      ~sun_phr_prefixer_impl();
+      typedef boost::shared_ptr<shr_prefixer> sptr;
+
+      /*!
+       * \brief Return a shared_ptr to a new instance of ieee802_15_4::shr_prefixer.
+       *
+       * To avoid accidental use of raw pointers, ieee802_15_4::shr_prefixer's
+       * constructor is in a private implementation
+       * class. ieee802_15_4::shr_prefixer::make is the public interface for
+       * creating new instances.
+       */
+      static sptr make(std::vector<unsigned char> phr);
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_SUN_PHR_PREFIXER_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_SHR_PREFIXER_H */
 

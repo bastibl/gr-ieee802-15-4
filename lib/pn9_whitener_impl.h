@@ -18,15 +18,15 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802_15_4_SUN_PHR_PREFIXER_IMPL_H
-#define INCLUDED_IEEE802_15_4_SUN_PHR_PREFIXER_IMPL_H
+#ifndef INCLUDED_IEEE802_15_4_PN9_WHITENER_IMPL_H
+#define INCLUDED_IEEE802_15_4_PN9_WHITENER_IMPL_H
 
-#include <ieee802_15_4/sun_phr_prefixer.h>
+#include <ieee802_15_4/pn9_whitener.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class sun_phr_prefixer_impl : public sun_phr_prefixer
+    class pn9_whitener_impl : public pn9_whitener
     {
      private:
       const static int MAX_PREAMBLE_LEN = 8;
@@ -36,18 +36,19 @@ namespace gr {
       const static int MAX_PPDU_LEN = MAX_PREAMBLE_LEN + MAX_SFD_LEN + MAX_PHR_LEN + MAX_PSDU_LEN;
       const static int MAX_FCS_LEN = 4; // Same as MFR
 
-      unsigned char* d_buf;
-      unsigned char d_phr_size;
+      const static int PN9_LEN = (1<<9)/8; // Size of psuedo random sequence in bytes
 
-      void prefix_phr(pmt::pmt_t msg);
+      unsigned char* d_pn9;
+
+      void pn9_whiten(pmt::pmt_t msg);
 
      public:
-      sun_phr_prefixer_impl(std::vector<unsigned char> phr);
-      ~sun_phr_prefixer_impl();
+      pn9_whitener_impl(uint16_t seed);
+      ~pn9_whitener_impl();
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_SUN_PHR_PREFIXER_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_PN9_WHITENER_IMPL_H */
 

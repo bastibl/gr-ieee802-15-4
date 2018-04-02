@@ -24,52 +24,61 @@
 
 #include <gnuradio/io_signature.h>
 #include <gnuradio/block_detail.h>
-#include "sun_phr_prefixer_impl.h"
+#include "pn9_whitener_impl.h"
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    sun_phr_prefixer::sptr
-    sun_phr_prefixer::make(std::vector<unsigned char> phr)
+    pn9_whitener::sptr
+    pn9_whitener::make(uint16_t seed)
     {
       return gnuradio::get_initial_sptr
-        (new sun_phr_prefixer_impl(phr));
+        (new pn9_whitener_impl(seed));
     }
 
     /*
      * The private constructor
      */
-    sun_phr_prefixer_impl::sun_phr_prefixer_impl(std::vector<unsigned char> phr)
-      : gr::block("sun_phr_prefixer",
+    pn9_whitener_impl::pn9_whitener_impl(uint16_t seed)
+      : gr::block("pn9_whitener",
               gr::io_signature::make(0,0,0),
-              gr::io_signature::make(0,0,0)),
-              d_phr_size(sizeof(unsigned char)*phr.size())
+              gr::io_signature::make(0,0,0))
     {
-      // check input dimensions and prepare the buffer with the (static) PHR
-      if(d_phr_size > MAX_PHR_LEN) {
-        throw std::runtime_error("PHR size must be less than 4"); // ??? use MAX_PHR_LEN
-      }
+      uint16_t pn = seed;
+      d_pn9 = new unsigned char[PN9_LEN]; // Size of array that holds entire PN9 sequence
 
-      // Start by copying PHR into buffer
-      d_buf = new unsigned char[MAX_PPDU_LEN];
-      memcpy(d_buf, &phr[0], sizeof(unsigned char)*d_phr_size);
+      // Compute and save PN9 pattern for faster signal processing
+      for (int i = 0; i < PN9_LEN ; i++)
+      {
+        for (int j = 0; j < 8; j++) // iterate through bits in byte
+        {
+          if ( !!(pn & (1<<3)) ^ !!(pn & (1<<8)) )
+          {
+            pn = (pn << 1) | 0x1;
+          } else {
+            pn = (pn << 1);
+          }
+        }
+
+        d_pn9[i] = (unsigned char)pn;
+      }
 
       // define message ports
       message_port_register_out(pmt::mp("out"));
       message_port_register_in(pmt::mp("in"));
-      set_msg_handler(pmt::mp("in"), boost::bind(&sun_phr_prefixer_impl::prefix_phr, this, _1));
+      set_msg_handler(pmt::mp("in"), boost::bind(&pn9_whitener_impl::pn9_whiten, this, _1));
     }
 
     /*
      * Our virtual destructor.
      */
-    sun_phr_prefixer_impl::~sun_phr_prefixer_impl()
+    pn9_whitener_impl::~pn9_whitener_impl()
     {
-      delete[] d_buf;
+      delete[] d_pn9;
     }
 
     void
-    sun_phr_prefixer_impl::prefix_phr(pmt::pmt_t msg)
+    pn9_whitener_impl::pn9_whiten(pmt::pmt_t msg)
     {
       if(pmt::is_eof_object(msg)) 
       {
@@ -88,8 +97,14 @@ namespace gr {
       }
 
       unsigned char* blob_ptr = (unsigned char*) pmt::blob_data(blob);
-      memcpy(d_buf+d_phr_size, blob_ptr, data_len);
-      pmt::pmt_t packet = pmt::make_blob(&d_buf[0], data_len+d_phr_size);
+
+      // Whiten the blob in situ
+      for (int i = 0; i < data_len; i++) {
+        blob_ptr[i] ^= d_pn9[i%PN9_LEN];
+      }
+
+      // Pass it on
+      pmt::pmt_t packet = pmt::make_blob(&blob_ptr[0], data_len);
       message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
     }
   } /* namespace ieee802_15_4 */
