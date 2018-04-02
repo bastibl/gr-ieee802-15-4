@@ -35,7 +35,7 @@ include(GrPython)
 function(GR_SWIG_MAKE_DOCS output_file)
     if(ENABLE_DOXYGEN)
 
-        #setup the input files variable list, quote formated
+        #setup the input files variable list, quote formatted
         set(input_files)
         unset(INPUT_PATHS)
         foreach(input_path ${ARGN})
@@ -171,7 +171,12 @@ macro(GR_SWIG_MAKE name)
     #setup the actual swig library target to be built
     include(UseSWIG)
     SWIG_ADD_MODULE(${name} python ${ifiles})
-    SWIG_LINK_LIBRARIES(${name} ${PYTHON_LIBRARIES} ${GR_SWIG_LIBRARIES})
+    if(APPLE)
+      set(PYTHON_LINK_OPTIONS "-undefined dynamic_lookup")
+    else()
+      set(PYTHON_LINK_OPTIONS ${PYTHON_LIBRARIES})
+    endif(APPLE)
+    SWIG_LINK_LIBRARIES(${name} ${PYTHON_LINK_OPTIONS} ${GR_SWIG_LIBRARIES})
     if(${name} STREQUAL "runtime_swig")
         SET_TARGET_PROPERTIES(${SWIG_MODULE_runtime_swig_REAL_NAME} PROPERTIES DEFINE_SYMBOL "gnuradio_runtime_EXPORTS")
     endif(${name} STREQUAL "runtime_swig")
@@ -237,7 +242,7 @@ def get_swig_deps(file_path, level):
             inc_path = os.path.join(inc_dir, inc_file)
             if not os.path.exists(inc_path): continue
             deps.extend(get_swig_deps(inc_path, level-1))
-            break #found, we dont search in lower prio inc dirs
+            break #found, we don't search in lower prio inc dirs
     return deps
 
 if __name__ == '__main__':
