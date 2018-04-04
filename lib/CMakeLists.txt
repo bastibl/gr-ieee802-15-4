@@ -26,7 +26,6 @@ list(APPEND ieee802_15_4_sources
     codeword_demapper_ib_impl.cc
     codeword_mapper_bi_impl.cc
     codeword_soft_demapper_fb_impl.cc
-    crc_16_impl.cc
     deinterleaver_ff_impl.cc
     dqcsk_demapper_cc_impl.cc
     dqcsk_mapper_fc_impl.cc

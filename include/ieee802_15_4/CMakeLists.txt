@@ -21,7 +21,6 @@ install(FILES
     codeword_demapper_ib.h
     codeword_mapper_bi.h
     codeword_soft_demapper_fb.h
-    crc_16.h
     deinterleaver_ff.h
     dqcsk_demapper_cc.h
     dqcsk_mapper_fc.h
