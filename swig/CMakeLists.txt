@@ -40,7 +40,7 @@ endforeach(incdir)
 
 set(GR_SWIG_LIBRARIES gnuradio-ieee802_15_4)
 set(GR_SWIG_DOC_FILE ${CMAKE_CURRENT_BINARY_DIR}/ieee802_15_4_swig_doc.i)
-set(GR_SWIG_DOC_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include/ieee802-15-4)
+set(GR_SWIG_DOC_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 GR_SWIG_MAKE(ieee802_15_4_swig ieee802_15_4_swig.i)
 

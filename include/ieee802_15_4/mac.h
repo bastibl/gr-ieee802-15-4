@@ -23,6 +23,12 @@
 namespace gr {
 namespace ieee802_15_4 {
 
+/*!
+ * \brief This is the MAC Block.
+ *
+ * \details
+ * The MAC block...
+ */
 class IEEE802_15_4_API mac: virtual public block
 {
 public:

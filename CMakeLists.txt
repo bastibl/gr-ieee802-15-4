@@ -108,6 +108,17 @@ if(NOT SWIG_FOUND)
     message(FATAL_ERROR "SWIG required to compile gr-ieee802-15-4")
 endif()
 
+
+########################################################################
+# Setup doxygen option
+########################################################################
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+	option(ENABLE_DOXYGEN "Build docs using Doxygen" ON)
+else(DOXYGEN_FOUND)
+	option(ENABLE_DOXYGEN "Build docs using Doxygen" OFF)
+endif(DOXYGEN_FOUND)
+
 ########################################################################
 # On Apple only, set install name and use rpath correctly, if not already set
 ########################################################################
@@ -169,3 +180,4 @@ add_subdirectory(lib)
 add_subdirectory(swig)
 add_subdirectory(python)
 add_subdirectory(grc)
+add_subdirectory(docs)
