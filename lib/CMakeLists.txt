@@ -47,7 +47,7 @@ list(APPEND ieee802_15_4_sources
     rime_connection.cc
     rime_stack.cc
     ruc_connection.cc
-    shr_prefixer_impl.cc
+    sun_shr_prefixer_impl.cc
     stubborn_sender.cc
     sun_phr_prefixer_impl.cc
     uc_connection.cc

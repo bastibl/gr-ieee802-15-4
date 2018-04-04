@@ -21,12 +21,12 @@
 #ifndef INCLUDED_IEEE802_15_4_PHR_PREFIXER_IMPL_H
 #define INCLUDED_IEEE802_15_4_PHR_PREFIXER_IMPL_H
 
-#include <ieee802_15_4/shr_prefixer.h>
+#include <ieee802_15_4/sun_shr_prefixer.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    class shr_prefixer_impl : public shr_prefixer
+    class sun_shr_prefixer_impl : public sun_shr_prefixer
     {
      private:
       const static int MAX_PREAMBLE_LEN = 8;
@@ -42,12 +42,12 @@ namespace gr {
       void prefix_phr(pmt::pmt_t msg);
 
      public:
-      shr_prefixer_impl(std::vector<unsigned char> phr);
-      ~shr_prefixer_impl();
+      sun_shr_prefixer_impl(std::vector<unsigned char> phr);
+      ~sun_shr_prefixer_impl();
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_SHR_PREFIXER_IMPL_H */
+#endif /* INCLUDED_IEEE802_15_4_SUN_SHR_PREFIXER_IMPL_H */
 

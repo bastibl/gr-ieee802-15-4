@@ -29,9 +29,15 @@ namespace gr {
   namespace ieee802_15_4 {
 
     /*!
-     * \brief Prepend SUN PHR
+     * \brief Prepend SUN PHY PHR to PDU
      * \ingroup ieee802_15_4
      *
+     * \details
+     * Prepends a 2-byte PHR to PDU in an input message, setting
+     * Frame Length field to PDU's size.
+     *
+     * Per section 20.2.2 of 802.15.4-2015.
+     * 
      */
     class IEEE802_15_4_API sun_phr_prefixer : virtual public gr::block
     {
@@ -39,12 +45,11 @@ namespace gr {
       typedef boost::shared_ptr<sun_phr_prefixer> sptr;
 
       /*!
-       * \brief Return a shared_ptr to a new instance of ieee802_15_4::sun_phr_prefixer.
+       * \brief Make a block that prepends a SUN PHY PHR to a PDU 
        *
-       * To avoid accidental use of raw pointers, ieee802_15_4::sun_phr_prefixer's
-       * constructor is in a private implementation
-       * class. ieee802_15_4::sun_phr_prefixer::make is the public interface for
-       * creating new instances.
+       * \param ms temp
+       * \param fcs True sets FCS Type bit, indicating 2-octet FCS
+       * \param dw True sets Data Whitening bit
        */
       static sptr make(bool ms, bool fcs, bool dw);
     };

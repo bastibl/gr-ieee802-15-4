@@ -19,8 +19,8 @@
  */
 
 
-#ifndef INCLUDED_IEEE802_15_4_SHR_PREFIXER_H
-#define INCLUDED_IEEE802_15_4_SHR_PREFIXER_H
+#ifndef INCLUDED_IEEE802_15_4_SUN_SHR_PREFIXER_H
+#define INCLUDED_IEEE802_15_4_SUN_SHR_PREFIXER_H
 
 #include <ieee802_15_4/api.h>
 #include <gnuradio/block.h>
@@ -29,22 +29,23 @@ namespace gr {
   namespace ieee802_15_4 {
 
     /*!
-     * \brief Prepend SUN PHR
+     * \brief Prepend vector of unsigned chars to PDU in input message
      * \ingroup ieee802_15_4
      *
+     * \details 
+     * Prepends a vector of unsigned char to the PDU on the input message port.
      */
-    class IEEE802_15_4_API shr_prefixer : virtual public gr::block
+    class IEEE802_15_4_API sun_shr_prefixer : virtual public gr::block
     {
      public:
-      typedef boost::shared_ptr<shr_prefixer> sptr;
+      typedef boost::shared_ptr<sun_shr_prefixer> sptr;
 
       /*!
-       * \brief Return a shared_ptr to a new instance of ieee802_15_4::shr_prefixer.
+       * \brief Prepend vector of unsigned chars to PDU in input message
        *
-       * To avoid accidental use of raw pointers, ieee802_15_4::shr_prefixer's
-       * constructor is in a private implementation
-       * class. ieee802_15_4::shr_prefixer::make is the public interface for
-       * creating new instances.
+       * \details
+       * Prepend vector of unsigned chars to PDU.
+       * \param phr Packet header
        */
       static sptr make(std::vector<unsigned char> phr);
     };
@@ -52,5 +53,5 @@ namespace gr {
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_SHR_PREFIXER_H */
+#endif /* INCLUDED_IEEE802_15_4_SUN_SHR_PREFIXER_H */
 

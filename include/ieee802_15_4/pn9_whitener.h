@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2015 Felix Wunsch, Communications Engineering Lab (CEL) / Karlsruhe Institute of Technology (KIT) <wunsch.felix@googlemail.com>.
+ * Copyright 2018 Fred Fierling, Spukhafte Systems Limited
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,9 @@ namespace gr {
      * \brief Whiten or unwhiten blob using PN9 sequence
      * \ingroup ieee802_15_4
      *
+     * \details
+     * Whitens or unwhitens PDU in input message using PN9 described 
+     * in section 17.2.3 of the 802.15.4-2015 specification.
      */
     class IEEE802_15_4_API pn9_whitener : virtual public gr::block
     {
@@ -39,14 +42,11 @@ namespace gr {
       typedef boost::shared_ptr<pn9_whitener> sptr;
 
       /*!
-       * \brief Return a shared_ptr to a new instance of ieee802_15_4::pn9_whitener.
+       * \brief Make block that whitens or unwhitens blob using PN9 sequence
        *
-       * To avoid accidental use of raw pointers, ieee802_15_4::pn9_whitener's
-       * constructor is in a private implementation
-       * class. ieee802_15_4::pn9_whitener::make is the public interface for
-       * creating new instances.
+       * \param seed Starting seed. Defaults to all ones.
        */
-      static sptr make(uint16_t seed = ~0); // Per 802.15.4g, section 18.1.3
+      static sptr make(uint16_t seed = ~0); // SUN PHY default
     };
 
   } // namespace ieee802_15_4
