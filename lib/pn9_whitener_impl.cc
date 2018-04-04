@@ -52,15 +52,16 @@ namespace gr {
       {
         for (int j = 0; j < 8; j++) // iterate through bits in byte
         {
-          if ( !!(pn & (1<<3)) ^ !!(pn & (1<<8)) )
+          if ( !!(pn & (1<<12)) ^ !!(pn & (1<<7)) )
           {
-            pn = (pn << 1) | 0x1;
+            pn = (pn >> 1) | 1<<15;
           } else {
-            pn = (pn << 1);
+            pn = (pn >> 1);
           }
         }
 
-        d_pn9[i] = (unsigned char)pn;
+        d_pn9[i] = (pn & 0xFF00)>>8;
+        //std::cout << std::hex << (int)d_pn9[i] << '\n';
       }
 
       // define message ports

@@ -37,12 +37,10 @@ namespace gr {
       const static int MAX_FCS_LEN = 4; // Same as MFR
 
       unsigned char* d_buf;
-      unsigned char d_phr_size;
-
       void prefix_phr(pmt::pmt_t msg);
 
      public:
-      sun_phr_prefixer_impl(std::vector<unsigned char> phr);
+      sun_phr_prefixer_impl(bool ms, bool fcs, bool dw);
       ~sun_phr_prefixer_impl();
     };
 

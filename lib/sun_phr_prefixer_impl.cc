@@ -30,29 +30,23 @@ namespace gr {
   namespace ieee802_15_4 {
 
     sun_phr_prefixer::sptr
-    sun_phr_prefixer::make(std::vector<unsigned char> phr)
+    sun_phr_prefixer::make(bool ms, bool fcs, bool dw)
     {
       return gnuradio::get_initial_sptr
-        (new sun_phr_prefixer_impl(phr));
+        (new sun_phr_prefixer_impl(ms,fcs,dw));
     }
 
     /*
      * The private constructor
      */
-    sun_phr_prefixer_impl::sun_phr_prefixer_impl(std::vector<unsigned char> phr)
+    sun_phr_prefixer_impl::sun_phr_prefixer_impl(bool ms, bool fcs, bool dw)
       : gr::block("sun_phr_prefixer",
               gr::io_signature::make(0,0,0),
-              gr::io_signature::make(0,0,0)),
-              d_phr_size(sizeof(unsigned char)*phr.size())
+              gr::io_signature::make(0,0,0))
     {
-      // check input dimensions and prepare the buffer with the (static) PHR
-      if(d_phr_size > MAX_PHR_LEN) {
-        throw std::runtime_error("PHR size must be less than 4"); // ??? use MAX_PHR_LEN
-      }
-
-      // Start by copying PHR into buffer
-      d_buf = new unsigned char[MAX_PPDU_LEN];
-      memcpy(d_buf, &phr[0], sizeof(unsigned char)*d_phr_size);
+      // Alloc buffer with PHR bits 
+      d_buf = new unsigned char[MAX_PSDU_LEN + MAX_PHR_LEN];
+      d_buf[0] = (ms ? 1 : 0) | (fcs ? 1<<3 : 0) | (dw ? 1<<4 : 0);
 
       // define message ports
       message_port_register_out(pmt::mp("out"));
@@ -84,12 +78,30 @@ namespace gr {
       pmt::pmt_t blob = pmt::cdr(msg);
       size_t data_len = pmt::blob_length(blob);
       if(data_len > MAX_PSDU_LEN) {
-        throw std::runtime_error("Payload length exceeds the maximum: " );
+        throw std::runtime_error("Payload length exceeds MAX_PSDU_LEN" );
       }
 
+      // Reverse bits of length
+      unsigned int v = data_len;
+      unsigned int r = v;
+      int s = 10; // frame length in bits - 1 because of extra shift at end
+
+      for (v >>= 1; v; v >>= 1) {   
+        r <<= 1;
+        r |= v & 1;
+        s--;
+      }
+
+      r <<= s; // shift if v's highest bits are zero
+
+      // Put length in PHR
+      unsigned int i = 0;
+      d_buf[i++] |= (r & 0b00000000111)<<5;
+      d_buf[i++] =  (r & 0b11111111000)>>3;
+
       unsigned char* blob_ptr = (unsigned char*) pmt::blob_data(blob);
-      memcpy(d_buf+d_phr_size, blob_ptr, data_len);
-      pmt::pmt_t packet = pmt::make_blob(&d_buf[0], data_len+d_phr_size);
+      memcpy(d_buf+i, blob_ptr, data_len);
+      pmt::pmt_t packet = pmt::make_blob(&d_buf[0], data_len+i);
       message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
     }
   } /* namespace ieee802_15_4 */

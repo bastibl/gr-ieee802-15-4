@@ -46,7 +46,7 @@ namespace gr {
        * class. ieee802_15_4::sun_phr_prefixer::make is the public interface for
        * creating new instances.
        */
-      static sptr make(std::vector<unsigned char> phr);
+      static sptr make(bool ms, bool fcs, bool dw);
     };
 
   } // namespace ieee802_15_4
