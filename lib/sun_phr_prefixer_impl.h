@@ -40,7 +40,7 @@ namespace gr {
       void prefix_phr(pmt::pmt_t msg);
 
      public:
-      sun_phr_prefixer_impl(bool ms, bool fcs, bool dw);
+      sun_phr_prefixer_impl(bool fcs, bool dw);
       ~sun_phr_prefixer_impl();
     };
 

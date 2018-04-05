@@ -30,23 +30,23 @@ namespace gr {
   namespace ieee802_15_4 {
 
     sun_phr_prefixer::sptr
-    sun_phr_prefixer::make(bool ms, bool fcs, bool dw)
+    sun_phr_prefixer::make(bool fcs, bool dw)
     {
       return gnuradio::get_initial_sptr
-        (new sun_phr_prefixer_impl(ms,fcs,dw));
+        (new sun_phr_prefixer_impl(fcs,dw));
     }
 
     /*
      * The private constructor
      */
-    sun_phr_prefixer_impl::sun_phr_prefixer_impl(bool ms, bool fcs, bool dw)
+    sun_phr_prefixer_impl::sun_phr_prefixer_impl(bool fcs, bool dw)
       : gr::block("sun_phr_prefixer",
               gr::io_signature::make(0,0,0),
               gr::io_signature::make(0,0,0))
     {
       // Alloc buffer with PHR bits 
       d_buf = new unsigned char[MAX_PSDU_LEN + MAX_PHR_LEN];
-      d_buf[0] = (ms ? 1 : 0) | (fcs ? 1<<3 : 0) | (dw ? 1<<4 : 0);
+      d_buf[0] = (fcs ? 1<<3 : 0) | (dw ? 1<<4 : 0);
 
       // define message ports
       message_port_register_out(pmt::mp("out"));

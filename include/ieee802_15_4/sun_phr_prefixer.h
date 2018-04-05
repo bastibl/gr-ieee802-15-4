@@ -47,11 +47,10 @@ namespace gr {
       /*!
        * \brief Make a block that prepends a SUN PHY PHR to a PDU 
        *
-       * \param ms temp
        * \param fcs True sets FCS Type bit, indicating 2-octet FCS
        * \param dw True sets Data Whitening bit
        */
-      static sptr make(bool ms, bool fcs, bool dw);
+      static sptr make(bool fcs, bool dw);
     };
 
   } // namespace ieee802_15_4
