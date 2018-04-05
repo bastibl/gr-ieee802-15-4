@@ -30,34 +30,34 @@ namespace gr {
   namespace ieee802_15_4 {
 
     sun_shr_prefixer::sptr
-    sun_shr_prefixer::make(std::vector<unsigned char> phr)
+    sun_shr_prefixer::make(std::vector<unsigned char> shr)
     {
       return gnuradio::get_initial_sptr
-        (new sun_shr_prefixer_impl(phr));
+        (new sun_shr_prefixer_impl(shr));
     }
 
     /*
      * The private constructor
      */
-    sun_shr_prefixer_impl::sun_shr_prefixer_impl(std::vector<unsigned char> phr)
+    sun_shr_prefixer_impl::sun_shr_prefixer_impl(std::vector<unsigned char> shr)
       : gr::block("sun_shr_prefixer",
               gr::io_signature::make(0,0,0),
               gr::io_signature::make(0,0,0)),
-              d_phr_size(sizeof(unsigned char)*phr.size())
+              d_shr_size(sizeof(unsigned char)*shr.size())
     {
       // check input dimensions and prepare the buffer with the (static) PHR
-      if(d_phr_size > MAX_PHR_LEN) {
+      if(d_shr_size > MAX_PHR_LEN) {
         throw std::runtime_error("PHR size must be less than 4"); // ??? use MAX_PHR_LEN
       }
 
       // Start by copying PHR into buffer
       d_buf = new unsigned char[MAX_PPDU_LEN];
-      memcpy(d_buf, &phr[0], sizeof(unsigned char)*d_phr_size);
+      memcpy(d_buf, &shr[0], sizeof(unsigned char)*d_shr_size);
 
       // define message ports
       message_port_register_out(pmt::mp("out"));
       message_port_register_in(pmt::mp("in"));
-      set_msg_handler(pmt::mp("in"), boost::bind(&sun_shr_prefixer_impl::prefix_phr, this, _1));
+      set_msg_handler(pmt::mp("in"), boost::bind(&sun_shr_prefixer_impl::prefix_shr, this, _1));
     }
 
     /*
@@ -69,7 +69,7 @@ namespace gr {
     }
 
     void
-    sun_shr_prefixer_impl::prefix_phr(pmt::pmt_t msg)
+    sun_shr_prefixer_impl::prefix_shr(pmt::pmt_t msg)
     {
       if(pmt::is_eof_object(msg)) 
       {
@@ -88,8 +88,8 @@ namespace gr {
       }
 
       unsigned char* blob_ptr = (unsigned char*) pmt::blob_data(blob);
-      memcpy(d_buf+d_phr_size, blob_ptr, data_len);
-      pmt::pmt_t packet = pmt::make_blob(&d_buf[0], data_len+d_phr_size);
+      memcpy(d_buf+d_shr_size, blob_ptr, data_len);
+      pmt::pmt_t packet = pmt::make_blob(&d_buf[0], data_len+d_shr_size);
       message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
     }
   } /* namespace ieee802_15_4 */

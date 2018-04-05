@@ -41,13 +41,9 @@ namespace gr {
       typedef boost::shared_ptr<sun_shr_prefixer> sptr;
 
       /*!
-       * \brief Prepend vector of unsigned chars to PDU in input message
-       *
-       * \details
-       * Prepend vector of unsigned chars to PDU.
-       * \param phr Packet header
+       * \param shr Preamble and SFD. 0xAAAAAAAA0972 by default.
        */
-      static sptr make(std::vector<unsigned char> phr);
+      static sptr make(std::vector<unsigned char> shr);
     };
 
   } // namespace ieee802_15_4

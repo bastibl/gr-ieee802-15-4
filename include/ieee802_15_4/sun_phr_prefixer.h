@@ -45,8 +45,6 @@ namespace gr {
       typedef boost::shared_ptr<sun_phr_prefixer> sptr;
 
       /*!
-       * \brief Make a block that prepends a SUN PHY PHR to a PDU 
-       *
        * \param fcs True sets FCS Type bit, indicating 2-octet FCS
        * \param dw True sets Data Whitening bit
        */

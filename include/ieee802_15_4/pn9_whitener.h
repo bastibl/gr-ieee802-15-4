@@ -29,7 +29,7 @@ namespace gr {
   namespace ieee802_15_4 {
 
     /*!
-     * \brief Whiten or unwhiten blob using PN9 sequence
+     * \brief Whiten or unwhiten PDU using PN9 sequence
      * \ingroup ieee802_15_4
      *
      * \details
@@ -42,8 +42,6 @@ namespace gr {
       typedef boost::shared_ptr<pn9_whitener> sptr;
 
       /*!
-       * \brief Make block that whitens or unwhitens blob using PN9 sequence
-       *
        * \param seed Starting seed. Defaults to all ones.
        */
       static sptr make(uint16_t seed = ~0); // SUN PHY default
