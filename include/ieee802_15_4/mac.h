@@ -24,7 +24,7 @@ namespace gr {
 namespace ieee802_15_4 {
 
 /*!
- * \brief This is the MAC Block.
+ * \brief Add header and CRC for 
  *
  * \details
  * The MAC block...

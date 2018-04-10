@@ -29,8 +29,12 @@ namespace gr {
   namespace ieee802_15_4 {
 
     /*!
-     * \brief <+description of block+>
+     * \brief Prepend PHR vector of unsigned char to PDU
      * \ingroup ieee802_15_4
+     *
+     * \details
+     * Unpacks PDU (one bit per char), prepending a configurable
+     * vector of unsigned chars. Chars of vector are not unpacked.
      *
      */
     class IEEE802_15_4_API phr_prefixer : virtual public gr::block
@@ -39,12 +43,8 @@ namespace gr {
       typedef boost::shared_ptr<phr_prefixer> sptr;
 
       /*!
-       * \brief Return a shared_ptr to a new instance of ieee802_15_4::phr_prefixer.
+       * \brief Make a PHR Prefixer block
        *
-       * To avoid accidental use of raw pointers, ieee802_15_4::phr_prefixer's
-       * constructor is in a private implementation
-       * class. ieee802_15_4::phr_prefixer::make is the public interface for
-       * creating new instances.
        */
       static sptr make(std::vector<unsigned char> phr);
     };

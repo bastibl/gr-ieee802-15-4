@@ -33,8 +33,9 @@ namespace gr {
      * \ingroup ieee802_15_4
      *
      * \details
-     * Whitens or unwhitens PDU in input message using PN9 described 
-     * in section 17.2.3 of the 802.15.4-2015 specification.
+     * XORs each char in PDU of input message against the PN9
+     * pseudo-random bit sequence described in section 17.2.3
+     * of the 802.15.4-2015 specification.
      */
     class IEEE802_15_4_API pn9_whitener : virtual public gr::block
     {
@@ -42,7 +43,7 @@ namespace gr {
       typedef boost::shared_ptr<pn9_whitener> sptr;
 
       /*!
-       * \param seed Starting seed. Defaults to all ones.
+       * \param seed Configurable starting seed. Defaults to all ones.
        */
       static sptr make(uint16_t seed = ~0); // SUN PHY default
     };
