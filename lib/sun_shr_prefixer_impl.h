@@ -31,7 +31,7 @@ namespace gr {
      private:
       const static int MAX_PREAMBLE_LEN = 8;
       const static int MAX_SFD_LEN = 4;
-      const static int MAX_PHR_LEN = 8;
+      const static int MAX_PHR_LEN = 16;
       const static int MAX_PSDU_LEN = 2048; // Includes CRC, FCS, or MFR
       const static int MAX_PPDU_LEN = MAX_PREAMBLE_LEN + MAX_SFD_LEN + MAX_PHR_LEN + MAX_PSDU_LEN;
       const static int MAX_FCS_LEN = 4; // Same as MFR
