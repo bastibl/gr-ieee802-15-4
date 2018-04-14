@@ -1,9 +1,9 @@
 <block>
-  <name>SUN SHR Prefixer</name>
-  <key>ieee802_15_4_sun_shr_prefixer</key>
+  <name>PDU Wrapper</name>
+  <key>ieee802_15_4_pdu_wrapper</key>
   <category>[IEEE802.15.4]</category>
   <import>import ieee802_15_4</import>
-  <make>ieee802_15_4.sun_shr_prefixer($shr)</make>
+  <make>ieee802_15_4.pdu_wrapper($shr)</make>
   <param>
     <name>PHR</name>
     <key>shr</key>

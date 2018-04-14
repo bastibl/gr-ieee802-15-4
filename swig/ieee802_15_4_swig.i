@@ -45,7 +45,7 @@
 #include "ieee802_15_4/qpsk_demapper_fi.h"
 #include "ieee802_15_4/qpsk_mapper_if.h"
 #include "ieee802_15_4/rime_stack.h"
-#include "ieee802_15_4/sun_shr_prefixer.h"
+#include "ieee802_15_4/pdu_wrapper.h"
 #include "ieee802_15_4/sun_phr_prefixer.h"
 #include "ieee802_15_4/zeropadding_b.h"
 #include "ieee802_15_4/zeropadding_removal_b.h"
@@ -100,8 +100,8 @@ GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, qpsk_demapper_fi);
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, qpsk_mapper_if);
 %include "ieee802_15_4/rime_stack.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, rime_stack);
-%include "ieee802_15_4/sun_shr_prefixer.h"
-GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, sun_shr_prefixer);
+%include "ieee802_15_4/pdu_wrapper.h"
+GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, pdu_wrapper);
 %include "ieee802_15_4/sun_phr_prefixer.h"
 GR_SWIG_BLOCK_MAGIC2(ieee802_15_4, sun_phr_prefixer);
 %include "ieee802_15_4/zeropadding_b.h"

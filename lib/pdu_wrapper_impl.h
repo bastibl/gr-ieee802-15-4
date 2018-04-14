@@ -18,36 +18,36 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#ifndef INCLUDED_IEEE802_15_4_PHR_PREFIXER_IMPL_H
+#define INCLUDED_IEEE802_15_4_PHR_PREFIXER_IMPL_H
 
-#ifndef INCLUDED_IEEE802_15_4_SUN_SHR_PREFIXER_H
-#define INCLUDED_IEEE802_15_4_SUN_SHR_PREFIXER_H
-
-#include <ieee802_15_4/api.h>
-#include <gnuradio/block.h>
+#include <ieee802_15_4/pdu_wrapper.h>
 
 namespace gr {
   namespace ieee802_15_4 {
 
-    /*!
-     * \brief Prepend vector of unsigned chars to PDU in input message
-     * \ingroup ieee802_15_4
-     *
-     * \details 
-     * Prepends a vector of unsigned char to the PDU on the input message port.
-     */
-    class IEEE802_15_4_API sun_shr_prefixer : virtual public gr::block
+    class pdu_wrapper_impl : public pdu_wrapper
     {
-     public:
-      typedef boost::shared_ptr<sun_shr_prefixer> sptr;
+     private:
+      const static int MAX_PREAMBLE_LEN = 8;
+      const static int MAX_SFD_LEN = 4;
+      const static int MAX_PHR_LEN = 16;
+      const static int MAX_PSDU_LEN = 2048; // Includes CRC, FCS, or MFR
+      const static int MAX_PPDU_LEN = MAX_PREAMBLE_LEN + MAX_SFD_LEN + MAX_PHR_LEN + MAX_PSDU_LEN;
+      const static int MAX_FCS_LEN = 4; // Same as MFR
 
-      /*!
-       * \param shr Preamble and SFD. 0xAAAAAAAA0972 by default.
-       */
-      static sptr make(std::vector<unsigned char> shr);
+      unsigned char* d_buf;
+      unsigned char d_shr_size;
+
+      void prefix_shr(pmt::pmt_t msg);
+
+     public:
+      pdu_wrapper_impl(std::vector<unsigned char> shr);
+      ~pdu_wrapper_impl();
     };
 
   } // namespace ieee802_15_4
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_15_4_SUN_SHR_PREFIXER_H */
+#endif /* INCLUDED_IEEE802_15_4_PDU_WRAPPER_IMPL_H */
 

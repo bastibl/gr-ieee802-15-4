@@ -39,7 +39,7 @@ install(FILES
     qpsk_demapper_fi.h
     qpsk_mapper_if.h
     rime_stack.h
-    sun_shr_prefixer.h
+    pdu_wrapper.h
     sun_phr_prefixer.h
     zeropadding_b.h
     zeropadding_removal_b.h
