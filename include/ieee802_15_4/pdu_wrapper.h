@@ -42,11 +42,10 @@ namespace gr {
     {
      public:
       typedef boost::shared_ptr<pdu_wrapper> sptr;
-      //const static int MAX_PHR_LEN = 16;
 
       /*!
-       * \param prefix Prefix typically a preamble and SFD to prepend. 0xAAAAAAAA0972 for 802.15.4 OQPSK by default.
-       * \param suffix Suffix to append. 0x0 for 802.15.4 OQPSK by default.
+       * \param prefix Prefix to prepend, typically a preamble and SFD. Default is for 802.15.4 OQPSK.
+       * \param suffix Suffix to append. Default is no pad.
        */
       static sptr make(std::vector<unsigned char> prefix, std::vector<unsigned char> suffix);
     };

@@ -14,7 +14,7 @@
   <param>
     <name>Suffix</name>
     <key>suffix</key>
-    <value>(0xAA)</value>
+    <value>()</value>
     <type>int_vector</type>
     <hide>part</hide>
   </param>

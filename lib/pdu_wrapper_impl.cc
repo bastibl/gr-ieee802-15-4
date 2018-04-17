@@ -50,13 +50,13 @@ namespace gr {
       // check input vector and prepare the buffer with for the prefix
       if(d_prefix_size > MAX_PHR_LEN) {
         throw std::runtime_error(str(boost::format("Prefix size must be less than %d bytes")
-          //% 16)); 
           % static_cast<int>(MAX_PHR_LEN) )); 
       }
 
       // check input vector and prepare the buffer with for the suffix
       if(d_suffix_size > MAX_PHR_LEN) {
-        throw std::runtime_error("Suffix size must be less than 4"); // ??? use MAX_PHR_LEN
+        throw std::runtime_error(str(boost::format("Suffix size must be less than %d bytes")
+          % static_cast<int>(MAX_PHR_LEN) )); 
       }
 
       // Start by copying prefix into buffer
@@ -103,9 +103,9 @@ namespace gr {
       }
 
       unsigned char* blob_ptr = (unsigned char*) pmt::blob_data(blob);
-      memcpy(d_buf+d_prefix_size, blob_ptr, data_len);
+      memcpy(&d_buf[d_prefix_size], blob_ptr, data_len);
 
-      memcpy(d_buf+d_prefix_size+data_len, d_suffix, d_suffix_size);
+      memcpy(&d_buf[d_prefix_size + data_len], d_suffix, d_suffix_size);
 
       pmt::pmt_t packet = pmt::make_blob(&d_buf[0], d_prefix_size+data_len+d_suffix_size);
       message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
