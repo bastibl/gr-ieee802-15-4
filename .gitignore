@@ -17,3 +17,4 @@ examples/transceiver_CSS_USRP.py
 *.npy
 .idea/*
 **/.DS_Store
+*.swp
