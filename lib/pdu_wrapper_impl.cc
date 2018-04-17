@@ -30,34 +30,47 @@ namespace gr {
   namespace ieee802_15_4 {
 
     pdu_wrapper::sptr
-    pdu_wrapper::make(std::vector<unsigned char> shr)
+    pdu_wrapper::make(std::vector<unsigned char> prefix, std::vector<unsigned char> suffix)
     {
       return gnuradio::get_initial_sptr
-        (new pdu_wrapper_impl(shr));
+        (new pdu_wrapper_impl(prefix, suffix));
     }
 
     /*
      * The private constructor
      */
-    pdu_wrapper_impl::pdu_wrapper_impl(std::vector<unsigned char> shr)
+    pdu_wrapper_impl::pdu_wrapper_impl(std::vector<unsigned char> prefix,
+      std::vector<unsigned char> suffix)
       : gr::block("pdu_wrapper",
               gr::io_signature::make(0,0,0),
               gr::io_signature::make(0,0,0)),
-              d_shr_size(sizeof(unsigned char)*shr.size())
+              d_prefix_size(sizeof(unsigned char)*prefix.size()),
+              d_suffix_size(sizeof(unsigned char)*suffix.size())
     {
-      // check input dimensions and prepare the buffer with the (static) PHR
-      if(d_shr_size > MAX_PHR_LEN) {
-        throw std::runtime_error("PHR size must be less than 4"); // ??? use MAX_PHR_LEN
+      // check input vector and prepare the buffer with for the prefix
+      if(d_prefix_size > MAX_PHR_LEN) {
+        throw std::runtime_error(str(boost::format("Prefix size must be less than %d bytes")
+          //% 16)); 
+          % static_cast<int>(MAX_PHR_LEN) )); 
       }
 
-      // Start by copying PHR into buffer
+      // check input vector and prepare the buffer with for the suffix
+      if(d_suffix_size > MAX_PHR_LEN) {
+        throw std::runtime_error("Suffix size must be less than 4"); // ??? use MAX_PHR_LEN
+      }
+
+      // Start by copying prefix into buffer
       d_buf = new unsigned char[MAX_PPDU_LEN];
-      memcpy(d_buf, &shr[0], sizeof(unsigned char)*d_shr_size);
+      memcpy(d_buf, &prefix[0], sizeof(unsigned char)*d_prefix_size);
+
+      // Copy suffix
+      d_suffix = new unsigned char[MAX_PHR_LEN];
+      memcpy(d_suffix, &suffix[0], sizeof(unsigned char)*d_suffix_size);
 
       // define message ports
       message_port_register_out(pmt::mp("out"));
       message_port_register_in(pmt::mp("in"));
-      set_msg_handler(pmt::mp("in"), boost::bind(&pdu_wrapper_impl::prefix_shr, this, _1));
+      set_msg_handler(pmt::mp("in"), boost::bind(&pdu_wrapper_impl::wrapper, this, _1));
     }
 
     /*
@@ -66,10 +79,11 @@ namespace gr {
     pdu_wrapper_impl::~pdu_wrapper_impl()
     {
       delete[] d_buf;
+      delete[] d_suffix;
     }
 
     void
-    pdu_wrapper_impl::prefix_shr(pmt::pmt_t msg)
+    pdu_wrapper_impl::wrapper(pmt::pmt_t msg)
     {
       if(pmt::is_eof_object(msg)) 
       {
@@ -83,13 +97,17 @@ namespace gr {
 
       pmt::pmt_t blob = pmt::cdr(msg);
       size_t data_len = pmt::blob_length(blob);
-      if(data_len > MAX_PSDU_LEN) {
-        throw std::runtime_error("Payload length exceeds the maximum: " );
+      if(data_len > GRPW_MAX_PSDU_LEN) {
+        throw std::runtime_error(str(boost::format("Payload length exceeds the maximum: %d bytes")
+          % GRPW_MAX_PSDU_LEN ));
       }
 
       unsigned char* blob_ptr = (unsigned char*) pmt::blob_data(blob);
-      memcpy(d_buf+d_shr_size, blob_ptr, data_len);
-      pmt::pmt_t packet = pmt::make_blob(&d_buf[0], data_len+d_shr_size);
+      memcpy(d_buf+d_prefix_size, blob_ptr, data_len);
+
+      memcpy(d_buf+d_prefix_size+data_len, d_suffix, d_suffix_size);
+
+      pmt::pmt_t packet = pmt::make_blob(&d_buf[0], d_prefix_size+data_len+d_suffix_size);
       message_port_pub(pmt::mp("out"), pmt::cons(pmt::PMT_NIL, packet));
     }
   } /* namespace ieee802_15_4 */

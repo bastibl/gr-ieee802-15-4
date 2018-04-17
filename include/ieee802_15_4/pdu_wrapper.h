@@ -33,17 +33,22 @@ namespace gr {
      * \ingroup ieee802_15_4
      *
      * \details 
-     * Prepends a vector of unsigned char to the PDU on the input message port.
+     * Prepends or appends a vector of unsigned char to the PDU on the input message port.
      */
+
+    static const int GRPW_MAX_PSDU_LEN = 2048; // Includes CRC, FCS, or MFR
+
     class IEEE802_15_4_API pdu_wrapper : virtual public gr::block
     {
      public:
       typedef boost::shared_ptr<pdu_wrapper> sptr;
+      //const static int MAX_PHR_LEN = 16;
 
       /*!
-       * \param shr Preamble and SFD. 0xAAAAAAAA0972 by default.
+       * \param prefix Prefix typically a preamble and SFD to prepend. 0xAAAAAAAA0972 for 802.15.4 OQPSK by default.
+       * \param suffix Suffix to append. 0x0 for 802.15.4 OQPSK by default.
        */
-      static sptr make(std::vector<unsigned char> shr);
+      static sptr make(std::vector<unsigned char> prefix, std::vector<unsigned char> suffix);
     };
 
   } // namespace ieee802_15_4
