@@ -24,7 +24,7 @@ namespace gr {
 namespace ieee802_15_4 {
 
 /*!
- * \brief Add header and CRC for 
+ * \brief This is the MAC Block.
  *
  * \details
  * The MAC block...
@@ -46,7 +46,7 @@ public:
           int src=0x3344 );
 };
 
-}  // namespace ieee802_15_4
+}  // namespace ieee802_11
 }  // namespace gr
 
 #endif /* INCLUDED_GR_IEEE802_15_4_MAC_H */

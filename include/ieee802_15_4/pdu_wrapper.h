@@ -29,15 +29,14 @@ namespace gr {
   namespace ieee802_15_4 {
 
     /*!
-     * \brief Prepend vector of unsigned chars to PDU in input message
+     * \brief Prepend or append to PDU
      * \ingroup ieee802_15_4
      *
      * \details 
-     * Prepends or appends a vectors of unsigned char to the PDU on the input message port.
+     * Prepends or appends vectors of unsigned char
+     * to the PDU on the input message port.
+     *
      */
-
-    static const int GRPW_MAX_PSDU_LEN = 2048; // Includes CRC, FCS, or MFR
-
     class IEEE802_15_4_API pdu_wrapper : virtual public gr::block
     {
      public:
@@ -50,6 +49,7 @@ namespace gr {
       static sptr make(std::vector<unsigned char> prefix, std::vector<unsigned char> suffix);
     };
 
+    static const int GRPW_MAX_PSDU_LEN = 2048; // Includes CRC, FCS, or MFR
   } // namespace ieee802_15_4
 } // namespace gr
 
