@@ -36,7 +36,8 @@ namespace gr {
       const static int MAX_PPDU_LEN = MAX_PREAMBLE_LEN + MAX_SFD_LEN + MAX_PHR_LEN + MAX_PSDU_LEN;
       const static int MAX_FCS_LEN = 4; // Same as MFR
 
-      const static int PN9_LEN = MAX_PSDU_LEN; // Size of psuedo random sequence in bytes
+      // Length in bytes over which a 511-bit PN9 sequence repeats
+      const static int PN9_LEN = (1<<9)-1;
 
       unsigned char* d_pn9;
 

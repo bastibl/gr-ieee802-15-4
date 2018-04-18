@@ -61,8 +61,12 @@ namespace gr {
         }
 
         d_pn9[i] = (pn & 0xFF00)>>8;
-        //std::cout << std::hex << (int)d_pn9[i] << '\n';
       }
+
+      //for (int k = 0; k < 8 ; k++) {
+      //  std::cout << std::hex << (int)d_pn9[k%PN9_LEN] << '\n';
+      //}
+      //std::cout << '\n';
 
       // define message ports
       message_port_register_out(pmt::mp("out"));

@@ -25,11 +25,11 @@
     <value>True</value>
     <type>bool</type>
     <option>
-        <name>Yes</name>
+        <name>True</name>
         <key>True</key>
     </option>
     <option>
-        <name>No</name>
+        <name>False</name>
         <key>False</key>
     </option>
   </param>

@@ -33,7 +33,7 @@ namespace gr {
      * \ingroup ieee802_15_4
      *
      * \details 
-     * Prepends or appends a vector of unsigned char to the PDU on the input message port.
+     * Prepends or appends a vectors of unsigned char to the PDU on the input message port.
      */
 
     static const int GRPW_MAX_PSDU_LEN = 2048; // Includes CRC, FCS, or MFR
