@@ -1,0 +1,44 @@
+<block>
+  <name>SUN PHR Prefixer</name>
+  <key>ieee802_15_4_sun_phr_prefixer</key>
+  <category>[IEEE802.15.4]</category>
+  <import>import ieee802_15_4</import>
+  <make>ieee802_15_4.sun_phr_prefixer($fcs,$dw)</make>
+  <param>
+    <name>FCS Type</name>
+    <key>fcs</key>
+    <value>True</value>
+    <type>bool</type>
+    <hide>part</hide>
+    <option>
+        <name>2-octets</name>
+        <key>True</key>
+    </option>
+    <option>
+        <name>4-octets</name>
+        <key>False</key>
+    </option>
+  </param>
+  <param>
+    <name>Data Whitening</name>
+    <key>dw</key>
+    <value>True</value>
+    <type>bool</type>
+    <option>
+        <name>True</name>
+        <key>True</key>
+    </option>
+    <option>
+        <name>False</name>
+        <key>False</key>
+    </option>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>message</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>message</type>
+  </source> 
+</block>

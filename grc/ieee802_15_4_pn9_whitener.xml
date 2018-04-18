@@ -1,0 +1,22 @@
+<block>
+  <name>PN9 Whitener</name>
+  <key>ieee802_15_4_pn9_whitener</key>
+  <category>[IEEE802.15.4]</category>
+  <import>import ieee802_15_4</import>
+  <make>ieee802_15_4.pn9_whitener($seed)</make>
+  <param>
+    <name>Seed</name>
+    <key>seed</key>
+    <value>0xffff</value>
+    <type>hex</type>
+    <hide>part</hide>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>message</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>message</type>
+  </source> 
+</block>

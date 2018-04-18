@@ -1,0 +1,29 @@
+<block>
+  <name>PDU Wrapper</name>
+  <key>ieee802_15_4_pdu_wrapper</key>
+  <category>[IEEE802.15.4]</category>
+  <import>import ieee802_15_4</import>
+  <make>ieee802_15_4.pdu_wrapper($prefix,$suffix)</make>
+  <param>
+    <name>Prefix</name>
+    <key>prefix</key>
+    <value>(0xAA,0xAA,0xAA,0xAA,0x09,0x72)</value>
+    <type>int_vector</type>
+    <hide>part</hide>
+  </param>
+  <param>
+    <name>Suffix</name>
+    <key>suffix</key>
+    <value>()</value>
+    <type>int_vector</type>
+    <hide>part</hide>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>message</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>message</type>
+  </source> 
+</block>

@@ -33,11 +33,14 @@ install(FILES
     packet_sink.h
     phr_prefixer.h
     phr_removal.h
+    pn9_whitener.h
     preamble_sfd_prefixer_ii.h
     preamble_tagger_cc.h
     qpsk_demapper_fi.h
     qpsk_mapper_if.h
     rime_stack.h
+    pdu_wrapper.h
+    sun_phr_prefixer.h
     zeropadding_b.h
     zeropadding_removal_b.h
     DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
