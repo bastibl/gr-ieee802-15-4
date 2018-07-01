@@ -49,6 +49,7 @@ list(APPEND ieee802_15_4_sources
     uc_connection.cc
     zeropadding_b_impl.cc
     zeropadding_removal_b_impl.cc
+    pn9_whitener_impl.cc
 )
 
 list(APPEND ieee802_15_4_libs
