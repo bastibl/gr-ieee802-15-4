@@ -11,4 +11,5 @@ all: sdr_shell
 upload:
 	make sdr_shell.upload
 
+CONTIKI_WITH_RIME = 1
 include $(CONTIKI)/Makefile.include

@@ -19,7 +19,7 @@
 #include "dev/button-sensor.h"
 #include "dev/light-sensor.h"
 #include "net/netstack.h"
-#include "net/rime.h"
+#include "net/rime/rime.h"
 #include "net/rime/channel.h"
 #include "net/rime/broadcast.h"
 #include "serial-shell.h"
@@ -55,21 +55,21 @@ struct runicast_entry {
 static const char payload[] = "Hello GNU Radio!";
 static char in_buf[256];
 
-static void broadcast_received(struct broadcast_conn *c, const rimeaddr_t *from);
+static void broadcast_received(struct broadcast_conn *c, const linkaddr_t *from);
 static void broadcast_sent(struct broadcast_conn *c, int status, int num_tx);
 static struct broadcast_conn broadcast_connection;
 static const struct broadcast_callbacks broadcast_callback = {
 	broadcast_received, broadcast_sent
 };
 
-static void unicast_received(struct unicast_conn *c, const rimeaddr_t *from);
+static void unicast_received(struct unicast_conn *c, const linkaddr_t *from);
 static void unicast_sent(struct unicast_conn *c, int status, int num_tx);
 static const struct unicast_callbacks unicast_callback = {
 	unicast_received, unicast_sent
 };
 
-static void runicast_received(struct runicast_conn *c, const rimeaddr_t *from, int seqno);
-static void runicast_sent(struct runicast_conn *c, const rimeaddr_t *to, uint8_t retransmissions);
+static void runicast_received(struct runicast_conn *c, const linkaddr_t *from, int seqno);
+static void runicast_sent(struct runicast_conn *c, const linkaddr_t *to, uint8_t retransmissions);
 static const struct runicast_callbacks runicast_callback = {
 	runicast_received, runicast_sent
 };
@@ -169,7 +169,7 @@ broadcast_sent(struct broadcast_conn *c, int status, int num_tx) {
 }
 
 static void
-broadcast_received(struct broadcast_conn *c, const rimeaddr_t *from) {
+broadcast_received(struct broadcast_conn *c, const linkaddr_t *from) {
 	char *pkt = packetbuf_dataptr();
 	static int8_t rssi;
 	rssi = packetbuf_attr(PACKETBUF_ATTR_RSSI);
@@ -196,7 +196,7 @@ unicast_sent(struct unicast_conn *c, int status, int num_tx){
 }
 
 static void
-unicast_received(struct unicast_conn *c, const rimeaddr_t *from){
+unicast_received(struct unicast_conn *c, const linkaddr_t *from){
 	char *pkt = packetbuf_dataptr();
 	static int8_t rssi;
 	rssi = packetbuf_attr(PACKETBUF_ATTR_RSSI);
@@ -217,13 +217,13 @@ unicast_received(struct unicast_conn *c, const rimeaddr_t *from){
 }
 
 static void
-runicast_sent(struct runicast_conn *c, const rimeaddr_t *to, uint8_t retransmissions){
+runicast_sent(struct runicast_conn *c, const linkaddr_t *to, uint8_t retransmissions){
 	printf("runicast sent to %d.%d on channel %d. retransmissions: %d\n",
 		to->u8[0], to->u8[1], c->c.c.c.c.channel.channelno, retransmissions);
 }
 
 static void
-runicast_received(struct runicast_conn *c, const rimeaddr_t *from, int seqno){
+runicast_received(struct runicast_conn *c, const linkaddr_t *from, int seqno){
 	char *pkt = packetbuf_dataptr();
 	static int8_t rssi;
 	rssi = packetbuf_attr(PACKETBUF_ATTR_RSSI);
@@ -424,7 +424,7 @@ PROCESS_THREAD(shell_uc_send_process, ev, data)
   uint16_t channel;
   long channel_long;
   const char *next;
-  rimeaddr_t target;
+  linkaddr_t target;
   long rime_long;
   char buf[6];
   char msg_buf[128];
@@ -545,7 +545,7 @@ PROCESS_THREAD(shell_ruc_send_process, ev, data)
   uint16_t channel;
   long channel_long;
   const char *next;
-  rimeaddr_t target;
+  linkaddr_t target;
   long rime_long;
   char buf[6];
   char msg_buf[128];
