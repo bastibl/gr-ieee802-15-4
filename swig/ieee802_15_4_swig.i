@@ -16,8 +16,9 @@
  */
 #define IEEE802_15_4_API
 
-%include <gnuradio.i>
+%include "gnuradio.i"           // the common stuff
 
+//load generated python docstrings
 %include "ieee802_15_4_swig_doc.i"
 
 %{

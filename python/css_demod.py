@@ -1,5 +1,4 @@
-import css_constants
-import css_phy
+from .css_phy import physical_layer
 import numpy as np
 
 def c_corrcoef(a,b):
@@ -10,7 +9,7 @@ def c_corrcoef(a,b):
 		return 0
 	return num/denom
 
-class demodulator(css_phy.physical_layer):
+class demodulator(physical_layer):
 	def demodulate(self, iq_in):
 		if len(iq_in) != self.nsamp_frame*self.nframes:
 			raise Exception("Demodulator expects "+str(self.nframes)+" frames of length "+str(self.nsamp_frame)+"(="+str(self.nsamp_frame*self.nframes)+"), but input length is "+str(len(iq_in)))

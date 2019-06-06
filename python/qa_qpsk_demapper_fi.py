@@ -46,11 +46,11 @@ class qa_qpsk_demapper_fi (gr_unittest.TestCase):
         # check data
         ref_I = [1,-1,1,-1]
         ref_Q = [1,1,-1,-1]  
-        print "data in:", data_in   
-        print "ref I:", ref_I
-        print "data I:", self.snk_I.data()
-        print "ref Q:", ref_Q
-        print "data Q:", self.snk_Q.data()
+        print("data in:", data_in)
+        print("ref I:", ref_I)
+        print("data I:", self.snk_I.data())
+        print("ref Q:", ref_Q)
+        print("data Q:", self.snk_Q.data())
 
         self.assertFloatTuplesAlmostEqual(ref_I, self.snk_I.data())
         self.assertFloatTuplesAlmostEqual(ref_Q, self.snk_Q.data())

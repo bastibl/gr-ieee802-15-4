@@ -16,29 +16,32 @@
 #
 
 ########################################################################
+# Check if there is C++ code at all
+########################################################################
+if(NOT ieee802_15_4_sources)
+    MESSAGE(STATUS "No C++ sources... skipping swig/")
+    return()
+endif(NOT ieee802_15_4_sources)
+
+########################################################################
 # Include swig generation macros
 ########################################################################
-include(GrPython)
 find_package(SWIG)
 find_package(PythonLibs)
 if(NOT SWIG_FOUND OR NOT PYTHONLIBS_FOUND)
     return()
 endif()
 include(GrSwig)
+include(GrPython)
 
 ########################################################################
 # Setup swig generation
 ########################################################################
-set(GR_SWIG_INCLUDE_DIRS
-    ${GR_IEEE802_15_4_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-foreach(incdir ${GNURADIO_RUNTIME_INCLUDE_DIRS})
-    list(APPEND GR_SWIG_INCLUDE_DIRS ${incdir}/gnuradio/swig)
-endforeach(incdir)
+set(GR_SWIG_INCLUDE_DIRS $<TARGET_PROPERTY:gnuradio::runtime_swig,INTERFACE_INCLUDE_DIRECTORIES>)
+set(GR_SWIG_TARGET_DEPS gnuradio::runtime_swig)
 
 set(GR_SWIG_LIBRARIES gnuradio-ieee802_15_4)
+
 set(GR_SWIG_DOC_FILE ${CMAKE_CURRENT_BINARY_DIR}/ieee802_15_4_swig_doc.i)
 set(GR_SWIG_DOC_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
@@ -47,22 +50,14 @@ GR_SWIG_MAKE(ieee802_15_4_swig ieee802_15_4_swig.i)
 ########################################################################
 # Install the build swig module
 ########################################################################
-GR_SWIG_INSTALL(
-    TARGETS ieee802_15_4_swig
-    DESTINATION ${GR_PYTHON_DIR}/ieee802_15_4
-    COMPONENT "ieee802_15_4_python"
-)
+GR_SWIG_INSTALL(TARGETS ieee802_15_4_swig DESTINATION ${GR_PYTHON_DIR}/ieee802_15_4)
 
 ########################################################################
 # Install swig .i files for development
 ########################################################################
-list(APPEND swig_sources
+install(
+    FILES
     ieee802_15_4_swig.i
     ${CMAKE_CURRENT_BINARY_DIR}/ieee802_15_4_swig_doc.i
-)
-
-install(
-    FILES ${swig_sources}
     DESTINATION ${GR_INCLUDE_DIR}/ieee802_15_4/swig
-    COMPONENT "ieee802_15_4_swig"
 )

@@ -1,13 +1,10 @@
 #! /usr/bin python
 
-import css_mod
-import css_demod
-import css_constants
 import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-	print "Generate and demodulate IEEE 802.15.4 compliant CSS baseband signal"
+	print("Generate and demodulate IEEE 802.15.4 compliant CSS baseband signal")
 	slow_rate = False
 	phy_packetsize_bytes = 38
 	nframes = 40
@@ -18,31 +15,31 @@ if __name__ == "__main__":
 	d = css_demod.demodulator(slow_rate=slow_rate, phy_packetsize_bytes=phy_packetsize_bytes, nframes=nframes, chirp_number=chirp_number)
 	payload_rx = d.demodulate(baseband)
 
-	print "RX BER:", sum(abs(payload - payload_rx))/len(payload)
+	print("RX BER:", sum(abs(payload - payload_rx))/len(payload))
 
-	print "samples in one..."
-	print "-> subchirp: ", css_constants.n_sub
-	print "-> average chirp sequence:", css_constants.n_chirp
+	print("samples in one...")
+	print("-> subchirp: ", css_constants.n_sub)
+	print("-> average chirp sequence:", css_constants.n_chirp)
 	nsamp_frame = len(baseband)/m.nframes
-	print "-> frame: ", nsamp_frame
+	print("-> frame: ", nsamp_frame)
 	nsamp_payload = m.phy_packetsize_bytes*css_constants.n_chirp
 	nsamp_header = nsamp_frame - nsamp_payload
-	print "-> frame header: ", nsamp_header
-	print "-> frame payload: ", nsamp_payload
+	print("-> frame header: ", nsamp_header)
+	print("-> frame payload: ", nsamp_payload)
 
 	f, axarr = plt.subplots(2)
 	axarr[0].stem(np.angle(d.sym_DQPSK, deg=True))
 	axarr[0].set_title("Demodulated DQPSK symbols")
 	axarr[1].stem(np.angle(m.frame_DQPSK, deg=True) - np.angle(d.sym_DQPSK, deg=True))
 	axarr[1].set_title("Difference between original and demodulated DQPSK symbols")
-	print "sum of difference of angles in DQPSK symbols:", sum(np.angle(m.frame_DQPSK, deg=True) - np.angle(d.sym_DQPSK, deg=True))
+	print("sum of difference of angles in DQPSK symbols:", sum(np.angle(m.frame_DQPSK, deg=True) - np.angle(d.sym_DQPSK, deg=True)))
 
 	f, axarr = plt.subplots(2)
 	axarr[0].stem(np.angle(d.sym_QPSK, deg=True))
 	axarr[0].set_title("Demodulated QPSK symbols")
 	axarr[1].stem(np.angle(m.frame_QPSK, deg=True) - np.angle(d.sym_QPSK, deg=True))
 	axarr[1].set_title("Difference between original and demodulated QPSK symbols")
-	print "sum of difference of angles in DQPSK symbols:", sum(np.angle(m.frame_QPSK, deg=True) - np.angle(d.sym_QPSK, deg=True))
+	print("sum of difference of angles in DQPSK symbols:", sum(np.angle(m.frame_QPSK, deg=True) - np.angle(d.sym_QPSK, deg=True)))
 
 	f, axarr = plt.subplots(4)
 	for i in range(4):

@@ -28,7 +28,7 @@ import numpy as np
 class qa_multiuser_multiuser_chirp_detector_cc (gr_unittest.TestCase):
 
     def setUp (self):
-    	print "NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY ieee802_15_4!"
+    	print)"NOTE: THIS TEST USES THE INSTALLED VERSION OF THE LIBRARY ieee802_15_4!")
         self.tb = gr.top_block ()
         self.p = ieee802_15_4_installed.css_phy()
 
@@ -37,7 +37,7 @@ class qa_multiuser_multiuser_chirp_detector_cc (gr_unittest.TestCase):
 
     def test_001_t (self): # two chirp sequences with alternating time gaps
         # set up fg
-        print "test_001_t"
+        print("test_001_t")
         data_in = np.concatenate((self.p.chirp_seq, self.p.time_gap_1, self.p.chirp_seq, self.p.time_gap_2))
         src = blocks.vector_source_c(data_in)
         det = ieee802_15_4.multiuser_chirp_detector_cc(self.p.chirp_seq, len(self.p.time_gap_1), len(self.p.time_gap_2), 38, 0.99)
@@ -51,7 +51,7 @@ class qa_multiuser_multiuser_chirp_detector_cc (gr_unittest.TestCase):
 
     def test_002_t (self): # 4 chirp sequences with zeros in the middle
         # set up fg
-        print "test_002_t"
+        print("test_002_t")
         data = np.concatenate((self.p.chirp_seq, self.p.time_gap_1, self.p.chirp_seq, self.p.time_gap_2))
         zeros = np.zeros((10,))
         data_in = np.concatenate((data,zeros,data))
@@ -67,7 +67,7 @@ class qa_multiuser_multiuser_chirp_detector_cc (gr_unittest.TestCase):
 
     def test_003_t (self): # 4 chirp sequences in reversed order (late-entry)
         # set up fg
-        print "test_003_t"
+        print("test_003_t")
         data1 = np.concatenate((self.p.chirp_seq, self.p.time_gap_1))
         data2 = np.concatenate((self.p.chirp_seq, self.p.time_gap_2))
         zeros100 = np.zeros((100,))

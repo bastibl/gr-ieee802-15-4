@@ -40,6 +40,5 @@ install(FILES
     rime_stack.h
     zeropadding_b.h
     zeropadding_removal_b.h
-    DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_15_4
-    COMPONENT "ieee802_15_4_devel"
+    DESTINATION include/ieee802_15_4
 )

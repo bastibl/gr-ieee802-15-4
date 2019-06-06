@@ -1,31 +1,31 @@
-import css_constants
+from .css_constants import *
 import numpy as np
 
 
 class physical_layer:
     def __init__(self, slow_rate=False, phy_packetsize_bytes=18, nframes=1, chirp_number=1):
         self.slow_rate = slow_rate
-        self.phy_packetsize_bytes = phy_packetsize_bytes if phy_packetsize_bytes <= css_constants.max_phy_packetsize_bytes else css_constants.max_phy_packetsize_bytes
+        self.phy_packetsize_bytes = phy_packetsize_bytes if phy_packetsize_bytes <= max_phy_packetsize_bytes else max_phy_packetsize_bytes
         self.nframes = nframes
         self.chirp_number = chirp_number
         self.bits_per_symbol = 6 if self.slow_rate is True else 3
-        self.codewords = css_constants.codewords_250kbps if self.slow_rate is True else css_constants.codewords_1mbps
+        self.codewords = codewords_250kbps if self.slow_rate is True else codewords_1mbps
         self.coderate = 3.0 / 4 if self.slow_rate is False else 3.0 / 16
-        self.intlv_seq = css_constants.intlv_seq if self.slow_rate is True else []
-        self.preamble = css_constants.preamble_250kbps if self.slow_rate is True else css_constants.preamble_1mbps
-        self.SFD = css_constants.SFD_250kbps if self.slow_rate is True else css_constants.SFD_1mbps
+        self.intlv_seq = intlv_seq if self.slow_rate is True else []
+        self.preamble = preamble_250kbps if self.slow_rate is True else preamble_1mbps
+        self.SFD = SFD_250kbps if self.slow_rate is True else SFD_1mbps
         self.PHR = self.gen_PHR()
         self.rcfilt = self.gen_rcfilt()
         self.possible_chirp_sequences = self.gen_chirp_sequences()
         if self.chirp_number < 1 or self.chirp_number > 4:
-            print "Invalid chirp sequence number, must be [1..4]. Use chirp 1"
+            print("Invalid chirp sequence number, must be [1..4]. Use chirp 1")
             self.chirp_number = 1
         self.chirp_seq = self.possible_chirp_sequences[self.chirp_number - 1]
         self.n_subchirps = 4;
-        self.n_tau = css_constants.n_tau[self.chirp_number - 1]
-        self.time_gap_1 = np.zeros((css_constants.n_chirp - 2 * self.n_tau - self.n_subchirps * css_constants.n_sub,),
+        self.n_tau = n_tau[self.chirp_number - 1]
+        self.time_gap_1 = np.zeros((n_chirp - 2 * self.n_tau - self.n_subchirps * n_sub,),
                                    dtype=np.complex128)
-        self.time_gap_2 = np.zeros((css_constants.n_chirp + 2 * self.n_tau - self.n_subchirps * css_constants.n_sub,),
+        self.time_gap_2 = np.zeros((n_chirp + 2 * self.n_tau - self.n_subchirps * n_sub,),
                                    dtype=np.complex128)
         self.padded_zeros = self.calc_padded_zeros()
         self.nsym_frame = self.calc_nsym_frame()
@@ -42,9 +42,9 @@ class physical_layer:
     def calc_nsamp_frame(self, nsym_frame):
         nchirps = nsym_frame / 4
         if nchirps % 2 == 0:
-            return int(nchirps * css_constants.n_chirp)
+            return int(nchirps * n_chirp)
         else:
-            return int((nchirps - 1) * css_constants.n_chirp + 4 * css_constants.n_sub + len(self.time_gap_1))
+            return int((nchirps - 1) * n_chirp + 4 * n_sub + len(self.time_gap_1))
 
     def calc_padded_zeros(self):
         if self.slow_rate == True:
@@ -57,11 +57,11 @@ class physical_layer:
 
     def gen_rcfilt(self):
         alpha = 0.25
-        rcfilt = np.ones((css_constants.n_sub,))
-        half_plateau_width = round((1 - alpha) / (1 + alpha) * css_constants.n_sub / 2)
+        rcfilt = np.ones((n_sub,))
+        half_plateau_width = round((1 - alpha) / (1 + alpha) * n_sub / 2)
         rcfilt[int(len(rcfilt) / 2 + half_plateau_width):] = [
-            0.5 * (1 + np.cos((1 + alpha) * np.pi / (alpha * css_constants.n_sub) * i)) for i in
-            range(int(css_constants.n_sub / 2 - half_plateau_width))]
+            0.5 * (1 + np.cos((1 + alpha) * np.pi / (alpha * n_sub) * i)) for i in
+            range(int(n_sub / 2 - half_plateau_width))]
         rcfilt[0:int(len(rcfilt) / 2 - half_plateau_width)] = rcfilt[-1:int(len(rcfilt) / 2 + half_plateau_width - 1):-1]
         # force 0s at the edges
         rcfilt[0] = 0
@@ -71,17 +71,17 @@ class physical_layer:
     def gen_chirp_sequences(self):
         # generate subchirps
         subchirp_low_up = np.array([np.exp(1j * (
-        -2 * np.pi * css_constants.fc + css_constants.mu / 2 * i / css_constants.bb_samp_rate) * i / css_constants.bb_samp_rate)
-                                    for i in np.arange(css_constants.n_sub) - css_constants.n_sub / 2])
+        -2 * np.pi * fc + mu / 2 * i / bb_samp_rate) * i / bb_samp_rate)
+                                    for i in np.arange(n_sub) - n_sub / 2])
         subchirp_low_down = np.array([np.exp(1j * (
-        -2 * np.pi * css_constants.fc - css_constants.mu / 2 * i / css_constants.bb_samp_rate) * i / css_constants.bb_samp_rate)
-                                      for i in np.arange(css_constants.n_sub) - css_constants.n_sub / 2])
+        -2 * np.pi * fc - mu / 2 * i / bb_samp_rate) * i / bb_samp_rate)
+                                      for i in np.arange(n_sub) - n_sub / 2])
         subchirp_high_up = np.array([np.exp(1j * (
-        +2 * np.pi * css_constants.fc + css_constants.mu / 2 * i / css_constants.bb_samp_rate) * i / css_constants.bb_samp_rate)
-                                     for i in np.arange(css_constants.n_sub) - css_constants.n_sub / 2])
+        +2 * np.pi * fc + mu / 2 * i / bb_samp_rate) * i / bb_samp_rate)
+                                     for i in np.arange(n_sub) - n_sub / 2])
         subchirp_high_down = np.array([np.exp(1j * (
-        +2 * np.pi * css_constants.fc - css_constants.mu / 2 * i / css_constants.bb_samp_rate) * i / css_constants.bb_samp_rate)
-                                       for i in np.arange(css_constants.n_sub) - css_constants.n_sub / 2])
+        +2 * np.pi * fc - mu / 2 * i / bb_samp_rate) * i / bb_samp_rate)
+                                       for i in np.arange(n_sub) - n_sub / 2])
 
         # multiply each subchirp with the raised cosine window
         subchirp_low_up *= self.rcfilt

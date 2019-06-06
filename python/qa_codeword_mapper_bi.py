@@ -47,10 +47,10 @@ class qa_codeword_mapper_bi (gr_unittest.TestCase):
         self.tb.run()
         # check data
         data = self.snk.data()
-        print "len data:", len(self.snk2.data())
-        print "rx data:", data
+        print("len data:", len(self.snk2.data()))
+        print("rx data:", data)
         ref = np.concatenate((cw[0], cw[1], cw[2], cw[3], cw[4], cw[5], cw[6], cw[7]))
-        print "ref:", ref
+        print("ref:", ref)
         self.assertFloatTuplesAlmostEqual(data, ref)
 
 

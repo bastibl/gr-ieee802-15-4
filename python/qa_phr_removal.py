@@ -73,7 +73,7 @@ class qa_phr_removal (gr_unittest.TestCase):
         # for i in data_out:
         # 	print data_out
         ref = np.concatenate((data1,data2))
-        print "ref:", ref
+        print("ref:", ref)
         # print "data_out:", data_out
         self.assertFloatTuplesAlmostEqual(data_out, ref)
 

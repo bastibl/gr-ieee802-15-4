@@ -33,7 +33,7 @@ class qa_frame_buffer_cc (gr_unittest.TestCase):
 
     def test_001_t (self):
         # set up fg
-        print "no test here"
+        print("no test here")
         pass
 
 

@@ -55,9 +55,9 @@ class qa_zeropadding_removal_b (gr_unittest.TestCase):
             data_out = np.concatenate((data_out,tmp[1]))
 
         ref = range(12)
-        print "num messages:", self.msgsink.num_messages()
-        print "ref:", ref
-        print "data_out:", data_out
+        print("num messages:", self.msgsink.num_messages())
+        print("ref:", ref)
+        print("data_out:", data_out)
         self.assertFloatTuplesAlmostEqual(data_out, ref)
 
 

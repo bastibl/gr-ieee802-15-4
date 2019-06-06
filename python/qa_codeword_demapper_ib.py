@@ -46,8 +46,8 @@ class qa_codeword_demapper_ib (gr_unittest.TestCase):
         # check data
         bits = (0,0,0, 0,0,1, 0,1,0, 0,1,1, 1,0,0, 1,0,1, 1,1,0, 1,1,1)
         data_out = self.snk.data()
-        print "data_out:", data_out
-        print "ref:", bits
+        print("data_out:", data_out)
+        print("ref:", bits)
         self.assertFloatTuplesAlmostEqual(data_out, bits)
 
 if __name__ == '__main__':

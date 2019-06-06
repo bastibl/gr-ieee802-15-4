@@ -52,7 +52,7 @@ class qa_access_code_removal_b (gr_unittest.TestCase):
         self.tb.stop()
         # check data
         num_msgs = self.snk.num_messages()
-        print num_msgs
+        print(num_msgs)
         self.assertTrue(num_msgs == 2)
         msg1 = self.snk.get_message(0)
         self.assertFloatTuplesAlmostEqual(data1, pmt.to_python(msg1)[1])
@@ -77,7 +77,7 @@ class qa_access_code_removal_b (gr_unittest.TestCase):
         self.tb.stop()
         # check data
         num_msgs = self.snk.num_messages()
-        print num_msgs
+        print(num_msgs)
         self.assertTrue(num_msgs == 2)
         msg1 = self.snk.get_message(0)
         self.assertFloatTuplesAlmostEqual(data1, pmt.to_python(msg1)[1])

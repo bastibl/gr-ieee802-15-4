@@ -14,31 +14,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#####################################################################
-# Setup python install
-#####################################################################
+########################################################################
+# Include python install macros
+########################################################################
 include(GrPython)
 if(NOT PYTHONINTERP_FOUND)
     return()
 endif()
 
-list(APPEND python_sources
+########################################################################
+# Install python sources
+########################################################################
+GR_PYTHON_INSTALL(
+    FILES
     __init__.py
     css_constants.py
     css_phy.py
     css_mod.py
-    css_demod.py
-)
-GR_PYTHON_INSTALL(
-    FILES ${python_sources}
-    DESTINATION ${GR_PYTHON_DIR}/ieee802_15_4
-    COMPONENT "ieee802_15_4_python"
+    css_demod.py DESTINATION ${GR_PYTHON_DIR}/ieee802_15_4
 )
 
-#####################################################################
+########################################################################
 # Handle the unit tests
-#####################################################################
+########################################################################
 include(GrTest)
 
-set(GR_TEST_TARGET_DEPS gnuradio-ieee802-15-4)
+set(GR_TEST_TARGET_DEPS gnuradio-ieee802_15_4)
 set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)

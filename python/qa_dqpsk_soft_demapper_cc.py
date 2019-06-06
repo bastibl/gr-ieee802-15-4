@@ -47,9 +47,9 @@ class qa_dqpsk_soft_demapper_cc (gr_unittest.TestCase):
         data_out = self.snk.data()
         ref = [0, pi/2, pi, -pi/2, pi/2, pi, -pi/2, 0, 0, pi, pi, pi/2]
         ref = np.array([np.exp(1j*i) for i in ref])
-        print "angle in:", np.angle(data_in)/pi*180
-        print "angle out:", np.angle(data_out)/pi*180
-        print "angle ref:", np.angle(ref)/pi*180
+        print("angle in:", np.angle(data_in)/pi*180)
+        print("angle out:", np.angle(data_out)/pi*180)
+        print("angle ref:", np.angle(ref)/pi*180)
         self.assertFloatTuplesAlmostEqual(ref, data_out, 5) 
 
 if __name__ == '__main__':

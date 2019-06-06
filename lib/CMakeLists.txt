@@ -18,6 +18,7 @@
 # Setup library
 #####################################################################
 include(GrPlatform) #define LIB_SUFFIX
+
 list(APPEND ieee802_15_4_sources
     access_code_prefixer.cc
     access_code_removal_b_impl.cc
@@ -51,22 +52,58 @@ list(APPEND ieee802_15_4_sources
     zeropadding_removal_b_impl.cc
 )
 
-list(APPEND ieee802_15_4_libs
-    ${Boost_LIBRARIES}
-    ${GNURADIO_ALL_LIBRARIES}
-    ${VOLK_LIBRARIES}
-)
+set(ieee802_15_4_sources "${ieee802_15_4_sources}" PARENT_SCOPE)
+if(NOT ieee802_15_4_sources)
+    MESSAGE(STATUS "No C++ sources... skipping lib/")
+    return()
+endif(NOT ieee802_15_4_sources)
 
 add_library(gnuradio-ieee802_15_4 SHARED ${ieee802_15_4_sources})
-target_link_libraries(gnuradio-ieee802_15_4 ${ieee802_15_4_libs})
+target_link_libraries(gnuradio-ieee802_15_4 gnuradio::gnuradio-runtime gnuradio::gnuradio-blocks)
+target_include_directories(gnuradio-ieee802_15_4
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+    PUBLIC $<INSTALL_INTERFACE:include>
+  )
 set_target_properties(gnuradio-ieee802_15_4 PROPERTIES DEFINE_SYMBOL "gnuradio_ieee802_15_4_EXPORTS")
 
-#####################################################################
-# Install built library files
-#####################################################################
-install(TARGETS gnuradio-ieee802_15_4
-    LIBRARY DESTINATION lib${LIB_SUFFIX} # .so/.dylib file
-    ARCHIVE DESTINATION lib${LIB_SUFFIX} # .lib file
-    RUNTIME DESTINATION bin              # .dll file
-)
+if(APPLE)
+    set_target_properties(gnuradio-ieee802_15_4 PROPERTIES
+        INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib"
+    )
+endif(APPLE)
 
+########################################################################
+# Install built library files
+########################################################################
+include(GrMiscUtils)
+GR_LIBRARY_FOO(gnuradio-ieee802_15_4)
+
+########################################################################
+# Print summary
+########################################################################
+message(STATUS "Using install prefix: ${CMAKE_INSTALL_PREFIX}")
+message(STATUS "Building for version: ${VERSION} / ${LIBVER}")
+
+########################################################################
+# Build and register unit test
+########################################################################
+include(GrTest)
+
+# If your unit tests require special include paths, add them here
+#include_directories()
+# List all files that contain Boost.UTF unit tests here
+list(APPEND test_ieee802_15_4_sources
+)
+# Anything we need to link to for the unit tests go here
+list(APPEND GR_TEST_TARGET_DEPS gnuradio-ieee802_15_4)
+
+if(NOT test_ieee802_15_4_sources)
+    MESSAGE(STATUS "No C++ unit tests... skipping")
+    return()
+endif(NOT test_ieee802_15_4_sources)
+
+foreach(qa_file ${test_ieee802_15_4_sources})
+    GR_ADD_CPP_TEST("ieee802_15_4_${qa_file}"
+        ${CMAKE_CURRENT_SOURCE_DIR}/${qa_file}
+    )
+endforeach(qa_file)

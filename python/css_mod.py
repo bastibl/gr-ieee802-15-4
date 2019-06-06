@@ -1,8 +1,8 @@
-import css_constants
-import css_phy
+from .css_phy import physical_layer
+
 import numpy as np
 
-class modulator(css_phy.physical_layer):
+class modulator(physical_layer):
 	def modulate_random(self):
 		payload_bits = np.random.randint(0,2,size=(self.nframes*self.phy_packetsize_bytes*8,))
 		return self.modulate(payload_bits)
@@ -93,7 +93,7 @@ class modulator(css_phy.physical_layer):
 			elif (in_I[i], in_Q[i]) == (-1,-1):
 				sym_out.append(QPSK_symbols[3])
 			else:
-				print "ERROR in mod_QPSK: Invalid input sequence"
+				print("ERROR in mod_QPSK: Invalid input sequence")
 		return sym_out
 
 	def mod_DQPSK(self, in_QPSK):
@@ -117,7 +117,7 @@ class modulator(css_phy.physical_layer):
 		for i in range(n_seq):
 			tmp = self.chirp_seq.copy()
 			for k in range(self.n_subchirps):
-				tmp[k*css_constants.n_sub:(k+1)*css_constants.n_sub] *= in_DQPSK[i*self.n_subchirps+k]
+				tmp[k*n_sub:(k+1)*n_sub] *= in_DQPSK[i*self.n_subchirps+k]
 			cplx_bb = np.concatenate((cplx_bb, tmp))
 			if i%2 == 0:
 				cplx_bb = np.concatenate((cplx_bb, self.time_gap_1))

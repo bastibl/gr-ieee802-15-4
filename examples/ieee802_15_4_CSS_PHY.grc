@@ -1,2803 +1,861 @@
-<?xml version='1.0' encoding='utf-8'?>
-<?grc format='1' created='3.8.git'?>
-<flow_graph>
-  <timestamp>Fri Feb  6 11:23:02 2015</timestamp>
-  <block>
-    <key>options</key>
-    <param>
-      <key>author</key>
-      <value>Felix Wunsch</value>
-    </param>
-    <param>
-      <key>window_size</key>
-      <value>1280, 1024</value>
-    </param>
-    <param>
-      <key>category</key>
-      <value>[IEEE802.15.4]</value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>description</key>
-      <value>IEEE 802.15.4 CSS PHY</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(10, 10)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>generate_options</key>
-      <value>hb</value>
-    </param>
-    <param>
-      <key>hier_block_src_path</key>
-      <value>.:</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_css_phy</value>
-    </param>
-    <param>
-      <key>max_nouts</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>qt_qss_theme</key>
-      <value></value>
-    </param>
-    <param>
-      <key>realtime_scheduling</key>
-      <value></value>
-    </param>
-    <param>
-      <key>run_command</key>
-      <value>{python} -u {filename}</value>
-    </param>
-    <param>
-      <key>run_options</key>
-      <value>prompt</value>
-    </param>
-    <param>
-      <key>run</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>thread_safe_setters</key>
-      <value></value>
-    </param>
-    <param>
-      <key>title</key>
-      <value>IEEE 802.15.4 CSS PHY</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(648, -6)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>bits_per_cw</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Bits per codeword</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>intx</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_complex_to_float</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(616, 742)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_complex_to_float_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_deinterleave</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>blocksize</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(656, 238)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_deinterleave_0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>byte</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>num_streams</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_interleave</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>blocksize</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(80, 878)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_interleave_0_0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>byte</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>num_streams</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_keep_m_in_n</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(464, 809)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_keep_m_in_n_0_0_0</value>
-    </param>
-    <param>
-      <key>m</key>
-      <value>sym_per_frame-len(preamble)-len(sfd)</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>n</key>
-      <value>sym_per_frame</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>offset</key>
-      <value>len(preamble)+len(sfd)</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_keep_m_in_n</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(464, 729)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_keep_m_in_n_0_0_0_0</value>
-    </param>
-    <param>
-      <key>m</key>
-      <value>sym_per_frame-len(preamble)-len(sfd)</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>n</key>
-      <value>sym_per_frame</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>offset</key>
-      <value>len(preamble)+len(sfd)</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_multiply_const_vxx</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>const</key>
-      <value>np.exp(1j*np.pi/4)</value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(760, 758)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_multiply_const_vxx_0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_stream_to_tagged_stream</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(192, 375)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_stream_to_tagged_stream_0</value>
-    </param>
-    <param>
-      <key>len_tag_key</key>
-      <value>"burst_len"</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>packet_len</key>
-      <value>nsamp_frame</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(184, 73)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>chirp_seq</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Chirp sequence</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>[]</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(800, -7)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>codewords</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Codewords</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>[[0,0],[1,1]]</value>
-    </param>
-  </block>
-  <block>
-    <key>digital_costas_loop_cc</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(312, 663)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>digital_costas_loop_cc_0</value>
-    </param>
-    <param>
-      <key>w</key>
-      <value>2 * math.pi / 100</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>order</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>use_snr</key>
-      <value>False</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_codeword_mapper_bi</key>
-    <param>
-      <key>bits_per_cw</key>
-      <value>bits_per_cw</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>codewords</key>
-      <value>codewords</value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(832, 191)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_codeword_mapper_bi_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_codeword_mapper_bi</key>
-    <param>
-      <key>bits_per_cw</key>
-      <value>bits_per_cw</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>codewords</key>
-      <value>codewords</value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(832, 263)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_codeword_mapper_bi_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_codeword_soft_demapper_fb</key>
-    <param>
-      <key>bits_per_cw</key>
-      <value>bits_per_cw</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>codewords</key>
-      <value>codewords</value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(120, 735)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_codeword_soft_demapper_fb_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_codeword_soft_demapper_fb</key>
-    <param>
-      <key>bits_per_cw</key>
-      <value>bits_per_cw</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>codewords</key>
-      <value>codewords</value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(120, 815)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_codeword_soft_demapper_fb_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_deinterleaver_ff</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(304, 822)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_deinterleaver_ff_0</value>
-    </param>
-    <param>
-      <key>intlv_seq</key>
-      <value>intlv_seq</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_deinterleaver_ff</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(304, 742)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_deinterleaver_ff_0_0</value>
-    </param>
-    <param>
-      <key>intlv_seq</key>
-      <value>intlv_seq</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_dqcsk_mapper_fc</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>chirp_seq</key>
-      <value>chirp_seq</value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(416, 356)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_dqcsk_mapper_fc_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>num_subchirps</key>
-      <value>num_subchirps</value>
-    </param>
-    <param>
-      <key>nsym_frame</key>
-      <value>sym_per_frame</value>
-    </param>
-    <param>
-      <key>len_subchirp</key>
-      <value>len_sub</value>
-    </param>
-    <param>
-      <key>time_gap_1</key>
-      <value>time_gap_1</value>
-    </param>
-    <param>
-      <key>time_gap_2</key>
-      <value>time_gap_2</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_dqpsk_mapper_ff</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>forward</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(664, 375)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_dqpsk_mapper_ff_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>framelen</key>
-      <value>sym_per_frame</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_dqpsk_soft_demapper_cc</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>framelen</key>
-      <value>sym_per_frame</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(784, 662)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_dqpsk_soft_demapper_cc_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_frame_buffer_cc</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(632, 662)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_frame_buffer_cc_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>nsym_frame</key>
-      <value>sym_per_frame</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_interleaver_ii</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>forward</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1008, 191)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_interleaver_ii_0</value>
-    </param>
-    <param>
-      <key>intlv_seq</key>
-      <value>intlv_seq</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_interleaver_ii</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>forward</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1008, 263)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_interleaver_ii_0_0</value>
-    </param>
-    <param>
-      <key>intlv_seq</key>
-      <value>intlv_seq</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_multiuser_chirp_detector_cc</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>chirp_seq</key>
-      <value>chirp_seq</value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(128, 635)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_multiuser_chirp_detector_cc_0</value>
-    </param>
-    <param>
-      <key>len_subchirp</key>
-      <value>len_sub</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>threshold</key>
-      <value>threshold</value>
-    </param>
-    <param>
-      <key>time_gap_1</key>
-      <value>len(time_gap_1)</value>
-    </param>
-    <param>
-      <key>time_gap_2</key>
-      <value>len(time_gap_2)</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_phr_prefixer_c</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(360, 246)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_phr_prefixer_c_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>phr</key>
-      <value>phr</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_phr_removal</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(368, 894)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_phr_removal_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>phr</key>
-      <value>phr</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_preamble_sfd_prefixer_ii</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1024, 433)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_preamble_sfd_prefixer_ii_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>preamble</key>
-      <value>preamble</value>
-    </param>
-    <param>
-      <key>sfd</key>
-      <value>sfd</value>
-    </param>
-    <param>
-      <key>nsym_frame</key>
-      <value>sym_per_frame</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_preamble_sfd_prefixer_ii</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1040, 337)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_preamble_sfd_prefixer_ii_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>preamble</key>
-      <value>preamble</value>
-    </param>
-    <param>
-      <key>sfd</key>
-      <value>sfd</value>
-    </param>
-    <param>
-      <key>nsym_frame</key>
-      <value>sym_per_frame</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_preamble_tagger_cc</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(480, 661)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_preamble_tagger_cc_0</value>
-    </param>
-    <param>
-      <key>len_preamble</key>
-      <value>len(preamble)</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_qpsk_mapper_if</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(856, 382)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_qpsk_mapper_if_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_zeropadding_b</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(504, 246)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_zeropadding_b_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>nzeros</key>
-      <value>nzeros_padding</value>
-    </param>
-  </block>
-  <block>
-    <key>ieee802_15_4_zeropadding_removal_b</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(200, 887)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ieee802_15_4_zeropadding_removal_b_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>nzeros</key>
-      <value>nzeros_padding</value>
-    </param>
-    <param>
-      <key>phr_payload_len</key>
-      <value>nbytes_payload*8+len(phr)</value>
-    </param>
-  </block>
-  <block>
-    <key>import</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(8, 126)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>import_0</value>
-    </param>
-    <param>
-      <key>import</key>
-      <value>import numpy as np</value>
-    </param>
-  </block>
-  <block>
-    <key>import</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(8, 173)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>import_1</value>
-    </param>
-    <param>
-      <key>import</key>
-      <value>import math</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(904, -7)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>intlv_seq</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Interleaver sequence</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>[]</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(552, 90)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>len_sub</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Samples per subchirp</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>intx</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(344, -6)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>nbytes_payload</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Num payload bytes</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>intx</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>127</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1008, 90)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>nsamp_frame</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Samples per frame</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>long</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(720, 90)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>num_subchirps</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Num subchirps per sequence</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>intx</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(496, -6)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>nzeros_padding</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Num padded zeros</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>intx</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>pad_sink</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(48, 387)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>pad_sink_0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>txout</value>
-    </param>
-    <param>
-      <key>num_streams</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>optional</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>pad_sink</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(328, 598)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>pad_sink_1</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>det_out</value>
-    </param>
-    <param>
-      <key>num_streams</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>optional</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>pad_sink</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(520, 892)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>pad_sink_1_0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>message</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>rxout</value>
-    </param>
-    <param>
-      <key>num_streams</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>optional</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>pad_sink</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(496, 598)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>pad_sink_2</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>costas_out</value>
-    </param>
-    <param>
-      <key>num_streams</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>optional</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>pad_sink</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(800, 598)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>pad_sink_3</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>framer_out</value>
-    </param>
-    <param>
-      <key>num_streams</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>optional</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>pad_sink</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(792, 806)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>pad_sink_4</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>qpsk_out</value>
-    </param>
-    <param>
-      <key>num_streams</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>optional</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>pad_source</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(16, 662)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>pad_source_0</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>rxin</value>
-    </param>
-    <param>
-      <key>num_streams</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>optional</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>pad_source</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(16, 246)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>pad_source_1</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>txin</value>
-    </param>
-    <param>
-      <key>num_streams</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>optional</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>message</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(184, -7)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>phr</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>PHR</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>[0 for i in range(12)]</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(888, 89)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>preamble</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Preamble</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>()</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(904, 89)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>sfd</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>SFD</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>()</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1040, 1)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>sym_per_frame</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Symbols per frame</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(96, 151)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>threshold</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Threshold</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>eng_float</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(320, 89)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>time_gap_1</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Time gap 1</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>()</value>
-    </param>
-  </block>
-  <block>
-    <key>parameter</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(440, 89)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>time_gap_2</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Time gap 2</value>
-    </param>
-    <param>
-      <key>short_id</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>()</value>
-    </param>
-  </block>
-  <connection>
-    <source_block_id>blocks_complex_to_float_0</source_block_id>
-    <sink_block_id>blocks_keep_m_in_n_0_0_0_0</sink_block_id>
-    <source_key>1</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_complex_to_float_0</source_block_id>
-    <sink_block_id>blocks_keep_m_in_n_0_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_deinterleave_0</source_block_id>
-    <sink_block_id>ieee802_15_4_codeword_mapper_bi_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_deinterleave_0</source_block_id>
-    <sink_block_id>ieee802_15_4_codeword_mapper_bi_0_0</sink_block_id>
-    <source_key>1</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_interleave_0_0</source_block_id>
-    <sink_block_id>ieee802_15_4_zeropadding_removal_b_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_keep_m_in_n_0_0_0</source_block_id>
-    <sink_block_id>ieee802_15_4_deinterleaver_ff_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_keep_m_in_n_0_0_0_0</source_block_id>
-    <sink_block_id>ieee802_15_4_deinterleaver_ff_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_multiply_const_vxx_0</source_block_id>
-    <sink_block_id>blocks_complex_to_float_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_multiply_const_vxx_0</source_block_id>
-    <sink_block_id>pad_sink_4</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_stream_to_tagged_stream_0</source_block_id>
-    <sink_block_id>pad_sink_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>digital_costas_loop_cc_0</source_block_id>
-    <sink_block_id>ieee802_15_4_preamble_tagger_cc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>digital_costas_loop_cc_0</source_block_id>
-    <sink_block_id>pad_sink_2</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_codeword_mapper_bi_0</source_block_id>
-    <sink_block_id>ieee802_15_4_interleaver_ii_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_codeword_mapper_bi_0_0</source_block_id>
-    <sink_block_id>ieee802_15_4_interleaver_ii_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_codeword_soft_demapper_fb_0</source_block_id>
-    <sink_block_id>blocks_interleave_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>1</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_codeword_soft_demapper_fb_0_0</source_block_id>
-    <sink_block_id>blocks_interleave_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_deinterleaver_ff_0</source_block_id>
-    <sink_block_id>ieee802_15_4_codeword_soft_demapper_fb_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_deinterleaver_ff_0_0</source_block_id>
-    <sink_block_id>ieee802_15_4_codeword_soft_demapper_fb_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_dqcsk_mapper_fc_0</source_block_id>
-    <sink_block_id>blocks_stream_to_tagged_stream_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_dqpsk_mapper_ff_0</source_block_id>
-    <sink_block_id>ieee802_15_4_dqcsk_mapper_fc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_dqpsk_soft_demapper_cc_0</source_block_id>
-    <sink_block_id>blocks_multiply_const_vxx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_frame_buffer_cc_0</source_block_id>
-    <sink_block_id>ieee802_15_4_dqpsk_soft_demapper_cc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_frame_buffer_cc_0</source_block_id>
-    <sink_block_id>pad_sink_3</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_interleaver_ii_0</source_block_id>
-    <sink_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_interleaver_ii_0_0</source_block_id>
-    <sink_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_multiuser_chirp_detector_cc_0</source_block_id>
-    <sink_block_id>digital_costas_loop_cc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_multiuser_chirp_detector_cc_0</source_block_id>
-    <sink_block_id>pad_sink_1</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_phr_prefixer_c_0</source_block_id>
-    <sink_block_id>ieee802_15_4_zeropadding_b_0</sink_block_id>
-    <source_key>out</source_key>
-    <sink_key>in</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_phr_removal_0_0</source_block_id>
-    <sink_block_id>pad_sink_1_0</sink_block_id>
-    <source_key>out</source_key>
-    <sink_key>in</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0</source_block_id>
-    <sink_block_id>ieee802_15_4_qpsk_mapper_if_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_preamble_sfd_prefixer_ii_0_0</source_block_id>
-    <sink_block_id>ieee802_15_4_qpsk_mapper_if_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>1</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_preamble_tagger_cc_0</source_block_id>
-    <sink_block_id>ieee802_15_4_frame_buffer_cc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_qpsk_mapper_if_0</source_block_id>
-    <sink_block_id>ieee802_15_4_dqpsk_mapper_ff_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_zeropadding_b_0</source_block_id>
-    <sink_block_id>blocks_deinterleave_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>ieee802_15_4_zeropadding_removal_b_0_0</source_block_id>
-    <sink_block_id>ieee802_15_4_phr_removal_0_0</sink_block_id>
-    <source_key>out</source_key>
-    <sink_key>in</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>pad_source_0</source_block_id>
-    <sink_block_id>ieee802_15_4_multiuser_chirp_detector_cc_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>pad_source_1</source_block_id>
-    <sink_block_id>ieee802_15_4_phr_prefixer_c_0</sink_block_id>
-    <source_key>out</source_key>
-    <sink_key>in</sink_key>
-  </connection>
-</flow_graph>
+options:
+  parameters:
+    author: Felix Wunsch
+    category: '[IEEE802.15.4]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: IEEE 802.15.4 CSS PHY
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: hb
+    hier_block_src_path: '.:'
+    id: ieee802_15_4_css_phy
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: IEEE 802.15.4 CSS PHY
+    window_size: 1280, 1024
+  states:
+    coordinate: [10, 10]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: bits_per_cw
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Bits per codeword
+    short_id: ''
+    type: intx
+    value: '1'
+  states:
+    coordinate: [648, -6]
+    rotation: 0
+    state: enabled
+- name: blocks_complex_to_float_0
+  id: blocks_complex_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    coordinate: [808, 752.0]
+    rotation: 180
+    state: enabled
+- name: blocks_deinterleave_0
+  id: blocks_deinterleave
+  parameters:
+    affinity: ''
+    alias: ''
+    blocksize: '1'
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_streams: '2'
+    type: byte
+    vlen: '1'
+  states:
+    coordinate: [648, 232.0]
+    rotation: 0
+    state: enabled
+- name: blocks_interleave_0_0
+  id: blocks_interleave
+  parameters:
+    affinity: ''
+    alias: ''
+    blocksize: '1'
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_streams: '2'
+    type: byte
+    vlen: '1'
+  states:
+    coordinate: [128, 928.0]
+    rotation: 0
+    state: enabled
+- name: blocks_keep_m_in_n_0_0_0
+  id: blocks_keep_m_in_n
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    m: sym_per_frame-len(preamble)-len(sfd)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n: sym_per_frame
+    offset: len(preamble)+len(sfd)
+    type: float
+  states:
+    coordinate: [600, 836.0]
+    rotation: 180
+    state: enabled
+- name: blocks_keep_m_in_n_0_0_0_0
+  id: blocks_keep_m_in_n
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    m: sym_per_frame-len(preamble)-len(sfd)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n: sym_per_frame
+    offset: len(preamble)+len(sfd)
+    type: float
+  states:
+    coordinate: [600, 748.0]
+    rotation: 180
+    state: enabled
+- name: blocks_multiply_const_vxx_0
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: np.exp(1j*np.pi/4)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: '1'
+  states:
+    coordinate: [1000, 764.0]
+    rotation: 180
+    state: enabled
+- name: blocks_stream_to_tagged_stream_0
+  id: blocks_stream_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    len_tag_key: '"burst_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    packet_len: nsamp_frame
+    type: complex
+    vlen: '1'
+  states:
+    coordinate: [192, 380.0]
+    rotation: 180
+    state: enabled
+- name: chirp_seq
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Chirp sequence
+    short_id: ''
+    type: ''
+    value: '[]'
+  states:
+    coordinate: [184, 73]
+    rotation: 0
+    state: enabled
+- name: codewords
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Codewords
+    short_id: ''
+    type: ''
+    value: '[[0,0],[1,1]]'
+  states:
+    coordinate: [800, -7]
+    rotation: 0
+    state: enabled
+- name: digital_costas_loop_cc_0
+  id: digital_costas_loop_cc
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    order: '4'
+    use_snr: 'False'
+    w: 2 * math.pi / 100
+  states:
+    coordinate: [376, 592.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_codeword_mapper_bi_0
+  id: ieee802_15_4_codeword_mapper_bi
+  parameters:
+    affinity: ''
+    alias: ''
+    bits_per_cw: bits_per_cw
+    codewords: codewords
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [840, 196.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_codeword_mapper_bi_0_0
+  id: ieee802_15_4_codeword_mapper_bi
+  parameters:
+    affinity: ''
+    alias: ''
+    bits_per_cw: bits_per_cw
+    codewords: codewords
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [840, 260.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_codeword_soft_demapper_fb_0
+  id: ieee802_15_4_codeword_soft_demapper_fb
+  parameters:
+    affinity: ''
+    alias: ''
+    bits_per_cw: bits_per_cw
+    codewords: codewords
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [144, 756.0]
+    rotation: 180
+    state: enabled
+- name: ieee802_15_4_codeword_soft_demapper_fb_0_0
+  id: ieee802_15_4_codeword_soft_demapper_fb
+  parameters:
+    affinity: ''
+    alias: ''
+    bits_per_cw: bits_per_cw
+    codewords: codewords
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [152, 836.0]
+    rotation: 180
+    state: enabled
+- name: ieee802_15_4_deinterleaver_ff_0
+  id: ieee802_15_4_deinterleaver_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    intlv_seq: intlv_seq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [384, 852.0]
+    rotation: 180
+    state: enabled
+- name: ieee802_15_4_deinterleaver_ff_0_0
+  id: ieee802_15_4_deinterleaver_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    intlv_seq: intlv_seq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [384, 764.0]
+    rotation: 180
+    state: enabled
+- name: ieee802_15_4_dqcsk_mapper_fc_0
+  id: ieee802_15_4_dqcsk_mapper_fc
+  parameters:
+    affinity: ''
+    alias: ''
+    chirp_seq: chirp_seq
+    comment: ''
+    len_subchirp: len_sub
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nsym_frame: sym_per_frame
+    num_subchirps: num_subchirps
+    time_gap_1: time_gap_1
+    time_gap_2: time_gap_2
+  states:
+    coordinate: [416, 348.0]
+    rotation: 180
+    state: enabled
+- name: ieee802_15_4_dqpsk_mapper_ff_0
+  id: ieee802_15_4_dqpsk_mapper_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    forward: 'True'
+    framelen: sym_per_frame
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [664, 380.0]
+    rotation: 180
+    state: enabled
+- name: ieee802_15_4_dqpsk_soft_demapper_cc_0
+  id: ieee802_15_4_dqpsk_soft_demapper_cc
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    framelen: sym_per_frame
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [1032, 668.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_frame_buffer_cc_0
+  id: ieee802_15_4_frame_buffer_cc
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nsym_frame: sym_per_frame
+  states:
+    coordinate: [848, 668.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_interleaver_ii_0
+  id: ieee802_15_4_interleaver_ii
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    forward: 'True'
+    intlv_seq: intlv_seq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [1064, 196.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_interleaver_ii_0_0
+  id: ieee802_15_4_interleaver_ii
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    forward: 'True'
+    intlv_seq: intlv_seq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [1064, 260.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_multiuser_chirp_detector_cc_0
+  id: ieee802_15_4_multiuser_chirp_detector_cc
+  parameters:
+    affinity: ''
+    alias: ''
+    chirp_seq: chirp_seq
+    comment: ''
+    len_subchirp: len_sub
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    threshold: threshold
+    time_gap_1: len(time_gap_1)
+    time_gap_2: len(time_gap_2)
+  states:
+    coordinate: [152, 588.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_phr_prefixer_0
+  id: ieee802_15_4_phr_prefixer
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    phr: phr
+  states:
+    coordinate: [288, 244.0]
+    rotation: 0
+    state: true
+- name: ieee802_15_4_phr_removal_0_0
+  id: ieee802_15_4_phr_removal
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    phr: phr
+  states:
+    coordinate: [448, 940.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_preamble_sfd_prefixer_ii_0
+  id: ieee802_15_4_preamble_sfd_prefixer_ii
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nsym_frame: sym_per_frame
+    preamble: preamble
+    sfd: sfd
+  states:
+    coordinate: [1024, 433]
+    rotation: 180
+    state: enabled
+- name: ieee802_15_4_preamble_sfd_prefixer_ii_0_0
+  id: ieee802_15_4_preamble_sfd_prefixer_ii
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nsym_frame: sym_per_frame
+    preamble: preamble
+    sfd: sfd
+  states:
+    coordinate: [1040, 337]
+    rotation: 180
+    state: enabled
+- name: ieee802_15_4_preamble_tagger_cc_0
+  id: ieee802_15_4_preamble_tagger_cc
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    len_preamble: len(preamble)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [640, 668.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_qpsk_mapper_if_0
+  id: ieee802_15_4_qpsk_mapper_if
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    coordinate: [856, 376.0]
+    rotation: 180
+    state: enabled
+- name: ieee802_15_4_zeropadding_b_0
+  id: ieee802_15_4_zeropadding_b
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nzeros: nzeros_padding
+  states:
+    coordinate: [488, 244.0]
+    rotation: 0
+    state: enabled
+- name: ieee802_15_4_zeropadding_removal_b_0_0
+  id: ieee802_15_4_zeropadding_removal_b
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nzeros: nzeros_padding
+    phr_payload_len: nbytes_payload*8+len(phr)
+  states:
+    coordinate: [248, 932.0]
+    rotation: 0
+    state: enabled
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import numpy as np
+  states:
+    coordinate: [8, 126]
+    rotation: 0
+    state: enabled
+- name: import_1
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import math
+  states:
+    coordinate: [8, 173]
+    rotation: 0
+    state: enabled
+- name: intlv_seq
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Interleaver sequence
+    short_id: ''
+    type: ''
+    value: '[]'
+  states:
+    coordinate: [904, -7]
+    rotation: 0
+    state: enabled
+- name: len_sub
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Samples per subchirp
+    short_id: ''
+    type: intx
+    value: '1'
+  states:
+    coordinate: [552, 90]
+    rotation: 0
+    state: enabled
+- name: nbytes_payload
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Num payload bytes
+    short_id: ''
+    type: intx
+    value: '127'
+  states:
+    coordinate: [344, -6]
+    rotation: 0
+    state: enabled
+- name: nsamp_frame
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Samples per frame
+    short_id: ''
+    type: long
+    value: '1'
+  states:
+    coordinate: [1008, 90]
+    rotation: 0
+    state: enabled
+- name: num_subchirps
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Num subchirps per sequence
+    short_id: ''
+    type: intx
+    value: '1'
+  states:
+    coordinate: [720, 90]
+    rotation: 0
+    state: enabled
+- name: nzeros_padding
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Num padded zeros
+    short_id: ''
+    type: intx
+    value: '0'
+  states:
+    coordinate: [496, -6]
+    rotation: 0
+    state: enabled
+- name: pad_sink_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: txout
+    num_streams: '1'
+    optional: 'False'
+    type: complex
+    vlen: '1'
+  states:
+    coordinate: [48, 388.0]
+    rotation: 180
+    state: enabled
+- name: pad_sink_1
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: det_out
+    num_streams: '1'
+    optional: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    coordinate: [336, 524.0]
+    rotation: 0
+    state: enabled
+- name: pad_sink_1_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: rxout
+    num_streams: '1'
+    optional: 'False'
+    type: message
+    vlen: '1'
+  states:
+    coordinate: [600, 940.0]
+    rotation: 0
+    state: enabled
+- name: pad_sink_2
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: costas_out
+    num_streams: '1'
+    optional: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    coordinate: [648, 580.0]
+    rotation: 0
+    state: enabled
+- name: pad_sink_3
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: framer_out
+    num_streams: '1'
+    optional: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    coordinate: [1048, 604.0]
+    rotation: 0
+    state: enabled
+- name: pad_sink_4
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: qpsk_out
+    num_streams: '1'
+    optional: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    coordinate: [1032, 812.0]
+    rotation: 0
+    state: enabled
+- name: pad_source_0
+  id: pad_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: rxin
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_streams: '1'
+    optional: 'False'
+    type: complex
+    vlen: '1'
+  states:
+    coordinate: [16, 620.0]
+    rotation: 0
+    state: enabled
+- name: pad_source_1
+  id: pad_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: txin
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_streams: '1'
+    optional: 'False'
+    type: message
+    vlen: '1'
+  states:
+    coordinate: [16, 246]
+    rotation: 0
+    state: enabled
+- name: phr
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: PHR
+    short_id: ''
+    type: ''
+    value: '[0 for i in range(12)]'
+  states:
+    coordinate: [184, -7]
+    rotation: 0
+    state: enabled
+- name: preamble
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Preamble
+    short_id: ''
+    type: ''
+    value: ()
+  states:
+    coordinate: [888, 89]
+    rotation: 0
+    state: enabled
+- name: sfd
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: SFD
+    short_id: ''
+    type: ''
+    value: ()
+  states:
+    coordinate: [904, 89]
+    rotation: 0
+    state: enabled
+- name: sym_per_frame
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Symbols per frame
+    short_id: ''
+    type: ''
+    value: '1'
+  states:
+    coordinate: [1040, 1]
+    rotation: 0
+    state: enabled
+- name: threshold
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Threshold
+    short_id: ''
+    type: eng_float
+    value: '0'
+  states:
+    coordinate: [96, 151]
+    rotation: 0
+    state: enabled
+- name: time_gap_1
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Time gap 1
+    short_id: ''
+    type: ''
+    value: ()
+  states:
+    coordinate: [320, 89]
+    rotation: 0
+    state: enabled
+- name: time_gap_2
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Time gap 2
+    short_id: ''
+    type: ''
+    value: ()
+  states:
+    coordinate: [440, 89]
+    rotation: 0
+    state: enabled
+
+connections:
+- [blocks_complex_to_float_0, '0', blocks_keep_m_in_n_0_0_0, '0']
+- [blocks_complex_to_float_0, '1', blocks_keep_m_in_n_0_0_0_0, '0']
+- [blocks_deinterleave_0, '0', ieee802_15_4_codeword_mapper_bi_0, '0']
+- [blocks_deinterleave_0, '1', ieee802_15_4_codeword_mapper_bi_0_0, '0']
+- [blocks_interleave_0_0, '0', ieee802_15_4_zeropadding_removal_b_0_0, '0']
+- [blocks_keep_m_in_n_0_0_0, '0', ieee802_15_4_deinterleaver_ff_0, '0']
+- [blocks_keep_m_in_n_0_0_0_0, '0', ieee802_15_4_deinterleaver_ff_0_0, '0']
+- [blocks_multiply_const_vxx_0, '0', blocks_complex_to_float_0, '0']
+- [blocks_multiply_const_vxx_0, '0', pad_sink_4, '0']
+- [blocks_stream_to_tagged_stream_0, '0', pad_sink_0, '0']
+- [digital_costas_loop_cc_0, '0', ieee802_15_4_preamble_tagger_cc_0, '0']
+- [digital_costas_loop_cc_0, '0', pad_sink_2, '0']
+- [ieee802_15_4_codeword_mapper_bi_0, '0', ieee802_15_4_interleaver_ii_0, '0']
+- [ieee802_15_4_codeword_mapper_bi_0_0, '0', ieee802_15_4_interleaver_ii_0_0, '0']
+- [ieee802_15_4_codeword_soft_demapper_fb_0, '0', blocks_interleave_0_0, '1']
+- [ieee802_15_4_codeword_soft_demapper_fb_0_0, '0', blocks_interleave_0_0, '0']
+- [ieee802_15_4_deinterleaver_ff_0, '0', ieee802_15_4_codeword_soft_demapper_fb_0_0,
+  '0']
+- [ieee802_15_4_deinterleaver_ff_0_0, '0', ieee802_15_4_codeword_soft_demapper_fb_0,
+  '0']
+- [ieee802_15_4_dqcsk_mapper_fc_0, '0', blocks_stream_to_tagged_stream_0, '0']
+- [ieee802_15_4_dqpsk_mapper_ff_0, '0', ieee802_15_4_dqcsk_mapper_fc_0, '0']
+- [ieee802_15_4_dqpsk_soft_demapper_cc_0, '0', blocks_multiply_const_vxx_0, '0']
+- [ieee802_15_4_frame_buffer_cc_0, '0', ieee802_15_4_dqpsk_soft_demapper_cc_0, '0']
+- [ieee802_15_4_frame_buffer_cc_0, '0', pad_sink_3, '0']
+- [ieee802_15_4_interleaver_ii_0, '0', ieee802_15_4_preamble_sfd_prefixer_ii_0, '0']
+- [ieee802_15_4_interleaver_ii_0_0, '0', ieee802_15_4_preamble_sfd_prefixer_ii_0_0,
+  '0']
+- [ieee802_15_4_multiuser_chirp_detector_cc_0, '0', digital_costas_loop_cc_0, '0']
+- [ieee802_15_4_multiuser_chirp_detector_cc_0, '0', pad_sink_1, '0']
+- [ieee802_15_4_phr_prefixer_0, out, ieee802_15_4_zeropadding_b_0, in]
+- [ieee802_15_4_phr_removal_0_0, out, pad_sink_1_0, in0]
+- [ieee802_15_4_preamble_sfd_prefixer_ii_0, '0', ieee802_15_4_qpsk_mapper_if_0, '0']
+- [ieee802_15_4_preamble_sfd_prefixer_ii_0_0, '0', ieee802_15_4_qpsk_mapper_if_0,
+  '1']
+- [ieee802_15_4_preamble_tagger_cc_0, '0', ieee802_15_4_frame_buffer_cc_0, '0']
+- [ieee802_15_4_qpsk_mapper_if_0, '0', ieee802_15_4_dqpsk_mapper_ff_0, '0']
+- [ieee802_15_4_zeropadding_b_0, '0', blocks_deinterleave_0, '0']
+- [ieee802_15_4_zeropadding_removal_b_0_0, out, ieee802_15_4_phr_removal_0_0, in]
+- [pad_source_0, '0', ieee802_15_4_multiuser_chirp_detector_cc_0, '0']
+- [pad_source_1, out0, ieee802_15_4_phr_prefixer_0, in]
+
+metadata:
+  file_format: 1
