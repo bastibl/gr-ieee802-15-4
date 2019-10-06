@@ -24,6 +24,9 @@ options:
     title: IEEE 802.15.4 Transceiver using OQPSK PHY
     window_size: 1280, 1024
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [16, 8]
     rotation: 0
     state: enabled
@@ -52,6 +55,9 @@ blocks:
     value: '2480000000'
     widget: combo_box
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [1064, 8]
     rotation: 0
     state: enabled
@@ -70,6 +76,9 @@ blocks:
     value: '0.75'
     widget: counter_slider
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [920, 8]
     rotation: 0
     state: enabled
@@ -88,6 +97,9 @@ blocks:
     value: '0.75'
     widget: counter_slider
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [776, 8]
     rotation: 0
     state: enabled
@@ -103,6 +115,9 @@ blocks:
     unbuffered: 'True'
     vlen: '1'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [864, 340.0]
     rotation: 0
     state: disabled
@@ -117,9 +132,12 @@ blocks:
     msg: pmt.intern("Hello World!\n")
     period: '1000'
   states:
-    coordinate: [72, 212]
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [72, 196.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_socket_pdu_0_0
   id: blocks_socket_pdu
   parameters:
@@ -132,28 +150,34 @@ blocks:
     mtu: '10000'
     port: '52001'
     tcp_no_delay: 'False'
-    type: TCP_SERVER
+    type: UDP_SERVER
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [360, 84.0]
     rotation: 180
-    state: disabled
-- name: foo_packet_pad_0
-  id: foo_packet_pad
+    state: enabled
+- name: foo_packet_pad2_0
+  id: foo_packet_pad2
   parameters:
     affinity: ''
     alias: ''
     comment: ''
-    debug: 'False'
+    debug: 'True'
     delay: 'False'
     delay_sec: '0.001'
     maxoutbuf: '0'
-    minoutbuf: '0'
-    pad_front: '2000'
-    pad_tail: '2000'
+    minoutbuf: 2**16
+    pad_front: '1000'
+    pad_tail: '1000'
   states:
-    coordinate: [368, 580.0]
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [376, 612.0]
     rotation: 180
-    state: enabled
+    state: true
 - name: foo_wireshark_connector_0
   id: foo_wireshark_connector
   parameters:
@@ -165,6 +189,9 @@ blocks:
     minoutbuf: '0'
     tech: '195'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [664, 348.0]
     rotation: 0
     state: disabled
@@ -183,6 +210,9 @@ blocks:
     seq_nr: '0'
     src: '0x3344'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [344, 364.0]
     rotation: 180
     state: enabled
@@ -195,6 +225,9 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [344, 504.0]
     rotation: 0
     state: enabled
@@ -211,6 +244,9 @@ blocks:
     ruc_channels: '[132]'
     uc_channels: '[131]'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [352, 208.0]
     rotation: 0
     state: enabled
@@ -222,7 +258,10 @@ blocks:
     note: This is for loopback testing. Disable this block an enable the USRP blocks
       for over-the-air transmission.
   states:
-    coordinate: [344, 707]
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [352, 724.0]
     rotation: 0
     state: enabled
 - name: note_1
@@ -232,6 +271,9 @@ blocks:
     comment: ''
     note: 'you can connect to the Socket PDU with: ''nc -u localhost 52002'''
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [336, 20.0]
     rotation: 0
     state: enabled
@@ -309,6 +351,9 @@ blocks:
     ymax: '10'
     ymin: '-140'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [640, 580.0]
     rotation: 0
     state: enabled
@@ -582,6 +627,9 @@ blocks:
     time_source7: ''
     type: fc32
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [640, 444.0]
     rotation: 0
     state: disabled
@@ -950,6 +998,9 @@ blocks:
     time_source7: ''
     type: fc32
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [80, 460.0]
     rotation: 0
     state: disabled
@@ -957,12 +1008,12 @@ blocks:
 connections:
 - [blocks_message_strobe_0, strobe, ieee802_15_4_rime_stack_0, bcin]
 - [blocks_socket_pdu_0_0, pdus, ieee802_15_4_rime_stack_0, bcin]
-- [foo_packet_pad_0, '0', ieee802_15_4_oqpsk_phy_0, '0']
+- [foo_packet_pad2_0, '0', ieee802_15_4_oqpsk_phy_0, '0']
 - [foo_wireshark_connector_0, '0', blocks_file_sink_0, '0']
 - [ieee802_15_4_mac_0, app out, ieee802_15_4_rime_stack_0, fromMAC]
 - [ieee802_15_4_mac_0, pdu out, foo_wireshark_connector_0, in]
 - [ieee802_15_4_mac_0, pdu out, ieee802_15_4_oqpsk_phy_0, txin]
-- [ieee802_15_4_oqpsk_phy_0, '0', foo_packet_pad_0, '0']
+- [ieee802_15_4_oqpsk_phy_0, '0', foo_packet_pad2_0, '0']
 - [ieee802_15_4_oqpsk_phy_0, '0', qtgui_freq_sink_x_0, '0']
 - [ieee802_15_4_oqpsk_phy_0, '0', uhd_usrp_sink_0, '0']
 - [ieee802_15_4_oqpsk_phy_0, rxout, foo_wireshark_connector_0, in]
