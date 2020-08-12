@@ -49,7 +49,7 @@ namespace gr {
       // define message ports
       message_port_register_out(pmt::mp("out"));
       message_port_register_in(pmt::mp("in"));
-      set_msg_handler(pmt::mp("in"), boost::bind(&phr_removal_impl::remove_phr, this, _1));
+      set_msg_handler(pmt::mp("in"), boost::bind(&phr_removal_impl::remove_phr, this, boost::placeholders::_1));
     }
 
     /*

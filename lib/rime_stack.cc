@@ -55,7 +55,7 @@ public:
 
 		message_port_register_in(mac_in);
 		set_msg_handler(mac_in, 
-						boost::bind(&rime_stack_impl::unpack, this, _1));
+						boost::bind(&rime_stack_impl::unpack, this, boost::placeholders::_1));
 		message_port_register_out(mac_out);
 
 		//register broadcast message ports
@@ -102,7 +102,7 @@ public:
 				bc_connection *to_add = new bc_connection(this, channels[i],
 						inport, outport, d_rime_add);
 				set_msg_handler(inport,
-						boost::bind(&bc_connection::pack, to_add, _1));
+						boost::bind(&bc_connection::pack, to_add, boost::placeholders::_1));
 				d_connections.push_back(to_add);
 				break;
 			}
@@ -111,7 +111,7 @@ public:
 				uc_connection *to_add = new uc_connection(this, channels[i],
 						inport, outport, d_rime_add);
 				set_msg_handler(inport,
-						boost::bind(&uc_connection::pack, to_add, _1));
+						boost::bind(&uc_connection::pack, to_add, boost::placeholders::_1));
 				d_connections.push_back(to_add);
 				break;
 			}
@@ -120,7 +120,7 @@ public:
 				ruc_connection *to_add = new ruc_connection(this, channels[i],
 						inport, outport, d_rime_add);
 				set_msg_handler(inport,
-						boost::bind(&ruc_connection::pack, to_add, _1));
+						boost::bind(&ruc_connection::pack, to_add, boost::placeholders::_1));
 				d_connections.push_back(to_add);
 				break;
 			}

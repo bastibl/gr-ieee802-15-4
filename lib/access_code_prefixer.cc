@@ -35,7 +35,7 @@ class access_code_prefixer_impl : public access_code_prefixer {
 	    message_port_register_out(pmt::mp("out"));
 
 	    message_port_register_in(pmt::mp("in"));
-	    set_msg_handler(pmt::mp("in"), boost::bind(&access_code_prefixer_impl::make_frame, this, _1));
+	    set_msg_handler(pmt::mp("in"), boost::bind(&access_code_prefixer_impl::make_frame, this, boost::placeholders::_1));
 	    buf[0] = pad & 0xFF;
 
 	    for(int i = 4; i > 0; i--) {

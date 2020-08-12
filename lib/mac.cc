@@ -43,9 +43,9 @@ mac_impl(bool debug, int fcf, int seq_nr, int dst_pan, int dst, int src) :
 	d_num_packets_received(0) {
 
 	message_port_register_in(pmt::mp("app in"));
-	set_msg_handler(pmt::mp("app in"), boost::bind(&mac_impl::app_in, this, _1));
+	set_msg_handler(pmt::mp("app in"), boost::bind(&mac_impl::app_in, this, boost::placeholders::_1));
 	message_port_register_in(pmt::mp("pdu in"));
-	set_msg_handler(pmt::mp("pdu in"), boost::bind(&mac_impl::mac_in, this, _1));
+	set_msg_handler(pmt::mp("pdu in"), boost::bind(&mac_impl::mac_in, this, boost::placeholders::_1));
 
 	message_port_register_out(pmt::mp("app out"));
 	message_port_register_out(pmt::mp("pdu out"));
