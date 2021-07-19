@@ -1,4 +1,9 @@
 title: gr-ieee802-15-4
+brief: An IEEE 802.15.4 (ZigBee) Transceiver
+tags:
+  - IEEE 802.15.4
+  - ZigBee
+  - IoT
 author:
   - Bastian Bloessl <bloessl@ccs-labs.org>
   - Felix Wunsch <wunsch.felix@googlemail.com>
@@ -7,13 +12,9 @@ copyright_owner:
   - Felix Wunsch
   - Free Software Foundation
 repo: https://github.com/bastibl/gr-ieee802-15-4.git
-tags:
-  - IEEE 802.15.4
-  - ZigBee
-  - IoT
 website: http://www.ccs-labs.org/software/gr-ieee802-15-4/
-brief: An IEEE 802.15.4 (ZigBee) Transceiver
 icon: http://www.ccs-labs.org/software/gr-ieee802-15-4/gr-15-4-logo.png
+gr_supported_version: v3.7, v3.8, v3.9
 ---
 This is an IEEE802.15.4 transceiver for GNU Radio v3.7. It is based on the UCLA implementation (https://cgran.org/wiki/UCLAZigBee) of Thomas Schmid.
 
