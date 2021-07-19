@@ -37,7 +37,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API interleaver_ii : virtual public gr::sync_block
 {
 public:
-    typedef boost::shared_ptr<interleaver_ii> sptr;
+    typedef std::shared_ptr<interleaver_ii> sptr;
 
     /*!
      * \brief Return a shared_ptr to a new instance of ieee802_15_4::interleaver_ii.

@@ -37,7 +37,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API codeword_mapper_bi : virtual public gr::block
 {
 public:
-    typedef boost::shared_ptr<codeword_mapper_bi> sptr;
+    typedef std::shared_ptr<codeword_mapper_bi> sptr;
 
     /*!
      * \brief Return a shared_ptr to a new instance of ieee802_15_4::codeword_mapper_bi.

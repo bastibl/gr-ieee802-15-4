@@ -37,7 +37,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API dqcsk_demapper_cc : virtual public gr::block
 {
 public:
-    typedef boost::shared_ptr<dqcsk_demapper_cc> sptr;
+    typedef std::shared_ptr<dqcsk_demapper_cc> sptr;
 
     /*!
      * \brief Return a shared_ptr to a new instance of ieee802_15_4::dqcsk_demapper_cc.

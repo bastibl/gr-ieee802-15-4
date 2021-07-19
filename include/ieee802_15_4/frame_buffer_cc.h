@@ -37,7 +37,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API frame_buffer_cc : virtual public gr::block
 {
 public:
-    typedef boost::shared_ptr<frame_buffer_cc> sptr;
+    typedef std::shared_ptr<frame_buffer_cc> sptr;
 
     /*!
      * \brief Return a shared_ptr to a new instance of ieee802_15_4::frame_buffer_cc.

@@ -37,7 +37,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API zeropadding_removal_b : virtual public gr::sync_block
 {
 public:
-    typedef boost::shared_ptr<zeropadding_removal_b> sptr;
+    typedef std::shared_ptr<zeropadding_removal_b> sptr;
 
     /*!
      * \brief Return a shared_ptr to a new instance of

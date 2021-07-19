@@ -37,7 +37,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API codeword_soft_demapper_fb : virtual public gr::block
 {
 public:
-    typedef boost::shared_ptr<codeword_soft_demapper_fb> sptr;
+    typedef std::shared_ptr<codeword_soft_demapper_fb> sptr;
 
     /*!
      * \brief Return a shared_ptr to a new instance of

@@ -37,7 +37,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API multiuser_chirp_detector_cc : virtual public gr::block
 {
 public:
-    typedef boost::shared_ptr<multiuser_chirp_detector_cc> sptr;
+    typedef std::shared_ptr<multiuser_chirp_detector_cc> sptr;
 
     /*!
      * \brief Return a shared_ptr to a new instance of

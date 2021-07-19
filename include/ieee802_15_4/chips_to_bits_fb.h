@@ -37,7 +37,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API chips_to_bits_fb : virtual public gr::sync_decimator
 {
 public:
-    typedef boost::shared_ptr<chips_to_bits_fb> sptr;
+    typedef std::shared_ptr<chips_to_bits_fb> sptr;
 
     /*!
      * \brief Return a shared_ptr to a new instance of ieee802_15_4::chips_to_bits_fb.

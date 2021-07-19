@@ -37,7 +37,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API phr_removal : virtual public gr::block
 {
 public:
-    typedef boost::shared_ptr<phr_removal> sptr;
+    typedef std::shared_ptr<phr_removal> sptr;
 
     /*!
      * \brief Return a shared_ptr to a new instance of ieee802_15_4::phr_removal.

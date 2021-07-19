@@ -37,7 +37,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API dqpsk_mapper_ff : virtual public gr::sync_block
 {
 public:
-    typedef boost::shared_ptr<dqpsk_mapper_ff> sptr;
+    typedef std::shared_ptr<dqpsk_mapper_ff> sptr;
 
     /*!
      * \brief Return a shared_ptr to a new instance of ieee802_15_4::dqpsk_mapper_ff.

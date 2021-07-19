@@ -27,7 +27,7 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API rime_stack : virtual public block
 {
 public:
-    typedef boost::shared_ptr<rime_stack> sptr;
+    typedef std::shared_ptr<rime_stack> sptr;
     static sptr make(std::vector<uint16_t> bc_channels,
                      std::vector<uint16_t> uc_channels,
                      std::vector<uint16_t> ruc_channels,
