@@ -16,8 +16,8 @@
  */
 
 
-#include "stubborn_sender.h"
 #include "ruc_connection.h"
+#include "stubborn_sender.h"
 
 #define debug 1
 #if debug
@@ -26,79 +26,71 @@
 
 using namespace gr::ieee802_15_4;
 
-stubborn_sender::stubborn_sender(rime_stack* block, ruc_connection *caller,
-								 pmt::pmt_t outport) 
-	:d_stop(false), d_mac_outport(outport), d_block(block), d_caller(caller)
+stubborn_sender::stubborn_sender(rime_stack* block,
+                                 ruc_connection* caller,
+                                 pmt::pmt_t outport)
+    : d_stop(false), d_mac_outport(outport), d_block(block), d_caller(caller)
 {
-
 }
 
-void
-stubborn_sender::start(long int retxtime, int retxs)
+void stubborn_sender::start(long int retxtime, int retxs)
 {
-	d_retxtime = retxtime;
-	d_retxs = retxs;
+    d_retxtime = retxtime;
+    d_retxs = retxs;
 
-	gr::thread::thread t(&stubborn_sender::thread_func, this);
-	t.detach();
+    gr::thread::thread t(&stubborn_sender::thread_func, this);
+    t.detach();
 
-	dout << "sender started" << std::endl;
-
+    dout << "sender started" << std::endl;
 }
 
-void
-stubborn_sender::enqueue(pmt::pmt_t msg)
+void stubborn_sender::enqueue(pmt::pmt_t msg)
 {
-	gr::thread::scoped_lock lock(d_mutex);
-	d_msg_queue.push(msg);
-	d_queue_filled.notify_one();
+    gr::thread::scoped_lock lock(d_mutex);
+    d_msg_queue.push(msg);
+    d_queue_filled.notify_one();
 }
 
-pmt::pmt_t
-stubborn_sender::queue_pop()
+pmt::pmt_t stubborn_sender::queue_pop()
 {
-	gr::thread::scoped_lock lock(d_mutex);
+    gr::thread::scoped_lock lock(d_mutex);
 
-	while(d_msg_queue.size() == 0){
-		d_queue_filled.wait(lock);
-	}
-	pmt::pmt_t msg = d_msg_queue.front();
-	d_msg_queue.pop();
-	return msg;
+    while (d_msg_queue.size() == 0) {
+        d_queue_filled.wait(lock);
+    }
+    pmt::pmt_t msg = d_msg_queue.front();
+    d_msg_queue.pop();
+    return msg;
 }
 
 
-
-void
-stubborn_sender::thread_func()
+void stubborn_sender::thread_func()
 {
-	while(true){
-		d_stop.store(false);
-		pmt::pmt_t to_send = queue_pop();
-		int i = 0;
-		do{
-			d_block->message_port_pub(d_mac_outport, to_send);
-			dout << "send try " << i << std::endl;
-			gr::thread::scoped_lock lock(d_mutex);
-			d_ack_received.timed_wait(lock, boost::posix_time::milliseconds(d_retxtime));
-			lock.unlock();
-		} while(i++ < d_retxs && !d_stop.load()); 
+    while (true) {
+        d_stop.store(false);
+        pmt::pmt_t to_send = queue_pop();
+        int i = 0;
+        do {
+            d_block->message_port_pub(d_mac_outport, to_send);
+            dout << "send try " << i << std::endl;
+            gr::thread::scoped_lock lock(d_mutex);
+            d_ack_received.timed_wait(lock, boost::posix_time::milliseconds(d_retxtime));
+            lock.unlock();
+        } while (i++ < d_retxs && !d_stop.load());
 
-		if(!d_stop.load()){
-			dout << "timeout" << std::endl;
-			d_caller->inc_recv_seqno();
-		} else {
-			dout << "stopped" << std::endl;
-		}
-	}
+        if (!d_stop.load()) {
+            dout << "timeout" << std::endl;
+            d_caller->inc_recv_seqno();
+        } else {
+            dout << "stopped" << std::endl;
+        }
+    }
 }
 
 
-void
-stubborn_sender::stop()
+void stubborn_sender::stop()
 {
-	dout << "stopping sender..." << std::endl;
-	d_stop.store(true);
-	d_ack_received.notify_one();
+    dout << "stopping sender..." << std::endl;
+    d_stop.store(true);
+    d_ack_received.notify_one();
 }
-

@@ -17,31 +17,35 @@
 #ifndef INCLUDED_RIME_CONNECTION_H
 #define INCLUDED_RIME_CONNECTION_H
 
+#include <gnuradio/block_detail.h>
 #include <ieee802_15_4/api.h>
 #include <ieee802_15_4/rime_stack.h>
-#include <gnuradio/block_detail.h>
 
-namespace gr{
-	namespace ieee802_15_4{
-		class IEEE802_15_4_API rime_connection{
-		protected:
-			rime_stack *d_block;
-			uint16_t d_channel;
-			pmt::pmt_t d_inport;
-			pmt::pmt_t d_outport;
-			pmt::pmt_t d_mac_outport;
-			uint8_t d_rime_add_mine[2];
-			
-		public:
-			static std::string msg_to_string(pmt::pmt_t msg);
-			rime_connection(rime_stack *block, uint16_t channel, pmt::pmt_t inport,
-				pmt::pmt_t outport, const uint8_t rime_add_mine[2]);
-			virtual ~rime_connection() {};
-			virtual void pack(pmt::pmt_t msg) = 0;
-			virtual void unpack(pmt::pmt_t msg) = 0;
-			uint16_t channel() const;
-		};
-	}
-}
+namespace gr {
+namespace ieee802_15_4 {
+class IEEE802_15_4_API rime_connection
+{
+protected:
+    rime_stack* d_block;
+    uint16_t d_channel;
+    pmt::pmt_t d_inport;
+    pmt::pmt_t d_outport;
+    pmt::pmt_t d_mac_outport;
+    uint8_t d_rime_add_mine[2];
 
-#endif 
+public:
+    static std::string msg_to_string(pmt::pmt_t msg);
+    rime_connection(rime_stack* block,
+                    uint16_t channel,
+                    pmt::pmt_t inport,
+                    pmt::pmt_t outport,
+                    const uint8_t rime_add_mine[2]);
+    virtual ~rime_connection(){};
+    virtual void pack(pmt::pmt_t msg) = 0;
+    virtual void unpack(pmt::pmt_t msg) = 0;
+    uint16_t channel() const;
+};
+} // namespace ieee802_15_4
+} // namespace gr
+
+#endif

@@ -22,27 +22,34 @@
 #include "stubborn_sender.h"
 #include <array>
 
-namespace gr{
-	namespace ieee802_15_4{
-		class IEEE802_15_4_API ruc_connection : public rime_connection{
-		private:
-			static const int header_length = 7;
-			static const int seqno_bits = 2;
-			int d_send_seqno;
-			int d_recv_seqno;
-			stubborn_sender d_stubborn_sender;
-			gr::thread::mutex d_mutex;
-		public:
-			static std::array<uint8_t, 256> make_msgbuf(uint16_t channel, bool ack, int seqno,
-					const uint8_t src[2], const uint8_t dest[2]);
-			ruc_connection(rime_stack *block, uint16_t channel,
-						pmt::pmt_t inport, pmt::pmt_t outport,
-						const uint8_t rime_add_mine[2]);
-			void pack(pmt::pmt_t msg);
-			void unpack(pmt::pmt_t msg);
-			void inc_recv_seqno();
-			int recv_seqno();
-		};
-	}
-}
+namespace gr {
+namespace ieee802_15_4 {
+class IEEE802_15_4_API ruc_connection : public rime_connection
+{
+private:
+    static const int header_length = 7;
+    static const int seqno_bits = 2;
+    int d_send_seqno;
+    int d_recv_seqno;
+    stubborn_sender d_stubborn_sender;
+    gr::thread::mutex d_mutex;
+
+public:
+    static std::array<uint8_t, 256> make_msgbuf(uint16_t channel,
+                                                bool ack,
+                                                int seqno,
+                                                const uint8_t src[2],
+                                                const uint8_t dest[2]);
+    ruc_connection(rime_stack* block,
+                   uint16_t channel,
+                   pmt::pmt_t inport,
+                   pmt::pmt_t outport,
+                   const uint8_t rime_add_mine[2]);
+    void pack(pmt::pmt_t msg);
+    void unpack(pmt::pmt_t msg);
+    void inc_recv_seqno();
+    int recv_seqno();
+};
+} // namespace ieee802_15_4
+} // namespace gr
 #endif

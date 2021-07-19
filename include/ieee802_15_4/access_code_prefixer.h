@@ -17,8 +17,8 @@
 #ifndef INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H
 #define INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H
 
-#include <ieee802_15_4/api.h>
 #include <gnuradio/block.h>
+#include <ieee802_15_4/api.h>
 
 namespace gr {
 namespace ieee802_15_4 {
@@ -26,12 +26,11 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API access_code_prefixer : virtual public gr::block
 {
 public:
-
-	typedef boost::shared_ptr<access_code_prefixer> sptr;
-	static sptr make(int pad=0, int preamble=0x000000a7); // per IEEE 802.15.4
+    typedef boost::shared_ptr<access_code_prefixer> sptr;
+    static sptr make(int pad = 0, int preamble = 0x000000a7); // per IEEE 802.15.4
 };
 
-}  // namespace ieee802_15_4
-}  // namespace gr
+} // namespace ieee802_15_4
+} // namespace gr
 
 #endif /* INCLUDED_GR_IEEE802_15_4_ACCESS_CODE_PREFIXER_H */

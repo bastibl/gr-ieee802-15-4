@@ -20,22 +20,25 @@
 #include "rime_connection.h"
 #include <array>
 
-namespace gr{
-	namespace ieee802_15_4{
-		class IEEE802_15_4_API bc_connection : public rime_connection{
-		private:
-			static const int header_length = 4;
+namespace gr {
+namespace ieee802_15_4 {
+class IEEE802_15_4_API bc_connection : public rime_connection
+{
+private:
+    static const int header_length = 4;
 
-		public:
-			static std::array<uint8_t, 256> make_msgbuf(uint16_t channel,
-					const uint8_t src[2]);
-			bc_connection(rime_stack *block, uint16_t channel, pmt::pmt_t inport,
-				pmt::pmt_t outport, const uint8_t rime_add_mine[2]);
-			void pack(pmt::pmt_t msg);
-			void unpack(pmt::pmt_t msg);
-		};
-	}
-}
+public:
+    static std::array<uint8_t, 256> make_msgbuf(uint16_t channel, const uint8_t src[2]);
+    bc_connection(rime_stack* block,
+                  uint16_t channel,
+                  pmt::pmt_t inport,
+                  pmt::pmt_t outport,
+                  const uint8_t rime_add_mine[2]);
+    void pack(pmt::pmt_t msg);
+    void unpack(pmt::pmt_t msg);
+};
+} // namespace ieee802_15_4
+} // namespace gr
 
 
 #endif

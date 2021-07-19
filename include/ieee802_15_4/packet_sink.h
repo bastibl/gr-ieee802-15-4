@@ -17,8 +17,8 @@
 #ifndef INCLUDED_GR_IEEE802_15_4_PACKET_SINK_H
 #define INCLUDED_GR_IEEE802_15_4_PACKET_SINK_H
 
-#include <ieee802_15_4/api.h>
 #include <gnuradio/block.h>
+#include <ieee802_15_4/api.h>
 
 namespace gr {
 namespace ieee802_15_4 {
@@ -26,13 +26,11 @@ namespace ieee802_15_4 {
 class IEEE802_15_4_API packet_sink : virtual public block
 {
 public:
-
-	typedef boost::shared_ptr<packet_sink> sptr;
-	static sptr make(unsigned int threshold = 10);
-
+    typedef boost::shared_ptr<packet_sink> sptr;
+    static sptr make(unsigned int threshold = 10);
 };
 
-}  // namespace ieee802_15_4
-}  // namespace gr
+} // namespace ieee802_15_4
+} // namespace gr
 
 #endif /* INCLUDED_GR_IEEE802_15_4_PACKET_SINK_H */

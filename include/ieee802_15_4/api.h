@@ -20,9 +20,9 @@
 #include <gnuradio/attributes.h>
 
 #ifdef gnuradio_ieee802_15_4_EXPORTS
-#  define IEEE802_15_4_API __GR_ATTR_EXPORT
+#define IEEE802_15_4_API __GR_ATTR_EXPORT
 #else
-#  define IEEE802_15_4_API __GR_ATTR_IMPORT
+#define IEEE802_15_4_API __GR_ATTR_IMPORT
 #endif
 
 #endif /* INCLUDED_IEEE802_15_4_API_H */

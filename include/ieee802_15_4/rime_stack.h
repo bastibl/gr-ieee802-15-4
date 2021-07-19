@@ -17,25 +17,23 @@
 #ifndef INCLUDED_GR_IEEE802_15_4_RIME_STACK_H
 #define INCLUDED_GR_IEEE802_15_4_RIME_STACK_H
 
-#include <ieee802_15_4/api.h>
 #include <gnuradio/block.h>
+#include <ieee802_15_4/api.h>
 #include <vector>
 
 namespace gr {
-	namespace ieee802_15_4 {
+namespace ieee802_15_4 {
 
-		class IEEE802_15_4_API rime_stack : virtual public block
-		{
-		public:
-
-			typedef boost::shared_ptr<rime_stack> sptr;
-			static sptr make(std::vector<uint16_t> bc_channels, 
-				std::vector<uint16_t> uc_channels,
-				std::vector<uint16_t> ruc_channels,
-				std::vector<uint8_t> rime_add);
-		};
-	}  // namespace ieee802_15_4
-}  // namespace gr
+class IEEE802_15_4_API rime_stack : virtual public block
+{
+public:
+    typedef boost::shared_ptr<rime_stack> sptr;
+    static sptr make(std::vector<uint16_t> bc_channels,
+                     std::vector<uint16_t> uc_channels,
+                     std::vector<uint16_t> ruc_channels,
+                     std::vector<uint8_t> rime_add);
+};
+} // namespace ieee802_15_4
+} // namespace gr
 
 #endif /* INCLUDED_GR_IEEE802_15_4_RIME_STACK_H */
- 
