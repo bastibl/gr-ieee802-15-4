@@ -23,6 +23,7 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: IEEE 802.15.4 Transceiver using OQPSK PHY
+    window_size: (1000,1000)
   states:
     bus_sink: false
     bus_source: false
@@ -139,26 +140,6 @@ blocks:
     coordinate: [72, 196.0]
     rotation: 0
     state: enabled
-- name: blocks_socket_pdu_0_0
-  id: blocks_socket_pdu
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    host: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    mtu: '10000'
-    port: '52001'
-    tcp_no_delay: 'False'
-    type: UDP_SERVER
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [360, 84.0]
-    rotation: 180
-    state: enabled
 - name: foo_packet_pad2_0
   id: foo_packet_pad2
   parameters:
@@ -251,6 +232,26 @@ blocks:
     coordinate: [352, 208.0]
     rotation: 0
     state: enabled
+- name: network_socket_pdu_0
+  id: network_socket_pdu
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    host: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    mtu: '10000'
+    port: '52001'
+    tcp_no_delay: 'False'
+    type: UDP_SERVER
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [360, 84.0]
+    rotation: 180
+    state: true
 - name: note_0
   id: note
   parameters:
@@ -1075,7 +1076,6 @@ blocks:
 
 connections:
 - [blocks_message_strobe_0, strobe, ieee802_15_4_rime_stack_0, bcin]
-- [blocks_socket_pdu_0_0, pdus, ieee802_15_4_rime_stack_0, bcin]
 - [foo_packet_pad2_0, '0', ieee802_15_4_oqpsk_phy_0, '0']
 - [foo_wireshark_connector_0, '0', blocks_file_sink_0, '0']
 - [ieee802_15_4_mac_0, app out, ieee802_15_4_rime_stack_0, fromMAC]
@@ -1086,9 +1086,11 @@ connections:
 - [ieee802_15_4_oqpsk_phy_0, '0', uhd_usrp_sink_0, '0']
 - [ieee802_15_4_oqpsk_phy_0, rxout, foo_wireshark_connector_0, in]
 - [ieee802_15_4_oqpsk_phy_0, rxout, ieee802_15_4_mac_0, pdu in]
-- [ieee802_15_4_rime_stack_0, bcout, blocks_socket_pdu_0_0, pdus]
+- [ieee802_15_4_rime_stack_0, bcout, network_socket_pdu_0, pdus]
 - [ieee802_15_4_rime_stack_0, toMAC, ieee802_15_4_mac_0, app in]
+- [network_socket_pdu_0, pdus, ieee802_15_4_rime_stack_0, bcin]
 - [uhd_usrp_source_0, '0', ieee802_15_4_oqpsk_phy_0, '0']
 
 metadata:
   file_format: 1
+  grc_version: v3.11.0.0git-70-gf44384ae

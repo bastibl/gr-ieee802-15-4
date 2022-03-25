@@ -149,7 +149,7 @@ documentation: 'Felix Wunsch
 
     IEEE 802.15.4 CSS PHY
 
-    /home/hydra/gnuradio/src/modules/ported/needs_pr/gr-ieee802-15-4/examples/ieee802_15_4_css_phy.py'
-grc_source: /home/hydra/gnuradio/src/modules/ported/needs_pr/gr-ieee802-15-4/examples/ieee802_15_4_CSS_PHY.grc
+    ./examples/ieee802_15_4_css_phy.py'
+grc_source: ./examples/ieee802_15_4_CSS_PHY.grc
 
 file_format: 1
