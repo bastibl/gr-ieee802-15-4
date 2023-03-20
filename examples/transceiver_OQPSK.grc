@@ -159,7 +159,7 @@ blocks:
     bus_structure: null
     coordinate: [376, 612.0]
     rotation: 180
-    state: true
+    state: enabled
 - name: foo_wireshark_connector_0
   id: foo_wireshark_connector
   parameters:
@@ -505,7 +505,7 @@ blocks:
     gain7: '0'
     gain8: '0'
     gain9: '0'
-    gain_type0: default
+    gain_type0: normalized
     gain_type1: default
     gain_type10: default
     gain_type11: default
@@ -537,7 +537,7 @@ blocks:
     gain_type7: default
     gain_type8: default
     gain_type9: default
-    len_tag_name: pdu_length
+    len_tag_name: packet_len
     lo_export0: 'False'
     lo_export1: 'False'
     lo_export10: 'False'
@@ -636,7 +636,7 @@ blocks:
     bus_structure: null
     coordinate: [640, 444.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: uhd_usrp_source_0
   id: uhd_usrp_source
   parameters:
@@ -846,7 +846,7 @@ blocks:
     gain7: '0'
     gain8: '0'
     gain9: '0'
-    gain_type0: default
+    gain_type0: normalized
     gain_type1: default
     gain_type10: default
     gain_type11: default
@@ -1093,4 +1093,4 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: v3.11.0.0git-70-gf44384ae
+  grc_version: v3.10.5.1-37-ga5a387bf
